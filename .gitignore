@@ -1,0 +1,4 @@
+.backups/
+.DS_Store
+*.bak
+*.orig
