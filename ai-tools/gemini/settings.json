@@ -1,0 +1,36 @@
+{
+  "hasSeenIdeIntegrationNudge": true,
+  "selectedAuthType": "oauth-personal",
+  "hooks": {
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/roynulrohan/.superset/hooks/gemini-hook.sh"
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/roynulrohan/.superset/hooks/gemini-hook.sh"
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/roynulrohan/.superset/hooks/gemini-hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

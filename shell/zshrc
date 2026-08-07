@@ -1,0 +1,168 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="eastwood"
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git zsh-syntax-highlighting)
+
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
+
+# ---------------------------------------------------------------------------
+# Plugin loading
+#
+# The same plugin lives in a different place on every platform: Homebrew puts
+# it under $HOMEBREW_PREFIX/share, Debian/Ubuntu under /usr/share, and anything
+# not packaged at all gets git-cloned into oh-my-zsh's custom dir. Try each in
+# turn and source the first one that exists, so an absent plugin is a no-op
+# instead of an error on every shell start.
+# ---------------------------------------------------------------------------
+_load_zsh_plugin() {
+  local name=$1 file=$2 candidate
+  for candidate in \
+    "$HOMEBREW_PREFIX/share/$name/$file" \
+    "/usr/share/$name/$file" \
+    "/usr/share/zsh/plugins/$name/$file" \
+    "${ZSH_CUSTOM:-$ZSH/custom}/plugins/$name/$file"
+  do
+    [[ -r "$candidate" ]] && { source "$candidate"; return 0 }
+  done
+  return 1
+}
+
+# Powerlevel10k: git clone, same location on every platform.
+[[ -r "${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k/powerlevel10k.zsh-theme" ]] \
+  && source "${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k/powerlevel10k.zsh-theme"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+_load_zsh_plugin zsh-autocomplete    zsh-autocomplete.plugin.zsh
+_load_zsh_plugin zsh-you-should-use  you-should-use.plugin.zsh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bbbbbb"
+_load_zsh_plugin zsh-autosuggestions zsh-autosuggestions.zsh
+
+# Must be sourced last — syntax highlighting wraps every widget defined before it.
+_load_zsh_plugin zsh-syntax-highlighting zsh-syntax-highlighting.zsh
+
+# ---------------------------------------------------------------------------
+# Modern CLI replacements
+#
+# Debian/Ubuntu ship bat and fd under different binary names (batcat, fdfind)
+# because of pre-existing packages. Resolve the real name once, and only alias
+# over `cat`/`ls` if the replacement actually exists — otherwise a fresh box
+# ends up with no working cat.
+# ---------------------------------------------------------------------------
+if command -v bat >/dev/null 2>&1; then
+  _BAT=bat
+elif command -v batcat >/dev/null 2>&1; then
+  _BAT=batcat
+  alias bat="batcat"
+fi
+
+if command -v fd >/dev/null 2>&1; then
+  _FD=fd
+elif command -v fdfind >/dev/null 2>&1; then
+  _FD=fdfind
+  alias fd="fdfind"
+fi
+
+[[ -n "$_BAT" ]] && alias cat="$_BAT"
+
+if command -v eza >/dev/null 2>&1; then
+  alias ls="eza --icons=always --color=always"
+  alias ll="eza -la --icons=always --git --group-directories-first --header --no-user -U -m --time-style=default"
+  alias tree="eza --tree --icons=always --level=2 --git-ignore --group-directories-first"
+fi
+
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+
+# fzf config (use fd for faster, .gitignore-aware results)
+if command -v fzf >/dev/null 2>&1; then
+  if [[ -n "$_FD" ]]; then
+    export FZF_DEFAULT_COMMAND="$_FD --hidden --strip-cwd-prefix --exclude .git"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="$_FD --type=d --hidden --strip-cwd-prefix --exclude .git"
+  fi
+  [[ -n "$_BAT" ]] && export FZF_CTRL_T_OPTS="--preview '$_BAT -n --color=always --line-range :500 {}'"
+  command -v eza >/dev/null 2>&1 \
+    && export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+  source <(fzf --zsh)
+fi
+
+# Quick edit
+alias zshrc="code ~/.zshrc"
+
+# Dev shortcuts
+alias dev="bun run dev"
+alias build="bun run build"
+
+alias claude-mem='bun "$HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+# ---------------------------------------------------------------------------
+# Toolchains — each guarded so a machine missing one stays quiet
+# ---------------------------------------------------------------------------
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+[[ -d "$BUN_INSTALL/bin" ]] && export PATH="$BUN_INSTALL/bin:$PATH"
+[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+
+# Java — Homebrew openjdk (macOS); on Linux the distro package is already on PATH
+for _jdk in "$HOMEBREW_PREFIX/opt/openjdk/bin" "$HOMEBREW_PREFIX/opt/openjdk@11/bin"; do
+  [[ -d "$_jdk" ]] && export PATH="$_jdk:$PATH"
+done
+unset _jdk
+
+# Android SDK
+if [[ -d "$HOME/Library/Android/sdk" ]]; then
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+elif [[ -d "$HOME/Android/Sdk" ]]; then
+  export ANDROID_HOME="$HOME/Android/Sdk"
+fi
+if [[ -n "$ANDROID_HOME" ]]; then
+  for _d in emulator tools tools/bin platform-tools; do
+    [[ -d "$ANDROID_HOME/$_d" ]] && export PATH="$ANDROID_HOME/$_d:$PATH"
+  done
+  unset _d
+fi
+
+# Misc tool dirs
+for _dir in "$HOME/.amplify/bin" "$HOME/.console-ninja/.bin" \
+            "$HOME/.antigravity/antigravity/bin" \
+            "$HOME/.local/share/solana/install/active_release/bin" \
+            "$HOME/.local/bin"
+do
+  [[ -d "$_dir" ]] && export PATH="$_dir:$PATH"
+done
+unset _dir
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if [[ -x "$HOME/miniconda3/bin/conda" ]]; then
+  __conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
+  if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+  elif [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+    . "$HOME/miniconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="$HOME/miniconda3/bin:$PATH"
+  fi
+  unset __conda_setup
+fi
+# <<< conda initialize <<<

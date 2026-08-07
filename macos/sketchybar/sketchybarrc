@@ -1,0 +1,90 @@
+#!/bin/bash
+# ~/.config/sketchybar/sketchybarrc
+# Entry point for sketchybar. Runs once at launch (or on `sketchybar --reload`).
+# Adapted from https://github.com/FelixKratz/dotfiles (by Felix Kratz, the author of sketchybar).
+
+# Pull in color palette (Catppuccin Macchiato) and SF Symbols glyph codepoints.
+source "$HOME/.config/sketchybar/colors.sh"
+source "$HOME/.config/sketchybar/icons.sh"
+
+# Paths used by the item scripts below.
+ITEM_DIR="$HOME/.config/sketchybar/items"
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+
+# SF Pro is built into macOS and ships Regular/Bold/Semibold/Heavy/Black weights.
+FONT="SF Pro"
+
+# Uniform padding used by all items (icon padding, label padding, item padding).
+PADDINGS=3
+
+# macOS has a system overlay that pops up on volume keys (the big white pill).
+# Unload it so our own bar volume indicator is the only feedback.
+launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
+
+# ─── Bar appearance ──────────────────────────────────────────────────────────
+# Floating bar: 39px tall, 10px margin from screen edges, rounded corners,
+# glass blur, sticky across spaces. `y_offset=10` keeps it away from the notch.
+bar=(
+  height=39
+  color=$BAR_COLOR
+  shadow=on
+  position=top
+  sticky=on
+  padding_right=10
+  padding_left=10
+  corner_radius=9
+  y_offset=10
+  margin=10
+  blur_radius=20
+  notch_width=0
+)
+sketchybar --bar "${bar[@]}"
+
+# ─── Default properties for every item added below ───────────────────────────
+defaults=(
+  updates=when_shown
+  icon.font="$FONT:Bold:14.0"
+  icon.color=$ICON_COLOR
+  icon.padding_left=$PADDINGS
+  icon.padding_right=$PADDINGS
+  label.font="$FONT:Semibold:13.0"
+  label.color=$LABEL_COLOR
+  label.padding_left=$PADDINGS
+  label.padding_right=$PADDINGS
+  padding_right=$PADDINGS
+  padding_left=$PADDINGS
+  background.height=30
+  background.corner_radius=9
+  popup.background.border_width=2
+  popup.background.corner_radius=9
+  popup.background.border_color=$POPUP_BORDER_COLOR
+  popup.background.color=$POPUP_BACKGROUND_COLOR
+  popup.blur_radius=20
+  popup.background.shadow.drawing=on
+)
+sketchybar --default "${defaults[@]}"
+
+# ─── Items ───────────────────────────────────────────────────────────────────
+# Each file below adds one bar item (or a group of items for things like
+# Spotify's popup). Order matters: first-added items appear leftmost on
+# their side. Center items are centered independently.
+
+# Left side
+source "$ITEM_DIR/apple.sh"       # Apple logo + popup (prefs/activity/lock)
+source "$ITEM_DIR/spaces.sh"      # Yabai spaces 1-4 with app icons inside
+source "$ITEM_DIR/front_app.sh"   # Yabai window-state indicator + focused app name
+
+# Center
+source "$ITEM_DIR/spotify.sh"     # Spotify player (hover on icon → popup with controls)
+
+# Right side (first sourced ends up rightmost since items push existing ones left)
+source "$ITEM_DIR/calendar.sh"    # Date + time
+source "$ITEM_DIR/battery.sh"     # Battery icon, auto-hidden above 60%
+source "$ITEM_DIR/volume.sh"      # Volume icon + slider on hover/click
+source "$ITEM_DIR/brew.sh"        # Homebrew outdated-package counter
+
+# Force all item scripts to run once so everything has correct initial state.
+# (Do NOT use `--update` outside sketchybarrc — it reruns every item.)
+sketchybar --update
+
+echo "sketchybar configuration loaded.."

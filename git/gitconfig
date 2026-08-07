@@ -1,0 +1,8 @@
+[user]
+	name = Roynul Rohan
+	email = roynulrohan@gmail.com
+[http]
+	postBuffer = 524288000
+[pack]
+	windowMemory = 256m
+	packSizeLimit = 256m

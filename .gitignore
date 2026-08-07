@@ -2,3 +2,18 @@
 .DS_Store
 *.bak
 *.orig
+
+# Backstop against committing credentials. Not a substitute for checking —
+# see AGENTS.md for the full list of what's deliberately excluded.
+auth.json
+oauth_creds.json
+google_accounts.json
+.claude.json
+hosts.yml
+credentials.json
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+.env
+.env.*

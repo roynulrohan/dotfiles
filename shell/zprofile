@@ -1,0 +1,18 @@
+# Homebrew — Apple Silicon, Intel macOS, and Linuxbrew all install elsewhere.
+# Sourcing shellenv is what sets $HOMEBREW_PREFIX, which zshrc's plugin loader
+# depends on, so this has to run before zshrc.
+for _brew in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+  [[ -x "$_brew" ]] && { eval "$("$_brew" shellenv)"; break }
+done
+unset _brew
+
+# Python framework build (macOS installer package)
+[[ -d "/Library/Frameworks/Python.framework/Versions/3.12/bin" ]] \
+  && export PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:$PATH"
+
+# Unversioned python/pip from the Homebrew keg
+[[ -d "$HOMEBREW_PREFIX/opt/python@3.9/libexec/bin" ]] \
+  && export PATH="$HOMEBREW_PREFIX/opt/python@3.9/libexec/bin:$PATH"
+
+[[ -d "$HOME/.local/share/solana/install/active_release/bin" ]] \
+  && export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"

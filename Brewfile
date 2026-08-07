@@ -1,0 +1,246 @@
+tap "agentuity/tap"
+tap "aimenhallou/floatnote"
+tap "asmvik/formulae"
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
+tap "homebrew/services"
+tap "manaflow-ai/cmux"
+tap "mongodb/brew"
+tap "nikitabobko/tap"
+tap "penso/arbor"
+tap "raine/claude-history"
+tap "stripe/stripe-cli"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Toolchain of the web
+brew "biome"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@77"
+# Collection of portable C++ source libraries
+brew "boost"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
+# Collection of reusable C++ library artifacts developed at Facebook
+brew "folly"
+# C++14 implementation of the TLS-1.3 standard
+brew "fizz"
+# Modular, composable client/server abstractions framework
+brew "wangle"
+# Thrift functions for querying information from a service
+brew "fb303"
+# Shared library for Watchman and Eden projects
+brew "edencommon"
+# Modern, maintained replacement for ls
+brew "eza"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Interact with Google Gemini AI models from the command-line
+brew "gemini-cli"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# OpenType text shaping engine
+brew "harfbuzz"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Provides library functionality for FIDO U2F & FIDO 2.0, including USB
+brew "libfido2"
+# TIFF library and utilities
+brew "libtiff"
+# Mac App Store command-line interface
+brew "mas"
+# Open source relational database management system
+brew "mysql"
+# Node version management
+brew "n"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
+# Improved Nano Syntax Highlighting Files
+brew "nanorc"
+# Fast, highly customisable system info script
+brew "neofetch"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node@18"
+# Manage multiple Node.js versions
+brew "nvm"
+# Development kit for the Java programming language
+brew "openjdk@11"
+# Python version management
+brew "pyenv"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
+# Persistent key-value database, with built-in net interface
+brew "redis", restart_service: :changed
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# CLI proxy to minimize LLM token consumption
+brew "rtk"
+# Change macOS audio source from the command-line
+brew "switchaudio-osx"
+# Simplified and community-driven man pages
+brew "tldr"
+# Watch files and take action when they change
+brew "watchman"
+# Programming language designed for robustness, optimality, and clarity
+brew "zig"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Real-time type-ahead completion for Zsh
+brew "zsh-autocomplete", args: ["HEAD"]
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# ZSH plugin that reminds you to use existing aliases for commands you just typed
+brew "zsh-you-should-use"
+# Automatic tiling window manager similar to xmonad
+cask "amethyst"
+cask "arbor"
+# Window peeking utility app
+cask "dockdoor"
+cask "font-hack-nerd-font"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
+# Standalone app for debugging React Native apps
+cask "react-native-debugger"
+# OpenJDK distribution from Azul
+cask "zulu@11"
+mas "CrystalFetch", id: 6454431289
+mas "iStat Menus", id: 1319778037
+mas "TestFlight", id: 899247664
+mas "Widgy", id: 1524540481
+mas "Xcode", id: 497799835
+vscode "adpyke.vscode-sql-formatter"
+vscode "aeschli.vscode-css-formatter"
+vscode "ahmadalli.vscode-nginx-conf"
+vscode "akamud.vscode-theme-onedark"
+vscode "anseki.vscode-color"
+vscode "apollographql.vscode-apollo"
+vscode "batisteo.vscode-django"
+vscode "biomejs.biome"
+vscode "bmewburn.vscode-intelephense-client"
+vscode "bradlc.vscode-tailwindcss"
+vscode "brapifra.phpserver"
+vscode "burkeholland.simple-react-snippets"
+vscode "cweijan.dbclient-jdbc"
+vscode "cweijan.vscode-mysql-client2"
+vscode "danielpinto8zz6.c-cpp-compile-run"
+vscode "dart-code.dart-code"
+vscode "dart-code.flutter"
+vscode "dbaeumer.vscode-eslint"
+vscode "doggy8088.netcore-snippets"
+vscode "donjayamanne.python-environment-manager"
+vscode "donjayamanne.python-extension-pack"
+vscode "dsznajder.es7-react-js-snippets"
+vscode "eamodio.gitlens"
+vscode "ecmel.vscode-html-css"
+vscode "editorconfig.editorconfig"
+vscode "equimper.react-native-react-redux"
+vscode "esbenp.prettier-vscode"
+vscode "expo.vscode-expo-tools"
+vscode "fivethree.vscode-svelte-snippets"
+vscode "formulahendry.auto-close-tag"
+vscode "formulahendry.auto-rename-tag"
+vscode "formulahendry.code-runner"
+vscode "formulahendry.vscode-mysql"
+vscode "gamunu.vscode-yarn"
+vscode "gencer.html-slim-scss-css-class-completion"
+vscode "github.vscode-github-actions"
+vscode "github.vscode-pull-request-github"
+vscode "graphql.vscode-graphql"
+vscode "graphql.vscode-graphql-syntax"
+vscode "icrawl.discord-vscode"
+vscode "juanblanco.solidity"
+vscode "jundat95.react-native-snippet"
+vscode "kevinrose.vsc-python-indent"
+vscode "kokororin.vscode-phpfmt"
+vscode "kuscamara.remove-unused-imports"
+vscode "magicstack.magicpython"
+vscode "mathiasfrohlich.kotlin"
+vscode "me-dutour-mathieu.vscode-github-actions"
+vscode "mechatroner.rainbow-csv"
+vscode "mgmcdermott.vscode-language-babel"
+vscode "mhutchie.git-graph"
+vscode "mquandalle.graphql"
+vscode "mrmlnc.vscode-scss"
+vscode "ms-azuretools.vscode-azureappservice"
+vscode "ms-azuretools.vscode-azureresourcegroups"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
+vscode "ms-python.debugpy"
+vscode "ms-python.isort"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode-remote.remote-wsl"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.vscode-typescript-next"
+vscode "ms-vsliveshare.vsliveshare"
+vscode "msjsdiag.vscode-react-native"
+vscode "mwpb.java-prettier-formatter"
+vscode "naco-siren.gradle-language"
+vscode "njpwerner.autodocstring"
+vscode "pkief.material-icon-theme"
+vscode "pmneo.tsimporter"
+vscode "raynigon.nginx-formatter"
+vscode "redhat.java"
+vscode "redhat.vscode-yaml"
+vscode "rifi2k.format-html-in-php"
+vscode "ritwickdey.liveserver"
+vscode "rodrigovallades.es7-react-js-snippets"
+vscode "shd101wyy.markdown-preview-enhanced"
+vscode "shyykoserhiy.vscode-spotify"
+vscode "sibiraj-s.vscode-scss-formatter"
+vscode "sixth.sixth-ai"
+vscode "skyran.js-jsx-snippets"
+vscode "steoates.autoimport"
+vscode "svelte.svelte-vscode"
+vscode "syler.sass-indented"
+vscode "tomoki1207.pdf"
+vscode "ttoowa.in-your-face-incredible"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
+vscode "vmware.vscode-spring-boot"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-maven"
+vscode "vscodevim.vim"
+vscode "wallabyjs.console-ninja"
+vscode "walter-ribeiro.full-react-snippets"
+vscode "wholroyd.jinja"
+vscode "xabikos.javascriptsnippets"
+vscode "xdebug.php-debug"
+vscode "xdebug.php-pack"
+vscode "yandeu.five-server"
+vscode "zhuangtongfa.material-theme"
+vscode "zignd.html-css-class-completion"
+vscode "zobo.php-intellisense"
+vscode "zxh404.vscode-proto3"
+cargo "avm"
+npm "@expo/ngrok"
+npm "corepack"
+npm "typescript-language-server"
+npm "typescript"
+npm "yarn"

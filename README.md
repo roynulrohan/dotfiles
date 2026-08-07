@@ -1,58 +1,62 @@
 # dotfiles
 
-Personal config, symlinked into place. Currently covers Claude Code and ccstatusline.
+Config files plus instructions for reproducing them on a machine they weren't
+written for.
+
+There's no install script. Each package has a `SETUP.md` covering dependencies
+per platform, where the files go, what breaks on the other OS, and how to check
+it worked. `AGENTS.md` is the entry point an agent reads first.
 
 ## Fresh machine
 
+Point an agent at it:
+
+> Clone `roynulrohan/dotfiles`, read `AGENTS.md`, and set up this box.
+> It's a headless Ubuntu dev server — shell and Claude Code only.
+
+Or do it yourself: read `AGENTS.md`, then the `SETUP.md` of whatever you want.
+
+## Packages
+
+| | | macOS | Linux |
+|---|---|:-:|:-:|
+| `shell` | zsh, oh-my-zsh, p10k, aliases, PATH | ✅ | ✅ |
+| `git` | gitconfig | ✅ | ✅ |
+| `claude` | Claude Code — instructions, settings, hooks, skills | ✅ | ✅ |
+| `ccstatusline` | Claude Code statusline | ✅ | ✅ |
+| `ghostty` | primary terminal | ✅ | ✅ |
+| `kitty` | fallback terminal | ✅ | ✅ |
+| `nvim` | LazyVim | ✅ | ✅ |
+| `neofetch` | fetch | ✅ | ⚠️ unmaintained |
+| `ai-tools` | codex, gemini, cursor, factory, mastra, claude-mem | ✅ | ✅ |
+| `vscode` `cursor` | editor settings, keybindings | ✅ | ✅ |
+| `macos` | yabai, sketchybar, borders, linearmouse | ✅ | ❌ |
+| `Brewfile` | 11 taps · 47 formulae · 11 casks · 5 MAS · 112 VS Code extensions | ✅ | 📖 source list |
+
+## How it stays current
+
+The files here are the real ones — the paths on this Mac are symlinks pointing
+back into the repo. Edit either side, `git status` sees it.
+
+The failure mode: an app that saves config by writing a temp file and renaming it
+over the target replaces the symlink with a regular file, and the repo quietly
+stops seeing your edits. Claude Code, VS Code, and Cursor can all do this. To
+check everything at once:
+
 ```bash
-curl -fsSL https://bun.sh/install | bash   # required — statusline + hooks use bunx
-gh repo clone roynulrohan/dotfiles ~/dotfiles
-~/dotfiles/install.sh
+find ~/.zshrc ~/.gitconfig ~/.claude/settings.json \
+     ~/.config/ccstatusline/settings.json ~/.config/nvim \
+     -maxdepth 0 ! -type l 2>/dev/null
 ```
 
-Then restart Claude Code. `install.sh --dry-run` shows what it would touch first.
+Anything it prints has detached. Copy it back into the repo and relink.
 
-## Layout
+## Not in here
 
-```
-claude/
-  CLAUDE.md              global instructions  ->  ~/.claude/CLAUDE.md
-  RTK.md                 rtk reference, @-imported by CLAUDE.md
-  settings.json          env, hooks, statusline, plugins
-  hooks/rtk-rewrite.sh   PreToolUse:Bash hook, rewrites commands through rtk
-  skills/gh/             custom gh skill
-ccstatusline/
-  settings.json          statusline layout  ->  ~/.config/ccstatusline/settings.json
-lib/links.sh             the source::destination map both scripts read
-install.sh               create the symlinks
-sync.sh                  check them / recover a clobbered one
-```
+Credentials, by design — SSH keys, `~/.claude.json`, `~/.codex/auth.json`,
+Gemini OAuth, Stripe/arbor/agentuity keys. Plus shell history, caches, and
+`.zcompdump*`. `.gitignore` blocks the obvious filenames as a backstop, but it's
+not a substitute for checking before you commit.
 
-To track another file, add one line to `lib/links.sh` and re-run `install.sh`.
-
-## How it stays in sync
-
-The repo holds the real files; the locations above are symlinks pointing back
-here. Edit either side — it's the same file, and `git -C ~/dotfiles status`
-shows the change immediately. Commit and push when you want it on the other
-machine, `git pull` to receive it. No copy step.
-
-One failure mode to know about: an app that saves by writing a temp file and
-renaming it over the target replaces the symlink with a regular file, and the
-repo silently stops seeing your edits. `./sync.sh` detects that (`DETACHED`),
-and `./sync.sh --adopt` copies the file back into the repo and restores the
-link, keeping the edit.
-
-## Dependencies
-
-| Tool | Needed for | Without it |
-|---|---|---|
-| `bun` | statusline, ccstatusline hooks | statusline doesn't render |
-| `jq` | RTK hook | hook warns once, passes commands through |
-| `rtk` | RTK hook | same |
-| `gh` | `git-pr` statusline segment | segment stays blank |
-
-`install.sh` reports which are present.
-
-Plugins listed in `settings.json` (`enabledPlugins` / `extraKnownMarketplaces`)
-are fetched by Claude Code itself on first run — nothing to install by hand.
+Manual after any fresh setup: `gh auth login`, sign into Claude Code, generate
+new SSH keys.

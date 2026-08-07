@@ -1,0 +1,38 @@
+#font-family = "JetBrains Mono"
+#font-size = 14
+#background-opacity = 0.85
+#background-blur = macos-glass-clear
+#mouse-hide-while-typing = true
+#window-decoration = true
+#macos-option-as-alt = true
+#macos-titlebar-style = transparent
+#window-colorspace = display-p3
+
+font-family = "JetBrainsMono NFM Regular"
+
+font-size = 14
+
+#window-padding-x = 10
+#window-padding-y = 10
+
+window-decoration = true
+
+cursor-style=block
+
+mouse-scroll-multiplier = 2
+
+window-colorspace = "display-p3"
+
+copy-on-select = clipboard
+
+window-padding-balance = true
+
+window-save-state = always
+
+macos-titlebar-style = transparent
+
+background-opacity = 0.0
+
+background-blur = macos-glass-regular
+
+config-file = ?auto/theme.ghostty

@@ -1,0 +1,81 @@
+#!/usr/bin/env sh
+# ~/.config/yabai/yabairc
+# Runs once when yabai starts. It's a plain shell script that calls
+# `yabai -m ...` to configure the window manager + install event signals.
+
+# ─── Scripting addition ──────────────────────────────────────────────────────
+# The scripting-addition extends yabai with features that aren't available via
+# normal macOS APIs (creating/destroying spaces, cleaner window-focus handling,
+# etc). It requires:
+#   1) SIP partially disabled (already done on this machine)
+#   2) A sudoers entry so `sudo yabai --load-sa` runs without a password prompt
+#      (see step 5 of setup: /private/etc/sudoers.d/yabai).
+# The signal below reloads the SA if the Dock restarts (which also happens after
+# yabai is upgraded via brew).
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# ─── Unload macOS Stage Manager / WindowManager daemon ───────────────────────
+# On Sonoma+ this daemon interferes with yabai's window placement. Unloading
+# is safe — it comes back after reboot (and yabairc runs again).
+launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
+
+# ─── Signals that drive sketchybar ──────────────────────────────────────────
+# sketchybar listens for custom events (--trigger). yabai fires these whenever
+# the underlying condition changes, so sketchybar repaints in real time.
+yabai -m signal --add event=window_focused   action="sketchybar --trigger window_focus"
+yabai -m signal --add event=window_created   action="sketchybar --trigger windows_on_spaces"
+yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+
+# NOT auto-running create_spaces.sh on startup or display change — the upstream
+# script has quirky behavior on 3+ display setups. Run it manually with
+#   ~/.config/yabai/create_spaces.sh
+# if/when you want to normalize space count across displays (and you'll want
+# to inspect what it did after).
+
+# ─── Global config ───────────────────────────────────────────────────────────
+yabai -m config                                         \
+    external_bar               all:49:0                 \
+    mouse_follows_focus        off                      \
+    focus_follows_mouse        off                      \
+    window_origin_display      default                  \
+    window_placement           second_child             \
+    window_zoom_persist        off                      \
+    window_topmost             off                      \
+    window_shadow              float                    \
+    window_opacity             on                       \
+    window_opacity_duration    0.15                     \
+    active_window_opacity      1.00                     \
+    normal_window_opacity      0.95                     \
+    window_animation_duration  0.22                     \
+    insert_feedback_color      0xff9dd274               \
+    split_ratio                0.50                     \
+    auto_balance               off                      \
+    mouse_modifier             fn                       \
+    mouse_action1              move                     \
+    mouse_action2              resize                   \
+    mouse_drop_action          swap                     \
+                                                        \
+    top_padding                10                       \
+    bottom_padding             10                       \
+    left_padding               10                       \
+    right_padding              10                       \
+    window_gap                 8
+
+# external_bar all:49:0 reserves 49px at the top of each display (39px bar +
+# 10px y_offset) so yabai won't tile windows underneath the sketchybar.
+
+yabai -m config layout bsp
+
+# ─── Rules: apps that shouldn't be tiled ────────────────────────────────────
+# Add apps that don't play well with tiling (dialogs, floating palettes, etc).
+# Extend this list over time as you notice misbehaving windows — run
+# `yabai -m query --windows --window` on a focused window to get its exact app name.
+yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Activity Monitor|Raycast|Finder)$" manage=off
+
+# Specific dialog-window rules (these open with the parent app, not as separate apps).
+yabai -m rule --add label="Finder_dialogs" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+yabai -m rule --add label="Safari_dialogs" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+yabai -m rule --add label="About_This_Mac" app="System Information" title="About This Mac" manage=off
+
+echo "yabai configuration loaded.."
