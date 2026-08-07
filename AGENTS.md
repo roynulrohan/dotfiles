@@ -18,6 +18,11 @@ judgement calls. That's your job.
 2. **Detect the platform** — `uname -s`, and on Linux the distro and package
    manager. Every SETUP.md is written in terms of macOS/Homebrew vs
    Debian/Ubuntu/apt. Other distros: translate, don't guess at paths.
+
+   **Check for WSL specifically** — `grep -qi microsoft /proc/version`. WSL is
+   Ubuntu for package-manager purposes but differs in ways that will make you
+   report success on things that didn't work. Read the WSL section below before
+   touching anything.
 3. **Never clobber silently.** If a destination file exists and isn't already a
    symlink into this repo, copy it somewhere safe first and say what you did.
 
@@ -41,23 +46,71 @@ decision this repo doesn't cover.
 
 ## Packages
 
-| Package | What | macOS | Linux |
-|---|---|:-:|:-:|
-| `shell` | zsh, p10k, aliases, PATH | ✅ | ✅ |
-| `git` | gitconfig | ✅ | ✅ |
-| `claude` | Claude Code config, hooks, skills | ✅ | ✅ |
-| `ccstatusline` | Claude Code statusline | ✅ | ✅ |
-| `ghostty` | terminal — **config path differs by OS** | ✅ | ✅ |
-| `kitty` | terminal, fallback | ✅ | ✅ |
-| `nvim` | LazyVim | ✅ | ✅ |
-| `neofetch` | fetch output | ✅ | ✅ |
-| `ai-tools` | codex, gemini, cursor, factory, mastra, claude-mem | ✅ | ✅ |
-| `vscode` / `cursor` | editor settings, keybindings | ✅ | ✅ |
-| `macos` | yabai, sketchybar, borders, linearmouse | ✅ | ❌ skip |
-| `Brewfile` | full macOS package manifest | ✅ | 📖 read as a source list |
+| Package | What | macOS | Linux | WSL |
+|---|---|:-:|:-:|:-:|
+| `shell` | zsh, p10k, aliases, PATH | ✅ | ✅ | ✅ |
+| `git` | gitconfig | ✅ | ✅ | ✅ |
+| `claude` | Claude Code config, hooks, skills | ✅ | ✅ | ✅ |
+| `ccstatusline` | Claude Code statusline | ✅ | ✅ | ✅ |
+| `ghostty` | terminal — **config path differs by OS** | ✅ | ✅ | ❌ |
+| `kitty` | terminal, fallback | ✅ | ✅ | ❌ |
+| `nvim` | LazyVim | ✅ | ✅ | ✅ |
+| `neofetch` | fetch output | ✅ | ⚠️ | ⚠️ |
+| `ai-tools` | codex, gemini, cursor, factory, mastra, claude-mem | ✅ | ✅ | ✅ |
+| `vscode` / `cursor` | editor settings, keybindings | ✅ | ✅ | ⚠️ Windows side |
+| `windows-terminal` | terminal profile | ❌ | ❌ | ⚠️ not captured |
+| `macos` | yabai, sketchybar, borders, linearmouse | ✅ | ❌ skip | ❌ skip |
+| `Brewfile` | full macOS package manifest | ✅ | 📖 read as a source list | 📖 same |
 
 Each package has a `SETUP.md`. Read it. They all follow the same shape: what it
 is, dependencies per platform, where the files go, platform gotchas, how to verify.
+
+## WSL
+
+Detect with `grep -qi microsoft /proc/version`.
+
+For apt and everything under `$HOME`, treat WSL as Ubuntu — the `shell`, `git`,
+`claude`, `ccstatusline`, `nvim`, and `ai-tools` packages all install normally.
+
+What's different is that **the terminal and the GUI editor are Windows
+processes**, not Linux ones. Anything to do with rendering — fonts, terminal
+colours, window settings — is configured on the Windows side and is invisible
+from inside WSL. This is the failure mode to watch for: you run the documented
+Linux steps, every command exits 0, and the result still looks wrong, because
+the thing you configured isn't the thing doing the rendering.
+
+**Fonts do not work the way `shell/SETUP.md` describes.** Installing a Nerd Font
+into `~/.local/share/fonts` and running `fc-cache` inside WSL accomplishes
+nothing — Windows Terminal renders with fonts installed on Windows. The font
+must be installed on the Windows host and selected in the terminal profile.
+That's a manual step outside your reach. Surface it, don't attempt it, and don't
+report the prompt as working until the user confirms the glyphs render.
+
+**Skip `ghostty` and `kitty` entirely.** There's no GUI terminal inside WSL.
+The equivalent config is the Windows Terminal profile — see
+`windows-terminal/SETUP.md`.
+
+**`vscode` and `cursor` are inverted.** With the Remote-WSL extension the editor
+runs on Windows; WSL only holds `~/.vscode-server/`, which is machine state, not
+config. Linking `vscode/settings.json` inside WSL has no effect. The real
+destination is on the Windows filesystem:
+
+```
+/mnt/c/Users/<WindowsUser>/AppData/Roaming/Code/User/settings.json
+```
+
+Writing across the `/mnt/c` boundary works but is a decision, not a default —
+it edits the user's Windows install, and symlinks from Windows into WSL are
+unreliable. Ask before doing it; copying is safer than linking here.
+
+**`rtk` has no apt package**, so the RTK hook in `claude` stays inert unless
+Rust is installed (`cargo install rtk`). The hook detects this and exits
+cleanly, so nothing breaks — but say so rather than leaving it silently
+disabled.
+
+**Set the login shell**: `chsh -s $(which zsh)`. Also check that the Windows
+Terminal profile launches the WSL distro directly; if it invokes `bash`, none of
+the zsh config loads and the box will look unconfigured.
 
 ## Order
 

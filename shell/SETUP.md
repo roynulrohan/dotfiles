@@ -67,8 +67,15 @@ tofu boxes.
 - Linux: download `JetBrainsMono.zip` from
   [nerd-fonts releases](https://github.com/ryanoasis/nerd-fonts/releases/latest),
   unzip into `~/.local/share/fonts/`, then `fc-cache -fv`
+- **WSL: neither of the above.** The font has to be installed on the *Windows*
+  host — Windows Terminal does the rendering and can't see fonts inside the WSL
+  filesystem. `fc-cache` in WSL is wasted effort. Download the same zip on
+  Windows, select all the `.ttf` files, right-click → *Install for all users*,
+  then set the font in the Windows Terminal profile. See
+  `../windows-terminal/SETUP.md`.
 
-Then set it as the terminal font — see `ghostty/SETUP.md`.
+Then set it as the terminal font — see `ghostty/SETUP.md`, or
+`windows-terminal/SETUP.md` on WSL.
 
 ## Platform notes
 

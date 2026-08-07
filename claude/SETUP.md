@@ -52,6 +52,17 @@ Only `bun` really matters. The RTK hook checks for `jq` and `rtk` itself and
 exits cleanly when they're absent, so a machine without them works fine — you
 just lose the token savings.
 
+**On WSL and Debian/Ubuntu, `rtk` has no package** — it needs a Rust toolchain
+(`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`, then
+`cargo install rtk`). That's a big dependency for a token optimiser, so it's a
+reasonable thing to skip. Just say you skipped it: the hook fails silently by
+design, and an inert hook is indistinguishable from a working one unless you
+look.
+
+Claude Code itself installs on WSL with the same native installer as Linux:
+`curl -fsSL https://claude.ai/install.sh | bash`. It lands in `~/.local/bin`,
+which `shell/zshrc` already adds to PATH.
+
 ## Platform notes
 
 - The hook command in `settings.json` is

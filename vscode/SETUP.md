@@ -12,7 +12,30 @@ equivalent — they're separate installs with separate config directories.
 
 **Different path per OS**, same as Ghostty. Symlink both.
 
-On Windows/WSL it's `%APPDATA%\Code\User\`.
+## WSL
+
+Do not link these inside the WSL filesystem — it has no effect.
+
+With the Remote-WSL extension, **VS Code runs on Windows**. The Linux side only
+holds `~/.vscode-server/`, which is downloaded server state, not user config.
+Your settings live on the Windows host:
+
+```
+/mnt/c/Users/<WindowsUser>/AppData/Roaming/Code/User/settings.json
+/mnt/c/Users/<WindowsUser>/AppData/Roaming/Code/User/keybindings.json
+```
+
+Reachable from WSL through `/mnt/c`, but treat it as a decision rather than a
+default — it modifies the user's Windows install. **Copy rather than symlink**:
+a symlink created in WSL pointing back into the Linux filesystem is not reliably
+followed by a Windows process, and the reverse direction has the same problem.
+
+Extensions split in two under Remote-WSL. UI extensions (themes, keymaps)
+install on the Windows host; workspace extensions (language servers, linters,
+formatters) install into the WSL distro. The `code --install-extension` loop
+below installs into whichever context the `code` command resolves to, so run it
+from inside a WSL shell to populate the Linux side, and from PowerShell for the
+Windows side. Most of the list wants both.
 
 ## Install
 

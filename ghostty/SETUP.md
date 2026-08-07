@@ -27,6 +27,10 @@ commits into this repo. The copy here is a record of the intended theme.
 
 Requires JetBrainsMono Nerd Font — see `shell/SETUP.md`.
 
+**Skip this package on WSL.** There's no GUI terminal inside the distro; the
+rendering is done by Windows Terminal on the host. Configure that instead —
+see `../windows-terminal/SETUP.md`.
+
 ## Platform notes
 
 Four keys in `config` are macOS-only. Ghostty warns about unknown keys on Linux

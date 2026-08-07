@@ -15,6 +15,9 @@ a relative include, so they have to end up in the same directory.
 
 ## Install
 
+**Skip this package on WSL** — same reason as Ghostty. Windows Terminal does the
+rendering; see `../windows-terminal/SETUP.md`.
+
 - macOS: `brew install --cask kitty`
 - Debian/Ubuntu: `apt install kitty`, or the upstream installer
   (`curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin`) for a
