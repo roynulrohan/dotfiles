@@ -4,10 +4,10 @@
     // Portable: native modules plus a few "command" rows gated per OS with "condition"
     // (fastfetch >= 2.48.1; older versions ignore it and run both sets).
     //
-    // Colours use the terminal palette so the theme follows the terminal:
-    //   $1 = plain (7), $2 = primary (16), $3 = secondary (17), $4 = tertiary (18), $5 = dim (8)
-    // On Linux caelestia sets 16-18 from the wallpaper; on macOS the kitty/ghostty
-    // theme in this repo defines them.
+    // Colours are plain ANSI so the theme follows the terminal, whatever sets it:
+    //   $1 = white (7), $2 = blue (4), $3 = magenta (5), $4 = cyan (6), $5 = bright black (8)
+    // On Linux caelestia sets them from the wallpaper; on macOS they are the
+    // terminal theme's own colours. Nothing in this repo overrides the palette.
     //
     // The logo is passed on the command line by the fish greeting (random image,
     // width computed from aspect ratio). "kitty" works in kitty and Ghostty.
@@ -21,13 +21,16 @@
         "separator": "",
         "key": { "width": 14 },
         "color": { "keys": "white" },
-        "constants": ["\u001b[37m", "\u001b[38;5;16m", "\u001b[38;5;17m", "\u001b[38;5;18m", "\u001b[38;5;8m"]
+        "constants": ["\u001b[37m", "\u001b[34m", "\u001b[35m", "\u001b[36m", "\u001b[38;5;8m"]
     },
     "modules": [
         "break",
         { "type": "custom",   "format": "{$5}╭─────────────────────────────────╮" },
-        { "type": "os",       "key": "{$5}│ {$2}󰣇{$1}  os",       "format": "{$2}{2>20}{$5} │" },
-        { "type": "kernel",   "key": "{$5}│ {$2}󰌽{$1}  kernel",   "format": "{2>20}{$5} │" },
+        // os and kernel icons per OS: Arch and Tux on Linux, Apple and chip on macOS
+        { "type": "os",       "key": "{$5}│ {$2}󰣇{$1}  os",       "format": "{$2}{2>20}{$5} │", "condition": { "system": "Linux" } },
+        { "type": "os",       "key": "{$5}│ {$2}󰀵{$1}  os",       "format": "{$2}{2>20}{$5} │", "condition": { "system": "macOS" } },
+        { "type": "kernel",   "key": "{$5}│ {$2}󰌽{$1}  kernel",   "format": "{2>20}{$5} │", "condition": { "system": "Linux" } },
+        { "type": "kernel",   "key": "{$5}│ {$2}󰘚{$1}  kernel",   "format": "{2>20}{$5} │", "condition": { "system": "macOS" } },
         { "type": "packages", "key": "{$5}│ {$3}󰏗{$1}  pkgs",     "format": "{all>20}{$5} │" },
         { "type": "command",  "key": "{$5}│ {$3}󰍹{$1}  display",  "format": "{>20}{$5} │", "condition": { "system": "Linux" },
           "text": "hyprctl monitors -j | python3 -c \"import json,sys; m=json.load(sys.stdin); print(f'{len(m)} x {m[0][\\\"width\\\"]}x{m[0][\\\"height\\\"]}')\"" },

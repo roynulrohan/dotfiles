@@ -32,9 +32,10 @@ decision the repo doesn't cover.
   they're editable in its GUI; HyDE-style keybinds layered on caelestia's, with
   caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
   opaque; workspaces show as numbers in the bar.
-- **Theming follows the wallpaper.** caelestia sets terminal colours 0–18; the
-  prompt and greeting reference palette indices, never hex, so they follow. On the
-  Mac the terminal theme defines slots 16–18 to stand in.
+- **Theming follows the terminal.** The prompt and greeting use named ANSI
+  colours, never hex, so they follow whatever sets the palette: caelestia's
+  wallpaper scheme on Linux, the Ghostty/kitty theme on the Mac. **No theming
+  changes on the Mac**: nothing in this repo overrides its terminal palette.
 - **Claude Code is the primary agent**; `shared/claude` is the most important
   package to get right.
 

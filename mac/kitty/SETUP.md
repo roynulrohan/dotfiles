@@ -1,8 +1,7 @@
 # kitty colours (macOS)
 
-Catppuccin-style theme plus the three accent slots (16–18) the fastfetch
-greeting uses. On Linux this file is generated from caelestia instead; see
-`shared/kitty/SETUP.md`.
+Catppuccin Frappé theme, the same one the Mac had before fish. On Linux this
+file is generated from caelestia instead; see `shared/kitty/SETUP.md`.
 
 | Repo | Destination |
 |---|---|

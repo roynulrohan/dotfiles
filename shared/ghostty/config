@@ -36,8 +36,3 @@ background-opacity = 0.0
 background-blur = macos-glass-regular
 
 config-file = ?auto/theme.ghostty
-
-# Accent slots used by the fastfetch greeting (see shared/fastfetch)
-palette = 16=#8caaee
-palette = 17=#f4b8e4
-palette = 18=#81c8be

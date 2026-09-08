@@ -31,8 +31,9 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
   verified. `condition` needs **fastfetch ≥ 2.48.1**; older builds ignore it and
   run both sets, so a Mac on Homebrew's stale 2.36.1 showed `free`/`hyprctl` errors
   until `brew upgrade fastfetch`.
-- Colours 16, 17, 18 are the accent slots. caelestia sets them live on Linux;
-  `mac/kitty/colors.conf` and `shared/ghostty/config` define them on macOS.
+- Accent colours are plain ANSI blue, magenta and cyan, so the greeting follows
+  whatever the terminal theme defines: caelestia's wallpaper scheme on Linux, the
+  Ghostty or kitty theme on macOS. Nothing in this repo overrides the palette.
 - Square images work best. Pad a portrait to a transparent square with
   `magick in.png -background none -gravity center -extent '%[fx:max(w,h)]x%[fx:max(w,h)]' out.png`.
 

@@ -17,6 +17,4 @@ though on the CachyOS desktop kitty is the terminal caelestia launches.
 
 ## Notes
 
-- `palette = 16..18` at the bottom are the accent slots the fastfetch greeting
-  colours with. Match them to the theme if you change themes.
 - The macOS-only keys (`macos-titlebar-style`, glass blur) are ignored on Linux.

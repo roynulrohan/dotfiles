@@ -15,7 +15,7 @@ caelestia's `~/.config/starship.toml` on Linux is left alone and unused.
 
 ## Notes
 
-Colours are ANSI numbers (`16`, `17`), not hex, so the prompt follows the
+Colours are ANSI names (`blue`, `purple`), not hex, so the prompt follows the
 terminal palette: caelestia's wallpaper scheme on Linux, the kitty/ghostty theme
 on macOS. Keep it that way when editing.
 
