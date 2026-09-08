@@ -64,13 +64,11 @@ brew "nano"
 # Improved Nano Syntax Highlighting Files
 brew "nanorc"
 # Fast, highly customisable system info script
-brew "neofetch"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node@18"
 # Manage multiple Node.js versions
-brew "nvm"
 # Development kit for the Java programming language
 brew "openjdk@11"
 # Python version management
@@ -96,13 +94,9 @@ brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Real-time type-ahead completion for Zsh
-brew "zsh-autocomplete", args: ["HEAD"]
 # Fish-like fast/unobtrusive autosuggestions for zsh
-brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
-brew "zsh-syntax-highlighting"
 # ZSH plugin that reminds you to use existing aliases for commands you just typed
-brew "zsh-you-should-use"
 # Automatic tiling window manager similar to xmonad
 cask "amethyst"
 cask "arbor"
@@ -114,7 +108,6 @@ cask "font-jetbrains-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Standalone app for debugging React Native apps
@@ -244,3 +237,8 @@ npm "corepack"
 npm "typescript-language-server"
 npm "typescript"
 npm "yarn"
+brew "fish"
+brew "starship"
+brew "imagemagick"
+brew "lazygit"
+brew "micro"

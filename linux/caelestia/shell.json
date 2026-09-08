@@ -1,0 +1,27 @@
+{
+    "appearance": {
+        "transparency": {
+            "enabled": false
+        }
+    },
+    "bar": {
+        "persistent": true,
+        "popouts": {
+            "activeWindow": false
+        },
+        "showOnHover": true,
+        "workspaces": {
+            "activeLabel": "",
+            "displayType": "Text",
+            "label": "",
+            "occupiedLabel": "",
+            "shown": 5
+        }
+    },
+    "dashboard": {
+        "enabled": true
+    },
+    "sidebar": {
+        "enabled": true
+    }
+}

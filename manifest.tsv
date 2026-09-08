@@ -1,0 +1,27 @@
+# os	repo path	destination	mode
+# os: all | linux | mac.  mode: copy | copy-x (chmod +x) | dir (copy directory contents)
+all	shared/fish/conf.d	~/.config/fish/conf.d	dir
+all	shared/starship/starship.toml	~/.config/starship/starship.toml	copy
+all	shared/fastfetch/greeting.jsonc	~/.config/fastfetch/greeting.jsonc	copy
+all	shared/kitty/kitty.conf	~/.config/kitty/kitty.conf	copy
+all	shared/git/gitconfig	~/.gitconfig	copy
+all	shared/git/ssh_config	~/.ssh/config	copy
+all	shared/claude/settings.json	~/.claude/settings.json	copy
+all	shared/claude/CLAUDE.md	~/.claude/CLAUDE.md	copy
+all	shared/claude/hooks	~/.claude/hooks	dir
+all	shared/claude/skills	~/.claude/skills	dir
+all	shared/ccstatusline/settings.json	~/.config/ccstatusline/settings.json	copy
+all	shared/nvim	~/.config/nvim	dir
+linux	linux/caelestia/hypr-vars.lua	~/.config/caelestia/hypr-vars.lua	copy
+linux	linux/caelestia/hypr-user.lua	~/.config/caelestia/hypr-user.lua	copy
+linux	linux/caelestia/shell.json	~/.config/caelestia/shell.json	copy
+linux	linux/caelestia/user-config.fish	~/.config/caelestia/user-config.fish	copy
+linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
+linux	shared/ghostty/config	~/.config/ghostty/config	copy
+mac	mac/fish/config.fish	~/.config/fish/config.fish	copy
+mac	mac/kitty/colors.conf	~/.config/kitty/colors.conf	copy
+mac	shared/ghostty/config	~/Library/Application Support/com.mitchellh.ghostty/config	copy
+mac	mac/wm/yabai	~/.config/yabai	dir
+mac	mac/wm/sketchybar	~/.config/sketchybar	dir
+mac	mac/wm/borders	~/.config/borders	dir
+mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	copy

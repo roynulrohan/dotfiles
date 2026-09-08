@@ -3,8 +3,11 @@
 *.bak
 *.orig
 
-# Backstop against committing credentials. Not a substitute for checking —
-# see AGENTS.md for the full list of what's deliberately excluded.
+# Logo images stay on each machine (see shared/fastfetch/SETUP.md)
+shared/fastfetch/logo/*
+!shared/fastfetch/logo/.gitkeep
+
+# Backstop against committing credentials. Not a substitute for checking.
 auth.json
 oauth_creds.json
 google_accounts.json

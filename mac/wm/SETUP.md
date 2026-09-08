@@ -1,4 +1,4 @@
-# macos
+# mac/wm — yabai, sketchybar, borders, linearmouse
 
 Tiling window manager and status bar. **macOS only — skip this package entirely
 on Linux.** There's no port; the equivalent would be i3/sway plus waybar or

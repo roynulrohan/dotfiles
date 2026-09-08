@@ -1,0 +1,60 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    // Two boxed sections (HyDE layout) with right-aligned values (caelestia style).
+    // Portable: native modules only, no shell commands, so it runs on macOS too.
+    //
+    // Colours use the terminal palette so the theme follows the terminal:
+    //   $1 = plain (7), $2 = primary (16), $3 = secondary (17), $4 = tertiary (18), $5 = dim (8)
+    // On Linux caelestia sets 16-18 from the wallpaper; on macOS the kitty/ghostty
+    // theme in this repo defines them.
+    //
+    // The logo is passed on the command line by the fish greeting (random image,
+    // width computed from aspect ratio). "kitty" works in kitty and Ghostty.
+    "logo": {
+        "type": "kitty",
+        "width": 31,
+        "height": 14,
+        "padding": { "top": 3, "left": 2, "right": 3 }
+    },
+    "display": {
+        "separator": "",
+        "key": { "width": 14 },
+        "color": { "keys": "white" },
+        "constants": ["\u001b[37m", "\u001b[38;5;16m", "\u001b[38;5;17m", "\u001b[38;5;18m", "\u001b[38;5;8m"]
+    },
+    "modules": [
+        "break",
+        { "type": "custom",   "format": "{$5}╭─────────────────────────────────╮" },
+        { "type": "os",       "key": "{$5}│ {$2}󰣇{$1}  os",       "format": "{$2}{2>20}{$5} │" },
+        { "type": "kernel",   "key": "{$5}│ {$2}󰌽{$1}  kernel",   "format": "{2>20}{$5} │" },
+        { "type": "packages", "key": "{$5}│ {$3}󰏗{$1}  pkgs",     "format": "{all>20}{$5} │" },
+        { "type": "command",  "key": "{$5}│ {$3}󰍹{$1}  display",  "format": "{>20}{$5} │", "condition": { "system": "Linux" },
+          "text": "hyprctl monitors -j | python3 -c \"import json,sys; m=json.load(sys.stdin); print(f'{len(m)} x {m[0][\\\"width\\\"]}x{m[0][\\\"height\\\"]}')\"" },
+        { "type": "terminal", "key": "{$5}│ {$4}󰆍{$1}  term",     "format": "{pretty-name>20}{$5} │" },
+        { "type": "wm",       "key": "{$5}│ {$4}󱗃{$1}  wm",       "format": "{2>20}{$5} │" },
+        { "type": "custom",   "format": "{$5}╰─────────────────────────────────╯" },
+        "break",
+        { "type": "custom",   "format": "{$5}╭─────────────────────────────────╮" },
+        { "type": "title",    "key": "{$5}│ {$2}󰀄{$1}  user",     "format": "{$2}{user-name>20}{$5} │" },
+        { "type": "title",    "key": "{$5}│ {$2}󰇅{$1}  host",     "format": "{host-name>20}{$5} │" },
+        { "type": "cpu",      "key": "{$5}│ {$2}󰻠{$1}  cpu",      "format": "{1>20}{$5} │" },
+        { "type": "gpu",      "key": "{$5}│ {$3}󰊴{$1}  gpu",      "format": "{2>20}{$5} │" },
+        // Values built from several parts can't be right-aligned by fastfetch, so
+        // these rows are shell commands, one set per OS.
+        { "type": "command",  "key": "{$5}│ {$3}󰍛{$1}  mem",      "format": "{>20}{$5} │", "condition": { "system": "Linux" },
+          "text": "free -m | awk 'NR==2{printf \"%.1f / %.1f GiB\",$3/1024,$2/1024}'" },
+        { "type": "command",  "key": "{$5}│ {$4}󱦟{$1}  age",      "format": "{>20}{$5} │", "condition": { "system": "Linux" },
+          "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days" },
+        { "type": "command",  "key": "{$5}│ {$4}󱫐{$1}  uptime",   "format": "{>20}{$5} │", "condition": { "system": "Linux" },
+          "text": "uptime -p | cut -d ' ' -f 2- | sed 's/ days\\?/d/; s/ hours\\?/h/; s/ minutes\\?/m/; s/,//g'" },
+        { "type": "command",  "key": "{$5}│ {$3}󰍛{$1}  mem",      "format": "{>20}{$5} │", "condition": { "system": "macOS" },
+          "text": "vm_stat | awk -v total=$(sysctl -n hw.memsize) '/page size/{gsub(/[^0-9]/,\"\"); ps=$0} /Pages (active|wired down|occupied by compressor)/{gsub(/\\./,\"\",$NF); used+=$NF} END{printf \"%.1f / %.1f GiB\", used*ps/1073741824, total/1073741824}'" },
+        { "type": "command",  "key": "{$5}│ {$4}󱦟{$1}  age",      "format": "{>20}{$5} │", "condition": { "system": "macOS" },
+          "text": "echo $(( ($(date +%s) - $(stat -f %B /)) / 86400 )) days" },
+        { "type": "command",  "key": "{$5}│ {$4}󱫐{$1}  uptime",   "format": "{>20}{$5} │", "condition": { "system": "macOS" },
+          "text": "sysctl -n kern.boottime | awk -v now=$(date +%s) '{gsub(\",\",\"\",$4); s=now-$4; d=int(s/86400); h=int(s%86400/3600); m=int(s%3600/60); if(d) printf \"%dd \", d; printf \"%dh %dm\", h, m}'" },
+        { "type": "custom",   "format": "{$5}╰─────────────────────────────────╯" },
+        { "type": "colors",   "paddingLeft": 2, "symbol": "circle" },
+        "break"
+    ]
+}

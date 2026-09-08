@@ -1,15 +1,13 @@
 # dotfiles
 
-Read `AGENTS.md` in this directory before doing anything with this repo — it
-covers what's here, the preferences behind it, and how to set up a machine.
+Read `AGENTS.md` first. Rules for any edit here:
 
-Two rules that apply to any edit in this repo:
-
-1. **Never commit a credential.** Several configs here are committed *because*
-   their key fields are empty (`ai-tools/claude-mem/settings.json`,
-   `ai-tools/cursor/mcp.json`). If a key gets filled in on a machine, that file
-   must stop being a symlink into this repo.
-2. **Keep configs portable.** No hardcoded `/Users/roynulrohan` — use `$HOME`.
-   Guard anything platform-specific with an existence check so the other OS
-   skips it silently rather than erroring. Then document it in the package's
-   `SETUP.md`.
+1. **Never commit a credential.** Some configs are committed *because* their key
+   fields are empty. If one gets filled in on a machine, don't copy it back.
+2. **Copy, don't symlink.** Machines keep normal files in normal places; this repo
+   is the source to copy from and the place to copy changes back to.
+   `manifest.tsv` maps repo paths to destinations; `./status.sh` shows drift.
+3. **Never commit a framework's tree.** caelestia's `~/.config/hypr` and
+   `~/.config/fish` are theirs; only `linux/caelestia` overrides are ours.
+4. **Keep shared configs portable.** No hardcoded home paths; guard OS-specific
+   bits so the other OS skips them. Document OS differences in the package's `SETUP.md`.
