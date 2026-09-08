@@ -1,7 +1,7 @@
 [user]
 	name = Roynul Rohan
 	email = roynulrohan@gmail.com
-	signingkey = /home/roynul/.ssh/id_ed25519.pub
+	signingkey = ~/.ssh/id_ed25519.pub
 [init]
 	defaultBranch = main
 [pull]
@@ -31,7 +31,7 @@
 	gpgsign = false
 [credential "https://github.com"]
 	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper = !gh auth git-credential
