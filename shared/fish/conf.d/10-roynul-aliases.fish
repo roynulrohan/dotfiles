@@ -7,7 +7,6 @@ if command -q eza
     alias ll 'eza -la --icons --git --group-directories-first --header'
     alias tree 'eza --tree --icons --level=2 --git-ignore --group-directories-first'
 end
-command -q bat; and alias cat 'bat --paging=never'
 
 # Git
 abbr -a lg  lazygit
