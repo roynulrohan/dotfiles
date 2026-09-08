@@ -27,8 +27,10 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
   else the image is skipped.
 - Rows whose value is built from several parts (`mem`, `age`, `uptime`,
   `display`) are shell commands gated with `"condition": {"system": ...}`; the
-  Linux set uses `free`/`hyprctl`, the macOS set `vm_stat`/`sysctl`. **The macOS
-  commands have not been run on a Mac yet**; check them the first time.
+  Linux set uses `free`/`hyprctl`, the macOS set `vm_stat`/`sysctl`. Both sets are
+  verified. `condition` needs **fastfetch ≥ 2.48.1**; older builds ignore it and
+  run both sets, so a Mac on Homebrew's stale 2.36.1 showed `free`/`hyprctl` errors
+  until `brew upgrade fastfetch`.
 - Colours 16, 17, 18 are the accent slots. caelestia sets them live on Linux;
   `mac/kitty/colors.conf` and `shared/ghostty/config` define them on macOS.
 - Square images work best. Pad a portrait to a transparent square with
