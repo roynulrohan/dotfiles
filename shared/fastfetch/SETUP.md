@@ -46,6 +46,10 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
   error; rebuild them with
   `magick in.gif -coalesce -layers RemoveDups -resize 400x500 +repage -fuzz 3% -colors 128 -layers Optimize out.gif`
   (also shrinks them a lot).
+- The logo is 18 rows tall, sized for the Linux layout, which has one row more
+  (`display`) than macOS. Override per machine with `set -U fastfetch_logo_rows N`,
+  a fish universal variable that stays out of this repo. The Mac uses 17 so the
+  image ends on the colour-dots row and the blank line above the prompt survives.
 - Square images work best. Pad a portrait to a transparent square with
   `magick in.png -background none -gravity center -extent '%[fx:max(w,h)]x%[fx:max(w,h)]' out.png`.
 

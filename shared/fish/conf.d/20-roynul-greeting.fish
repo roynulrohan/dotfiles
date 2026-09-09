@@ -23,7 +23,10 @@ function fastfetch
 
     # Fixed height; width follows the image's aspect ratio (a cell is ~2.2x
     # taller than wide). Capped so a wide image can't push the boxes off screen.
+    # 18 rows suits the Linux layout; override per machine with
+    # `set -U fastfetch_logo_rows N` (a universal variable, not in dotfiles).
     set -l rows 18
+    set -q fastfetch_logo_rows; and set rows $fastfetch_logo_rows
     set -l cols 40
     if command -q magick
         set -l dims (magick identify -format '%w %h' "$logo[1]" 2>/dev/null | string split ' ')
