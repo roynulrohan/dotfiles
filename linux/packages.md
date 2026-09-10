@@ -15,6 +15,8 @@ sits around it.
 | `ttf-jetbrains-mono-nerd` | the font everything assumes |
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |
+| `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
+| `dolphin` `mpv` | file manager (Super+E via `hypr-vars.lua`) and video player |
 | `zen-browser-bin` (AUR) `discord` | apps referenced by window rules |
 
 Reproduce the list from a live machine with `pacman -Qqe`.

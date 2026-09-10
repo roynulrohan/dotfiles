@@ -25,3 +25,4 @@ mac	mac/wm/yabai	~/.config/yabai	dir
 mac	mac/wm/sketchybar	~/.config/sketchybar	dir
 mac	mac/wm/borders	~/.config/borders	dir
 mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	copy
+linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy

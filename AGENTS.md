@@ -44,7 +44,7 @@ decision the repo doesn't cover.
 | Directory | Applies to | Contents |
 |---|---|---|
 | `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, claude, ccstatusline, ai-tools, nvim, vscode, cursor |
-| `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, `packages.md` |
+| `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (yabai, sketchybar, borders, linearmouse), `Brewfile` |
 | `legacy/` | nobody | old zsh setup, delete after the Mac migrates |
 
