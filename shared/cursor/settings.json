@@ -133,7 +133,7 @@
     "terminal.integrated.fontSize": 14,
     "terminal.integrated.gpuAcceleration": "canvas",
     "terminal.external.osxExec": "iTerm.app",
-    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.defaultProfile.osx": "fish",
     "githubPullRequests.pullBranch": "never",
     "editor.fontSize": 14,
     "terminal.integrated.fontFamily": "meslolgs nf",
