@@ -3,15 +3,18 @@
 The terminal greeting: HyDE's two-box layout with caelestia-style right-aligned
 values, coloured from the terminal palette, and a random image logo on the left.
 
-In fish, `fastfetch` itself is a wrapper function (`shared/fish/conf.d/20-roynul-greeting.fish`)
-that applies this config and picks the logo, so typing `fastfetch` matches the
-greeting. Arguments bypass the wrapper. Outside fish you get the plain binary.
+`fastfetch` on PATH is a wrapper script (`fastfetch` here, installed as
+`~/.local/bin/fastfetch`) that applies this config, picks the logo and falls back
+to the ASCII logo where the terminal can't draw images, so typing `fastfetch` in
+any shell matches the greeting. Arguments bypass the wrapper. fish's greeting
+just calls it.
 
 ## Files
 
 | Repo | Destination | Note |
 |---|---|---|
-| `greeting.jsonc` | `~/.config/fastfetch/greeting.jsonc` | invoked by the fish greeting, not fastfetch's default config |
+| `greeting.jsonc` | `~/.config/fastfetch/greeting.jsonc` | invoked by the wrapper, not fastfetch's default config |
+| `fastfetch` | `~/.local/bin/fastfetch` | wrapper script, `chmod +x`; `~/.local/bin` must precede the binary on PATH |
 | `logo/` | `~/.config/fastfetch/logo/` | **images are not committed**; drop your own in (png, jpg, webp, `.icon`, gif) |
 
 Keep the filename `greeting.jsonc`. On Linux caelestia owns `config.jsonc` in the
@@ -27,8 +30,10 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
 
 ## Notes
 
-- Needs a terminal with the kitty graphics protocol: kitty or Ghostty. Anywhere
-  else the image is skipped.
+- Images need a terminal that can draw them. The wrapper picks the logo type
+  from the environment: kitty protocol in kitty, Ghostty and WezTerm; iTerm2's
+  own inline images in iTerm2; the built-in ASCII logo everywhere else (VS Code's
+  terminal, Terminal.app, tmux, a pipe), so the two-column layout survives.
 - Rows whose value is built from several parts (`mem`, `age`, `uptime`,
   `display`) are shell commands gated with `"condition": {"system": ...}`; the
   Linux set uses `free`/`hyprctl`, the macOS set `vm_stat`/`sysctl`. Both sets are
@@ -46,10 +51,9 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
   error; rebuild them with
   `magick in.gif -coalesce -layers RemoveDups -resize 400x500 +repage -fuzz 3% -colors 128 -layers Optimize out.gif`
   (also shrinks them a lot).
-- The logo is 18 rows tall, sized for the Linux layout, which has one row more
-  (`display`) than macOS. Override per machine with `set -U fastfetch_logo_rows N`,
-  a fish universal variable that stays out of this repo. The Mac uses 17 so the
-  image ends on the colour-dots row and the blank line above the prompt survives.
+- The logo is 18 rows tall on Linux and 17 on macOS, whose layout has one row
+  fewer (no `display`), so the image ends on the colour-dots row and the blank
+  line above the prompt survives. `FASTFETCH_LOGO_ROWS` overrides either.
 - Square images work best. Pad a portrait to a transparent square with
   `magick in.png -background none -gravity center -extent '%[fx:max(w,h)]x%[fx:max(w,h)]' out.png`.
 
@@ -57,5 +61,6 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
 
 ```fish
 fastfetch -c ~/.config/fastfetch/greeting.jsonc --logo none   # boxes aligned, no errors
-fastfetch                                                     # wrapper: layout + random image
+fastfetch                                                     # wrapper: layout + random image, any shell
+env TERM=xterm TERM_PROGRAM= KITTY_WINDOW_ID= fastfetch       # the ASCII fallback path
 ```

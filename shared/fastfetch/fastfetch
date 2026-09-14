@@ -1,0 +1,104 @@
+#!/bin/sh
+# `fastfetch` = our layout (~/.config/fastfetch/greeting.jsonc) with a random
+# image from ~/.config/fastfetch/logo, from any shell. Installed as
+# ~/.local/bin/fastfetch, ahead of the real binary on PATH; fish's greeting
+# calls it too, so the greeting and the command look the same.
+#
+#   kitty, Ghostty, WezTerm  image over the kitty graphics protocol
+#   iTerm2                   image over iTerm2's inline-image protocol
+#   anything else            fastfetch's built-in ASCII logo, so the
+#                            two-column layout survives (VS Code terminal,
+#                            Terminal.app, tmux/screen, a pipe)
+#
+# Any arguments bypass all of this and go straight to the real binary.
+
+# The real binary is the first fastfetch on PATH that is not this script.
+self=$(cd "$(dirname "$0")" 2>/dev/null && pwd -P)/$(basename "$0")
+real=
+oldifs=$IFS; IFS=:
+for dir in $PATH; do
+    [ -n "$dir" ] && [ -x "$dir/fastfetch" ] || continue
+    [ "$(cd "$dir" 2>/dev/null && pwd -P)/fastfetch" = "$self" ] && continue
+    real=$dir/fastfetch
+    break
+done
+IFS=$oldifs
+if [ -z "$real" ]; then
+    echo "fastfetch: no fastfetch binary on PATH besides this wrapper" >&2
+    exit 127
+fi
+
+[ $# -gt 0 ] && exec "$real" "$@"
+cfg=$HOME/.config/fastfetch/greeting.jsonc
+[ -f "$cfg" ] || exec "$real"
+
+# What can this terminal draw? Decided from the environment, so it costs
+# nothing. tmux and screen sit between us and the terminal, so they get ASCII.
+type=builtin
+if [ -t 1 ] && [ -z "${TMUX-}" ] && [ -z "${STY-}" ]; then
+    if [ -n "${KITTY_WINDOW_ID-}" ] || [ "${TERM-}" = xterm-kitty ] \
+        || [ "${TERM_PROGRAM-}" = ghostty ] || [ "${TERM-}" = xterm-ghostty ] \
+        || [ "${TERM_PROGRAM-}" = WezTerm ]; then
+        type=kitty
+    elif [ "${TERM_PROGRAM-}" = iTerm.app ]; then
+        type=iterm
+    fi
+fi
+[ "$type" = builtin ] && exec "$real" -c "$cfg" --logo-type builtin
+
+# Random logo. (No `case` inside $(...): bash 3.2, macOS's /bin/sh, can't parse it.)
+logos=
+for f in "$HOME"/.config/fastfetch/logo/*; do
+    [ -f "$f" ] || continue
+    case "$f" in
+    *.icon|*.png|*.jpg|*.jpeg|*.webp|*.gif|*.PNG|*.JPG|*.JPEG|*.WEBP|*.GIF) ;;
+    *) continue ;;
+    esac
+    logos="$logos$f
+"
+done
+[ -n "$logos" ] || exec "$real" -c "$cfg" --logo none
+n=$(printf '%s' "$logos" | wc -l | tr -d ' ')
+i=$(( $(od -An -N2 -tu2 /dev/urandom | tr -d ' ') % n + 1 ))
+logo=$(printf '%s\n' "$logos" | sed -n "${i}p")
+
+# Fixed height; width follows the image's aspect ratio (a cell is ~2.2x taller
+# than wide), capped so a wide image can't push the boxes off screen. 18 rows
+# suits the Linux layout; the macOS layout has no `display` row, so one less
+# keeps the blank line above the prompt. FASTFETCH_LOGO_ROWS overrides either.
+rows=${FASTFETCH_LOGO_ROWS-}
+if [ -z "$rows" ]; then
+    rows=18
+    [ "$(uname -s)" = Darwin ] && rows=17
+fi
+cols=40
+if command -v magick >/dev/null 2>&1; then
+    dims=$(magick identify -format '%w %h' "${logo}[0]" 2>/dev/null)
+    set -- $dims
+    if [ $# -eq 2 ] && [ "$2" -gt 0 ] 2>/dev/null; then
+        cols=$(awk -v w="$1" -v h="$2" -v r="$rows" \
+            'BEGIN { c = int(w / h * r * 2.2 + 0.5); if (c > 44) c = 44; if (c < 8) c = 8; print c }')
+    fi
+fi
+
+# Animated GIFs: fastfetch's own kitty mode shows one frame. The recipe from
+# fastfetch issue #1423 is to let kitten icat emit the animation and hand it to
+# fastfetch as a raw logo. --place is absolute, so it must match greeting.jsonc's
+# padding (2 left, 1 top) on a cleared screen. Only kitty animates; Ghostty
+# shows a still frame.
+case "$logo" in
+*.gif|*.GIF)
+    if [ "$type" = kitty ] && command -v kitten >/dev/null 2>&1; then
+        clear
+        kitten icat -n --align left --scale-up --transfer-mode=stream \
+            --place "${cols}x${rows}@2x1" "$logo" \
+            | "$real" -c "$cfg" --logo-width "$cols" --logo-height "$rows" --raw -
+        exit $?
+    fi
+    ;;
+esac
+
+case "$type" in
+iterm) exec "$real" -c "$cfg" --logo-type iterm --logo "$logo" --logo-width "$cols" --logo-height "$rows" ;;
+*)     exec "$real" -c "$cfg" --logo "$logo" --logo-width "$cols" --logo-height "$rows" ;;
+esac
