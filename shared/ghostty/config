@@ -36,3 +36,8 @@ background-opacity = 0.0
 background-blur = macos-glass-regular
 
 config-file = ?auto/theme.ghostty
+
+# Icon size experiment: draw Nerd Font icon ranges with the non-Mono variant, which
+# lets an icon span two cells instead of being squeezed into one. Text stays NFM.
+font-codepoint-map = U+E000-U+F8FF=JetBrainsMono Nerd Font
+font-codepoint-map = U+F0000-U+FFFFF=JetBrainsMono Nerd Font

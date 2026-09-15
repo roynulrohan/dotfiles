@@ -18,3 +18,6 @@ though on the CachyOS desktop kitty is the terminal caelestia launches.
 ## Notes
 
 - The macOS-only keys (`macos-titlebar-style`, glass blur) are ignored on Linux.
+- `font-codepoint-map` sends the Nerd Font icon ranges to the non-Mono variant, so
+  icons draw at two cells instead of being squeezed into one; text stays NFM.
+  Remove the two lines to go back.
