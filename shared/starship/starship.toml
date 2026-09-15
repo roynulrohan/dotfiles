@@ -1,16 +1,22 @@
 # version: 1.0.0
 
-add_newline = false
+add_newline = true
 continuation_prompt = "[▸▹ ](dimmed white)"
 
 format = """\
   $os\
+$env_var\
+($username$hostname$localip )\
 $directory\
-$git_branch$git_commit$git_state$git_status\
+$git_branch$git_commit$git_state$git_status$git_metrics\
 $jobs\
+$sudo\
 $character"""
 
 right_format = """
+$status\
+$cmd_duration\
+$shell\
 $singularity\
 $kubernetes\
 $vcsh\
@@ -42,6 +48,7 @@ $gradle\
 $lua\
 $nim\
 $nodejs\
+$bun\
 $ocaml\
 $opa\
 $perl\
@@ -72,7 +79,6 @@ $openstack\
 $azure\
 $crystal\
 $custom\
-$status\
 $battery\
 $time"""
 
@@ -83,7 +89,7 @@ symbol = ' '
 # Distro icon at the far left of the prompt, Nerd Font glyph per OS.
 disabled = false
 format = "[$symbol]($style) "
-style = "bold blue"
+style = "bold white"
 
 [os.symbols]
 Macos = "󰀵"
@@ -92,47 +98,59 @@ CachyOS = "󰣇"
 Linux = "󰌽"
 
 [character]
+# Rounded arrow: green when the last command succeeded, red when it failed.
 format = "$symbol "
-success_symbol = "[◎](bold italic bright-yellow)"
-error_symbol = "[○](italic purple)"
-vimcmd_symbol = "[■](italic dimmed green)"
-# not supported in zsh
-vimcmd_replace_one_symbol = "◌"
-vimcmd_replace_symbol = "□"
-vimcmd_visual_symbol = "▼"
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+vimcmd_replace_one_symbol = "[❮](bold purple)"
+vimcmd_replace_symbol = "[❮](bold purple)"
+vimcmd_visual_symbol = "[❮](bold yellow)"
 
 [env_var.VIMSHELL]
 format = "[$env_value]($style)"
 style = 'green italic'
 
 [sudo]
-format = "[$symbol]($style)"
-style = "bold italic bright-purple"
-symbol = "⋈┈"
+# Shows while your sudo password is cached.
+format = '[$symbol]($style)'
+style = 'bold italic bright-purple'
+symbol = ' '
 disabled = false
 
 [username]
+# user@host, only when root or over SSH (see the ($username$hostname ) group in format)
 style_user = "bright-yellow bold italic"
 style_root = "purple bold italic"
-format = "[⭘ $user]($style) "
+format = "[$user]($style)"
 disabled = false
 show_always = false
 
+[hostname]
+ssh_only = true
+format = "[@$hostname]($style)"
+style = "bright-yellow bold italic"
+
 [directory]
-home_symbol = "⌂"
-truncation_length = 3
-truncate_to_repo = false
+# Full path from ~, folder icon in front, repo root in bold, lock when read-only.
+home_symbol = "~"
+truncation_length = 8
+truncate_to_repo = true
 truncation_symbol = ""
-read_only = " ◈"
+read_only = " "
 use_os_path_sep = true
-style = "bold blue"
-format = '[$path]($style)[$read_only]($read_only_style) '
-repo_root_style = 'bold purple'
-repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+style = "blue"
+before_repo_root_style = "dimmed blue"
+format = '[ ](bold blue)[$path]($style)[$read_only]($read_only_style) '
+repo_root_style = 'bold blue'
+repo_root_format = '[ ](bold blue)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 [cmd_duration]
-min_time = 0
-format = "[◄ $duration ](italic white)"
+# Right side, only for commands over 3 s (p10k's threshold).
+min_time = 3000
+format = "took [$duration]($style) "
+style = "italic white"
+show_milliseconds = false
 
 [jobs]
 format = "[$symbol$number]($style) "
@@ -141,13 +159,14 @@ symbol = "[▶](blue italic)"
 
 [localip]
 ssh_only = true
-format = " ◯[$localipv4](bold magenta)"
+format = ' [ $localipv4]($style)'
+style = 'bold magenta'
 disabled = false
 
 [time]
 disabled = false
-format = "[ $time]($style)"
-time_format = "%R"
+format = " at [$time]($style)"
+time_format = "%I:%M:%S %p"
 utc_time_offset = "local"
 style = "italic dimmed white"
 
@@ -172,139 +191,188 @@ threshold = 70
 style = "italic dimmed yellow"
 
 [git_branch]
-format = " [$branch(:$remote_branch)]($style)"
-symbol = "[△](bold italic bright-blue)"
-style = "italic bright-blue"
-truncation_symbol = "⋯"
-truncation_length = 11
-ignore_branches = ["main", "master"]
+# Always shown, p10k style: "on  main". Long names cut at 24.
+format = "on [$symbol$branch(:$remote_branch)]($style) "
+symbol = " "
+style = "bold green"
+truncation_symbol = "…"
+truncation_length = 24
 only_attached = true
 
 [git_metrics]
-format = '([▴$added]($added_style))([▿$deleted]($deleted_style))'
-added_style = 'italic dimmed green'
-deleted_style = 'italic dimmed red'
-ignore_submodules = true
+# Dim +added -deleted line counts next to the status markers.
 disabled = false
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+added_style = 'dimmed green'
+deleted_style = 'dimmed red'
+only_nonzero_diffs = true
+ignore_submodules = true
 
 [git_status]
-style = "bold italic bright-blue"
-format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
-conflicted = "[◪◦](italic bright-magenta)"
-ahead = "[▴│[${count}](bold white)│](italic green)"
-behind = "[▿│[${count}](bold white)│](italic red)"
-diverged = "[◇ ▴┤[${ahead_count}](regular white)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
-untracked = "[◌◦](italic bright-yellow)"
-stashed = "[◃◈](italic white)"
-modified = "[●◦](italic yellow)"
-staged = "[▪┤[$count](bold white)│](italic bright-cyan)"
-renamed = "[◎◦](italic bright-blue)"
-deleted = "[✕](italic red)"
+# p10k's alphabet with counts: ⇡1 ⇣2 *stash ~conflict +staged !modified ?untracked
+format = '([$ahead_behind$conflicted$stashed$staged$modified$untracked$renamed$deleted]($style))'
+style = "bold yellow"
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇡${ahead_count}⇣${behind_count} "
+conflicted = "~${count} "
+stashed = "*${count} "
+staged = "+${count} "
+modified = "!${count} "
+untracked = "?${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+
+[status]
+# Exit code of the last command, right side, only on failure: ✘ 127
+disabled = false
+format = "[$symbol$status]($style) "
+symbol = "✘ "
+success_symbol = ""
+not_executable_symbol = "✘ "
+not_found_symbol = "✘ "
+sigint_symbol = "✘ "
+signal_symbol = "✘ "
+style = "bold red"
+map_symbol = false
+recognize_signal_code = true
+pipestatus = false
+
+[shell]
+# Silent in fish; tags any other shell so a stray zsh/bash session is obvious.
+disabled = false
+format = "[$indicator]($style) "
+fish_indicator = ""
+zsh_indicator = "zsh"
+bash_indicator = "bash"
+unknown_indicator = ""
+style = "bold yellow"
+
+[bun]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold white'
+version_format = '${raw}'
 
 [deno]
-format = " [deno](italic) [∫ $version](green bold)"
-version_format = "${raw}"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold white'
+version_format = '${raw}'
 
 [lua]
-format = " [lua](italic) [${symbol}${version}]($style)"
-version_format = "${raw}"
-symbol = "⨀ "
-style = "bold bright-yellow"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+version_format = '${raw}'
 
 [nodejs]
-format = " [node](italic) [◫ ($version)](bold bright-green)"
-version_format = "${raw}"
-detect_files = ["package-lock.json", "yarn.lock"]
-detect_folders = ["node_modules"]
-detect_extensions = []
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold green'
+version_format = '${raw}'
 
 [python]
-format = " [py](italic) [${symbol}${version}]($style)"
-symbol = "[⌉](bold bright-blue)⌊ "
-version_format = "${raw}"
-style = "bold bright-yellow"
+symbol = ' '
+format = ' [${symbol}${pyenv_prefix}(${version})(\($virtualenv\) )]($style)'
+style = 'bold blue'
+version_format = '${raw}'
 
 [ruby]
-format = " [rb](italic) [${symbol}${version}]($style)"
-symbol = "◆ "
-version_format = "${raw}"
-style = "bold red"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold red'
+version_format = '${raw}'
 
 [rust]
-format = " [rs](italic) [$symbol$version]($style)"
-symbol = "⊃ "
-version_format = "${raw}"
-style = "bold red"
+symbol = '󱘗 '
+format = ' [$symbol($version)]($style)'
+style = 'bold red'
+version_format = '${raw}'
 
 [package]
-format = " [pkg](italic dimmed) [$symbol$version]($style)"
-version_format = "${raw}"
-symbol = "◨ "
-style = "dimmed yellow italic bold"
+symbol = '󰏗 '
+format = 'is [$symbol$version]($style)'
+style = 'dimmed yellow'
+version_format = '${raw}'
 
 [swift]
-format = " [sw](italic) [${symbol}${version}]($style)"
-symbol = "◁ "
-style = "bold bright-red"
-version_format = "${raw}"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold bright-red'
+version_format = '${raw}'
 
 [aws]
+symbol = ' '
+format = 'on [$symbol($profile)(\($region\) )(\[$duration\] )]($style)'
+style = 'bold yellow'
 disabled = true
-format = " [aws](italic) [$symbol $profile $region]($style)"
-style = "bold blue"
-symbol = "▲ "
 
 [buf]
-symbol = "■ "
-format = " [buf](italic) [$symbol $version $buf_version]($style)"
+symbol = ' '
+format = 'with [$symbol($version)]($style)'
+style = 'bold blue'
 
 [c]
-symbol = "ℂ "
-format = " [$symbol($version(-$name))]($style)"
+symbol = ' '
+format = ' [$symbol($version(-$name) )]($style)'
+style = 'bold blue'
 
 [conda]
-symbol = "◯ "
-format = " conda [$symbol$environment]($style)"
+symbol = ' '
+format = ' [$symbol$environment]($style)'
+style = 'bold green'
 
 [dart]
-symbol = "◁◅ "
-format = " dart [$symbol($version )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
 
 [docker_context]
-symbol = "◧ "
-format = " docker [$symbol$context]($style)"
+symbol = ' '
+format = ' [$symbol$context]($style)'
+style = 'bold blue'
 
 [elixir]
-symbol = "△ "
-format = " exs [$symbol $version OTP $otp_version ]($style)"
+symbol = ' '
+format = ' [$symbol($version \(OTP $otp_version\) )]($style)'
+style = 'bold purple'
 
 [elm]
-symbol = "◩ "
-format = " elm [$symbol($version )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold cyan'
 
 [golang]
-symbol = "∩ "
-format = " go [$symbol($version )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold cyan'
 
 [haskell]
-symbol = "❯λ "
-format = " hs [$symbol($version )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold purple'
 
 [java]
-symbol = "∪ "
-format = " java [${symbol}(${version} )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold red'
 
 [julia]
-symbol = "◎ "
-format = " jl [$symbol($version )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold purple'
 
 [memory_usage]
-symbol = "▪▫▪ "
-format = " mem [${ram}( ${swap})]($style)"
+symbol = '󰍛 '
+format = ' [$symbol${ram}( ${swap})]($style)'
+threshold = 75
+disabled = true
 
 [nim]
-symbol = "▴▲▴ "
-format = " nim [$symbol($version )]($style)"
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold yellow'
 
 [nix_shell]
 style = 'bold italic dimmed blue'
@@ -315,5 +383,192 @@ pure_msg = '[⌾](bold dimmed green)'
 unknown_msg = '[◌](bold dimmed yellow)'
 
 [spack]
-symbol = "◇ "
-format = " spack [$symbol$environment]($style)"
+symbol = ' '
+format = ' [$symbol$environment]($style)'
+style = 'bold blue'
+
+[singularity]
+symbol = ' '
+format = '[$symbol\[$env\]]($style)'
+
+[kubernetes]
+symbol = '󱃾 '
+format = '[$symbol$context( \($namespace\))]($style) in'
+style = 'bold blue'
+
+[fossil_branch]
+symbol = ' '
+format = 'on [$symbol$branch]($style)'
+
+[hg_branch]
+symbol = ' '
+format = 'on [$symbol$branch(:$topic)]($style)'
+
+[pijul_channel]
+symbol = ' '
+format = 'on [$symbol$channel]($style)'
+
+[cmake]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[cobol]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[dotnet]
+symbol = ' '
+format = ' [$symbol($version)(🎯 $tfm)]($style)'
+style = 'bold purple'
+
+[erlang]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold red'
+
+[fennel]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold green'
+
+[guix_shell]
+symbol = ' '
+format = ' [$symbol]($style)'
+
+[haxe]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold yellow'
+
+[helm]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[kotlin]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold purple'
+
+[gradle]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold cyan'
+
+[ocaml]
+symbol = ' '
+format = ' [$symbol($version)(\($switch_indicator$switch_name\) )]($style)'
+style = 'bold yellow'
+
+[opa]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[perl]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[php]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold purple'
+
+[pulumi]
+symbol = ' '
+format = ' [$symbol($username@)$stack]($style)'
+style = 'bold purple'
+
+[purescript]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold white'
+
+[raku]
+symbol = '󱖊 '
+format = ' [$symbol($version-$vm_version)]($style)'
+style = 'bold purple'
+
+[rlang]
+symbol = '󰟔 '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[red]
+symbol = '󱍼 '
+format = ' [$symbol($version)]($style)'
+style = 'bold red'
+
+[scala]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold red'
+
+[solidity]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold white'
+
+[terraform]
+symbol = ' '
+format = ' [$symbol$workspace]($style)'
+style = 'bold purple'
+
+[vlang]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[vagrant]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold blue'
+
+[zig]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold yellow'
+
+[meson]
+symbol = '󰔷 '
+format = ' [$symbol$project]($style)'
+style = 'bold blue'
+
+[gcloud]
+symbol = '󱇶 '
+format = 'on [$symbol$account(@$domain)(\($region\))]($style)'
+style = 'bold blue'
+
+[openstack]
+symbol = ' '
+format = 'on [$symbol$cloud(\($project\))]($style)'
+style = 'bold red'
+
+[azure]
+symbol = ' '
+format = 'on [$symbol($subscription)]($style)'
+style = 'bold blue'
+
+[crystal]
+symbol = ' '
+format = ' [$symbol($version)]($style)'
+style = 'bold white'
+
+[env_var.claude]
+# Marks shells spawned by Claude Code (it exports CLAUDECODE=1).
+variable = 'CLAUDECODE'
+format = '[$symbol]($style)'
+symbol = '✳ '
+style = 'bold bright-magenta'
+
+[git_commit]
+# Hash and tag when HEAD is detached, e.g. checked out at a release tag.
+only_detached = true
+tag_disabled = false
+tag_symbol = '  '
+format = '[($hash$tag)]($style) '
+style = 'bold green'
+
