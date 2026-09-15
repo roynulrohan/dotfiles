@@ -136,7 +136,7 @@
     "terminal.integrated.defaultProfile.osx": "fish",
     "githubPullRequests.pullBranch": "never",
     "editor.fontSize": 14,
-    "terminal.integrated.fontFamily": "meslolgs nf",
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
     "terminal.integrated.env.osx": {},
     "console-ninja.featureSet": "Community",
     "database-client.autoSync": true,
