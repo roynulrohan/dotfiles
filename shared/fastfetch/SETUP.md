@@ -51,6 +51,14 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
   error; rebuild them with
   `magick in.gif -coalesce -layers RemoveDups -resize 400x500 +repage -fuzz 3% -colors 128 -layers Optimize out.gif`
   (also shrinks them a lot).
+- `age` is time since the OS was installed, `2y 340d` (or `340d` under a year):
+  root filesystem birth on Linux, the Data volume's birth on macOS. `wm` on macOS
+  names the running window-manager app (yabai, Rectangle, ...) or `Aqua`, since
+  "Quartz Compositor" is always true and says nothing.
+- Logo width is computed from the image's aspect ratio and the terminal's real
+  cell shape (pixel size via TIOCGWINSZ, through `kitten` or python3); kitty
+  stretches to fill the requested box exactly, so a guessed cell shape shows.
+  `FASTFETCH_CELL_ASPECT` overrides, 2.2 is the fallback.
 - The logo is 18 rows tall on Linux and 17 on macOS, whose layout has one row
   fewer (no `display`), so the image ends on the colour-dots row and the blank
   line above the prompt survives. `FASTFETCH_LOGO_ROWS` overrides either.

@@ -71,13 +71,32 @@ if [ -z "$rows" ]; then
     rows=18
     [ "$(uname -s)" = Darwin ] && rows=17
 fi
+# Width follows the image's aspect ratio and the real cell shape. Terminals
+# report their pixel size (TIOCGWINSZ), so cell height / cell width can be
+# measured; without it, assume 2.2. This matters: kitty stretches an image to
+# fill the requested box exactly. FASTFETCH_CELL_ASPECT overrides.
+aspect=${FASTFETCH_CELL_ASPECT-}
+if [ -z "$aspect" ] && command -v kitten >/dev/null 2>&1; then
+    px=$(kitten icat --print-window-size 2>/dev/null) || px=
+    sz=$(stty size </dev/tty 2>/dev/null) || sz=
+    aspect=$(awk -v px="$px" -v sz="$sz" 'BEGIN { split(px, p, "x"); split(sz, s, " ");
+        if (p[1] > 0 && p[2] > 0 && s[1] > 0 && s[2] > 0) printf "%.3f", (p[2] / s[1]) / (p[1] / s[2]) }')
+fi
+if [ -z "$aspect" ] && command -v python3 >/dev/null 2>&1; then
+    aspect=$(python3 -c 'import fcntl, termios, struct, os
+fd = os.open("/dev/tty", os.O_RDONLY)
+r, c, x, y = struct.unpack("HHHH", fcntl.ioctl(fd, termios.TIOCGWINSZ, b"\0" * 8))
+print(round((y / r) / (x / c), 3)) if r and c and x and y else None' 2>/dev/null)
+    [ "$aspect" = None ] && aspect=
+fi
+[ -n "$aspect" ] || aspect=2.2
 cols=40
 if command -v magick >/dev/null 2>&1; then
     dims=$(magick identify -format '%w %h' "${logo}[0]" 2>/dev/null)
     set -- $dims
     if [ $# -eq 2 ] && [ "$2" -gt 0 ] 2>/dev/null; then
-        cols=$(awk -v w="$1" -v h="$2" -v r="$rows" \
-            'BEGIN { c = int(w / h * r * 2.2 + 0.5); if (c > 44) c = 44; if (c < 8) c = 8; print c }')
+        cols=$(awk -v w="$1" -v h="$2" -v r="$rows" -v a="$aspect" \
+            'BEGIN { c = int(w / h * r * a + 0.5); if (c > 44) c = 44; if (c < 8) c = 8; print c }')
     fi
 fi
 
