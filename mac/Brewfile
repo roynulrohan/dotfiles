@@ -1,6 +1,5 @@
 tap "agentuity/tap"
 tap "aimenhallou/floatnote"
-tap "asmvik/formulae"
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "homebrew/services"
 tap "manaflow-ai/cmux"
@@ -97,8 +96,6 @@ brew "zoxide"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 # Fish shell like syntax highlighting for zsh
 # ZSH plugin that reminds you to use existing aliases for commands you just typed
-# Automatic tiling window manager similar to xmonad
-cask "amethyst"
 cask "arbor"
 # Window peeking utility app
 cask "dockdoor"
@@ -242,3 +239,7 @@ brew "starship"
 brew "imagemagick"
 brew "lazygit"
 brew "micro"
+# Mac window management (mac/wm)
+brew "felixkratz/formulae/sketchybar"
+cask "nikitabobko/tap/aerospace"
+cask "karabiner-elements"

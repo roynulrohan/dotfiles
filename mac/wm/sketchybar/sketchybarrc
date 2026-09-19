@@ -17,24 +17,25 @@ FONT="SF Pro"
 # Uniform padding used by all items (icon padding, label padding, item padding).
 PADDINGS=3
 
-# macOS has a system overlay that pops up on volume keys (the big white pill).
-# Unload it so our own bar volume indicator is the only feedback.
-launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
+# macOS's own volume/brightness overlay stays on: the bar has no volume item,
+# so the overlay is the only feedback for the volume keys.
 
 # ─── Bar appearance ──────────────────────────────────────────────────────────
-# Floating bar: 39px tall, 10px margin from screen edges, rounded corners,
-# glass blur, sticky across spaces. `y_offset=10` keeps it away from the notch.
+# Floating bar inside the same 4 px frame as the windows: 36 px tall, 4 px from
+# the top and sides, rounded, glass blur, sticky across spaces. Shadow off: with
+# rounded corners the drop shadow pokes out under the bottom-left corner.
+# AeroSpace's gaps.outer.top is derived from height + y_offset: change them together.
 bar=(
-  height=39
+  height=36
   color=$BAR_COLOR
-  shadow=on
+  shadow=off
   position=top
   sticky=on
   padding_right=10
   padding_left=10
-  corner_radius=9
-  y_offset=10
-  margin=10
+  corner_radius=12
+  y_offset=4
+  margin=4
   blur_radius=20
   notch_width=0
 )
@@ -71,20 +72,21 @@ sketchybar --default "${defaults[@]}"
 
 # Left side
 source "$ITEM_DIR/apple.sh"       # Apple logo + popup (prefs/activity/lock)
-source "$ITEM_DIR/spaces.sh"      # Yabai spaces 1-4 with app icons inside
-source "$ITEM_DIR/front_app.sh"   # Yabai window-state indicator + focused app name
+source "$ITEM_DIR/spaces.sh"      # AeroSpace workspaces in one bracket, app glyphs beside each
+source "$ITEM_DIR/front_app.sh"   # AeroSpace window-state indicator + focused app name
 
 # Center
 source "$ITEM_DIR/spotify.sh"     # Spotify player (hover on icon → popup with controls)
 
-# Right side (first sourced ends up rightmost since items push existing ones left)
-source "$ITEM_DIR/calendar.sh"    # Date + time
-source "$ITEM_DIR/battery.sh"     # Battery icon, auto-hidden above 60%
-source "$ITEM_DIR/volume.sh"      # Volume icon + slider on hover/click
+# Right side (first sourced ends up rightmost since items push existing ones left).
+# Kept minimal: packages, then date + time. Wifi, volume and battery live in the
+# macOS menu bar, which auto-hides and slides down at the top edge.
+source "$ITEM_DIR/calendar.sh"    # "Thu 18 Sep" + "23:41", click opens Calendar
 source "$ITEM_DIR/brew.sh"        # Homebrew outdated-package counter
 
 # Force all item scripts to run once so everything has correct initial state.
 # (Do NOT use `--update` outside sketchybarrc — it reruns every item.)
 sketchybar --update
+
 
 echo "sketchybar configuration loaded.."

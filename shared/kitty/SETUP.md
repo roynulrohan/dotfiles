@@ -1,7 +1,9 @@
 # kitty
 
 Terminal on Linux (replaces caelestia's foot so the fastfetch image logos work).
-On macOS Ghostty is primary and kitty is optional.
+Also the terminal on macOS, where Ghostty stays configured as a second terminal.
+On the Mac, AeroSpace's Super+T opens new windows through kitty's remote control
+(`allow_remote_control` and `listen_on` in `kitty.conf`), so keep those two lines.
 
 ## Files
 

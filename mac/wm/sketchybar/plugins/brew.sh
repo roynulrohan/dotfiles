@@ -1,5 +1,4 @@
 #!/bin/bash
-{ echo "=== $(date +%H:%M:%S) ==="; HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_DOWNLOAD_CONCURRENCY=1 /opt/homebrew/bin/brew outdated --quiet 2>&1; echo exit=$?; } >> /tmp/brew-debug.log
 # plugins/brew.sh — Counts outdated Homebrew packages and sets the item label
 # + icon color based on the count. The ✓ glyph (􀆅) replaces the number when
 # everything's up to date.

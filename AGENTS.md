@@ -21,8 +21,9 @@ These explain why the configs look the way they do. Honour them when you hit a
 decision the repo doesn't cover.
 
 - **fish + starship**, everywhere. Not zsh, not powerlevel10k (that's in `legacy/`).
-- **Terminal**: kitty on Linux, Ghostty on macOS. Both speak the kitty graphics
-  protocol, which the greeting's image logo needs.
+- **Terminal**: kitty on both machines; Ghostty stays configured on the Mac as a
+  second terminal. Both speak the kitty graphics protocol, which the greeting's
+  image logo needs.
 - **JetBrainsMono Nerd Font**, or the prompt, greeting and eza icons break.
 - **Modern CLI replacements**: eza, bat, fd, ripgrep, fzf, zoxide. Aliases only
   activate when the tool exists, so install them.
@@ -32,6 +33,10 @@ decision the repo doesn't cover.
   they're editable in its GUI; HyDE-style keybinds layered on caelestia's, with
   caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
   opaque; workspaces show as numbers in the bar.
+- **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
+  from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
+  Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland
+  ones. Never change Hyprland to match the Mac.
 - **Theming follows the terminal.** The prompt and greeting use named ANSI
   colours, never hex, so they follow whatever sets the palette: caelestia's
   wallpaper scheme on Linux, the Ghostty/kitty theme on the Mac. **No theming
@@ -45,7 +50,7 @@ decision the repo doesn't cover.
 |---|---|---|
 | `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, claude, ccstatusline, ai-tools, nvim, vscode, cursor |
 | `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, `packages.md` |
-| `mac/` | Mac | fish entry point, kitty colours, `wm/` (yabai, sketchybar, borders, linearmouse), `Brewfile` |
+| `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 | `legacy/` | nobody | old zsh setup, delete after the Mac migrates |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,

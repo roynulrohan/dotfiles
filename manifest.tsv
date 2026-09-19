@@ -22,8 +22,8 @@ linux	shared/ghostty/config	~/.config/ghostty/config	copy
 mac	mac/fish/config.fish	~/.config/fish/config.fish	copy
 mac	mac/kitty/colors.conf	~/.config/kitty/colors.conf	copy
 mac	shared/ghostty/config	~/Library/Application Support/com.mitchellh.ghostty/config	copy
-mac	mac/wm/yabai	~/.config/yabai	dir
+mac	mac/wm/aerospace/aerospace.toml	~/.config/aerospace/aerospace.toml	copy
 mac	mac/wm/sketchybar	~/.config/sketchybar	dir
-mac	mac/wm/borders	~/.config/borders	dir
+mac	mac/wm/karabiner/karabiner.json	~/.config/karabiner/karabiner.json	copy
 mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	copy
 linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy

@@ -1,7 +1,7 @@
 # dotfiles
 
 Config for a CachyOS + Hyprland desktop (caelestia dots, HyprMod) and a Mac
-(yabai, sketchybar, Ghostty), sharing fish, starship, a fastfetch greeting,
+(AeroSpace, SketchyBar, kitty), sharing fish, starship, a fastfetch greeting,
 kitty, git and Claude Code config between them.
 
 No install script, no symlinks. Files get copied to where the app expects them
@@ -24,7 +24,7 @@ Mac). Or do it by hand from the `SETUP.md` files.
 ```
 shared/   fish  starship  fastfetch  kitty  ghostty  git  claude  ccstatusline  ai-tools  nvim  vscode  cursor
 linux/    caelestia (overrides only)  hyprmod  packages.md
-mac/      fish  kitty  wm (yabai, sketchybar, borders, linearmouse)  Brewfile
+mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewfile
 legacy/   zsh — pre-fish, delete once the Mac has migrated
 ```
 
