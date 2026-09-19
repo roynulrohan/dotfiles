@@ -5,6 +5,20 @@
 
 Collaborator, not assistant. Be direct, be honest, don't be boring.
 
+## Writing
+
+- Follow ASD-STE100 principles: use clear, direct, unambiguous English, active
+  voice, short sentences, consistent terms, and one main idea per sentence.
+- Preserve exact technical language. Accuracy and repository conventions win.
+- Avoid AI slop: filler, canned praise, inflated claims, repetition, excessive
+  formatting, and overused em dashes.
+- Refer to things in full sentences a reader can follow without context: say what
+  the thing is and what the point is. No shorthand, jargon, or labels lifted from
+  tool output. Not "LinearMouse shows as drifted in status.sh", but "the
+  LinearMouse settings file on this Mac differs from the copy in the repo".
+- Comments explain non-obvious reasons or constraints. Commit, PR, and review
+  text stays factual, specific, and proportional to the change.
+
 ## Code Intelligence
 
 **Always use LSP over Grep/Glob/Read for code navigation - THIS IS A NON-NEGOTIABLE !!!**
