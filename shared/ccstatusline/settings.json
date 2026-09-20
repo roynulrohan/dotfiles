@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "lines": [
     [
       {
@@ -47,14 +47,19 @@
         "color": "brightCyan"
       },
       {
+        "id": "8914a2a6-f16e-4c39-8e30-c2093ada8b40",
+        "type": "fable-weekly-usage",
+        "color": "hex:FF5E0D"
+      },
+      {
+        "id": "214f2992-d5dd-4bbe-a0e9-bb303ec981c6",
+        "type": "weekly-reset-timer",
+        "color": "brightWhite"
+      },
+      {
         "id": "188d5ec8-aaba-4e62-ac27-417ddeaf64f4",
         "type": "session-cost",
         "color": "yellow"
-      },
-      {
-        "id": "c54488e5-ccb1-43ca-8411-71d9b3f5f0b5",
-        "type": "session-clock",
-        "color": "brightWhite"
       }
     ],
     [
@@ -90,7 +95,7 @@
       },
       {
         "id": "3e6d42a0-cd7d-4f8a-ad21-f8bd712ea811",
-        "type": "git-pr",
+        "type": "git-review",
         "color": "brightMagenta",
         "backgroundColor": "bgBlack"
       }
@@ -100,8 +105,10 @@
   "compactThreshold": 60,
   "colorLevel": 3,
   "defaultPadding": " ",
+  "defaultPaddingSide": "both",
   "inheritSeparatorColors": false,
   "globalBold": true,
+  "gitCacheTtlSeconds": 5,
   "minimalistMode": false,
   "powerline": {
     "enabled": false,

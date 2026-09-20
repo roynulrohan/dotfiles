@@ -139,7 +139,6 @@
     "console-ninja.featureSet": "Community",
     "database-client.autoSync": true,
     "github.copilot.nextEditSuggestions.enabled": true,
-    "workbench.activityBar.location": "top",
     "json.schemaDownload.trustedDomains": {
         "https://schemastore.azurewebsites.net/": true,
         "https://raw.githubusercontent.com/microsoft/vscode/": true,
@@ -151,5 +150,14 @@
         "https://biomejs.dev": true
     },
     "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "chat.viewSessions.orientation": "stacked"
+    "chat.viewSessions.orientation": "stacked",
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+    "workbench.activityBar.location": "top"
 }

@@ -8,11 +8,18 @@ all	shared/kitty/kitty.conf	~/.config/kitty/kitty.conf	copy
 all	shared/git/gitconfig	~/.gitconfig	copy
 all	shared/git/ssh_config	~/.ssh/config	copy
 all	shared/claude/settings.json	~/.claude/settings.json	copy
-all	shared/claude/CLAUDE.md	~/.claude/CLAUDE.md	copy
-all	shared/claude/hooks	~/.claude/hooks	dir
-all	shared/claude/skills	~/.claude/skills	dir
+all	shared/agents/AGENTS.md	~/.claude/CLAUDE.md	copy
+all	shared/agents/AGENTS.md	~/.codex/AGENTS.md	copy
 all	shared/ccstatusline/settings.json	~/.config/ccstatusline/settings.json	copy
 all	shared/nvim	~/.config/nvim	dir
+mac	shared/vscode/settings.json	~/Library/Application Support/Code/User/settings.json	copy
+mac	shared/vscode/keybindings.json	~/Library/Application Support/Code/User/keybindings.json	copy
+mac	shared/cursor/settings.json	~/Library/Application Support/Cursor/User/settings.json	copy
+mac	shared/cursor/keybindings.json	~/Library/Application Support/Cursor/User/keybindings.json	copy
+linux	shared/vscode/settings.json	~/.config/Code/User/settings.json	copy
+linux	shared/vscode/keybindings.json	~/.config/Code/User/keybindings.json	copy
+linux	shared/cursor/settings.json	~/.config/Cursor/User/settings.json	copy
+linux	shared/cursor/keybindings.json	~/.config/Cursor/User/keybindings.json	copy
 linux	linux/caelestia/hypr-vars.lua	~/.config/caelestia/hypr-vars.lua	copy
 linux	linux/caelestia/hypr-user.lua	~/.config/caelestia/hypr-user.lua	copy
 linux	linux/caelestia/shell.json	~/.config/caelestia/shell.json	copy

@@ -20,7 +20,7 @@ when they change on a machine. `./status.sh` shows what differs.
 These explain why the configs look the way they do. Honour them when you hit a
 decision the repo doesn't cover.
 
-- **fish + starship**, everywhere. Not zsh, not powerlevel10k (that's in `legacy/`).
+- **fish + starship**, everywhere. Not zsh, not powerlevel10k.
 - **Terminal**: kitty on both machines; Ghostty stays configured on the Mac as a
   second terminal. Both speak the kitty graphics protocol, which the greeting's
   image logo needs.
@@ -41,17 +41,18 @@ decision the repo doesn't cover.
   colours, never hex, so they follow whatever sets the palette: caelestia's
   wallpaper scheme on Linux, the Ghostty/kitty theme on the Mac. **No theming
   changes on the Mac**: nothing in this repo overrides its terminal palette.
-- **Claude Code is the primary agent**; `shared/claude` is the most important
-  package to get right.
+- **Claude Code is the primary agent.** `shared/agents` holds the global
+  instructions every agent reads, copied to `~/.claude/CLAUDE.md` and
+  `~/.codex/AGENTS.md`; `shared/claude` holds Claude Code's own settings, hooks
+  and skills. Both matter; get them right.
 
 ## Layout
 
 | Directory | Applies to | Contents |
 |---|---|---|
-| `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, claude, ccstatusline, ai-tools, nvim, vscode, cursor |
+| `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor |
 | `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
-| `legacy/` | nobody | old zsh setup, delete after the Mac migrates |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
 gotchas, how to verify.
@@ -65,8 +66,9 @@ verifying anything shell-dependent.
 
 ## Not in this repo
 
-Credentials (SSH keys, `~/.claude.json`, tool auth files), shell history, caches,
-and the fastfetch logo images. After setup these need doing by hand, so surface
+Agent tools, plugins and skills: see `shared/agents`.
+Credentials (SSH keys, `~/.claude.json`, tool auth files), shell history,
+caches, and the fastfetch logo images. After setup these need doing by hand, so surface
 them as a checklist: `gh auth login`, Claude Code sign-in, new SSH key, images
 into `~/.config/fastfetch/logo/`.
 

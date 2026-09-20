@@ -1,5 +1,0 @@
-model = "gpt-5"
-model_reasoning_effort = "high"
-personality = "pragmatic"
-[projects."/Users/roynulrohan/Coding/PetConnect/pet-connect"]
-trust_level = "trusted"

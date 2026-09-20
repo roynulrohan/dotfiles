@@ -22,10 +22,9 @@ Mac). Or do it by hand from the `SETUP.md` files.
 ## Layout
 
 ```
-shared/   fish  starship  fastfetch  kitty  ghostty  git  claude  ccstatusline  ai-tools  nvim  vscode  cursor
+shared/   fish  starship  fastfetch  kitty  ghostty  git  agents  claude  ccstatusline  nvim  vscode  cursor
 linux/    caelestia (overrides only)  hyprmod  packages.md
 mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewfile
-legacy/   zsh — pre-fish, delete once the Mac has migrated
 ```
 
 ## Keeping it current

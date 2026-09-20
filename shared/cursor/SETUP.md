@@ -1,8 +1,8 @@
 # cursor
 
 Cursor editor settings and keybindings. Separate install and separate config
-directory from VS Code — see `../vscode/`. Cursor's agent config (`mcp.json`,
-`hooks.json`) lives in `../ai-tools/cursor/`, not here.
+directory from VS Code, see `../vscode/`. Cursor's agent config (`mcp.json`,
+`hooks.json`) is written by Cursor and not tracked here.
 
 ## Files
 

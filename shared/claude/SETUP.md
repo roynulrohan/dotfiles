@@ -1,63 +1,39 @@
 # claude
 
-Claude Code: global instructions, settings, hooks, and skills. The most important
-package here.
+Claude Code's own settings, hooks, and skills. The global instructions it reads
+live in `shared/agents` and are copied to `~/.claude/CLAUDE.md`.
 
 ## Files
 
 | Repo | Destination |
 |---|---|
-| `CLAUDE.md` | `~/.claude/CLAUDE.md` |
-| `RTK.md` | `~/.claude/RTK.md` |
 | `settings.json` | `~/.claude/settings.json` |
-| `hooks/rtk-rewrite.sh` | `~/.claude/hooks/rtk-rewrite.sh` (must be `chmod +x`) |
-| `skills/gh/` | `~/.claude/skills/gh/` |
-| `agent-skills/*` | `~/.agents/skills/` — see below |
 
 All symlinkable. If `CLAUDE_CONFIG_DIR` is set, use that instead of `~/.claude`.
 
-`CLAUDE.md` ends with `@RTK.md`, an import — both files must be present or the
-import dangles.
-
-## agent-skills
-
-`~/.claude/skills/` normally contains symlinks pointing out to `~/.agents/skills/`,
-a directory shared with other agent tools. On a fresh machine those links point
-at nothing and the skills vanish silently.
-
-Place the contents of `agent-skills/` at `~/.agents/skills/` first, then recreate
-the links:
-
-```bash
-mkdir -p ~/.agents/skills
-for s in ~/dotfiles/claude/agent-skills/*/; do
-  ln -sfn "$s" ~/.agents/skills/"$(basename "$s")"
-  ln -sfn ../../.agents/skills/"$(basename "$s")" ~/.claude/skills/"$(basename "$s")"
-done
-```
-
-Four skills: `find-skills`, `hermes-agent`, `mobile-responsiveness`,
-`tailwindcss-responsive-darkmode`.
+`settings.json` registers `rtk hook claude`, the native hook from
+[rtk](https://github.com/rtk-ai/rtk), which rewrites shell commands to cut token
+use. rtk installs and maintains that hook itself: run `rtk init -g`. Nothing
+about it is stored here beyond the one line in `settings.json`.
 
 ## Dependencies
 
 | Tool | Needed for | macOS | Debian/Ubuntu | If missing |
 |---|---|---|---|---|
 | `bun` | statusline, ccstatusline hooks | `curl -fsSL https://bun.sh/install \| bash` | same | statusline doesn't render |
-| `jq` | RTK hook | `brew install jq` | `apt install jq` | hook warns once, passes commands through |
-| `rtk` | RTK hook | `brew install rtk` | `cargo install rtk` (needs ≥0.23.0) | same |
+| `rtk` | the `rtk hook claude` entry in `settings.json` | `brew install rtk` | `cargo install rtk` | the hook command fails on every tool call |
 | `gh` | `git-pr` statusline segment | `brew install gh` | [cli.github.com](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) | segment stays blank |
 
-Only `bun` really matters. The RTK hook checks for `jq` and `rtk` itself and
-exits cleanly when they're absent, so a machine without them works fine — you
-just lose the token savings.
+`bun` matters most. The rtk hook is a native binary command, so it needs neither
+bash nor jq, but it does need `rtk` on PATH: without it, every tool call hits a
+failing hook. On a machine without rtk, run `rtk init -g --uninstall` or drop the
+`rtk hook claude` entry from `settings.json`.
 
 **On WSL and Debian/Ubuntu, `rtk` has no package** — it needs a Rust toolchain
 (`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`, then
-`cargo install rtk`). That's a big dependency for a token optimiser, so it's a
-reasonable thing to skip. Just say you skipped it: the hook fails silently by
-design, and an inert hook is indistinguishable from a working one unless you
-look.
+`cargo install rtk`). That's a big dependency for a token optimiser, so skipping
+it is reasonable. If you skip it, remove the hook entry as well, and say you did
+both.
 
 Claude Code itself installs on WSL with the same native installer as Linux:
 `curl -fsSL https://claude.ai/install.sh | bash`. It lands in `~/.local/bin`,
@@ -65,11 +41,13 @@ which `shell/zshrc` already adds to PATH.
 
 ## Platform notes
 
-- The hook command in `settings.json` is
-  `"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/rtk-rewrite.sh"` — no hardcoded
-  paths. Keep it that way.
-- `enabledPlugins` and `extraKnownMarketplaces` are fetched by Claude Code on
-  first run. Nothing to install by hand; expect a delay on first launch.
+- The hook command in `settings.json` is `rtk hook claude`, resolved from PATH,
+  so there are no hardcoded paths. `rtk init -g` writes the same line.
+- **Plugins and skills are not tracked here.** `settings.json` in this repo has
+  no `enabledPlugins` or `extraKnownMarketplaces`, so a fresh machine starts with
+  none and you install what you want per machine. Claude Code writes those keys
+  back into the live file as you enable plugins, so `./status.sh` will report
+  `settings.json` as differing. That is expected.
 - `settings.json` sets `"permissions": {"defaultMode": "dontAsk"}`. Worth
   confirming that's wanted on a shared or production machine before linking.
 - **Claude Code rewrites `settings.json`** when you change things via `/config`.
@@ -88,11 +66,11 @@ holds project state and MCP credentials and is deliberately excluded.
 ```bash
 test -L ~/.claude/settings.json && echo linked
 jq -e . ~/.claude/settings.json >/dev/null && echo "valid json"
-echo '{"tool_input":{"command":"git status"}}' | ~/.claude/hooks/rtk-rewrite.sh
+rtk init --show
 ```
 
-That last one should emit JSON rewriting the command to `rtk git status`. With
-`rtk` or `jq` absent it prints a warning and nothing else — also correct.
+The last one should report the hook, `RTK.md`, and the `@RTK.md` reference in
+`~/.claude/CLAUDE.md` as configured.
 
 In Claude Code: `/status` shows the loaded config, and the statusline should
 appear across four lines.
