@@ -5,7 +5,6 @@
 | Repo | Destination |
 |---|---|
 | `gitconfig` | `~/.gitconfig` |
-| `ssh_config` | `~/.ssh/config` (`chmod 600`) |
 
 ## Install
 
