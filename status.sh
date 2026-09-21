@@ -15,7 +15,10 @@ while IFS=$'\t' read -r scope repo dest mode; do
         printf 'missing   %s\n' "$dest"; status=1; continue
     fi
     if [[ "$mode" == dir ]]; then
-        out=$(diff -rq -x '.gitkeep' -x 'lazy-lock.json' "$repo" "$dest" 2>/dev/null)
+        # SETUP.md is this repo's documentation and never belongs at the
+        # destination. lazy-lock.json is deliberately not excluded: lazy.nvim
+        # rewrites it on every plugin update, and that is real drift worth seeing.
+        out=$(diff -rq -x '.gitkeep' -x 'SETUP.md' "$repo" "$dest" 2>/dev/null)
     else
         out=$(diff -q "$repo" "$dest" 2>/dev/null)
     fi
