@@ -10,11 +10,11 @@ equivalent — they're separate installs with separate config directories.
 | `settings.json` | `~/Library/Application Support/Code/User/settings.json` | `~/.config/Code/User/settings.json` |
 | `keybindings.json` | `~/Library/Application Support/Code/User/keybindings.json` | `~/.config/Code/User/keybindings.json` |
 
-**Different path per OS**, same as Ghostty. Symlink both.
+**Different path per OS**, same as Ghostty. Copy both.
 
 ## WSL
 
-Do not link these inside the WSL filesystem — it has no effect.
+Do not copy these into the WSL filesystem — it has no effect.
 
 With the Remote-WSL extension, **VS Code runs on Windows**. The Linux side only
 holds `~/.vscode-server/`, which is downloaded server state, not user config.
@@ -62,7 +62,7 @@ The second form is the one to use on Linux.
 ## Notes
 
 `settings.json` may reference machine-specific paths (interpreter locations, SDK
-roots). Skim it after linking and fix anything pointing at `/Users/roynulrohan`
+roots). Skim it after copying and fix anything pointing at `/Users/roynulrohan`
 or `/opt/homebrew`.
 
 `alias zshrc="code ~/.zshrc"` in `shell/zshrc` assumes `code` is on PATH. On

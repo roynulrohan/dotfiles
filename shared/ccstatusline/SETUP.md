@@ -10,7 +10,7 @@ worktree, changes, ahead-behind, conflicts, PR.
 |---|---|
 | `settings.json` | `~/.config/ccstatusline/settings.json` |
 
-Same path on both platforms. Symlink it.
+Same path on both platforms. Copy it into place.
 
 ## Dependencies
 
@@ -36,7 +36,7 @@ Re-running the ccstatusline installer **appends** its hooks to
 `claude/settings.json` without checking whether they're already there. Running it
 three times gets you three copies on each event and three `bunx` processes per
 keystroke. The config in this repo is deduplicated — if you install ccstatusline
-via its own installer rather than by linking this file, check
+via its own installer rather than by copying this file, check
 `claude/settings.json` afterwards and remove the duplicates.
 
 ## Verify

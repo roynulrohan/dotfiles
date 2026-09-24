@@ -11,7 +11,7 @@ directory from VS Code, see `../vscode/`. Cursor's agent config (`mcp.json`,
 | `settings.json` | `~/Library/Application Support/Cursor/User/settings.json` | `~/.config/Cursor/User/settings.json` |
 | `keybindings.json` | `~/Library/Application Support/Cursor/User/keybindings.json` | `~/.config/Cursor/User/keybindings.json` |
 
-**Different path per OS.** Symlink both.
+**Different path per OS.** Copy both.
 
 ## Install
 
@@ -28,7 +28,7 @@ Extensions are not captured for Cursor. The `Brewfile`'s `vscode` lines are VS
 Code's list — Cursor uses a different marketplace and `cursor --install-extension`
 won't necessarily resolve the same identifiers. Reinstall by hand.
 
-Same caveat as VS Code: skim `settings.json` after linking for hardcoded
+Same caveat as VS Code: skim `settings.json` after copying for hardcoded
 `/Users/roynulrohan` paths.
 
 ## Verify

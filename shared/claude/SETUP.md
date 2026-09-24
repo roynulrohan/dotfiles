@@ -9,7 +9,7 @@ live in `shared/agents` and are copied to `~/.claude/CLAUDE.md`.
 |---|---|
 | `settings.json` | `~/.claude/settings.json` |
 
-All symlinkable. If `CLAUDE_CONFIG_DIR` is set, use that instead of `~/.claude`.
+Copy it into place. If `CLAUDE_CONFIG_DIR` is set, use that instead of `~/.claude`.
 
 `settings.json` registers `rtk hook claude`, the native hook from
 [rtk](https://github.com/rtk-ai/rtk), which rewrites shell commands to cut token
@@ -49,12 +49,11 @@ which `shell/zshrc` already adds to PATH.
   back into the live file as you enable plugins, so `./status.sh` will report
   `settings.json` as differing. That is expected.
 - `settings.json` sets `"permissions": {"defaultMode": "dontAsk"}`. Worth
-  confirming that's wanted on a shared or production machine before linking.
+  confirming that's wanted on a shared or production machine before copying.
 - **Claude Code rewrites `settings.json`** when you change things via `/config`.
-  If it saves by rename, the symlink is replaced by a regular file and the repo
-  silently stops tracking your edits. Check with
-  `test -L ~/.claude/settings.json`; if it's not a link, copy it back into the
-  repo and relink.
+  Those edits land only in the live file. Run `./status.sh` to see the drift, and
+  copy the file back into the repo when you want to keep them. Leave out the
+  per-machine plugin keys when you do.
 
 ## Auth
 
@@ -64,7 +63,7 @@ holds project state and MCP credentials and is deliberately excluded.
 ## Verify
 
 ```bash
-test -L ~/.claude/settings.json && echo linked
+diff shared/claude/settings.json ~/.claude/settings.json
 jq -e . ~/.claude/settings.json >/dev/null && echo "valid json"
 rtk init --show
 ```
