@@ -59,3 +59,19 @@ A caelestia update that rewrites `hyprland.lua` drops them, and every bind,
 rule and setting in `hyprland-gui.lua` stops applying. Open HyprMod once: it
 checks for the line at startup and adds it back. Or add the two lines by hand
 and run `hyprctl reload`.
+
+### A replugged monitor lands on the far right
+
+Seen once after DP-2 was unplugged for a while: the live `hyprland-gui.lua` had
+lost DP-2's `hl.monitor` block, most likely because HyprMod saved the file while
+the monitor was disconnected. Plugged back in, Hyprland put it to the right of
+the others at its default refresh rate. The repo copy still has every monitor,
+so restore it, then restart the live wallpapers, which only cover monitors that
+were connected when they started:
+
+```bash
+cp ~/Coding/dotfiles/linux/hyprmod/hyprland-gui.lua ~/.config/hypr/
+~/.local/bin/live-wallpaper
+```
+
+Check `diff` first if HyprMod changed anything else since the last commit.
