@@ -92,6 +92,12 @@ copy these files in after signing in.
 
 - Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at weight
   500. VS Code is left see-through at caelestia's 95% window opacity on purpose.
+- Discord presence (`vscord`) shows the project and file only: no line numbers,
+  error counts or "View Repository" button, and it disconnects after 5 minutes
+  idle. On CachyOS it reaches Discord through Equibop's built-in arRPC bridge
+  (`arRPC: true` in `~/.config/equibop/settings.json`, socket
+  `$XDG_RUNTIME_DIR/discord-ipc-0`). `vscord.app.privacyMode.enable` hides the
+  project and file too; `vscord.ignore.workspaces` hides chosen projects.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports
   (`editor.codeActionsOnSave`, `explicit`); auto save after a delay doesn't, so
   nothing reshuffles while typing.
