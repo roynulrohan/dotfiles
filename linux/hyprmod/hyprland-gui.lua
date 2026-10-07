@@ -192,3 +192,9 @@ hl.window_rule({
     },
     opaque = true,
 })
+hl.window_rule({
+    match = {
+        class = "orca",
+    },
+    opaque = true,
+})
