@@ -153,6 +153,15 @@ local smw_ok, smw = pcall(require, "split-monitor-workspaces")
 if not smw_ok then
     print("hypr-user: split-monitor-workspaces not loaded: " .. tostring(smw))
 else
+    -- HyprMod reads this config by running it and parsing stdout line by line,
+    -- and the package print()s at setup, which broke HyprMod. Send those lines
+    -- to stderr instead (Hyprland logs both).
+    local stdout_print = print
+    print = function(...)
+        local parts = {}
+        for i = 1, select("#", ...) do parts[i] = tostring(select(i, ...)) end
+        io.stderr:write(table.concat(parts, "\t") .. "\n")
+    end
     smw.setup({
         workspace_count = 10,
         monitor_priority = { "DP-1", "HDMI-A-1", "DP-2" },
@@ -162,6 +171,7 @@ else
         -- monitor has focus and then move them, which left workspaces on the
         -- wrong monitor.
     })
+    print = stdout_print
 
     -- Replace caelestia's global Super(+Alt)+N and its "groups of 10"
     -- (Ctrl+Super(+Alt)+N). Super+Shift+N used to live in HyprMod's file.

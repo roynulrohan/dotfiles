@@ -54,7 +54,10 @@ git -C ~/.local/share/hypr-plugins/split-monitor-workspaces checkout f26d624
 `hypr-user.lua` requires it by its full name: its modules are called
 `globals`, `helpers` and `monitors`, and caelestia requires its own modules by
 bare names too. If the package is missing, caelestia's global workspace keys stay
-and Super+Shift+N does nothing.
+and Super+Shift+N does nothing. HyprMod reads the whole config by running it and parsing
+stdout, so the package's `print()` at setup broke HyprMod (it wouldn't open);
+`hypr-user.lua` sends those lines to stderr during setup. Check with
+`python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home() / ".config/hypr/hyprland.lua")'`.
 
 Ranges: main DP-1 gets Hyprland ids 1–10, right HDMI-A-1 11–20, left DP-2
 21–30 (`monitor_priority`). caelestia's bar labels workspaces by id, so the side
