@@ -14,10 +14,15 @@ Same path on both platforms. Copy it into place.
 
 ## Dependencies
 
-`bun` — the statusline runs as `bunx -y ccstatusline@latest`, wired up in
+A global install: `bun add -g ccstatusline`. The statusline runs as
+`ccstatusline` from PATH (bun installs it to `~/.bun/bin`), wired up in
 `claude/settings.json` under `statusLine` and as `--hook` entries on
-`UserPromptSubmit` and `PreToolUse:Skill`. Nothing to install separately; bunx
-fetches it on first use.
+`UserPromptSubmit` and `PreToolUse:Skill`. It stays on the installed version
+until you run `bun add -g ccstatusline@latest`.
+
+ccstatusline records the install in an `installation` block in the live
+`settings.json`. That block is per machine and is not in this repo, so
+`./status.sh` reports the file as differing.
 
 `gh` is optional and only feeds the `git-pr` segment.
 
@@ -34,7 +39,7 @@ beyond the Nerd Font already needed for the prompt.
 
 Re-running the ccstatusline installer **appends** its hooks to
 `claude/settings.json` without checking whether they're already there. Running it
-three times gets you three copies on each event and three `bunx` processes per
+three times gets you three copies on each event and three ccstatusline processes per
 keystroke. The config in this repo is deduplicated — if you install ccstatusline
 via its own installer rather than by copying this file, check
 `claude/settings.json` afterwards and remove the duplicates.
@@ -42,4 +47,5 @@ via its own installer rather than by copying this file, check
 ## Verify
 
 Start Claude Code — four lines should appear at the bottom. If they're blank,
-`bun` is missing. If they're full of tofu, the Nerd Font isn't selected.
+`ccstatusline` is not on PATH: run `bun add -g ccstatusline`. If they're full of
+tofu, the Nerd Font isn't selected.

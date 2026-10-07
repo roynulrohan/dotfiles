@@ -20,7 +20,8 @@ about it is stored here beyond the one line in `settings.json`.
 
 | Tool | Needed for | macOS | Debian/Ubuntu | If missing |
 |---|---|---|---|---|
-| `bun` | statusline, ccstatusline hooks | `curl -fsSL https://bun.sh/install \| bash` | same | statusline doesn't render |
+| `bun` | installing ccstatusline | `curl -fsSL https://bun.sh/install \| bash` | same | statusline doesn't render |
+| `ccstatusline` | statusline, ccstatusline hooks | `bun add -g ccstatusline` | same | statusline doesn't render |
 | `rtk` | the `rtk hook claude` entry in `settings.json` | `brew install rtk` | `cargo install rtk` | the hook command fails on every tool call |
 | `gh` | `git-pr` statusline segment | `brew install gh` | [cli.github.com](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) | segment stays blank |
 

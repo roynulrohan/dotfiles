@@ -13,7 +13,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bunx -y ccstatusline@latest --hook"
+            "command": "ccstatusline --hook"
           }
         ]
       }
@@ -24,7 +24,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bunx -y ccstatusline@latest --hook"
+            "command": "ccstatusline --hook"
           }
         ]
       },
@@ -42,7 +42,7 @@
   "enableArtifact": false,
   "statusLine": {
     "type": "command",
-    "command": "bunx -y ccstatusline@latest",
+    "command": "ccstatusline",
     "padding": 0
   },
   "effortLevel": "xhigh",
