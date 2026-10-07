@@ -43,13 +43,16 @@ fastfetch, starship, the Nerd Font). Then copy these four files in and run
 `hyprctl reload`. The shell picks up `shell.json` live; restart it with
 Ctrl + Super + Alt + R if the bar doesn't change.
 
-The installer asks which components to set up. The CachyOS desktop has these
-enabled, and caelestia records the choice in
-`~/.local/state/caelestia/dots-state.json` (`enabled_components`):
+The installer asks which components to set up. Pick these:
 
 hypr, fish, foot, fastfetch, btop, micro, thunar, starship, firefox, gtk, qt,
 auth, network, bluetooth, pipewire, clipboard, fonts, tools, spotify, vscode,
-zed, nvim, discord, todoist, uwsm, zen
+zed, nvim, discord, uwsm, zen
+
+The first CachyOS install also enabled `todoist`, but it isn't used: skip it.
+caelestia's Super+R (the todo special workspace) then opens an empty scratchpad.
+caelestia records the components it set up in
+`~/.local/state/caelestia/dots-state.json` (`enabled_components`).
 
 AUR helper chosen in the installer: `paru`.
 
