@@ -29,5 +29,6 @@
   "defaultTuiAgent": "claude",
   "tabAutoGenerateTitle": true,
   "skipCloseTerminalWithRunningProcessConfirm": true,
-  "refreshLocalBaseRefOnWorktreeCreate": true
+  "refreshLocalBaseRefOnWorktreeCreate": true,
+  "terminalBackgroundOpacity": 0
 }

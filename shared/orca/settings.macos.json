@@ -1,5 +1,4 @@
 {
   "terminalFontFamily": "JetBrainsMono NFM Regular",
-  "windowBackgroundBlur": true,
-  "terminalBackgroundOpacity": 0
+  "windowBackgroundBlur": true
 }
