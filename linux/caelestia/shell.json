@@ -23,5 +23,8 @@
     },
     "sidebar": {
         "enabled": true
+    },
+    "services": {
+        "weatherLocation": "45.4215,-75.6972"
     }
 }
