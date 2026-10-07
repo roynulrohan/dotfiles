@@ -10,7 +10,7 @@ Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
 | Repo | Destination | What |
 |---|---|---|
 | `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out` |
-| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, `emulate_discrete_scroll = 0`, window mode (below), live-wallpaper autostart (`linux/wallpaper`); Hyprland config that HyprMod can't express goes here |
+| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, `emulate_discrete_scroll = 0`, window mode and per-monitor workspaces (below), live-wallpaper autostart (`linux/wallpaper`), and loading `hypr-local.lua` if the machine has one; Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on; weather for Ottawa (coordinates: the IP lookup said Toronto, and the name "Ottawa" also matches US towns) |
 | `user-config.fish` | `~/.config/caelestia/user-config.fish` | runs after caelestia's `config.fish`: resets its wallpaper colours in Orca's terminal; other fish config lives in `shared/fish` |
 | `cli.json` | `~/.config/caelestia/cli.json` | Super+D (the communication special workspace) starts and gathers Equibop instead of the official Discord |
@@ -36,6 +36,52 @@ Floating windows stay inside the usable area of their monitor: caelestia's bar
 and frame (the monitor's reserved area) and the 4 px outer gap are excluded,
 and a step that would cross an edge stops at it. Hyprland resizes a floating
 window around its centre, so the edge keys move it back by half the change.
+
+## Per-monitor workspaces
+
+Each monitor has its own workspaces 1–10 on Super+1…0, like awesome/dwm.
+[split-monitor-workspaces](https://github.com/zjeffer/split-monitor-workspaces)
+does it: a Lua package for Hyprland 0.55 or newer (its rival hyprsplit doesn't
+work with Lua configs). It isn't copied into this repo. Install it pinned to the
+reviewed commit:
+
+```bash
+git clone https://github.com/zjeffer/split-monitor-workspaces.git \
+    ~/.local/share/hypr-plugins/split-monitor-workspaces
+git -C ~/.local/share/hypr-plugins/split-monitor-workspaces checkout f26d624
+```
+
+`hypr-user.lua` requires it by its full name: its modules are called
+`globals`, `helpers` and `monitors`, and caelestia requires its own modules by
+bare names too. If the package is missing, caelestia's global workspace keys stay
+and Super+Shift+N does nothing.
+
+Ranges: main DP-1 gets Hyprland ids 1–10, left DP-2 11–20, right HDMI-A-1
+21–30 (`monitor_priority`). caelestia's bar labels workspaces by id, so the side
+monitors show 11–20 and 21–30. Empty workspaces aren't kept.
+
+| Key | Does |
+|---|---|
+| Super+1…0 | go to workspace N on the focused monitor |
+| Super+Shift+1…0 / Super+Alt+1…0 | move the window there and follow / stay |
+| Super+scroll, Super+PgUp/PgDn, Ctrl+Super+←/→ | cycle workspaces on this monitor |
+| Super+Alt+scroll, Super+Alt+PgUp/PgDn, Super+Ctrl+Alt+←/→ | move the window to the next/previous workspace on this monitor |
+| Super+Ctrl+↓ | first empty workspace on this monitor |
+| Super+[ / Super+] | focus the left / right monitor |
+| Super+Shift+[ / Super+Shift+] | send the window to the left / right monitor |
+
+caelestia's "groups of 10" (Ctrl+Super+N, Ctrl+Super+scroll,
+Ctrl+Super+Alt+N) are unbound. Super+Alt+arrows stays caelestia's 10 px
+resize. Ctrl+Super+Shift+arrows (move in a direction) carries a tiled window
+across monitors at the edge, but a floating window only slides to its own
+monitor's edge (Hyprland's floating layout, `moveTargetInDirection`); use
+Super+Shift+[ / ] for those.
+
+## Machine-local config
+
+If `~/.config/caelestia/hypr-local.lua` exists, `hypr-user.lua` loads it after
+everything above. It holds config that stays on one machine and out of this
+repo. A load error shows as a Hyprland notification instead of failing quietly.
 
 ## Install
 

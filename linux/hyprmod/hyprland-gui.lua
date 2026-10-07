@@ -49,43 +49,9 @@ hl.monitor({
     cm = "srgb",
 })
 
--- Workspaces
-hl.workspace_rule({
-    workspace = "1",
-    monitor = "DP-2",
-})
-hl.workspace_rule({
-    workspace = "2",
-    monitor = "DP-1",
-})
-hl.workspace_rule({
-    workspace = "3",
-    monitor = "HDMI-A-1",
-})
-
 -- Keybinds
 hl.unbind("SUPER + B")
 hl.bind("SUPER + B", hl.dsp.exec_cmd("zen-browser"))
-hl.unbind("SUPER + SHIFT + 1")
-hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
-hl.unbind("SUPER + SHIFT + 2")
-hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
-hl.unbind("SUPER + SHIFT + 3")
-hl.bind("SUPER + SHIFT + 3", hl.dsp.window.move({ workspace = 3 }))
-hl.unbind("SUPER + SHIFT + 4")
-hl.bind("SUPER + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
-hl.unbind("SUPER + SHIFT + 5")
-hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
-hl.unbind("SUPER + SHIFT + 6")
-hl.bind("SUPER + SHIFT + 6", hl.dsp.window.move({ workspace = 6 }))
-hl.unbind("SUPER + SHIFT + 7")
-hl.bind("SUPER + SHIFT + 7", hl.dsp.window.move({ workspace = 7 }))
-hl.unbind("SUPER + SHIFT + 8")
-hl.bind("SUPER + SHIFT + 8", hl.dsp.window.move({ workspace = 8 }))
-hl.unbind("SUPER + SHIFT + 9")
-hl.bind("SUPER + SHIFT + 9", hl.dsp.window.move({ workspace = 9 }))
-hl.unbind("SUPER + SHIFT + 0")
-hl.bind("SUPER + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
 hl.unbind("CTRL + SUPER + SHIFT + Left")
 hl.bind("SUPER + SHIFT + CTRL + left", hl.dsp.window.move({ direction = "left" }))
 hl.unbind("CTRL + SUPER + SHIFT + Right")
@@ -94,12 +60,6 @@ hl.unbind("CTRL + SUPER + SHIFT + Up")
 hl.bind("SUPER + SHIFT + CTRL + up", hl.dsp.window.move({ direction = "up" }))
 hl.unbind("CTRL + SUPER + SHIFT + Down")
 hl.bind("SUPER + SHIFT + CTRL + down", hl.dsp.window.move({ direction = "down" }))
-hl.unbind("SUPER + CTRL + ALT + right")
-hl.bind("SUPER + CTRL + ALT + right", hl.dsp.window.move({ workspace = "r+1" }))
-hl.unbind("SUPER + CTRL + ALT + left")
-hl.bind("SUPER + CTRL + ALT + left", hl.dsp.window.move({ workspace = "r-1" }))
-hl.unbind("SUPER + CTRL + down")
-hl.bind("SUPER + CTRL + down", hl.dsp.focus({ workspace = "empty" }))
 hl.unbind("SUPER + W")
 hl.bind("SUPER + W", hl.dsp.window.float({ action = "toggle" }))
 hl.unbind("SUPER + G")

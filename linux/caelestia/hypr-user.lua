@@ -140,3 +140,72 @@ end)
 hl.on("hyprland.start", function()
     hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/live-wallpaper")
 end)
+
+-- Per-monitor workspaces: each monitor has its own 1-10 on Super+1..0, from
+-- split-monitor-workspaces (a Lua package, pinned clone in
+-- ~/.local/share/hypr-plugins; see linux/caelestia/SETUP.md). Hyprland ids:
+-- main DP-1 1-10, left DP-2 11-20, right HDMI-A-1 21-30.
+-- Required by its full name: its modules are called globals/helpers/monitors,
+-- and caelestia's own modules are required by bare names too.
+local smw_dir = os.getenv("HOME") .. "/.local/share/hypr-plugins"
+package.path = package.path .. ";" .. smw_dir .. "/?.lua;" .. smw_dir .. "/?/init.lua"
+local smw_ok, smw = pcall(require, "split-monitor-workspaces")
+if not smw_ok then
+    print("hypr-user: split-monitor-workspaces not loaded: " .. tostring(smw))
+else
+    smw.setup({
+        workspace_count = 10,
+        monitor_priority = { "DP-1", "DP-2", "HDMI-A-1" },
+        -- Empty workspaces disappear, as they did before.
+        enable_persistent_workspaces = false,
+    })
+
+    -- Replace caelestia's global Super(+Alt)+N and its "groups of 10"
+    -- (Ctrl+Super(+Alt)+N). Super+Shift+N used to live in HyprMod's file.
+    for i = 1, 10 do
+        local key, n = tostring(i % 10), tostring(i)
+        for _, mods in ipairs({ "SUPER", "SUPER + ALT", "CTRL + SUPER", "CTRL + SUPER + ALT" }) do
+            hl.unbind(mods .. " + " .. key)
+        end
+        hl.bind("SUPER + " .. key, smw.workspace(n))
+        hl.bind("SUPER + SHIFT + " .. key, smw.move_to_workspace(n))
+        hl.bind("SUPER + ALT + " .. key, smw.move_to_workspace_silent(n))
+    end
+
+    -- Cycling stays on the focused monitor. Keyboard keys repeat, wheels don't.
+    local function rebind(keys, action, repeating)
+        for _, key in ipairs(keys) do
+            hl.unbind(key)
+            hl.bind(key, action, repeating and { repeating = true } or nil)
+        end
+    end
+    rebind({ "SUPER + mouse_down" }, smw.cycle_workspaces("next"))
+    rebind({ "SUPER + mouse_up" }, smw.cycle_workspaces("prev"))
+    rebind({ "CTRL + SUPER + Right", "SUPER + Page_Down" }, smw.cycle_workspaces("next"), true)
+    rebind({ "CTRL + SUPER + Left", "SUPER + Page_Up" }, smw.cycle_workspaces("prev"), true)
+    rebind({ "SUPER + ALT + mouse_down" }, smw.move_to_workspace("+1"))
+    rebind({ "SUPER + ALT + mouse_up" }, smw.move_to_workspace("-1"))
+    rebind({ "SUPER + ALT + Page_Down", "SUPER + CTRL + ALT + right" }, smw.move_to_workspace("+1"), true)
+    rebind({ "SUPER + ALT + Page_Up", "SUPER + CTRL + ALT + left" }, smw.move_to_workspace("-1"), true)
+    rebind({ "SUPER + CTRL + down" }, smw.workspace("empty"))
+    hl.unbind("CTRL + SUPER + mouse_down")
+    hl.unbind("CTRL + SUPER + mouse_up")
+
+    -- Monitors: Super+[ ] jumps left/right, Super+Shift+[ ] sends the window.
+    hl.bind("SUPER + bracketleft", hl.dsp.focus({ monitor = "l" }))
+    hl.bind("SUPER + bracketright", hl.dsp.focus({ monitor = "r" }))
+    hl.bind("SUPER + SHIFT + bracketleft", hl.dsp.window.move({ monitor = "l" }))
+    hl.bind("SUPER + SHIFT + bracketright", hl.dsp.window.move({ monitor = "r" }))
+end
+
+-- Machine-local config that stays out of the repo, if this machine has one.
+-- Errors show as a Hyprland notification instead of failing silently.
+local local_file = os.getenv("HOME") .. "/.config/caelestia/hypr-local.lua"
+local lf = io.open(local_file)
+if lf then
+    lf:close()
+    local ok, err = pcall(require, "hypr-local")
+    if not ok then
+        hl.notification.create({ text = "hypr-local.lua failed: " .. tostring(err), timeout = 10000 })
+    end
+end

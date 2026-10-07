@@ -35,7 +35,8 @@ decision the repo doesn't cover.
   `linux/caelestia`. Binds and rules go through HyprMod (`linux/hyprmod`) so
   they're editable in its GUI; HyDE-style keybinds layered on caelestia's, with
   caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
-  opaque; workspaces show as numbers in the bar. Default apps: Zen for web
+  opaque; each monitor has its own workspaces 1–10, shown as
+  numbers in the bar. Default apps: Zen for web
   pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
   SVG and editing); see `linux/packages.md`. Login screen: SDDM with the
   caelestia "locklike" theme (`linux/sddm`). Discord: Equibop, caelestia-themed,

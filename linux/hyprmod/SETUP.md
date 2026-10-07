@@ -19,12 +19,14 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 
 ## What's in it
 
-- **Monitors and workspaces**: DP-2 left (ws 1), DP-1 middle 280 Hz (ws 2),
-  HDMI-A-1 right (ws 3). Machine-specific; redo on different hardware.
-- **HyDE-style keybinds on caelestia**: Super+Shift+N move window to workspace,
-  Super+Shift+arrows resize (in `linux/caelestia/hypr-user.lua`: HyprMod can't
-  convert repeating resize binds), Ctrl+Super+Shift+arrows move window, Super+Ctrl+Alt+←/→
-  move to relative workspace, Super+Ctrl+↓ empty workspace, Super+W float,
+- **Monitors**: DP-2 left, DP-1 middle 280 Hz, HDMI-A-1 right.
+  Machine-specific; redo on different hardware. No workspace rules: each
+  monitor has its own workspaces, set up in `linux/caelestia/hypr-user.lua`
+  (see "Per-monitor workspaces" in `linux/caelestia/SETUP.md`). Don't add
+  workspace keys or rules in HyprMod: its file loads last and would override them.
+- **HyDE-style keybinds on caelestia**: Super+Shift+arrows resize (in
+  `linux/caelestia/hypr-user.lua`: HyprMod can't convert repeating resize
+  binds), Ctrl+Super+Shift+arrows move window, Super+W float,
   Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+P /
   Super+Ctrl+P / Super+Shift+P screenshot / freeze / colour picker,
   Super+Shift+F pin, F10–F12 volume. Super+B opens Zen.
