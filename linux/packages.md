@@ -9,6 +9,7 @@ sits around it.
 | `paru` | AUR helper for the packages marked AUR below; in CachyOS's own repo |
 | `caelestia-shell` `caelestia-cli` (AUR) | desktop shell, wallpaper/scheme tooling |
 | `hyprland` `xdg-desktop-portal-hyprland` `xdg-desktop-portal-gtk` | compositor |
+| `sddm` `caelestia-sddm-locklike-git` (AUR) | login screen in caelestia's lock-screen style; see `sddm/` |
 | `hyprmod` (AUR) | GUI for binds, monitors, workspace and window rules; owns `hyprland-gui.lua` |
 | `kitty` | terminal (foot is caelestia's default; kitty for image logos and tabs) |
 | `fish` `starship` | shell and prompt |

@@ -36,3 +36,5 @@ mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	c
 linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy
 linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
 linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
+linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
+linux	linux/sddm/sddm-theme.conf	~/.config/caelestia/templates/sddm-theme.conf	copy
