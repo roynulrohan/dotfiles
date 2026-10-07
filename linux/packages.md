@@ -26,6 +26,7 @@ sits around it.
 | `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
 | `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see `shared/claude`) |
 | `pipewire` `wireplumber` | audio, preinstalled by CachyOS; the headset EQ runs in PipeWire's `filter-chain.service` (see `pipewire/`). Not EasyEffects |
+| `hyprsunset` | night light, always on (see `hyprsunset/`) |
 | `gvfs-smb` | SMB shares (the NAS) in GTK apps such as Thunar; Dolphin and Gwenview use KDE's own SMB support |
 | `cachyos-gaming-meta` `cachyos-gaming-applications` | CachyOS's gaming bundle (Steam, Lutris and the rest), installed as a set rather than listed one by one |
 
