@@ -43,3 +43,18 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   to screen edges and other windows within 10 px.
   `follow_mouse = 2`: hovering a window gives it mouse focus; keyboard focus
   moves only on click.
+
+## Gotcha
+
+HyprMod loads its file through two lines it appends to caelestia's
+`~/.config/hypr/hyprland.lua`:
+
+```lua
+-- HyprMod managed settings
+require("hyprland-gui")
+```
+
+A caelestia update that rewrites `hyprland.lua` drops them, and every bind,
+rule and setting in `hyprland-gui.lua` stops applying. Open HyprMod once: it
+checks for the line at startup and adds it back. Or add the two lines by hand
+and run `hyprctl reload`.
