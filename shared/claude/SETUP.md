@@ -30,6 +30,8 @@ bash nor jq, but it does need `rtk` on PATH: without it, every tool call hits a
 failing hook. On a machine without rtk, run `rtk init -g --uninstall` or drop the
 `rtk hook claude` entry from `settings.json`.
 
+On CachyOS (Arch), install rtk from the AUR: `paru -S rtk-bin`.
+
 **On WSL and Debian/Ubuntu, `rtk` has no package** — it needs a Rust toolchain
 (`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`, then
 `cargo install rtk`). That's a big dependency for a token optimiser, so skipping
