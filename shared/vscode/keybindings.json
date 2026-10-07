@@ -1,4 +1,4 @@
-// Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaults
 [
     {
         "key": "shift+alt+]",
@@ -22,7 +22,8 @@
     },
     {
         "key": "shift+alt+u",
-        "command": "remove-unused-imports.main"
+        "command": "editor.action.sourceAction",
+        "args": { "kind": "source.removeUnusedImports", "apply": "first" }
     },
     {
         "key": "alt+d",

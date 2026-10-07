@@ -23,6 +23,7 @@ sits around it.
 | `equibop-bin` (AUR) | Equibop, the default Discord app: caelestia's `discord` component installs it and themes it with its colours. The official `discord` stays installed alongside |
 | `linux-wallpaperengine-git` (AUR) | live wallpapers from Wallpaper Engine (installed through Steam/Proton); see `wallpaper/` |
 | `jellyfin-desktop-git` (AUR) | Jellyfin client; replaced the repo's `jellyfin-desktop`; kept opaque by a HyprMod rule |
+| `visual-studio-code-bin` (AUR) | VS Code, Microsoft's build; replaces the `code` (Code - OSS) that caelestia installs. See `shared/vscode` |
 | `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
 | `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see `shared/claude`) |
 | `pipewire` `wireplumber` | audio, preinstalled by CachyOS; the headset EQ runs in PipeWire's `filter-chain.service` (see `pipewire/`). Not EasyEffects |

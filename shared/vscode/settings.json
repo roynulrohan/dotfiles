@@ -1,156 +1,77 @@
 {
-    "workbench.startupEditor": "newUntitledFile",
-    "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "python.jediEnabled": false,
-    "C_Cpp.updateChannel": "Insiders",
-    "python.languageServer": "Default",
-    "code-runner.saveAllFilesBeforeRun": true,
+    // Look
     "workbench.colorTheme": "Atom One Dark",
-    "java.home": "C:\\Program Files\\Java\\jdk-14.0.1",
-    "java.semanticHighlighting.enabled": true,
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
-    },
-    "code-runner.runInTerminal": true,
-    "git.enableSmartCommit": true,
-    "C_Cpp.default.browse.path": [
-        "C:\\MinGW\\lib\\gcc\\mingw32\\9.2.0\\include\\c++"
-    ],
-    "liveServer.settings.donotShowInfoMsg": true,
-    "files.autoSave": "afterDelay",
     "workbench.iconTheme": "material-icon-theme",
-    "liveServer.settings.host": "localhost",
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "java.project.importHint": false,
-    "[javascriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "prettier.singleQuote": true,
-    "dart.debugExternalLibraries": true,
-    "dart.debugSdkLibraries": false,
-    "[xml]": {
-        "editor.defaultFormatter": "DotJoshJohnson.xml"
-    },
-    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: false, IndentCaseLabels: false, ColumnLimit: 0, AccessModifierOffset: -4 }",
-    "java.configuration.runtimes": [],
-    "liveServer.settings.donotVerifyTags": true,
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[css]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "diffEditor.renderSideBySide": true,
-    "files.autoSaveDelay": 1500,
-    "tabnine.experimentalAutoImports": true,
-    "oneDarkPro.vivid": true,
-    "oneDarkPro.editorTheme": "oneDarkPro",
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "prettier.jsxSingleQuote": true,
-    "[scss]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "css.enabledLanguages": ["html"],
-    "emmet.includeLanguages": {
-        "javascript": "javascriptreact"
-    },
-    "editor.autoClosingBrackets": "always",
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "git.confirmSync": false,
-    "html.format.wrapLineLength": 200,
-    "material-icon-theme.activeIconPack": "react_redux",
-    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
-    "[typescriptreact]": {
-    
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "C_Cpp.autocompleteAddParentheses": true,
-    "files.associations": {
-        "*.html": "html"
-    },
-    "explorer.confirmDelete": false,
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "headwind.runOnSave": false,
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "prettier.jsxBracketSameLine": true,
-    "prettier.printWidth": 160,
-    "[java]": {
-        "editor.defaultFormatter": "mwpb.java-prettier-formatter"
-    },
-    "bracketPairColorizer.depreciation-notice": false,
-    "[php]": {
-        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-    },
-    "editor.formatOnSaveMode": "modificationsIfAvailable",
-    "githubPullRequests.createOnPublishBranch": "never",
-    "phpserver.phpPath": "C:\\xampp\\php\\php.exe",
-    "[dockercompose]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[nginx]": {
-        "editor.defaultFormatter": "raynigon.nginx-formatter"
-    },
-    "svelte.enable-ts-plugin": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "svelte.plugin.svelte.format.config.singleQuote": true,
-    "svelte.plugin.svelte.format.config.printWidth": 160,
-    "svelte.plugin.svelte.format.config.svelteBracketNewLine": false,
-    "[svelte]": {
-        "editor.defaultFormatter": "svelte.svelte-vscode"
-    },
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.python",
-        "editor.formatOnType": true
-    },
-    "svelte.plugin.svelte.note-new-transformation": false,
-    "liveServer.settings.AdvanceCustomBrowserCmdLine": "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
-    "prettier.tabWidth": 4,
-    "[verse]": {
-        "editor.defaultFormatter": "epicgames.verse"
-    },
-    "[sql]": {
-        "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
-    },
-    "git.autofetch": true,
-    "terminal.integrated.fontSize": 14,
-    "terminal.integrated.gpuAcceleration": "canvas",
-    "terminal.external.osxExec": "iTerm.app",
-    "terminal.integrated.defaultProfile.osx": "fish",
-    "githubPullRequests.pullBranch": "never",
-    "editor.fontSize": 14,
-    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
-    "terminal.integrated.env.osx": {},
-    "console-ninja.featureSet": "Community",
-    "database-client.autoSync": true,
-    "github.copilot.nextEditSuggestions.enabled": true,
-    "json.schemaDownload.trustedDomains": {
-        "https://schemastore.azurewebsites.net/": true,
-        "https://raw.githubusercontent.com/microsoft/vscode/": true,
-        "https://raw.githubusercontent.com/devcontainers/spec/": true,
-        "https://www.schemastore.org/": true,
-        "https://json.schemastore.org/": true,
-        "https://json-schema.org/": true,
-        "https://developer.microsoft.com/json-schemas/": true,
-        "https://biomejs.dev": true
-    },
+    "workbench.activityBar.location": "top",
     "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "chat.viewSessions.orientation": "stacked",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrainsMono Nerd Font Mono', monospace",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true,
+    "editor.renderWhitespace": "trailing",
+    "editor.minimap.autohide": "mouseover",
+    "editor.smoothScrolling": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "workbench.list.smoothScrolling": true,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+
+    // Saving and formatting. Auto save doesn't format; Ctrl+S formats, applies
+    // ESLint fixes and removes unused imports.
+    "files.autoSave": "afterDelay",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.removeUnusedImports": "explicit"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // Prettier fallbacks, only for files outside a project with its own config.
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "prettier.bracketSameLine": true,
+    "prettier.tabWidth": 4,
+    "prettier.printWidth": 160,
+
+    // Suggestions: inline completions win over the suggest widget.
+    "editor.quickSuggestions": {
+        "other": "offWhenInlineCompletions",
+        "comments": "off",
+        "strings": "off"
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+
+    // TypeScript / JavaScript
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.importModuleSpecifierEnding": "minimal",
+    "javascript.preferences.importModuleSpecifierEnding": "minimal",
+    "typescript.preferences.preferTypeOnlyAutoImports": true,
+
+    // Git and GitHub
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "githubPullRequests.pullBranch": "never",
+    "githubPullRequests.createOnPublishBranch": "never",
+    "explorer.confirmDelete": false,
+
+    // Terminal, per OS (Settings Sync carries this file to every machine)
+    "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono', monospace",
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "terminal.integrated.defaultProfile.osx": "fish",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell 7": {
+            "path": "pwsh.exe",
+            "args": ["-NoLogo"],
+            "icon": "terminal-powershell"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell 7",
+
+    // GitHub workflow files get their schema from the GitHub Actions extension.
     "yaml.disableSchemaDetection": [
         "**/.github/workflows/*.yml",
         "**/.github/workflows/*.yaml",
@@ -159,5 +80,15 @@
         "**/.forgejo/workflows/*.yml",
         "**/.forgejo/workflows/*.yaml"
     ],
-    "workbench.activityBar.location": "top"
+    "json.schemaDownload.trustedDomains": {
+        "https://schemastore.azurewebsites.net/": true,
+        "https://raw.githubusercontent.com/microsoft/vscode/": true,
+        "https://raw.githubusercontent.com/devcontainers/spec/": true,
+        "https://www.schemastore.org/": true,
+        "https://json.schemastore.org/": true,
+        "https://spec.openapis.org/": true,
+        "https://json-schema.org/": true,
+        "https://developer.microsoft.com/json-schemas/": true,
+        "https://biomejs.dev": true
+    }
 }
