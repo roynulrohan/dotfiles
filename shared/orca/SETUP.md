@@ -19,8 +19,8 @@ The profile lives in `profiles/<profile>/` under Orca's data directory:
 `orca-settings.sh` reads the active profile from `orca-profile-index.json`
 (`local-default` on both machines). `settings.json` holds what both machines
 share; `settings.<os>.json` holds the values that differ per OS and wins over
-it: the terminal font name and window blur. `export` writes each key back to the
-file it came from.
+it: the terminal font name, window blur and Linux's text colour. `export` writes
+each key back to the file it came from.
 
 Where Orca keeps the settings depends on its version:
 - **Orca 1.4.222 and later** (CachyOS): `profile-state.db`, a SQLite database
@@ -76,6 +76,11 @@ account by hand.
   transparent, so it can't show the desktop behind it on either OS. The Mac's
   glass look on 1.4.206 goes away when it updates. `terminalBackgroundOpacity` 0
   only lets Orca's own window background show through the terminal.
+- **Text colour (Linux):** Hyprland's 95% window opacity (caelestia's
+  `windowOpacity`, see `linux/hyprmod/SETUP.md`) applies to the text too, so One
+  Dark's grey text (`abb2bf`) looked dim. `settings.linux.json` brightens it with
+  `terminalColorOverrides.foreground` `dcdfe4` (Settings → Color Overrides). The
+  Mac keeps plain One Dark.
 - To track another setting, add its key to `settings.json` with any value, then
   run `export`. Leave out credentials and account fields (`*ManagedAccounts`,
   `opencodeSessionCookie`, `minimaxGroupId`, proxy settings), `telemetry`, and
