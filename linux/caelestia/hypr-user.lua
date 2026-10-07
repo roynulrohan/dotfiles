@@ -11,9 +11,10 @@ hl.bind("SUPER + SHIFT + Right", hl.dsp.window.resize({ x = 30,  y = 0, relative
 hl.bind("SUPER + SHIFT + Up",    hl.dsp.window.resize({ x = 0, y = -30, relative = true }), { repeating = true })
 hl.bind("SUPER + SHIFT + Down",  hl.dsp.window.resize({ x = 0, y = 30,  relative = true }), { repeating = true })
 
--- imv zooms by 1.04^n per scroll event, where n is the raw scroll distance
--- (about 15 per wheel notch), so one notch zoomed about 80%. A 0.2 scroll factor
--- makes it about 12%. Keep it at or above 1/15: imv truncates each event to a
--- whole number, so a smaller factor stops wheel zoom. HyprMod has no
--- scroll_mouse action, so this rule lives here.
-hl.window_rule({ match = { class = "imv" }, scroll_mouse = 0.2 })
+-- Pass high-resolution wheel events through with their real direction. With
+-- emulation on (the default, 1), Hyprland regroups them into whole notches and
+-- sends zero-length scroll events while a notch fills up; swayimg reads a zero
+-- length as "scroll up", so Ctrl+wheel only zoomed in. Apps that read the
+-- high-resolution value (value120) are unaffected. HyprMod doesn't model this
+-- option, so it lives here.
+hl.config({ input = { emulate_discrete_scroll = 0 } })
