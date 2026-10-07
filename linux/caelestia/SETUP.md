@@ -10,9 +10,31 @@ Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
 | Repo | Destination | What |
 |---|---|---|
 | `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out` |
-| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, `emulate_discrete_scroll = 0`; Hyprland config that HyprMod can't express goes here |
+| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, `emulate_discrete_scroll = 0`, window mode (below); Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on |
 | `user-config.fish` | `~/.config/caelestia/user-config.fish` | empty on purpose; fish config lives in `shared/fish` |
+
+## Window mode
+
+`hypr-user.lua` defines a Hyprland submap for moving and placing the active
+window from the keyboard. It's Lua functions, which HyprMod can't express.
+**Super+A** enters it; Esc, Enter or Super+A leave. Other keys do nothing
+inside it.
+
+| Key | Floating window | Tiled window |
+|---|---|---|
+| Arrows | Move 40 px | Move within the layout |
+| Alt+arrows | Move 5 px | Move within the layout |
+| Shift+←/→ | Right edge in / out, 30 px | Resize |
+| Shift+↑/↓ | Bottom edge up / down, 30 px | Resize |
+| Ctrl+arrows | Snap to the left / right / top / bottom half | Nothing |
+| `f` | Fill the height | Nothing |
+| `c` | Centre | Centre |
+
+Floating windows stay inside the usable area of their monitor: caelestia's bar
+and frame (the monitor's reserved area) and the 4 px outer gap are excluded,
+and a step that would cross an edge stops at it. Hyprland resizes a floating
+window around its centre, so the edge keys move it back by half the change.
 
 ## Install
 

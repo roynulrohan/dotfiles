@@ -11,6 +11,10 @@ hl.config({
         gaps_in = 2,
         gaps_out = 4,
         layout = "dwindle",
+        resize_on_border = true,
+        snap = {
+            enabled = true,
+        },
     },
     input = {
         accel_profile = "flat",
