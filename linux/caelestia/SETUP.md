@@ -43,6 +43,16 @@ fastfetch, starship, the Nerd Font). Then copy these four files in and run
 `hyprctl reload`. The shell picks up `shell.json` live; restart it with
 Ctrl + Super + Alt + R if the bar doesn't change.
 
+The installer asks which components to set up. The CachyOS desktop has these
+enabled, and caelestia records the choice in
+`~/.local/state/caelestia/dots-state.json` (`enabled_components`):
+
+hypr, fish, foot, fastfetch, btop, micro, thunar, starship, firefox, gtk, qt,
+auth, network, bluetooth, pipewire, clipboard, fonts, tools, spotify, vscode,
+zed, nvim, discord, todoist, uwsm, zen
+
+AUR helper chosen in the installer: `paru`.
+
 ## Things to know
 
 - Load order: caelestia base → `hyprland/*.lua` → `hypr-user.lua` → HyprMod's
