@@ -11,7 +11,10 @@ installed for editing and for SVG.
 
 `mpv.conf`: start at 30% volume, cap at 100, resume where you stopped, loop
 single files, decode video on the GPU (`hwdec=auto`; a playing video dropped from
-39% to about 3% of a CPU core). Opening a file loads the rest of its folder, same kind only
+39% to about 3% of a CPU core). The read-ahead cache is capped at 32 MiB ahead and 16 MiB behind: mpv counts
+SMB and FUSE paths as network streams and otherwise holds up to 200 MiB per
+window (`demuxer-max-bytes`, `demuxer-max-back-bytes`). Each mpv window also
+carries about 80 MiB for the NVIDIA driver, so many open windows add up. Opening a file loads the rest of its folder, same kind only
 (`autocreate-playlist=same`). The image setup follows
 [guidocella/mpv-image-config](https://github.com/guidocella/mpv-image-config),
 trimmed to mpv's built-in `positioning` script (mpv 0.40 or newer). The
