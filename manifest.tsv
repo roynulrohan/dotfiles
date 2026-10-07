@@ -34,3 +34,5 @@ mac	mac/wm/sketchybar	~/.config/sketchybar	dir
 mac	mac/wm/karabiner/karabiner.json	~/.config/karabiner/karabiner.json	copy
 mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	copy
 linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy
+linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
+linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy

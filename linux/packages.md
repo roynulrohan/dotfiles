@@ -16,7 +16,7 @@ sits around it.
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |
 | `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
-| `dolphin` `mpv` | file manager (Super+E via `hypr-vars.lua`) and video player |
+| `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
 | `zen-browser-bin` (AUR) `discord` | apps referenced by window rules |
 
 Reproduce the list from a live machine with `pacman -Qqe`.

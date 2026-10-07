@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=mpv (images)
+Comment=mpv as the image viewer; see linux/mpv/SETUP.md in the dotfiles repo
+Exec=mpv --player-operation-mode=pseudo-gui -- %U
+Icon=mpv
+Terminal=false
+NoDisplay=true
+MimeType=image/avif;image/bmp;image/x-bmp;image/gif;image/heic;image/heif;image/jp2;image/jpeg;image/jpg;image/pjpeg;image/jxl;image/png;image/x-png;image/qoi;image/x-tga;image/x-targa;image/tiff;image/webp;
