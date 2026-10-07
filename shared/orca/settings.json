@@ -1,10 +1,7 @@
 {
   "theme": "dark",
   "leftSidebarAppearanceMode": "tinted",
-  "windowBackgroundBlur": true,
-  "terminalFontFamily": "JetBrainsMono NFM Regular",
   "terminalThemeDark": "One Dark",
-  "terminalBackgroundOpacity": 0,
   "terminalPaddingX": 4,
   "terminalPaddingY": 4,
   "terminalDividerThicknessPx": 1,
