@@ -22,7 +22,8 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 - **Monitors and workspaces**: DP-2 left (ws 1), DP-1 middle 280 Hz (ws 2),
   HDMI-A-1 right (ws 3). Machine-specific; redo on different hardware.
 - **HyDE-style keybinds on caelestia**: Super+Shift+N move window to workspace,
-  Super+Shift+arrows resize, Ctrl+Super+Shift+arrows move window, Super+Ctrl+Alt+←/→
+  Super+Shift+arrows resize (in `linux/caelestia/hypr-user.lua`: HyprMod can't
+  convert repeating resize binds), Ctrl+Super+Shift+arrows move window, Super+Ctrl+Alt+←/→
   move to relative workspace, Super+Ctrl+↓ empty workspace, Super+W float,
   Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+P /
   Super+Ctrl+P / Super+Shift+P screenshot / freeze / colour picker,
@@ -30,6 +31,9 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 - **Unbinds** of the caelestia binds those replace. The `unbind` text must match
   caelestia's spelling exactly, including modifier order and key capitalisation
   (`CTRL + SUPER + SHIFT + Left`), or both binds stay live.
-- **Window rules**: kitty, Zen (`zen`) and Discord (`discord`) forced opaque so
-  caelestia's default window opacity doesn't apply to them.
+- **Window rules**: kitty, Zen (`zen`), Discord (`discord`) and Jellyfin
+  (`org.jellyfin.JellyfinDesktop`) forced opaque so caelestia's default window
+  opacity doesn't apply to them.
 - **Settings**: dwindle, no tearing, flat mouse accel, gaps 2 / 4.
+  `follow_mouse = 2`: hovering a window gives it mouse focus; keyboard focus
+  moves only on click.

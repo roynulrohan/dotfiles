@@ -14,6 +14,7 @@ hl.config({
     },
     input = {
         accel_profile = "flat",
+        follow_mouse = 2,
     },
 })
 
@@ -105,10 +106,6 @@ hl.unbind("SUPER + SHIFT + J")
 hl.bind("SUPER + SHIFT + J", hl.dsp.layout("swapsplit"))
 hl.unbind("SUPER + SHIFT + F")
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.pin())
-hl.unbind("SUPER + SHIFT + left")
-hl.unbind("SUPER + SHIFT + right")
-hl.unbind("SUPER + SHIFT + up")
-hl.unbind("SUPER + SHIFT + down")
 hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.global("caelestia:screenshot"), {
     locked = true,
@@ -139,6 +136,12 @@ hl.bind("F12", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set
 -- Window rules
 hl.window_rule({
     match = {
+        class = "org.jellyfin.JellyfinDesktop",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
         class = "kitty",
     },
     opaque = true,
@@ -155,9 +158,3 @@ hl.window_rule({
     },
     opaque = true,
 })
-
--- TODO: the following entries need manual conversion to Lua:
---   binde = SUPER SHIFT, left, resizewindow
---   binde = SUPER SHIFT, right, resizewindow
---   binde = SUPER SHIFT, up, resizewindow
---   binde = SUPER SHIFT, down, resizewindow

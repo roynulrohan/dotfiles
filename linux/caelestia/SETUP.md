@@ -10,7 +10,7 @@ Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
 | Repo | Destination | What |
 |---|---|---|
 | `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out` |
-| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | empty hook; Hyprland config that HyprMod can't express goes here |
+| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds; Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on |
 | `user-config.fish` | `~/.config/caelestia/user-config.fish` | empty on purpose; fish config lives in `shared/fish` |
 
