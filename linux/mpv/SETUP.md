@@ -29,8 +29,8 @@ bindings off again, so videos keep mpv's defaults.
 | Wheel | Zoom towards the cursor |
 | Left-drag | Pan |
 | Middle button (hold) | Sweep across the whole image |
-| `n` / `p`, PgDn / PgUp | Next / previous image in the folder |
-| Arrows (Shift: slowly) | Pan |
+| ← / →, `n` / `p`, PgDn / PgUp | Previous / next image in the folder (hold to flip through) |
+| ↑ / ↓, Shift+arrows | Pan |
 | `=` / `-` | Zoom |
 | `0` | Reset the view |
 | `u` | Actual pixels / fit to window |
