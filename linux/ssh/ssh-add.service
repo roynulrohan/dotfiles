@@ -1,0 +1,18 @@
+[Unit]
+Description=Load SSH keys into the agent, passphrase from KDE Wallet
+# ksshaskpass reads the passphrase from KDE Wallet (unlocked by PAM at login)
+# and asks once, offering to store it, the first time. Needs the session's
+# Wayland display, so it runs with the graphical session.
+After=graphical-session.target ssh-agent.socket
+Requires=ssh-agent.socket
+
+[Service]
+Type=oneshot
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+Environment=SSH_ASKPASS=/usr/bin/ksshaskpass
+Environment=SSH_ASKPASS_REQUIRE=force
+StandardInput=null
+ExecStart=/usr/bin/ssh-add -q %h/.ssh/id_ed25519
+
+[Install]
+WantedBy=graphical-session.target

@@ -42,6 +42,7 @@ linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
 linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
 linux	linux/wallpaper/live-wallpaper	~/.local/bin/live-wallpaper	copy-x
 linux	linux/wallpaper/live-wallpaper.service	~/.config/systemd/user/live-wallpaper.service	copy
+linux	linux/ssh/ssh-add.service	~/.config/systemd/user/ssh-add.service	copy
 linux	linux/wallpaper/live-wallpaper-watchdog.service	~/.config/systemd/user/live-wallpaper-watchdog.service	copy
 linux	linux/wallpaper/live-wallpaper-watchdog.timer	~/.config/systemd/user/live-wallpaper-watchdog.timer	copy
 linux	linux/sddm/sddm-theme.conf	~/.config/caelestia/templates/sddm-theme.conf	copy
