@@ -20,6 +20,9 @@ when they change on a machine. `./status.sh` shows what differs.
 These explain why the configs look the way they do. Honour them when you hit a
 decision the repo doesn't cover.
 
+- **CachyOS is the reference machine.** The Mac adapts the shared configs, not
+  the other way round. When the Mac needs a different value, put it behind an OS
+  guard (`CLAUDE.md` rule 4), so CachyOS behaves the same as before.
 - **fish + starship**, everywhere. Not zsh, not powerlevel10k.
 - **Terminal**: kitty on both machines; Ghostty stays configured on the Mac as a
   second terminal. Both speak the kitty graphics protocol, which the greeting's
