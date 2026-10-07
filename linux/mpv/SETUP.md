@@ -10,7 +10,8 @@ installed for editing and for SVG.
 | `mpv-image.desktop` | `~/.local/share/applications/mpv-image.desktop` |
 
 `mpv.conf`: start at 30% volume, cap at 100, resume where you stopped, loop
-single files. Opening a file loads the rest of its folder, same kind only
+single files, decode video on the GPU (`hwdec=auto`; a playing video dropped from
+39% to about 3% of a CPU core). Opening a file loads the rest of its folder, same kind only
 (`autocreate-playlist=same`). The image setup follows
 [guidocella/mpv-image-config](https://github.com/guidocella/mpv-image-config),
 trimmed to mpv's built-in `positioning` script (mpv 0.40 or newer). The
