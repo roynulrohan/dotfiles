@@ -35,8 +35,9 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   apply: kitty, Zen (`zen`), Discord (`discord`), Jellyfin
   (`org.jellyfin.JellyfinDesktop`), the file explorers Dolphin
   (`org.kde.dolphin`) and Thunar (`[Tt]hunar`), and the viewers Gwenview
-  (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`), and Orca (`orca`, an AppImage
-  IDE). caelestia's own rules already keep `imv` and `feh` opaque.
+  (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`). caelestia's own rules already keep
+  `imv` and `feh` opaque. Orca (`orca`) is left at caelestia's 95% on purpose:
+  its own window is never transparent, so that's the only see-through it gets.
 - **Settings**: dwindle, no tearing, flat mouse accel, gaps 2 / 4.
   `resize_on_border`: drag a window edge to resize (a side edge changes one
   dimension only). `snap:enabled`: floating windows dragged with the mouse snap
