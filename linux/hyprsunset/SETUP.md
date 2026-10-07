@@ -24,15 +24,16 @@ this setup gets from uwsm (`wayland-session@hyprland.desktop.target`), so no
 
 ## Settings
 
-One profile at `00:00` with `temperature = 6250`. A single profile keeps it on
+One profile at `00:00` with `temperature = 5800`. A single profile keeps it on
 all day: hyprsunset re-applies it at midnight, and no other profile switches it
 off.
 
 hyprsunset keeps red at 100% and scales green and blue with Tanner Helland's
 blackbody formula (`matrixForKelvin` in `src/Hyprsunset.cpp`). The screen is
-unchanged at about 6600 K, not at the 6000 K default. 6250 K keeps 98% green
-and 95% blue: a tint you barely see. 4500 K (85% / 74%) and 5000–5750 K were
-too yellow. Valid range: 1000 K (deep orange, no blue) to 20000 K (bluish).
+unchanged at about 6600 K, not at the 6000 K default. 5800 K keeps 95% green
+and 91% blue: a light, just-visible tint. Tried: 4500 K (85% / 74%) and
+5000–5500 K were too yellow; 6250 K (98% / 95%) was too faint to see. Valid
+range: 1000 K (deep orange, no blue) to 20000 K (bluish).
 
 Try other values live, then write the one you like into the file and restart
 the service:
