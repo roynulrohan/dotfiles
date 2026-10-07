@@ -25,6 +25,7 @@ sits around it.
 | `jellyfin-desktop-git` (AUR) | Jellyfin client; replaced the repo's `jellyfin-desktop`; kept opaque by a HyprMod rule |
 | `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
 | `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see `shared/claude`) |
+| `pipewire` `wireplumber` | audio, preinstalled by CachyOS; the headset EQ runs in PipeWire's `filter-chain.service` (see `pipewire/`). Not EasyEffects |
 | `gvfs-smb` | SMB shares (the NAS) in GTK apps such as Thunar; Dolphin and Gwenview use KDE's own SMB support |
 | `cachyos-gaming-meta` `cachyos-gaming-applications` | CachyOS's gaming bundle (Steam, Lutris and the rest), installed as a set rather than listed one by one |
 

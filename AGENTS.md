@@ -42,7 +42,8 @@ decision the repo doesn't cover.
   is the default (Super+D, `discord://` links); the official app stays installed.
   Live wallpapers: Wallpaper Engine wallpapers per monitor through
   linux-wallpaperengine (`linux/wallpaper`); caelestia's wallpaper is a still
-  of the main one, for the colours.
+  of the main one, for the colours. Audio: PipeWire's own filter-chain runs the
+  G432 headset's EQ (`linux/pipewire`); no EasyEffects.
 - **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
   from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland
@@ -61,7 +62,7 @@ decision the repo doesn't cover.
 | Directory | Applies to | Contents |
 |---|---|---|
 | `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor, orca |
-| `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, `packages.md` |
+| `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, PipeWire headset EQ, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
