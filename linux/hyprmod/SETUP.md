@@ -31,9 +31,12 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 - **Unbinds** of the caelestia binds those replace. The `unbind` text must match
   caelestia's spelling exactly, including modifier order and key capitalisation
   (`CTRL + SUPER + SHIFT + Left`), or both binds stay live.
-- **Window rules**: kitty, Zen (`zen`), Discord (`discord`) and Jellyfin
-  (`org.jellyfin.JellyfinDesktop`) forced opaque so caelestia's default window
-  opacity doesn't apply to them.
+- **Window rules**: forced opaque so caelestia's default window opacity doesn't
+  apply: kitty, Zen (`zen`), Discord (`discord`), Jellyfin
+  (`org.jellyfin.JellyfinDesktop`), the file explorers Dolphin
+  (`org.kde.dolphin`) and Thunar (`[Tt]hunar`), and the viewers Gwenview
+  (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`). caelestia's
+  own rules already keep `imv` and `feh` opaque.
 - **Settings**: dwindle, no tearing, flat mouse accel, gaps 2 / 4.
   `follow_mouse = 2`: hovering a window gives it mouse focus; keyboard focus
   moves only on click.

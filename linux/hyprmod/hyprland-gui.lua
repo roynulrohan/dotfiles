@@ -158,3 +158,33 @@ hl.window_rule({
     },
     opaque = true,
 })
+hl.window_rule({
+    match = {
+        class = "org.kde.dolphin",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
+        class = "[Tt]hunar",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
+        class = "org.kde.gwenview",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
+        class = "org.kde.haruna",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
+        class = "mpv",
+    },
+    opaque = true,
+})
