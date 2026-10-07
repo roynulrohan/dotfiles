@@ -1,0 +1,32 @@
+#!/bin/sh
+# SDDM runs this as root before the X11 login screen appears (DisplayCommand
+# in x11.conf). Show the login screen on the main monitor only: the connected
+# output with the highest refresh rate becomes primary and the others turn off.
+# X11 mirrors every monitor otherwise. Hyprland sets its own layout after login,
+# so this affects the login screen only.
+# XSETUP_DRY_RUN=1 prints the xrandr command instead of running it.
+
+args=$(xrandr --query | awk '
+    $2 == "disconnected" { out = ""; next }
+    $2 == "connected"    { out = $1; outs[++n] = out; best[out] = 0; next }
+    /^[ \t]/ && out != "" {
+        for (i = 2; i <= NF; i++) {
+            r = $i; gsub(/[^0-9.]/, "", r)
+            if (r + 0 > best[out]) best[out] = r + 0
+        }
+    }
+    END {
+        if (n == 0) exit
+        main = outs[1]
+        for (i = 2; i <= n; i++) if (best[outs[i]] > best[main]) main = outs[i]
+        printf "--output %s --auto --primary --pos 0x0", main
+        for (i = 1; i <= n; i++) if (outs[i] != main) printf " --output %s --off", outs[i]
+    }')
+
+[ -n "$args" ] || exit 0
+if [ "${XSETUP_DRY_RUN:-}" = 1 ]; then
+    echo "xrandr $args"
+else
+    # shellcheck disable=SC2086 # output names contain no spaces
+    xrandr $args
+fi

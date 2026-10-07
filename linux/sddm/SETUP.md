@@ -10,6 +10,7 @@ profile.
 | Repo | Destination |
 |---|---|
 | `x11.conf` | `/etc/sddm.conf.d/x11.conf` (root) |
+| `Xsetup` | `/etc/sddm/Xsetup` (root, executable) |
 | `sddm-theme.conf` | `~/.config/caelestia/templates/sddm-theme.conf` |
 
 ## Install
@@ -21,7 +22,11 @@ profile.
    ```bash
    paru -S caelestia-sddm-locklike-git
    ```
-3. Copy the override: `sudo cp x11.conf /etc/sddm.conf.d/x11.conf`
+3. Copy the override and the setup script it runs:
+   ```bash
+   sudo cp x11.conf /etc/sddm.conf.d/x11.conf
+   sudo install -Dm755 Xsetup /etc/sddm/Xsetup
+   ```
 4. Sync your wallpaper, colours, avatar (`~/.face`) and settings onto the theme:
    ```bash
    sudo /usr/share/sddm/themes/caelestia/scripts/sync.sh
@@ -52,6 +57,12 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   override the login screen fails at boot. Files in `/etc/sddm.conf.d` win over
   `/usr/lib/sddm/sddm.conf.d` (`sddm.conf(5)`). The preview works either way,
   because it runs inside Hyprland.
+- **Main monitor only:** X11 mirrors every monitor at the login screen. `x11.conf`
+  makes SDDM run `Xsetup` first, which keeps the connected output with the
+  highest refresh rate (the 280 Hz ASUS) and turns the others off. It reads the
+  outputs at run time, because the NVIDIA driver names them differently under
+  X11 than Hyprland does. `XSETUP_DRY_RUN=1 ./Xsetup` prints the `xrandr`
+  command instead of running it. Hyprland sets its own layout after login.
 - **Session picker:** off in the theme's default template; ours sets
   `sessionPicker=true`. Even when hidden, Up/Down on the login screen change the
   session. It always starts on the first session in the list (Hyprland), not the
@@ -64,6 +75,11 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   from the last sync. Run the sync again after changing wallpaper. Automatic
   syncing is possible (a caelestia `postHook` plus a passwordless sudo rule for
   `sync.sh`) but isn't set up.
+- **Frozen screen after logging out:** on 2026-10-07 Hyprland crashed while
+  closing, SDDM logged the session as crashed and never showed the login screen
+  again. Ctrl+Alt+Delete on that screen reboots (systemd treats it as a reboot
+  request). Ctrl+Alt+F2, the terminal SDDM's login screen runs on, may bring it
+  back; untested.
 
 ## Verify
 
