@@ -3,7 +3,8 @@
 Terminal on Linux (replaces caelestia's foot so the fastfetch image logos work).
 Also the terminal on macOS, where Ghostty stays configured as a second terminal.
 On the Mac, AeroSpace's Super+T opens new windows through kitty's remote control
-(`allow_remote_control` and `listen_on` in `kitty.conf`), so keep those two lines.
+(`allow_remote_control` in `kitty.conf`, the `listen_on` path in
+`mac/kitty/macos.conf`), so keep both.
 
 ## Files
 
@@ -11,7 +12,16 @@ On the Mac, AeroSpace's Super+T opens new windows through kitty's remote control
 |---|---|---|
 | `kitty.conf` | `~/.config/kitty/kitty.conf` | shared |
 | `../../mac/kitty/colors.conf` | `~/.config/kitty/colors.conf` | **macOS**; on Linux generate it (below) |
+| `../../mac/kitty/macos.conf` | `~/.config/kitty/macos.conf` | **macOS**; socket path for remote control |
 | — | `~/.config/kitty/local.conf` | per-machine overrides, e.g. `font_size 18`; create empty if absent |
+
+## Remote control socket
+
+`kitty.conf` listens on `unix:@kitty`, an abstract socket. Abstract sockets
+exist only on Linux. On macOS, `macos.conf` overrides it with `unix:/tmp/kitty`
+through the `globinclude ${KITTY_OS}.conf` line; kitty appends `-PID` to both.
+Linux has no `linux.conf`, and `globinclude` skips a missing file silently.
+Copy `macos.conf` on the Mac, or kitty starts without remote control there.
 
 ## Install
 
@@ -39,5 +49,7 @@ its own transparency and Hyprland blurs behind it.
 ## Verify
 
 ```bash
-kitty --debug-config | head       # no errors
+# kitty's own config loader (kitty 0.49.2 has no --debug-config). Linux: unix:@kitty,
+# macOS: unix:/tmp/kitty
+kitty +runpy "import os; from kitty.config import load_config; print(load_config(os.path.expanduser('~/.config/kitty/kitty.conf')).listen_on)"
 ```
