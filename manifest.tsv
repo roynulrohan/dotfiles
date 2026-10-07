@@ -39,4 +39,6 @@ linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
 linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
 linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
 linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
+linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
+linux	linux/wallpaper/live-wallpaper	~/.local/bin/live-wallpaper	copy-x
 linux	linux/sddm/sddm-theme.conf	~/.config/caelestia/templates/sddm-theme.conf	copy

@@ -21,6 +21,7 @@ sits around it.
 | `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
 | `zen-browser-bin` (AUR) `discord` | apps referenced by window rules |
 | `equibop-bin` (AUR) | Equibop, the default Discord app: caelestia's `discord` component installs it and themes it with its colours. The official `discord` stays installed alongside |
+| `linux-wallpaperengine-git` (AUR) | live wallpapers from Wallpaper Engine (installed through Steam/Proton); see `wallpaper/` |
 | `jellyfin-desktop-git` (AUR) | Jellyfin client; replaced the repo's `jellyfin-desktop`; kept opaque by a HyprMod rule |
 | `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
 | `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see `shared/claude`) |

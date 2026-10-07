@@ -1,0 +1,14 @@
+#!/bin/sh
+# Sync the caelestia SDDM theme (wallpaper still, colours, avatar), then restore
+# the login-screen video, which the theme's sync.sh deletes as a stale
+# background. Run as yourself; it uses sudo for the root-owned theme folder.
+# LOGIN_VIDEO overrides the video; without the file, the still is used.
+set -e
+theme=/usr/share/sddm/themes/caelestia
+video="${LOGIN_VIDEO:-$HOME/Pictures/Wallpapers/live/login.mp4}"
+
+sudo "$theme/scripts/sync.sh"
+if [ -f "$video" ]; then
+    sudo install -m 644 "$video" "$theme/assets/background.mp4"
+    echo "✓ Login video: $video"
+fi

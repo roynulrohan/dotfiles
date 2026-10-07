@@ -134,3 +134,9 @@ hl.define_submap("window", function()
     hl.bind("Return", hl.dsp.submap("reset"))
     hl.bind("SUPER + A", hl.dsp.submap("reset"))
 end)
+
+-- Live wallpapers (linux/wallpaper/live-wallpaper): one Wallpaper Engine
+-- wallpaper per connected monitor, over caelestia's still wallpaper.
+hl.on("hyprland.start", function()
+    hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/live-wallpaper")
+end)

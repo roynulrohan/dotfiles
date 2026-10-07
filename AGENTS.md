@@ -40,6 +40,9 @@ decision the repo doesn't cover.
   SVG and editing); see `linux/packages.md`. Login screen: SDDM with the
   caelestia "locklike" theme (`linux/sddm`). Discord: Equibop, caelestia-themed,
   is the default (Super+D, `discord://` links); the official app stays installed.
+  Live wallpapers: Wallpaper Engine wallpapers per monitor through
+  linux-wallpaperengine (`linux/wallpaper`); caelestia's wallpaper is a still
+  of the main one, for the colours.
 - **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
   from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland

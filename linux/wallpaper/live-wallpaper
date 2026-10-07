@@ -1,0 +1,50 @@
+#!/bin/sh
+# Live wallpapers: one Wallpaper Engine Workshop wallpaper per monitor, played by
+# linux-wallpaperengine. hypr-user.lua runs this at login; run it again to
+# restart, e.g. after plugging a monitor in. Only connected monitors get one.
+# LIVE_WALLPAPER_DRY_RUN=1 prints the command instead of running it.
+
+# monitor   workshop id   name
+WALLPAPERS='
+DP-1       3314492008    世界很温柔 (Eri Uesugi, 4K 60 fps)
+HDMI-A-1   2704773569    CITRUS - go to class
+DP-2       2511663284    Rain 4K
+'
+
+# Wallpaper settings, name=value. Each name belongs to one wallpaper.
+PROPERTIES='
+fontcolorff4848bigbpromptbox=0
+'
+# fontcolorff4848bigbpromptbox: Elaina's notice box ("prompt box"). Its 5-second
+# auto-hide is a Wallpaper Engine script that doesn't run here.
+
+log="${XDG_CACHE_HOME:-$HOME/.cache}/live-wallpaper.log"
+
+# Hyprland may still be setting up outputs right after login.
+i=0
+until connected=$(hyprctl monitors -j 2>/dev/null | jq -r '.[].name' 2>/dev/null) && [ -n "$connected" ]; do
+    i=$((i + 1)); [ "$i" -ge 20 ] && { echo "live-wallpaper: no monitors from hyprctl" >&2; exit 1; }
+    sleep 0.5
+done
+
+set -- --silent
+for p in $PROPERTIES; do set -- "$@" --set-property "$p"; done
+screens=0
+while read -r monitor id _name; do
+    [ -n "$monitor" ] || continue
+    printf '%s\n' "$connected" | grep -qx "$monitor" || continue
+    set -- "$@" --screen-root "$monitor" --bg "$id" --scaling fill
+    screens=$((screens + 1))
+done <<LIST
+$WALLPAPERS
+LIST
+[ "$screens" -gt 0 ] || { echo "live-wallpaper: none of the listed monitors is connected" >&2; exit 1; }
+
+if [ "${LIVE_WALLPAPER_DRY_RUN:-}" = 1 ]; then
+    echo linux-wallpaperengine "$@"
+    exit 0
+fi
+
+# The /usr/bin wrapper execs ./linux-wallpaperengine from /opt/linux-wallpaperengine.
+pkill -f '^\./linux-wallpaperengine' && sleep 1
+setsid -f linux-wallpaperengine "$@" >"$log" 2>&1

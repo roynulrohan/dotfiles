@@ -11,6 +11,7 @@ profile.
 |---|---|
 | `x11.conf` | `/etc/sddm.conf.d/x11.conf` (root) |
 | `Xsetup` | `/etc/sddm/Xsetup` (root, executable) |
+| `sddm-sync` | `~/.local/bin/sddm-sync` |
 | `sddm-theme.conf` | `~/.config/caelestia/templates/sddm-theme.conf` |
 
 ## Install
@@ -27,9 +28,10 @@ profile.
    sudo cp x11.conf /etc/sddm.conf.d/x11.conf
    sudo install -Dm755 Xsetup /etc/sddm/Xsetup
    ```
-4. Sync your wallpaper, colours, avatar (`~/.face`) and settings onto the theme:
+4. Sync your wallpaper, colours, avatar (`~/.face`), settings and login video
+   onto the theme (it asks for sudo):
    ```bash
-   sudo /usr/share/sddm/themes/caelestia/scripts/sync.sh
+   sddm-sync
    ```
 5. Preview it in a window, without logging out:
    ```bash
@@ -72,7 +74,7 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   The template's colour lines are placeholders caelestia fills in, and the sync
   sets `os` and `host`.
 - **The scheme is dynamic,** so the login screen shows the wallpaper and colours
-  from the last sync. Run the sync again after changing wallpaper. Automatic
+  from the last sync. Run `sddm-sync` again after changing wallpaper. Automatic
   syncing is possible (a caelestia `postHook` plus a passwordless sudo rule for
   `sync.sh`) but isn't set up.
 - **Frozen screen after logging out:** on 2026-10-07 Hyprland crashed while
@@ -80,6 +82,24 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   again. Ctrl+Alt+Delete on that screen reboots (systemd treats it as a reboot
   request). Ctrl+Alt+F2, the terminal SDDM's login screen runs on, may bring it
   back; untested.
+
+## Login video
+
+The theme loops `assets/background.mp4` (or `.webm`, `.mkv`, `.mov`, `.m4v`,
+`.avi`) over the still, silently: its player has no audio output. The theme's
+`sync.sh` deletes every `background.*` other than the wallpaper it copies, so
+`sddm-sync` runs it and then installs the video again. Use `sddm-sync` instead of
+the plain `sync.sh`, and rerun it after the theme package updates, which wipes
+the theme folder.
+
+The video is `~/Pictures/Wallpapers/live/login.mp4` (not in this repo;
+`LOGIN_VIDEO` overrides it): a 1080p copy without audio of the main live
+wallpaper, since the login screen shows on one 1080p monitor and may decode on
+the CPU:
+
+```bash
+ffmpeg -i <video> -vf scale=1920:1080 -an -c:v libx264 -crf 22 -pix_fmt yuv420p -movflags +faststart ~/Pictures/Wallpapers/live/login.mp4
+```
 
 ## Verify
 
