@@ -1,0 +1,18 @@
+[Unit]
+Description=Live wallpapers (linux-wallpaperengine)
+# Started with the graphical session. Right after login Hyprland can close the
+# wallpaper's layer surface while outputs and workspaces settle, and
+# linux-wallpaperengine exits; Restart brings it back.
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/live-wallpaper --run
+Restart=always
+RestartSec=3
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target

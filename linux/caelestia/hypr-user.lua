@@ -135,11 +135,7 @@ hl.define_submap("window", function()
     hl.bind("SUPER + A", hl.dsp.submap("reset"))
 end)
 
--- Live wallpapers (linux/wallpaper/live-wallpaper): one Wallpaper Engine
--- wallpaper per connected monitor, over caelestia's still wallpaper.
-hl.on("hyprland.start", function()
-    hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/live-wallpaper")
-end)
+-- Live wallpapers run as a systemd user service (linux/wallpaper), not from here.
 
 -- Per-monitor workspaces: each monitor has its own 1-10 on Super+1..0, from
 -- split-monitor-workspaces (a Lua package, pinned clone in

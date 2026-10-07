@@ -10,11 +10,17 @@ the live wallpaper isn't running.
 | Repo | Destination |
 |---|---|
 | `live-wallpaper` | `~/.local/bin/live-wallpaper` |
+| `live-wallpaper.service` | `~/.config/systemd/user/` |
 | `live-wallpaper-watchdog.service`, `.timer` | `~/.config/systemd/user/` |
 
-`linux/caelestia/hypr-user.lua` runs it once when Hyprland starts. Run
-`live-wallpaper` again to restart the wallpapers, e.g. after plugging a monitor
-in. It logs to `~/.cache/live-wallpaper.log`.
+`live-wallpaper.service` runs it with the graphical session (`live-wallpaper
+--run`, in the foreground), and `Restart=always` brings it back whenever it
+exits: right after login Hyprland sometimes closes the wallpaper's layer
+surface while outputs and workspaces settle ("Compositor closed our LS" in the
+log), and the wallpapers used to stay gone until restarted by hand. Plain
+`live-wallpaper` restarts the service, e.g. after plugging a monitor in; stop
+the wallpapers with `systemctl --user stop live-wallpaper`. Output goes to the
+journal: `journalctl --user -u live-wallpaper`.
 
 ## Install
 
@@ -25,7 +31,8 @@ in. It logs to `~/.cache/live-wallpaper.log`.
    about 0.7 GB of GPU memory while open.
 2. `paru -S linux-wallpaperengine-git` (AUR, maintained by the author; builds
    from source and installs into `/opt/linux-wallpaperengine`).
-3. Copy `live-wallpaper` into place and log in again, or run it.
+3. Copy `live-wallpaper` and the service into place, then
+   `systemctl --user enable --now live-wallpaper.service`.
 4. Make the local 1080p copy of the main video (below), then copy the watchdog
    units and run `systemctl --user enable --now live-wallpaper-watchdog.timer`.
 
@@ -76,10 +83,8 @@ linux-wallpaperengine still leaks with video wallpapers on NVIDIA, about
 10 MiB a minute here (upstream issue #416, traced to mpv's OpenGL render path:
 mpv issues #15099 and #8516; a fix, mpv PR #17303, is merged but not in mpv
 0.41). The watchdog timer runs `live-wallpaper --if-over 1500` every 10
-minutes: above 1500 MiB (PSS) it restarts the wallpapers through
-`hyprctl dispatch` (a restart from the oneshot service itself would be killed
-with it), which flickers for about a second. It never starts them if they
-aren't running. Revisit once mpv 0.42 ships.
+minutes: above 1500 MiB (PSS) it restarts the service, which flickers for
+about a second. It never starts the wallpapers if they aren't running. Revisit once mpv 0.42 ships.
 
 ## Wallpaper settings
 

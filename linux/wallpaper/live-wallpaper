@@ -1,10 +1,14 @@
 #!/bin/sh
 # Live wallpapers: one Wallpaper Engine Workshop wallpaper per monitor, played by
-# linux-wallpaperengine. hypr-user.lua runs this at login; run it again to
-# restart, e.g. after plugging a monitor in. Only connected monitors get one.
-# LIVE_WALLPAPER_DRY_RUN=1 prints the command instead of running it.
-# live-wallpaper --if-over MIB restarts it only when it uses more than MIB of
-# memory (PSS), and never starts it if it isn't running: for the watchdog timer.
+# linux-wallpaperengine, run by live-wallpaper.service. Only connected monitors
+# get one.
+#   live-wallpaper              restart the service, e.g. after plugging a
+#                               monitor in
+#   live-wallpaper --run        what the service runs (foreground; output goes
+#                               to the journal: journalctl --user -u live-wallpaper)
+#   live-wallpaper --if-over MIB  restart the service only when the wallpapers
+#                               use more than MIB of memory (PSS): for the watchdog
+# LIVE_WALLPAPER_DRY_RUN=1 prints the linux-wallpaperengine command instead.
 
 # monitor   workshop id   name
 WALLPAPERS='
@@ -20,7 +24,6 @@ fontcolorff4848bigbpromptbox=0
 # fontcolorff4848bigbpromptbox: Elaina's notice box ("prompt box"). Its 5-second
 # auto-hide is a Wallpaper Engine script that doesn't run here.
 
-log="${XDG_CACHE_HOME:-$HOME/.cache}/live-wallpaper.log"
 copies="${XDG_DATA_HOME:-$HOME/.local/share}/live-wallpapers"
 
 if [ "${1:-}" = --if-over ]; then
@@ -29,9 +32,11 @@ if [ "${1:-}" = --if-over ]; then
     pss=$(awk '/^Pss:/ { print int($2 / 1024) }' "/proc/$pid/smaps_rollup" 2>/dev/null)
     [ "${pss:-0}" -gt "${2:?usage: live-wallpaper --if-over MIB}" ] || exit 0
     echo "live-wallpaper: restarting, it uses ${pss} MiB (limit $2)" >&2
-    # Restart through Hyprland, as at login: started from the watchdog's
-    # oneshot service, it would be killed when that service ends.
-    exec hyprctl dispatch "hl.dsp.exec_cmd(\"$0\")"
+    exec systemctl --user restart live-wallpaper.service
+fi
+
+if [ "${1:-}" != --run ] && [ "${LIVE_WALLPAPER_DRY_RUN:-}" != 1 ]; then
+    exec systemctl --user restart live-wallpaper.service
 fi
 
 # Hyprland may still be setting up outputs right after login.
@@ -63,5 +68,6 @@ if [ "${LIVE_WALLPAPER_DRY_RUN:-}" = 1 ]; then
 fi
 
 # The /usr/bin wrapper execs ./linux-wallpaperengine from /opt/linux-wallpaperengine.
+# Stop any copy not started by the service (an older setup ran it detached).
 pkill -f '^\./linux-wallpaperengine' && sleep 1
-setsid -f linux-wallpaperengine "$@" >"$log" 2>&1
+exec linux-wallpaperengine "$@"
