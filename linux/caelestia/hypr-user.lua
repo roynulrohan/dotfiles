@@ -144,7 +144,7 @@ end)
 -- Per-monitor workspaces: each monitor has its own 1-10 on Super+1..0, from
 -- split-monitor-workspaces (a Lua package, pinned clone in
 -- ~/.local/share/hypr-plugins; see linux/caelestia/SETUP.md). Hyprland ids:
--- main DP-1 1-10, left DP-2 11-20, right HDMI-A-1 21-30.
+-- main DP-1 1-10, right HDMI-A-1 11-20, left DP-2 21-30.
 -- Required by its full name: its modules are called globals/helpers/monitors,
 -- and caelestia's own modules are required by bare names too.
 local smw_dir = os.getenv("HOME") .. "/.local/share/hypr-plugins"
@@ -155,9 +155,12 @@ if not smw_ok then
 else
     smw.setup({
         workspace_count = 10,
-        monitor_priority = { "DP-1", "DP-2", "HDMI-A-1" },
-        -- Empty workspaces disappear, as they did before.
-        enable_persistent_workspaces = false,
+        monitor_priority = { "DP-1", "HDMI-A-1", "DP-2" },
+        -- Workspaces stay persistent (the package's default): Hyprland's own
+        -- workspace rules then pin each one to its monitor. Without them, a
+        -- reload makes the package create missing workspaces on whichever
+        -- monitor has focus and then move them, which left workspaces on the
+        -- wrong monitor.
     })
 
     -- Replace caelestia's global Super(+Alt)+N and its "groups of 10"

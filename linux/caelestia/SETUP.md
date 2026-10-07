@@ -56,9 +56,14 @@ git -C ~/.local/share/hypr-plugins/split-monitor-workspaces checkout f26d624
 bare names too. If the package is missing, caelestia's global workspace keys stay
 and Super+Shift+N does nothing.
 
-Ranges: main DP-1 gets Hyprland ids 1–10, left DP-2 11–20, right HDMI-A-1
+Ranges: main DP-1 gets Hyprland ids 1–10, right HDMI-A-1 11–20, left DP-2
 21–30 (`monitor_priority`). caelestia's bar labels workspaces by id, so the side
-monitors show 11–20 and 21–30. Empty workspaces aren't kept.
+monitors show 11–20 and 21–30. All 30 workspaces are persistent (the package's
+default), so Hyprland's own workspace rules pin each one to its monitor. With
+persistence off, every config reload made the package create a missing
+workspace on whichever monitor had focus and then move it, and Hyprland handed
+the robbed monitor a fallback workspace; on 2026-10-07 that left workspaces and
+their windows on the wrong monitor.
 
 | Key | Does |
 |---|---|
