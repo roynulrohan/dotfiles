@@ -26,5 +26,13 @@
     },
     "services": {
         "weatherLocation": "45.4215,-75.6972"
+    },
+    "session": {
+        "commands": {
+            "logout": [
+                "uwsm",
+                "stop"
+            ]
+        }
     }
 }

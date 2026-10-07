@@ -60,11 +60,15 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   `/usr/lib/sddm/sddm.conf.d` (`sddm.conf(5)`). The preview works either way,
   because it runs inside Hyprland.
 - **Main monitor only:** X11 mirrors every monitor at the login screen. `x11.conf`
-  makes SDDM run `Xsetup` first, which keeps the connected output with the
-  highest refresh rate (the 280 Hz ASUS) and turns the others off. It reads the
-  outputs at run time, because the NVIDIA driver names them differently under
-  X11 than Hyprland does. `XSETUP_DRY_RUN=1 ./Xsetup` prints the `xrandr`
-  command instead of running it. Hyprland sets its own layout after login.
+  makes SDDM run `Xsetup` first, which keeps the main monitor and turns the
+  others off. It finds the main monitor by the model name in its EDID
+  (`MAIN_MODEL=VG279QM`, read from `xrandr --verbose`). Output names don't work,
+  because the NVIDIA driver names them differently under X11 (the left VG248 is
+  X's `DP-2`). Refresh rate doesn't either: on 2026-10-07 X11 gave the VG248 a
+  higher one, so the login screen landed on the left monitor. With no matching
+  monitor it falls back to the highest refresh rate. `XSETUP_DRY_RUN=1 ./Xsetup`
+  prints the `xrandr` command instead of running it. Hyprland sets its own
+  layout after login.
 - **Session picker:** off in the theme's default template; ours sets
   `sessionPicker=true`. Even when hidden, Up/Down on the login screen change the
   session. It always starts on the first session in the list (Hyprland), not the
@@ -77,11 +81,16 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   from the last sync. Run `sddm-sync` again after changing wallpaper. Automatic
   syncing is possible (a caelestia `postHook` plus a passwordless sudo rule for
   `sync.sh`) but isn't set up.
-- **Frozen screen after logging out:** on 2026-10-07 Hyprland crashed while
-  closing, SDDM logged the session as crashed and never showed the login screen
-  again. Ctrl+Alt+Delete on that screen reboots (systemd treats it as a reboot
-  request). Ctrl+Alt+F2, the terminal SDDM's login screen runs on, may bring it
-  back; untested.
+- **Frozen screen after logging out:** happened twice on 2026-10-07. caelestia's
+  logout button killed the whole login session, `sddm-helper` included, so SDDM
+  logged "Process crashed" and never showed the login screen again (Hyprland
+  also segfaults in `libaquamarine` while closing, an upstream bug). The button
+  now runs `uwsm stop` (`session.commands.logout` in `linux/caelestia/shell.json`),
+  which the Hyprland wiki recommends for uwsm sessions: it brings the graphical
+  session down in order and lets SDDM's helper exit normally. Untested at the
+  time of writing. If it freezes anyway, Ctrl+Alt+Delete reboots (systemd treats
+  it as a reboot request); Ctrl+Alt+F2, the terminal SDDM's login screen runs
+  on, may bring it back.
 
 ## Login video
 
