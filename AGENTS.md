@@ -35,7 +35,9 @@ decision the repo doesn't cover.
   `linux/caelestia`. Binds and rules go through HyprMod (`linux/hyprmod`) so
   they're editable in its GUI; HyDE-style keybinds layered on caelestia's, with
   caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
-  opaque; workspaces show as numbers in the bar.
+  opaque; workspaces show as numbers in the bar. Default apps: Zen for web
+  pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
+  SVG and editing); see `linux/packages.md`.
 - **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
   from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland

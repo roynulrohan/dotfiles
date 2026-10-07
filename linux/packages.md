@@ -26,3 +26,14 @@ sits around it.
 | `cachyos-gaming-meta` `cachyos-gaming-applications` | CachyOS's gaming bundle (Steam, Lutris and the rest), installed as a set rather than listed one by one |
 
 Reproduce the list from a live machine with `pacman -Qqe`.
+
+## Default apps
+
+Zen for web pages and PDFs, Dolphin for folders. mpv's image and video
+defaults are set in `mpv/SETUP.md`.
+
+```bash
+xdg-settings set default-web-browser zen.desktop
+xdg-mime default zen.desktop application/pdf
+xdg-mime default org.kde.dolphin.desktop inode/directory
+```
