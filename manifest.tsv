@@ -23,6 +23,7 @@ linux	linux/caelestia/hypr-vars.lua	~/.config/caelestia/hypr-vars.lua	copy
 linux	linux/caelestia/hypr-user.lua	~/.config/caelestia/hypr-user.lua	copy
 linux	linux/caelestia/shell.json	~/.config/caelestia/shell.json	copy
 linux	linux/caelestia/user-config.fish	~/.config/caelestia/user-config.fish	copy
+linux	linux/caelestia/cli.json	~/.config/caelestia/cli.json	copy
 linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
 linux	shared/ghostty/config	~/.config/ghostty/config	copy
 mac	mac/fish/config.fish	~/.config/fish/config.fish	copy

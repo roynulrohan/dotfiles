@@ -38,7 +38,8 @@ decision the repo doesn't cover.
   opaque; workspaces show as numbers in the bar. Default apps: Zen for web
   pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
   SVG and editing); see `linux/packages.md`. Login screen: SDDM with the
-  caelestia "locklike" theme (`linux/sddm`).
+  caelestia "locklike" theme (`linux/sddm`). Discord: Equibop, caelestia-themed,
+  is the default (Super+D, `discord://` links); the official app stays installed.
 - **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
   from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland

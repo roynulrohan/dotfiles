@@ -13,6 +13,7 @@ Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
 | `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, `emulate_discrete_scroll = 0`, window mode (below); Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on |
 | `user-config.fish` | `~/.config/caelestia/user-config.fish` | empty on purpose; fish config lives in `shared/fish` |
+| `cli.json` | `~/.config/caelestia/cli.json` | Super+D (the communication special workspace) starts and gathers Equibop instead of the official Discord |
 
 ## Window mode
 
@@ -39,7 +40,7 @@ window around its centre, so the edge keys move it back by half the change.
 ## Install
 
 Follow caelestia's installer first (it also installs Hyprland, fish, foot,
-fastfetch, starship, the Nerd Font). Then copy these four files in and run
+fastfetch, starship, the Nerd Font). Then copy the files above in and run
 `hyprctl reload`. The shell picks up `shell.json` live; restart it with
 Ctrl + Super + Alt + R if the bar doesn't change.
 

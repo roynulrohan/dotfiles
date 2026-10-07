@@ -1,0 +1,13 @@
+{
+  "toggles": {
+    "communication": {
+      "discord": { "enable": false },
+      "equibop": {
+        "enable": true,
+        "match": [{ "class": "equibop" }],
+        "command": ["equibop"],
+        "move": true
+      }
+    }
+  }
+}

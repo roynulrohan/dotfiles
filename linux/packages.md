@@ -20,6 +20,7 @@ sits around it.
 | `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
 | `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
 | `zen-browser-bin` (AUR) `discord` | apps referenced by window rules |
+| `equibop-bin` (AUR) | Equibop, the default Discord app: caelestia's `discord` component installs it and themes it with its colours. The official `discord` stays installed alongside |
 | `jellyfin-desktop-git` (AUR) | Jellyfin client; replaced the repo's `jellyfin-desktop`; kept opaque by a HyprMod rule |
 | `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
 | `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see `shared/claude`) |
@@ -30,11 +31,12 @@ Reproduce the list from a live machine with `pacman -Qqe`.
 
 ## Default apps
 
-Zen for web pages and PDFs, Dolphin for folders. mpv's image and video
-defaults are set in `mpv/SETUP.md`.
+Zen for web pages and PDFs, Dolphin for folders, Equibop for `discord://`
+links. mpv's image and video defaults are set in `mpv/SETUP.md`.
 
 ```bash
 xdg-settings set default-web-browser zen.desktop
 xdg-mime default zen.desktop application/pdf
 xdg-mime default org.kde.dolphin.desktop inode/directory
+xdg-mime default equibop.desktop x-scheme-handler/discord
 ```
