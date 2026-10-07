@@ -48,7 +48,7 @@ which `shell/zshrc` already adds to PATH.
   none and you install what you want per machine. Claude Code writes those keys
   back into the live file as you enable plugins, so `./status.sh` will report
   `settings.json` as differing. That is expected.
-- `settings.json` sets `"permissions": {"defaultMode": "dontAsk"}`. Worth
+- `settings.json` sets `"permissions": {"defaultMode": "auto"}`. Worth
   confirming that's wanted on a shared or production machine before copying.
 - **Claude Code rewrites `settings.json`** when you change things via `/config`.
   Those edits land only in the live file. Run `./status.sh` to see the drift, and
