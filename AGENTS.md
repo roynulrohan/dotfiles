@@ -72,6 +72,21 @@ caches, and the fastfetch logo images. After setup these need doing by hand, so 
 them as a checklist: `gh auth login`, Claude Code sign-in, new SSH key, images
 into `~/.config/fastfetch/logo/`.
 
+## Commits
+
+Every commit subject ends with the device it was made on, in parentheses. Then
+`git log --oneline` shows which machine each change came from:
+
+    kitty: abstract socket on Linux, path socket only on macOS (cachy-os)
+
+| Tag | Device |
+|---|---|
+| `cachy-os` | CachyOS desktop (hostname `cachyos`) |
+| `macbook-pro` | the Mac |
+
+A new machine picks a short kebab-case tag and adds it to this table in its
+first commit. Commits before 2026-10-07 have no tag.
+
 ## When you're done
 
 Report what you copied, what you skipped and why, what you backed up, and the

@@ -11,3 +11,5 @@ Read `AGENTS.md` first. Rules for any edit here:
    `~/.config/fish` are theirs; only `linux/caelestia` overrides are ours.
 4. **Keep shared configs portable.** No hardcoded home paths; guard OS-specific
    bits so the other OS skips them. Document OS differences in the package's `SETUP.md`.
+5. **Tag every commit with its device.** End the subject with `(cachy-os)`,
+   `(macbook-pro)` and so on. The tag list is in `AGENTS.md`.
