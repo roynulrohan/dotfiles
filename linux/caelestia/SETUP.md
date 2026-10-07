@@ -56,6 +56,16 @@ caelestia records the components it set up in
 
 AUR helper chosen in the installer: `paru`.
 
+Colour scheme: `dynamic`, which takes its colours from the current wallpaper,
+dark mode, `tonalspot` variant. Set it after installing:
+
+```fish
+caelestia scheme set -n dynamic -f hard -m dark -v tonalspot
+```
+
+The wallpapers themselves aren't in this repo; they live in
+`~/Pictures/Wallpapers` on the CachyOS desktop.
+
 ## Things to know
 
 - Load order: caelestia base → `hyprland/*.lua` → `hypr-user.lua` → HyprMod's
