@@ -3,10 +3,12 @@
 # linux-wallpaperengine. hypr-user.lua runs this at login; run it again to
 # restart, e.g. after plugging a monitor in. Only connected monitors get one.
 # LIVE_WALLPAPER_DRY_RUN=1 prints the command instead of running it.
+# live-wallpaper --if-over MIB restarts it only when it uses more than MIB of
+# memory (PSS), and never starts it if it isn't running: for the watchdog timer.
 
 # monitor   workshop id   name
 WALLPAPERS='
-DP-1       3314492008    世界很温柔 (Eri Uesugi, 4K 60 fps)
+DP-1       3314492008    世界很温柔 (Eri Uesugi, video, local 1080p copy)
 HDMI-A-1   2704773569    CITRUS - go to class
 DP-2       2511663284    Rain 4K
 '
@@ -19,6 +21,18 @@ fontcolorff4848bigbpromptbox=0
 # auto-hide is a Wallpaper Engine script that doesn't run here.
 
 log="${XDG_CACHE_HOME:-$HOME/.cache}/live-wallpaper.log"
+copies="${XDG_DATA_HOME:-$HOME/.local/share}/live-wallpapers"
+
+if [ "${1:-}" = --if-over ]; then
+    pid=$(pgrep -f '^\./linux-wallpaperengine' | head -n 1)
+    [ -n "$pid" ] || exit 0
+    pss=$(awk '/^Pss:/ { print int($2 / 1024) }' "/proc/$pid/smaps_rollup" 2>/dev/null)
+    [ "${pss:-0}" -gt "${2:?usage: live-wallpaper --if-over MIB}" ] || exit 0
+    echo "live-wallpaper: restarting, it uses ${pss} MiB (limit $2)" >&2
+    # Restart through Hyprland, as at login: started from the watchdog's
+    # oneshot service, it would be killed when that service ends.
+    exec hyprctl dispatch "hl.dsp.exec_cmd(\"$0\")"
+fi
 
 # Hyprland may still be setting up outputs right after login.
 i=0
@@ -33,6 +47,9 @@ screens=0
 while read -r monitor id _name; do
     [ -n "$monitor" ] || continue
     printf '%s\n' "$connected" | grep -qx "$monitor" || continue
+    # A downscaled local copy (<id>-1080p, see SETUP.md) replaces the Workshop
+    # original; linux-wallpaperengine reads any --bg containing a / as a folder.
+    [ -d "$copies/$id-1080p" ] && id="$copies/$id-1080p"
     set -- "$@" --screen-root "$monitor" --bg "$id" --scaling fill
     screens=$((screens + 1))
 done <<LIST

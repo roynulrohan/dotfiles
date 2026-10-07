@@ -10,6 +10,7 @@ the live wallpaper isn't running.
 | Repo | Destination |
 |---|---|
 | `live-wallpaper` | `~/.local/bin/live-wallpaper` |
+| `live-wallpaper-watchdog.service`, `.timer` | `~/.config/systemd/user/` |
 
 `linux/caelestia/hypr-user.lua` runs it once when Hyprland starts. Run
 `live-wallpaper` again to restart the wallpapers, e.g. after plugging a monitor
@@ -25,6 +26,8 @@ in. It logs to `~/.cache/live-wallpaper.log`.
 2. `paru -S linux-wallpaperengine-git` (AUR, maintained by the author; builds
    from source and installs into `/opt/linux-wallpaperengine`).
 3. Copy `live-wallpaper` into place and log in again, or run it.
+4. Make the local 1080p copy of the main video (below), then copy the watchdog
+   units and run `systemctl --user enable --now live-wallpaper-watchdog.timer`.
 
 ## Picks
 
@@ -33,7 +36,7 @@ connected monitors get a wallpaper. Change a pick there, then rerun it.
 
 | Monitor | Wallpaper | ID |
 |---|---|---|
-| DP-1 (main, middle) | 世界很温柔 (Eri Uesugi), video, 4K 60 fps | `3314492008` |
+| DP-1 (main, middle) | 世界很温柔 (Eri Uesugi), video, 4K 60 fps; plays a local 1080p copy | `3314492008` |
 | HDMI-A-1 (right) | [4K]CITRUS - go to class | `2704773569` |
 | DP-2 (left) | Rain 雨 [4K] | `2511663284` |
 
@@ -46,7 +49,37 @@ Tested on 2026-10-07 with build r627:
 **Video** wallpapers are plain `.mp4`/`.webm` files and play exactly as on
 Windows. **Scene** wallpapers are re-implemented, so some effects are missing
 or wrong. mpvpaper can play the video ones if linux-wallpaperengine ever stops
-working.
+working, but it doesn't avoid the memory leak below: it draws through the same
+libmpv OpenGL path, and its own issues (#101, #116, #117) report the same
+growth on Hyprland with NVIDIA.
+
+## Memory
+
+The monitors are 1080p, so 4K wallpapers only cost memory. A 1080p copy of a
+video wallpaper goes in `~/.local/share/live-wallpapers/<id>-1080p/`, outside
+Steam's folder so Workshop updates don't overwrite it; `live-wallpaper` uses
+it instead of the Workshop original when it exists. Made with NVENC, 60 fps
+kept so the same file suits mpvpaper too:
+
+```bash
+src=~/.local/share/Steam/steamapps/workshop/content/431960/3314492008
+dst=~/.local/share/live-wallpapers/3314492008-1080p
+mkdir -p "$dst" && cp -p "$src/project.json" "$src/preview.gif" "$dst/"
+f=$(jq -r .file "$src/project.json")
+ffmpeg -i "$src/$f" -vf scale=1920:1080:flags=lanczos -c:v h264_nvenc -preset p7 \
+    -tune hq -rc vbr -cq 19 -b:v 0 -profile:v high -pix_fmt yuv420p -c:a copy "$dst/$f"
+```
+
+With it the process starts at about 430 MiB instead of 2 GiB or more.
+
+linux-wallpaperengine still leaks with video wallpapers on NVIDIA, about
+10 MiB a minute here (upstream issue #416, traced to mpv's OpenGL render path:
+mpv issues #15099 and #8516; a fix, mpv PR #17303, is merged but not in mpv
+0.41). The watchdog timer runs `live-wallpaper --if-over 1500` every 10
+minutes: above 1500 MiB (PSS) it restarts the wallpapers through
+`hyprctl dispatch` (a restart from the oneshot service itself would be killed
+with it), which flickers for about a second. It never starts them if they
+aren't running. Revisit once mpv 0.42 ships.
 
 ## Wallpaper settings
 

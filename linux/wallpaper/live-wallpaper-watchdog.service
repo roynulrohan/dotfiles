@@ -1,0 +1,8 @@
+[Unit]
+Description=Restart the live wallpaper when it has grown past its memory limit
+# linux-wallpaperengine leaks memory with video wallpapers on NVIDIA
+# (upstream issue #416; mpv's OpenGL render path). See SETUP.md.
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/live-wallpaper --if-over 1500
