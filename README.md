@@ -22,7 +22,7 @@ Mac). Or do it by hand from the `SETUP.md` files.
 ## Layout
 
 ```
-shared/   fish  starship  fastfetch  kitty  ghostty  git  agents  claude  ccstatusline  nvim  vscode  cursor
+shared/   fish  starship  fastfetch  kitty  ghostty  git  agents  claude  ccstatusline  nvim  vscode  cursor  orca
 linux/    caelestia (overrides only)  hyprmod  packages.md
 mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewfile
 ```

@@ -57,7 +57,7 @@ decision the repo doesn't cover.
 
 | Directory | Applies to | Contents |
 |---|---|---|
-| `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor |
+| `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor, orca |
 | `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 
