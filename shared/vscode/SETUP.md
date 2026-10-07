@@ -49,25 +49,27 @@ Windows side. Most of the list wants both.
 
 ## Extensions
 
-Thirteen, for TypeScript full-stack work; pruned on 2026-10-07 from over a
+Fifteen, for TypeScript full-stack work; pruned on 2026-10-07 from over a
 hundred collected on Windows and the Mac. On the Mac they're the `vscode` lines
 in `mac/Brewfile`.
 
 | Extension | Why |
 |---|---|
-| `esbenp.prettier-vscode`, `dbaeumer.vscode-eslint`, `oxc.oxc-vscode` | format and lint |
+| `esbenp.prettier-vscode`, `dbaeumer.vscode-eslint`, `oxc.oxc-vscode`, `biomejs.biome` | format and lint (projects use Prettier or Biome) |
+| `editorconfig.editorconfig` | per-project `.editorconfig` |
 | `bradlc.vscode-tailwindcss` | Tailwind IntelliSense |
 | `usernamehw.errorlens`, `yoavbls.pretty-ts-errors` | errors inline, readable TypeScript errors |
 | `eamodio.gitlens` | git blame and history (VS Code has its own commit graph) |
 | `github.vscode-pull-request-github`, `github.vscode-github-actions` | PRs, Actions |
 | `redhat.vscode-yaml` | YAML |
-| `akamud.vscode-theme-onedark`, `pkief.material-icon-theme` | Atom One Dark, icons |
+| `zhuangtongfa.material-theme`, `pkief.material-icon-theme` | One Dark Pro (Night Flat, vivid), icons |
 | `leonardssh.vscord` | Discord presence (iCrawl's is archived) |
 
 ```bash
-for e in esbenp.prettier-vscode dbaeumer.vscode-eslint oxc.oxc-vscode bradlc.vscode-tailwindcss \
+for e in esbenp.prettier-vscode dbaeumer.vscode-eslint oxc.oxc-vscode biomejs.biome editorconfig.editorconfig \
+    bradlc.vscode-tailwindcss \
     usernamehw.errorlens yoavbls.pretty-ts-errors eamodio.gitlens github.vscode-pull-request-github \
-    github.vscode-github-actions redhat.vscode-yaml akamud.vscode-theme-onedark \
+    github.vscode-github-actions redhat.vscode-yaml zhuangtongfa.material-theme \
     pkief.material-icon-theme leonardssh.vscord; do code --install-extension "$e"; done
 ```
 
@@ -88,6 +90,8 @@ copy these files in after signing in.
 
 ## Notes
 
+- Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at weight
+  500. VS Code is left see-through at caelestia's 95% window opacity on purpose.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports
   (`editor.codeActionsOnSave`, `explicit`); auto save after a delay doesn't, so
   nothing reshuffles while typing.

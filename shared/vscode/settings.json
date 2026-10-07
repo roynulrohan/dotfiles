@@ -1,11 +1,11 @@
 {
     // Look
-    "workbench.colorTheme": "Atom One Dark",
+    "workbench.colorTheme": "One Dark Pro Night Flat",
+    "oneDarkPro.vivid": true,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.activityBar.location": "top",
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrainsMono Nerd Font Mono', monospace",
-    "editor.fontSize": 14,
     "editor.fontLigatures": true,
     "editor.renderWhitespace": "trailing",
     "editor.minimap.autohide": "mouseover",
@@ -21,10 +21,10 @@
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
-        "source.removeUnusedImports": "explicit"
+        "source.removeUnusedImports": "explicit",
     },
     "[yaml]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
     },
     // Prettier fallbacks, only for files outside a project with its own config.
     "prettier.singleQuote": true,
@@ -37,7 +37,7 @@
     "editor.quickSuggestions": {
         "other": "offWhenInlineCompletions",
         "comments": "off",
-        "strings": "off"
+        "strings": "off",
     },
     "github.copilot.nextEditSuggestions.enabled": true,
 
@@ -66,8 +66,8 @@
         "PowerShell 7": {
             "path": "pwsh.exe",
             "args": ["-NoLogo"],
-            "icon": "terminal-powershell"
-        }
+            "icon": "terminal-powershell",
+        },
     },
     "terminal.integrated.defaultProfile.windows": "PowerShell 7",
 
@@ -78,7 +78,7 @@
         "**/.gitea/workflows/*.yml",
         "**/.gitea/workflows/*.yaml",
         "**/.forgejo/workflows/*.yml",
-        "**/.forgejo/workflows/*.yaml"
+        "**/.forgejo/workflows/*.yaml",
     ],
     "json.schemaDownload.trustedDomains": {
         "https://schemastore.azurewebsites.net/": true,
@@ -89,6 +89,7 @@
         "https://spec.openapis.org/": true,
         "https://json-schema.org/": true,
         "https://developer.microsoft.com/json-schemas/": true,
-        "https://biomejs.dev": true
-    }
+        "https://biomejs.dev": true,
+    },
+    "editor.fontWeight": "500",
 }

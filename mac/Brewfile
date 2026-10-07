@@ -116,10 +116,11 @@ mas "iStat Menus", id: 1319778037
 mas "TestFlight", id: 899247664
 mas "Widgy", id: 1524540481
 mas "Xcode", id: 497799835
-vscode "akamud.vscode-theme-onedark"
+vscode "biomejs.biome"
 vscode "bradlc.vscode-tailwindcss"
 vscode "dbaeumer.vscode-eslint"
 vscode "eamodio.gitlens"
+vscode "editorconfig.editorconfig"
 vscode "esbenp.prettier-vscode"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
@@ -129,6 +130,7 @@ vscode "pkief.material-icon-theme"
 vscode "redhat.vscode-yaml"
 vscode "usernamehw.errorlens"
 vscode "yoavbls.pretty-ts-errors"
+vscode "zhuangtongfa.material-theme"
 cargo "avm"
 npm "@expo/ngrok"
 npm "corepack"
