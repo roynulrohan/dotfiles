@@ -89,8 +89,8 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   with `uwsm stop`, which the Hyprland wiki recommends for uwsm sessions: it
   brings the graphical session down in order and lets SDDM's helper exit
   normally. Noctalia's own log out exits Hyprland directly, so its session menu
-  runs `uwsm stop` instead (`linux/noctalia/config.toml`). Untested at the
-  time of writing. If it freezes anyway, Ctrl+Alt+Delete reboots (systemd treats
+  runs `uwsm stop` instead (`linux/noctalia/config.toml`). Verified on
+  2026-10-08: log out returned to the login screen and the next login was clean. If it freezes anyway, Ctrl+Alt+Delete reboots (systemd treats
   it as a reboot request); Ctrl+Alt+F2, the terminal SDDM's login screen runs
   on, may bring it back.
 

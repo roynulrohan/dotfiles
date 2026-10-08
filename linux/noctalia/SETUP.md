@@ -26,8 +26,8 @@ from:
 noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
 ```
 
-Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`); not yet
-verified across a real login. Enable the plugin once:
+Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`), in its own
+uwsm scope; verified across a log out and log in on 2026-10-08. Enable the plugin once:
 `noctalia msg plugins enable roynul/workspace-apps`.
 
 ## Config
