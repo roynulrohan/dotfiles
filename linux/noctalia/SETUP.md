@@ -106,6 +106,24 @@ only runs when it finds a workspace to match). It reads `hyprctl -j` every
   background), in the key names of caelestia's old scheme file, then runs
   `hyprctl reload`. Noctalia's own Hyprland template only gives solid borders.
 
+The rest take over the files caelestia used to write, so each app's existing
+setting keeps pointing at the same file, and each file has one owner.
+Noctalia's built-in GTK and Qt templates are not used: the GTK one edits
+`gtk.css` and gsettings (kde-gtk-config also writes to `gtk.css`), and the Qt
+one merges into `kdeglobals`.
+
+| Template | Writes | Notes |
+|---|---|---|
+| `spicetify.ini` | `~/.config/spicetify/Themes/caelestia/color.ini` | keeps the `[caelestia]` section Spicetify selects; hook `spicetify -q -n refresh` re-patches Spotify without restarting it |
+| `gtk.css` | `gtk-3.0/gtk.css` and `gtk-4.0/gtk.css` | caelestia's layout with Noctalia colours; keeps `@import "thunar.css"` and kde-gtk-config's `@import 'colors.css'`. Open GTK apps pick it up on restart |
+| `thunar.css` | `gtk-3.0/thunar.css` and `gtk-4.0/thunar.css` | |
+| `qtengine.colors` | `~/.config/qtengine/caelestia.colors` | Noctalia's KDE colour-scheme template; qtengine's config still points at this file, `kdeglobals` is left alone |
+| `btop.theme` | `~/.config/btop/themes/caelestia.theme` | hook `pkill -USR2 -x btop` makes a running btop reload |
+| `sddm-theme.conf` | `~/.local/state/caelestia/theme/sddm-theme.conf` | what `sddm-sync` reads for the login screen (`linux/sddm`); a fixed green for its success colour (`custom_colors.success`) |
+| `equibop.theme.css` | `~/.config/equibop/themes/noctalia.theme.css` | Noctalia's community "Midnight" Discord theme, a new file; switch it on in Equibop → Settings → Themes. It loads its base CSS from `refact0r.github.io`, as caelestia's did |
+
+VS Code is not themed: it keeps One Dark Pro Night Flat.
+
 ## Keys
 
 In `linux/hypr/hyprland/keybinds.lua` (and HyprMod's Super+P / Super+Ctrl+P),

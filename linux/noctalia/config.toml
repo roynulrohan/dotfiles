@@ -222,6 +222,64 @@ input_path = "$XDG_CONFIG_HOME/noctalia/templates/hypr-scheme.lua"
 output_path = "$XDG_CONFIG_HOME/hypr/scheme/current.lua"
 post_hook = "hyprctl reload"
 
+# The app colour files caelestia used to write (now frozen) are rewritten in
+# place from Noctalia's palette, so each app keeps its existing theme selection.
+# One owner per file: the built-in gtk/qt templates are off (builtin_ids = [])
+# because they also edit gtk.css, gsettings and kdeglobals.
+
+# Spotify: caelestia's spicetify scheme; `spicetify watch -s` also re-patches on
+# change, the hook makes it immediate. -n = no restart, refresh = CSS only.
+[theme.templates.user.spicetify]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/spicetify.ini"
+output_path = "$XDG_CONFIG_HOME/spicetify/Themes/caelestia/color.ini"
+post_hook = "spicetify -q -n refresh"
+
+# GTK 3 and 4: caelestia's gtk.css (libadwaita colour names) with its imports
+# of thunar.css (ours) and colors.css (kde-gtk-config's) kept.
+[theme.templates.user.gtk]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/gtk.css"
+output_path = [
+  "$XDG_CONFIG_HOME/gtk-3.0/gtk.css",
+  "$XDG_CONFIG_HOME/gtk-4.0/gtk.css",
+]
+
+# Thunar: caelestia's rounded-pane look, pulled in by gtk.css above.
+[theme.templates.user.thunar]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/thunar.css"
+output_path = [
+  "$XDG_CONFIG_HOME/gtk-3.0/thunar.css",
+  "$XDG_CONFIG_HOME/gtk-4.0/thunar.css",
+]
+
+# Qt (qtengine): the KDE colour scheme qtengine/config.json points at. Only the
+# file; no post_action, so kdeglobals is not touched.
+[theme.templates.user.qtengine]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/qtengine.colors"
+output_path = "$XDG_CONFIG_HOME/qtengine/caelestia.colors"
+
+# btop: the theme btop.conf selects. SIGUSR2 makes btop re-read its config and
+# theme (btop.cpp: Global::reload_conf).
+[theme.templates.user.btop]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/btop.theme"
+output_path = "$XDG_CONFIG_HOME/btop/themes/caelestia.theme"
+post_hook = "pkill -USR2 -x btop || true"
+
+# SDDM: the colour source sddm-sync reads (it copies it into the root-owned
+# theme, so run sddm-sync by hand). onSuccess uses the custom `success` colour.
+[theme.templates.user.sddm]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/sddm-theme.conf"
+output_path = "$XDG_STATE_HOME/caelestia/theme/sddm-theme.conf"
+
+# Equibop: a second theme file next to caelestia's, off until chosen in
+# Equibop > Settings > Themes. Noctalia community "Midnight" template.
+[theme.templates.user.equibop]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/equibop.theme.css"
+output_path = "$XDG_CONFIG_HOME/equibop/themes/noctalia.theme.css"
+
+# Extra roles for the templates above (on_success etc.); blended into the palette.
+[theme.templates.custom_colors]
+success = "#4caf50"
+
 [widget.clock]
 format = "{:%a %b %-d · %-I:%M %p}"      # short date, 12-hour time: Thu Oct 8 · 3:42 PM
 tooltip_format = "{:%A, %B %-d, %Y}"      # hover: Thursday, October 8, 2026

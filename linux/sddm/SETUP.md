@@ -78,8 +78,9 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   The template's colour lines are placeholders caelestia fills in, and the sync
   sets `os` and `host`.
 - **The login screen shows the wallpaper and colours from the last sync.**
-  Since the switch to Noctalia (2026-10-08) caelestia no longer regenerates
-  its scheme, so a new sync gives the same colours. Noctalia has its own
+  Since the switch to Noctalia (2026-10-08) a Noctalia template writes the
+  colour file `sddm-sync` reads (`linux/noctalia`, Colour templates), so run
+  `sddm-sync` after changing wallpaper to bring the login screen along. Noctalia has its own
   greeter (for greetd, not SDDM); not tried yet.
 - **Frozen screen after logging out:** happened twice on 2026-10-07. caelestia's
   logout button killed the whole login session, `sddm-helper` included, so SDDM
