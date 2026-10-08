@@ -2,7 +2,7 @@
 # the second argument). usage: gen.py params.json [out.toml]
 # Noctalia merges every *.toml in ~/.config/noctalia, so this file sits next to
 # config.toml. Paths in it are absolute, so the generated file is not tracked.
-import os, sys, json, subprocess
+import os, pwd, sys, json, subprocess
 LOCK = os.path.expanduser("~/.local/share/noctalia/lock")
 OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.expanduser("~/.config/noctalia/lock.toml")
 W = []  # (id, table)
@@ -70,6 +70,9 @@ if P.get("viz", True):
            primary_color="primary", secondary_color="secondary", background=False))
 w("lock-avatar", "sticker", M, 960.0, P["avatar_cy"], 315.0, 215.0,
   dict(image_path=f"{LOCK}/avatar-clamshell.png", opacity=1.0, background=False))
+# The login name under the avatar.
+NAME = pwd.getpwuid(os.getuid()).pw_name
+text("lock-name", M, 960.0, P["avatar_cy"] + P["name_dy"], 320.0, P["name_h"], NAME, font=GSF, bold=True)
 # Right column: the machine. Load tiles, temperature and network graphs, then a GIF.
 # The GIF card has one fixed shape, the column width by gif_h, bottom-aligned; the tiles
 # and graphs share the height above it in proportion to their base sizes.

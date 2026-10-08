@@ -48,5 +48,7 @@
  "viz_mode": "bars",
  "viz_size": 380.0,
  "viz_inner": 0.78,
- "gif_h": 340.0
+ "gif_h": 340.0,
+ "name_dy": 132.0,
+ "name_h": 30.0
 }

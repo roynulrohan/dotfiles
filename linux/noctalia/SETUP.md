@@ -141,7 +141,8 @@ Modelled on caelestia's: one 1500x840 surface card on the blurred wallpaper of
 the main monitor (DP-1), never a snapshot of the desktop. Left: weather with a
 3-day forecast and a month calendar without events. Centre: hours, minutes and
 AM/PM in "GSF Lock Clock", the date, the avatar cut to Material's ClamShell
-shape with an audio ring that fades when idle, and the password field. Right:
+shape with an audio ring that fades when idle, the login name under it (read
+from the account when `gen.py` runs), and the password field. Right:
 CPU, RAM and GPU gauges, temperature and network graphs, and a GIF card. The
 side monitors show the clock group only. No lock or unlock animation.
 
