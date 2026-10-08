@@ -32,7 +32,10 @@ decision the repo doesn't cover.
   activate when the tool exists, so install them.
 - **bun over npm/npx**. `bunx`, not `npx`.
 - **Desktop (Linux)**: caelestia dots, unmodified, with overrides in
-  `linux/caelestia`. Binds and rules go through HyprMod (`linux/hyprmod`) so
+  `linux/caelestia`. `linux/caelestia/hypr-reference` holds a copy of
+  caelestia's Hyprland config and a README: which keys need caelestia, which
+  tools it installs, and the user's key preferences. It is for rebuilding the
+  Hyprland setup without caelestia. Binds and rules go through HyprMod (`linux/hyprmod`) so
   they're editable in its GUI; HyDE-style keybinds layered on caelestia's, with
   caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
   opaque; each monitor has its own workspaces 1–10, shown as

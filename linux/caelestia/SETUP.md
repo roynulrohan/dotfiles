@@ -1,9 +1,10 @@
 # caelestia overrides
 
 Everything of mine on top of [caelestia dots](https://github.com/caelestia-dots/caelestia).
-Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
-`~/.config/fish`, the shell) is installed and updated by `caelestia` and is
-**never committed**.
+Only the override layer is copied from here; caelestia's own tree
+(`~/.config/hypr`, `~/.config/fish`, the shell) is installed and updated by
+`caelestia`. A copy of its Hyprland part, which nothing loads, is kept in
+`hypr-reference/` (see "Reference copy" below).
 
 ## Files
 
@@ -14,6 +15,14 @@ Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on; weather for Ottawa (coordinates: the IP lookup said Toronto, and the name "Ottawa" also matches US towns); logout button runs `uwsm stop` (see `linux/sddm/SETUP.md`, frozen screen); no notifications on the lock screen (`lock.hideNotifs`); the lock screen shows the wallpaper, not a blurred screenshot of the desktop (`lock.useWallpaper`: after waking from sleep the blur once failed and the desktop showed sharp behind the lock). Idle (`general.idle.timeouts`): lock after 1 h, screens off after 1.5 h, `systemctl suspend` after 4 h. caelestia's default `suspendThenHibernate` can't work here (zram swap only, so logind reports `CanSuspendThenHibernate=na`) and failed silently. Audio playing (`general.idle.inhibitWhenAudio`, default on) and Keep awake (an idle inhibitor; every step respects it) pause all three. Launcher actions (`launcher.actions`, typed after `>`): caelestia's defaults plus Restart shell, Reload Hyprland, Restart wallpapers, Night light off/on and Battery (a notification with each wireless device's charge from UPower, such as the Lightspeed mice: caelestia only shows laptop and Bluetooth batteries); Sleep runs `systemctl suspend` instead of the impossible `suspendThenHibernate`. The list replaces caelestia's whole default list, so it repeats the defaults; commands run directly, through `sh -c` when they need a shell. The lock screen's media controls have no setting |
 | `user-config.fish` | `~/.config/caelestia/user-config.fish` | runs after caelestia's `config.fish`: resets its wallpaper colours in Orca's terminal; other fish config lives in `shared/fish` |
 | `cli.json` | `~/.config/caelestia/cli.json` | Super+D (the communication special workspace) starts and gathers Equibop instead of the official Discord |
+
+## Reference copy
+
+`hypr-reference/` holds a copy of caelestia's `~/.config/hypr` at revision
+`1ee7a98`. Nothing loads it. Its README lists what the layers above change,
+which keys and tools need caelestia, and the user's key preferences, so the
+Hyprland setup can be rebuilt without caelestia. Refresh it after a caelestia
+update changes `~/.config/hypr`.
 
 ## Window mode
 
