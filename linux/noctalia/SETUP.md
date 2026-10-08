@@ -8,6 +8,8 @@ Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | Repo | Destination |
 |---|---|
 | `config.toml` | `~/.config/noctalia/config.toml` |
+| `templates/` | `~/.config/noctalia/templates/` (colour templates, below) |
+| `plugins/workspace-apps/` | `~/.local/share/noctalia/plugins/workspace-apps/` (bar plugin, below) |
 
 ## Install
 
@@ -24,7 +26,9 @@ from:
 noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
 ```
 
-Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`); not yet verified across a real login.
+Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`); not yet
+verified across a real login. Enable the plugin once:
+`noctalia msg plugins enable roynul/workspace-apps`.
 
 ## Config
 
@@ -41,10 +45,66 @@ them. Changes made in its settings window go to
 - **Idle**, as under caelestia: lock after 1 h, screens off after 1.5 h, lock
   and suspend after 4 h. Noctalia pauses for idle inhibitors (browsers and mpv
   during video), not for any audio playing as caelestia did.
-- **Location** Ottawa by coordinates, for weather (the name also matches US
-  towns).
-- The bar keeps Noctalia's default layout, at the top.
+- **Location** `Ottawa, Ontario, Canada`, for weather. Plain "Ottawa" also
+  matches US towns; coordinates work but the UI then shows the numbers as the
+  place name.
+- **12-hour time** everywhere: `[shell] time_format` / `date_format` (control
+  centre, calendar, lock screen) and the bar clock (`Thu Oct 8 · 3:42 PM`, full
+  date on hover). Font: JetBrainsMono Nerd Font.
 - **Session menu**: the default five buttons, but log out runs `uwsm stop`.
+- **Panels** (control centre, wallpaper, session) float with their own solid
+  background and open under the island that was clicked. Attached panels share
+  the bar's background, which is invisible here.
+- **Screenshots** open in Noctalia's editor before anything is delivered: Enter
+  or Done copies, Save writes to `~/Pictures/Screenshots`, Esc discards; Ctrl+C
+  / Ctrl+S in the region overlay skip the editor. Nothing is saved
+  automatically.
+- **Launcher actions**: `/cmd` lists Restart audio (PipeWire and the EQ, for
+  when the headset drops off USB and PipeWire keeps failing on the old device),
+  Restart shell, Reload Hyprland, Restart wallpapers, Night light off / on,
+  Battery. They also match by name in normal search. Ported from caelestia's
+  `>` actions; shutdown, lock and the rest are in `/session`.
+
+## Bar
+
+HyDE-style islands: the bar itself is invisible (`background_opacity = 0`) and
+each widget or group is a rounded pill at 80% opacity, blurred by Hyprland's
+layer rule (`linux/hypr`, `ignore_alpha` keeps the empty bar unblurred). Left
+holds information, the middle the current workspace's apps, the right
+controls:
+
+stats (CPU, RAM, CPU and GPU temperature) · workspaces | app icons |
+media · signal (network, volume) · modes (caffeine, notifications; right-click
+the bell for do not disturb) · tray · clock · system (wallpaper, control
+centre) · power
+
+Workspaces show only occupied ones as bare numbers; the active one is a wider
+filled pill (inactive pills are transparent). Spacing follows the window grid
+(see "Look" in `linux/caelestia/SETUP.md`): the bar is 24 px tall and the
+islands fill it, 4 px from the screen top and 4 px above the windows, flush
+with the window edges; 16 px between islands, 8 px inside one, 8 px end
+padding (groups default to 6, so it is set per group). Text ≈ 10.5 px bold
+(Noctalia's bar text is 14 px; `font_scale 0.75`), as HyDE's 10 px.
+
+## Plugin: workspace apps
+
+`plugins/workspace-apps` (Luau): the app icons of the windows on *this* monitor's
+current workspace, in screen order; the focused one bright, the others dimmed;
+click to focus; hidden when the workspace is empty. It replaces the built-in
+`taskbar` with `only_active_workspace`, which shows every window from all
+monitors on a monitor whose workspace is empty (`taskbar_widget.cpp`: the filter
+only runs when it finds a workspace to match). It reads `hyprctl -j` every
+400 ms and never uses window titles.
+
+## Colour templates
+
+- `templates/kitty.conf`: Noctalia's built-in kitty template, copied, writing
+  `~/.config/kitty/themes/noctalia.conf` (see `shared/kitty`). The built-in one
+  also edits `kitty.conf`, which the Mac shares.
+- `templates/hypr-scheme.lua`: rewrites `~/.config/hypr/scheme/current.lua`, the
+  colour file the Hyprland config reads (window borders, group bars,
+  background), in the key names of caelestia's old scheme file, then runs
+  `hyprctl reload`. Noctalia's own Hyprland template only gives solid borders.
 
 ## Keys
 
@@ -73,9 +133,8 @@ Volume keys stay on `wpctl`.
 - **Log out with `uwsm stop`.** Noctalia's built-in log out exits Hyprland
   directly, which once froze the login screen (`linux/sddm`); the session menu
   is set to run `uwsm stop` instead.
-- **Terminal colours** are still caelestia's last scheme
-  (`~/.local/state/caelestia/sequences.txt`, printed by fish). Noctalia's
-  terminal templates aren't enabled.
+- **Night Light** in the control centre is Noctalia's own and off; the night
+  light that runs is hyprsunset (`linux/hyprsunset`). Use the `/cmd` actions.
 - Bluetooth shows nothing: the BlueZ service isn't running on this PC.
 - The login screen is still SDDM with caelestia's theme. Noctalia has its own
   greeter, for greetd instead of SDDM; not tried yet.

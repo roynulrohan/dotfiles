@@ -29,11 +29,11 @@ timeout = 14400
 action = "lock_and_suspend"
 enabled = true
 
-# Weather: Ottawa by coordinates (by name, "Ottawa" also matches US towns).
+# Weather: Ottawa, named in full (plain "Ottawa" also matches US towns; with
+# coordinates instead, the UI showed the numbers as the place name).
 [location]
 auto_locate = false
-latitude = 45.4215
-longitude = -75.6972
+address = "Ottawa, Ontario, Canada"
 
 # Session menu: the default five, but log out runs `uwsm stop`. Noctalia's own
 # log out exits Hyprland directly, which once froze the SDDM login screen.
@@ -52,3 +52,176 @@ action = "reboot"
 
 [[shell.session.actions]]
 action = "shutdown"
+
+# --- Look: HyDE-style bar and islands (see SETUP.md, Bar) ---
+[shell]
+font_family = "JetBrainsMono Nerd Font"
+# 12-hour time and a written-out date wherever Noctalia shows them without
+# their own setting: control centre, calendar, lock screen.
+time_format = "{:%-I:%M %p}"
+date_format = "%A, %B %-d, %Y"
+
+# HyDE-style: an invisible bar with separate rounded islands on it.
+[bar.default]
+margin_edge = 4              # 4 px from the screen top, the same as every gap
+margin_ends = 0              # with padding 4, islands align with the windows' 4 px edge
+concave_edge_corners = false # those only work on a bar attached to the edge
+background_opacity = 0.0     # the bar itself is invisible; only the islands show
+compositor_blur = false
+shadow = false
+thickness = 24               # = island height: no hidden space above or below the islands
+padding = 4
+widget_spacing = 16          # between islands: 2x the gap inside one
+font_weight = 700
+font_scale = 0.75             # Noctalia's bar text is 14 px; 0.75 gives ~10.5 px, HyDE's 10 px bold
+capsule = true               # every widget and group sits in its own island
+capsule_fill = "surface"
+capsule_opacity = 0.8        # HyDE: islands slightly see-through; Hyprland blurs behind them
+capsule_thickness = 1.0      # islands fill the bar, so screen→island = island→window = 4 px
+capsule_padding = 8          # radius left automatic: a full pill
+start = ["group:stats", "workspaces"]
+center = ["workspace-apps"]
+# Left = information, middle = apps, right = controls.
+end = ["media", "group:signal", "group:modes", "tray", "clock", "group:system", "session"]
+
+[[bar.default.capsule_group]]
+id = "stats"                 # machine state, text only
+members = ["cpu", "ram", "cputemp", "gputemp"]
+padding = 8                  # same end padding as single islands (group default is 6)
+opacity = 0.8                # match the single islands
+widget_spacing = 8
+
+[[bar.default.capsule_group]]
+id = "signal"                # is it working: online, sound
+members = ["network", "volume"]
+padding = 8                  # same end padding as single islands (group default is 6)
+opacity = 0.8                # match the single islands
+widget_spacing = 8
+
+[[bar.default.capsule_group]]
+id = "modes"                 # how the PC behaves: stay awake, do not disturb (right-click the bell)
+members = ["caffeine", "notifications"]
+padding = 8                  # same end padding as single islands (group default is 6)
+opacity = 0.8                # match the single islands
+widget_spacing = 8
+
+[[bar.default.capsule_group]]
+id = "system"                # customising and settings; power sits alone at the edge
+members = ["wallpaper", "control-center"]
+padding = 8                  # same end padding as single islands (group default is 6)
+opacity = 0.8                # match the single islands
+widget_spacing = 8
+
+[widget.cpu]
+type = "sysmon"
+stat = "cpu_usage"
+visualization = "none"
+
+[widget.ram]
+type = "sysmon"
+stat = "ram_used"
+visualization = "none"
+
+[widget.cputemp]
+type = "sysmon"
+stat = "cpu_temp"
+visualization = "none"
+
+[widget.gputemp]
+type = "sysmon"
+stat = "gpu_temp"
+visualization = "none"
+
+[widget.network]
+show_label = false           # icon only, no "enp5s0"
+
+# HyDE-style workspaces: bare numbers on the island, the active one a wider
+# filled pill. Inactive pills are transparent, so only their numbers show.
+[widget.workspaces]
+style = "regular"
+label_source = "id"
+hide_when_empty = true       # only workspaces with windows (plus the active one)
+focused_color = "primary"
+occupied_color = "#00000000"  # transparent: the number sits straight on the see-through island
+empty_color = "#00000000"
+active_pill_size = 2.2
+font_scale = 1.3             # numbers start at 11 px and the bar scale (0.75) applies too: 11 × 0.75 × 1.3 ≈ 10.7 px
+inactive_pill_size = 1.0
+pill_scale = 1.0
+
+# Our plugin (~/.local/share/noctalia/plugins/workspace-apps): the app icons on
+# this monitor's current workspace. Replaces the built-in taskbar, which shows
+# every window on a monitor whose workspace is empty (a Noctalia bug).
+[widget.workspace-apps]
+type = "roynul/workspace-apps:icons"
+
+# Screenshots like caelestia: the region opens in an editor first. Enter or
+# Done copies; Save writes a file; Esc discards. In the region overlay, the
+# copy and save keys deliver at once, skipping the editor.
+[shell.screenshot]
+annotate = true
+skip_annotate_on_copy_save = true
+save_to_file = false
+directory = "~/Pictures/Screenshots"   # Save puts them here, not loose in ~/Pictures
+copy_to_clipboard = true
+
+# Attached panels grow out of the bar and share its background; with an
+# invisible bar they turned transparent. Float them, like the launcher.
+[shell.panel]
+control_center_placement = "floating"
+wallpaper_placement = "floating"
+session_placement = "floating"
+# Open each panel under the island that was clicked, not at the bar's centre.
+open_near_click_control_center = true
+open_near_click_wallpaper = true
+open_near_click_session = true
+open_near_click_clipboard = true
+
+# kitty takes its colours from Noctalia's palette. Our own copy of Noctalia's
+# kitty template (templates/kitty.conf) writes only kitty/themes/noctalia.conf;
+# the built-in one also edits kitty.conf, which is shared with the Mac.
+[theme.templates]
+builtin_ids = []
+
+[theme.templates.user.kitty]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/kitty.conf"
+output_path = "$XDG_CONFIG_HOME/kitty/themes/noctalia.conf"
+post_hook = "pkill -USR1 -x kitty"
+
+# Launcher actions, ported from caelestia's ">" actions: type /cmd to list them
+# (they also show up when you search by name). Each line is title<TAB>description;
+# `exec` gets the chosen line as {selection}.
+[shell.launcher.dmenu.entry.actions]
+label = "Actions"
+prefix = "cmd"
+glyph = "bolt"
+global = true
+command = """printf '%s\t%s\n' \
+  'Restart audio' 'Fix sound after the headset reconnects (PipeWire, EQ)' \
+  'Restart shell' 'Restart Noctalia (fixes bar and panel glitches)' \
+  'Reload Hyprland' 'Re-read the Hyprland config; puts workspaces back on their monitors' \
+  'Restart wallpapers' 'Restart the live wallpapers' \
+  'Night light off' 'Turn the night light off until the next login' \
+  'Night light on' 'Back to the configured warmth' \
+  'Battery' 'Show the charge of wireless devices (mice, controllers)'"""
+exec = '''case "{selection}" in
+  "Restart audio"*) systemctl --user restart pipewire pipewire-pulse wireplumber filter-chain ;;
+  "Restart shell"*) pkill -x noctalia; sleep .5; uwsm app -- noctalia ;;
+  "Reload Hyprland"*) hyprctl reload ;;
+  "Restart wallpapers"*) "$HOME/.local/bin/live-wallpaper" ;;
+  "Night light off"*) hyprctl hyprsunset identity ;;
+  "Night light on"*) hyprctl hyprsunset reset ;;
+  "Battery"*) b=$(upower -d | awk '/^Device:/{m="";p="";s=""} /^ +model:/{sub(/^ +model: +/,"");sub(/^(Logitech|Sony Interactive Entertainment) /,"");sub(/ Wireless Controller$/,"");m=$0} /^ +state:/{s=" ("$2")"} /^ +percentage:/{p=$2} /^$/{if(m!=""&&p!="")print m": "p s;m=""}'); notify-send -e -a Battery Battery "${b:-No battery devices connected}" ;;
+esac'''
+
+
+# Hyprland's colours follow Noctalia's palette: rewrite the scheme file the
+# Hyprland config reads (window borders, group bars, background), then reload.
+[theme.templates.user.hypr-scheme]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/hypr-scheme.lua"
+output_path = "$XDG_CONFIG_HOME/hypr/scheme/current.lua"
+post_hook = "hyprctl reload"
+
+[widget.clock]
+format = "{:%a %b %-d · %-I:%M %p}"      # short date, 12-hour time: Thu Oct 8 · 3:42 PM
+tooltip_format = "{:%A, %B %-d, %Y}"      # hover: Thursday, October 8, 2026

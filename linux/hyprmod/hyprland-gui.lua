@@ -3,11 +3,12 @@
 -- Settings
 hl.config({
     decoration = {
-        rounding = 20,
+        rounding = 12,
     },
     general = {
         allow_tearing = true,
-        gaps_in = 2,
+        border_size = 2,
+        gaps_in = 1,
         gaps_out = 4,
         layout = "dwindle",
         resize_on_border = true,

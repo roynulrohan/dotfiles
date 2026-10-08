@@ -229,6 +229,16 @@ else
     hl.bind("SUPER + SHIFT + bracketright", hl.dsp.window.move({ monitor = "r" }))
 end
 
+-- HyDE's defaults (Configs/.local/share/hypr/lua/defaults.lua) where they differ
+-- from caelestia's: dim the workspace behind a pop-up workspace, don't let apps
+-- pull focus, middle-click pastes, Num Lock on at login. Key repeat stays
+-- caelestia's fast 250 ms / 35 per second.
+hl.config({
+    decoration = { dim_special = 0.3 },
+    misc = { focus_on_activate = false, middle_click_paste = true },
+    input = { numlock_by_default = true },
+})
+
 -- Machine-local config that stays out of the repo, if this machine has one.
 -- Errors show as a Hyprland notification instead of failing silently.
 local local_file = os.getenv("HOME") .. "/.config/caelestia/hypr-local.lua"

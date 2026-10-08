@@ -15,10 +15,10 @@ of caelestia's original Hyprland config, which nothing loads, is kept in
 
 | Repo | Destination | What |
 |---|---|---|
-| `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out`; caelestia's resize keys switched off (see Window mode); Super+C opens VS Code (`code`; caelestia's default `codium` isn't installed), Super+Shift+L runs `systemctl suspend` (caelestia's `suspend-then-hibernate` can't work, see `shell.json` below), cursor theme `breeze_cursors` (caelestia's `sweet-cursors` isn't installed) |
-| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, window mode and per-monitor workspaces (below), and loading `hypr-local.lua` if the machine has one; Hyprland config that HyprMod can't express goes here |
+| `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out`; caelestia's resize keys switched off (see Window mode); Super+C opens VS Code (`code`; caelestia's default `codium` isn't installed), Super+Shift+L runs `systemctl suspend` (caelestia's `suspend-then-hibernate` can't work, see `shell.json` below), cursor theme `breeze_cursors` (caelestia's `sweet-cursors` isn't installed); the look (window transparency, gradient borders, no shadows, blur behind pop-up workspaces; see Look) |
+| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, HyDE's behaviour defaults (see Look), window mode and per-monitor workspaces (below), and loading `hypr-local.lua` if the machine has one; Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on; weather for Ottawa (coordinates: the IP lookup said Toronto, and the name "Ottawa" also matches US towns); logout button runs `uwsm stop` (see `linux/sddm/SETUP.md`, frozen screen); no notifications on the lock screen (`lock.hideNotifs`); the lock screen shows the wallpaper, not a blurred screenshot of the desktop (`lock.useWallpaper`: after waking from sleep the blur once failed and the desktop showed sharp behind the lock). Idle (`general.idle.timeouts`): lock after 1 h, screens off after 1.5 h, `systemctl suspend` after 4 h. caelestia's default `suspendThenHibernate` can't work here (zram swap only, so logind reports `CanSuspendThenHibernate=na`) and failed silently. Audio playing (`general.idle.inhibitWhenAudio`, default on) and Keep awake (an idle inhibitor; every step respects it) pause all three. Launcher actions (`launcher.actions`, typed after `>`): caelestia's defaults plus Restart shell, Reload Hyprland, Restart wallpapers, Night light off/on and Battery (a notification with each wireless device's charge from UPower, such as the Lightspeed mice: caelestia only shows laptop and Bluetooth batteries); Sleep runs `systemctl suspend` instead of the impossible `suspendThenHibernate`. The list replaces caelestia's whole default list, so it repeats the defaults; commands run directly, through `sh -c` when they need a shell. The lock screen's media controls have no setting |
-| `user-config.fish` | `~/.config/caelestia/user-config.fish` | runs after caelestia's `config.fish`: resets its wallpaper colours in Orca's terminal; other fish config lives in `shared/fish` |
+| `user-config.fish` | `~/.config/caelestia/user-config.fish` | runs after caelestia's `config.fish`: resets its frozen wallpaper colours in Orca's terminal and in kitty (kitty takes Noctalia's palette instead); other fish config lives in `shared/fish` |
 | `cli.json` | `~/.config/caelestia/cli.json` | Super+D (the communication special workspace) starts and gathers Equibop instead of the official Discord |
 
 ## Reference copy
@@ -28,6 +28,37 @@ of caelestia's original Hyprland config, which nothing loads, is kept in
 which keys and tools need caelestia, and the user's key preferences, so the
 Hyprland setup can be rebuilt without caelestia. Nothing refreshes it now:
 `caelestia update` must not run.
+
+## Look
+
+Settled while ricing on 2026-10-08 against HyDE (HyDE-Project/HyDE and its
+themes). Each rule below names the file it lives in.
+
+- **One spacing unit, 4 px**: screen edges, under the bar and above the windows
+  all 4 px; 2 px between windows (half the outer gap, Hyprland's own 1:2
+  ratio). HyprMod: `gaps_in 1`, `gaps_out 4`; `singleWindowGapsOut 4` in
+  `hypr-vars.lua` and window mode's `INSET = 4 + 2` in `hypr-user.lua` follow
+  it. The Noctalia bar uses the same unit (`linux/noctalia`, Bar).
+- **Shapes**: window rounding 12 (HyprMod), the bar's islands are full pills
+  (24 px tall, radius 12). Border 2 px.
+- **Borders** (`hypr-vars.lua`): HyDE-style two-colour 45° gradients, focused
+  `primary` to `tertiary`, unfocused `onSurfaceVariant` to `outlineVariant` at
+  80%, so unfocused windows keep a visible border (caelestia's was almost
+  invisible). In Lua a gradient is a table, `{ colors = { … }, angle = 45 }`,
+  not HyDE's old text form. Colours come from `scheme/current.lua`, which a
+  Noctalia template keeps in step with the wallpaper (`linux/noctalia`).
+- **Transparency** (`hypr-vars.lua`, `windowOpacity`): HyDE's 90% focused, 75%
+  unfocused, for every window not on HyprMod's opaque list.
+- **No shadows** (HyDE). **Blur** stays caelestia's (8, 2 passes); HyDE's 6
+  with 3 passes was a close second.
+- **Pop-up workspaces** (Super+M, D, S): the workspace behind is dimmed 30% and
+  blurred (`dim_special` in `hypr-user.lua`, `blurSpecialWs` in
+  `hypr-vars.lua`), as in HyDE.
+- **Behaviour** (`hypr-user.lua`, HyDE's `defaults.lua`): apps can't pull
+  focus (`focus_on_activate = false`), middle-click pastes, Num Lock on at
+  login. Key repeat stays caelestia's 250 ms / 35 per second (HyDE keeps
+  Hyprland's slower 600 / 25).
+- **Animations**: caelestia's (`linux/hypr`, Changes from caelestia's original).
 
 ## Window mode
 
@@ -172,9 +203,16 @@ The wallpapers themselves aren't in this repo; they live in
   `hyprland-gui.lua`. Later wins, but a duplicate bind fires twice; overriding a
   caelestia bind needs an `unbind` first (see `linux/hyprmod`).
 - caelestia set terminal colours 0–18 from the wallpaper via
-  `~/.local/state/caelestia/sequences.txt`; the prompt and greeting rely on
-  that. Since the Noctalia switch nothing rewrites the file, so the palette is
-  caelestia's last scheme.
+  `~/.local/state/caelestia/sequences.txt`. Since the Noctalia switch nothing
+  rewrites the file; kitty resets those colours and takes Noctalia's palette
+  instead (`shared/kitty`).
+- **Qt apps turn light after a Qt update.** Qt apps (Dolphin and others) get
+  their dark colours from `qtengine`, caelestia's Qt theme engine, built from
+  the AUR against Qt's private API. When `qt6-base` moves to a new version (6.11
+  to 6.12 on 2026-10-08), the engine still loads but stops applying the colour
+  scheme, so newly started Qt apps come up light. Rebuild it, then restart the
+  Qt apps: `paru -S --rebuild qtengine`. Darkly (`darkly-bin`) only uses Qt's
+  public API and survives updates.
 - `singleWindowGapsOut` in `hypr-vars.lua` must track HyprMod's outer gap by hand.
 - Wallpapers: `~/Pictures/Wallpapers`. If the folder is created after the shell
   starts, restart the shell once so the picker sees it.

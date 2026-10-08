@@ -1,0 +1,18 @@
+# App icons of the windows on this monitor's active Hyprland workspace.
+# Replaces the built-in taskbar (only_active_workspace = true), which shows
+# every window from every monitor when the current workspace is empty.
+
+id           = "roynul/workspace-apps"
+name         = "Workspace apps"
+version      = "0.1.0"
+plugin_api   = 32 # tooltip on ui.row (32); also needs closures (9) and argv runAsync (24)
+author       = "roynul"
+license      = "MIT"
+icon         = "apps"
+description  = "Icons of the windows on this monitor's active Hyprland workspace; click to focus."
+tags         = ["hyprland", "taskbar"]
+dependencies = ["hyprland"]
+
+[[widget]]
+id    = "icons"
+entry = "icons.luau"
