@@ -1,8 +1,9 @@
 # Syntax colours, on top of fish's default theme. Interactive shells only.
 status is-interactive; or exit
 
-# macOS only. CachyOS is the reference machine, and caelestia's scheme there maps
-# brblack to a light grey that already reads on the transparent background.
+# macOS only. CachyOS is the reference machine, and the wallpaper palette there
+# (Noctalia's kitty theme) maps brblack to a mid grey that already reads on the
+# transparent background.
 test (uname) = Darwin; or exit
 
 # fish paints autosuggestions in brblack. Both terminals here run a transparent

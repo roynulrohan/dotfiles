@@ -29,7 +29,7 @@ caelestia's `~/.config/starship.toml` on Linux is left alone and unused.
 ## Notes
 
 - Colours are ANSI names (`blue`, `purple`), never hex or 256-colour numbers, so
-  the prompt follows the terminal palette: caelestia's wallpaper scheme on Linux,
+  the prompt follows the terminal palette: Noctalia's wallpaper palette on Linux (`shared/kitty`),
   the Ghostty theme on macOS. Badge icons are coloured to their brand with the
   nearest name. Keep it that way when editing.
 - Icons are literal Nerd Font glyphs. The badge symbols and their formats come

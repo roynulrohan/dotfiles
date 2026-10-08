@@ -30,7 +30,7 @@ abbreviations, `20` the fastfetch greeting, `30` syntax colours (macOS only). Ou
 - `conf.d/30` names ANSI colours only, never hex, so the terminal's own palette
   still decides the shade. It sets the one fish default that does not survive a
   transparent background; everything else is left to the theme. It runs on macOS
-  only: on CachyOS, caelestia's scheme maps `brblack` to a light grey that
+  only: on CachyOS, the wallpaper palette maps `brblack` to a mid grey that
   already reads, so the file exits at its OS guard.
 
 ## Verify

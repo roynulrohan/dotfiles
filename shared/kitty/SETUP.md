@@ -31,8 +31,15 @@ Copy `macos.conf` on the Mac, or kitty starts without remote control there.
 
 ## Linux colours
 
-Live colours come from caelestia's escape sequences printed by fish on startup.
-`colors.conf` is only the fallback; generate it once from the current scheme:
+Live colours come from Noctalia's wallpaper palette: a Noctalia template
+(`linux/noctalia/templates/kitty.conf`) writes `~/.config/kitty/themes/noctalia.conf`
+and reloads kitty, and `kitty.conf` loads it with `globinclude`, so the Mac,
+which has no such file, loads nothing. The template is a copy of Noctalia's
+built-in kitty template; the built-in one also appends an `include` line to
+`kitty.conf`, which would reach the Mac. caelestia's colour escape codes, which
+its fish config still prints, are reset in kitty by
+`linux/caelestia/user-config.fish`. `colors.conf` is only the fallback (it is
+caelestia's last scheme); to regenerate it from caelestia's scheme file:
 
 ```fish
 python3 -c '
@@ -44,7 +51,15 @@ open(os.path.expanduser("~/.config/kitty/colors.conf"),"w").write("\n".join(l)+"
 ```
 
 Hyprland treats kitty as opaque (rule in `linux/hyprmod`) because kitty handles
-its own transparency and Hyprland blurs behind it.
+its own transparency and Hyprland blurs behind it. Hyprland's focus fading
+(90% / 75%) would fade the text and fastfetch images too; a kitty watcher that
+fades only the background on focus was tried and dropped (2026-10-08).
+
+**Scrollbar** (kitty 0.43+): shown only while the mouse is at the window's
+right edge (`scrollbar hovered`; the default `scrolled` shows it whenever the
+view isn't at the bottom, which a window resize can leave behind). Handle and
+track use the theme's `selection_background`, at 80% and 25% (hovered),
+fully round (`scrollbar_radius 0.5`, half the hover width).
 
 ## Verify
 

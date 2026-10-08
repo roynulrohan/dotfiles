@@ -60,8 +60,9 @@ decision the repo doesn't cover.
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland
   ones. Never change Hyprland to match the Mac.
 - **Theming follows the terminal.** The prompt and greeting use named ANSI
-  colours, never hex, so they follow whatever sets the palette: on Linux, the
-  last caelestia wallpaper scheme (static since the Noctalia switch), the Ghostty/kitty theme on the Mac. **No theming
+  colours, never hex, so they follow whatever sets the palette: on Linux,
+  Noctalia's wallpaper palette (a Noctalia template writes kitty's theme), the
+  Ghostty/kitty theme on the Mac. **No theming
   changes on the Mac**: nothing in this repo overrides its terminal palette.
 - **Claude Code is the primary agent.** `shared/agents` holds the global
   instructions every agent reads, copied to `~/.claude/CLAUDE.md` and

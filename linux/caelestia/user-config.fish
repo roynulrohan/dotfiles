@@ -9,6 +9,8 @@
 # colours there: OSC 104 palette, 110 foreground, 111 background, 112 cursor
 # (all handled by xterm.js, Orca's terminal). conf.d runs before config.fish,
 # so this can't live there.
-if test "$TERM_PROGRAM" = Orca
+# kitty takes its colours from Noctalia's theme now (themes/noctalia.conf), so
+# reset caelestia's frozen colours there too.
+if test "$TERM_PROGRAM" = Orca; or set -q KITTY_WINDOW_ID
     printf '\e]104\a\e]110\a\e]111\a\e]112\a'
 end
