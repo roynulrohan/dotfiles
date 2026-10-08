@@ -2,7 +2,7 @@
 
 [HyprMod](https://github.com/bluemancz/hyprmod) is a GUI for Hyprland binds,
 monitors, workspace and window rules. It owns `~/.config/hypr/hyprland-gui.lua`,
-which caelestia loads last, so everything in it overrides caelestia.
+which `linux/hypr/hyprland.lua` loads last, so everything in it wins.
 
 ## Files
 
@@ -29,7 +29,7 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   function, which HyprMod can't express), Ctrl+Super+Shift+arrows move
   window, Super+W float,
   Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+P /
-  Super+Ctrl+P / Super+Shift+P screenshot / freeze / colour picker,
+  Super+Ctrl+P region screenshot (Noctalia), Super+Shift+P colour picker,
   Super+Shift+F pin, F10–F12 volume. Super+B opens Zen.
 - **Unbinds** of the caelestia binds those replace. The `unbind` text must match
   caelestia's spelling exactly, including modifier order and key capitalisation
@@ -54,18 +54,18 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 
 ## Gotcha
 
-HyprMod loads its file through two lines it appends to caelestia's
-`~/.config/hypr/hyprland.lua`:
+HyprMod loads its file through two lines it appended to
+`~/.config/hypr/hyprland.lua` (now in `linux/hypr`):
 
 ```lua
 -- HyprMod managed settings
 require("hyprland-gui")
 ```
 
-A caelestia update that rewrites `hyprland.lua` drops them, and every bind,
-rule and setting in `hyprland-gui.lua` stops applying. Open HyprMod once: it
-checks for the line at startup and adds it back. Or add the two lines by hand
-and run `hyprctl reload`.
+If they go missing (a `caelestia update` would drop them), every bind, rule
+and setting in `hyprland-gui.lua` stops applying. Open HyprMod once: it checks
+for the line at startup and adds it back. Or add the two lines by hand and run
+`hyprctl reload`.
 
 ### A replugged monitor lands on the far right
 

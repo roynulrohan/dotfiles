@@ -1,4 +1,4 @@
--- User overrides loaded after caelestia's base config and before HyprMod's file.
+-- User overrides loaded after the base config (linux/hypr) and before HyprMod's file.
 -- Only things HyprMod cannot represent go here.
 
 -- Window mode (Super+A): move, resize and place the active window from the
@@ -20,7 +20,7 @@ local EDGE  = 30    -- px per Shift+arrow press
 local INSET = 4 + 2 -- HyprMod's gaps_out + border_size, so placed windows line up with tiled ones
 
 -- Usable area of a monitor (the window's own, else the focused one): minus
--- caelestia's bar and frame (reserved), minus the gap.
+-- the bar (reserved), minus the gap.
 local function work_area(win)
     local m = (win and win.monitor) or hl.get_active_monitor()
     if not m then return nil end

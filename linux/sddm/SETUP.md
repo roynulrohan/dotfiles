@@ -77,17 +77,18 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   `/usr/share/sddm/themes/caelestia/theme.conf` is overwritten on every sync.
   The template's colour lines are placeholders caelestia fills in, and the sync
   sets `os` and `host`.
-- **The scheme is dynamic,** so the login screen shows the wallpaper and colours
-  from the last sync. Run `sddm-sync` again after changing wallpaper. Automatic
-  syncing is possible (a caelestia `postHook` plus a passwordless sudo rule for
-  `sync.sh`) but isn't set up.
+- **The login screen shows the wallpaper and colours from the last sync.**
+  Since the switch to Noctalia (2026-10-08) caelestia no longer regenerates
+  its scheme, so a new sync gives the same colours. Noctalia has its own
+  greeter (for greetd, not SDDM); not tried yet.
 - **Frozen screen after logging out:** happened twice on 2026-10-07. caelestia's
   logout button killed the whole login session, `sddm-helper` included, so SDDM
   logged "Process crashed" and never showed the login screen again (Hyprland
-  also segfaults in `libaquamarine` while closing, an upstream bug). The button
-  now runs `uwsm stop` (`session.commands.logout` in `linux/caelestia/shell.json`),
-  which the Hyprland wiki recommends for uwsm sessions: it brings the graphical
-  session down in order and lets SDDM's helper exit normally. Untested at the
+  also segfaults in `libaquamarine` while closing, an upstream bug). Log out
+  with `uwsm stop`, which the Hyprland wiki recommends for uwsm sessions: it
+  brings the graphical session down in order and lets SDDM's helper exit
+  normally. Noctalia's own log out exits Hyprland directly, so its session menu
+  runs `uwsm stop` instead (`linux/noctalia/config.toml`). Untested at the
   time of writing. If it freezes anyway, Ctrl+Alt+Delete reboots (systemd treats
   it as a reboot request); Ctrl+Alt+F2, the terminal SDDM's login screen runs
   on, may bring it back.

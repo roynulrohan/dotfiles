@@ -1,9 +1,14 @@
 # caelestia overrides
 
 Everything of mine on top of [caelestia dots](https://github.com/caelestia-dots/caelestia).
-Only the override layer is copied from here; caelestia's own tree
-(`~/.config/hypr`, `~/.config/fish`, the shell) is installed and updated by
-`caelestia`. A copy of its Hyprland part, which nothing loads, is kept in
+**Since 2026-10-08 the shell is Noctalia (`linux/noctalia`), and
+`~/.config/hypr` is ours (`linux/hypr`).** caelestia stays installed as a
+fallback but doesn't run, and `caelestia update` must not run (it would
+overwrite `~/.config/hypr`). Still in use from this package: `hypr-vars.lua`
+and `hypr-user.lua` (loaded by `linux/hypr/hyprland.lua`), `cli.json` (the
+pop-up workspaces), `user-config.fish` (caelestia's `~/.config/fish` is
+still theirs). `shell.json` only applies when caelestia's shell runs. A copy
+of caelestia's original Hyprland config, which nothing loads, is kept in
 `hypr-reference/` (see "Reference copy" below).
 
 ## Files
@@ -21,8 +26,8 @@ Only the override layer is copied from here; caelestia's own tree
 `hypr-reference/` holds a copy of caelestia's `~/.config/hypr` at revision
 `1ee7a98`. Nothing loads it. Its README lists what the layers above change,
 which keys and tools need caelestia, and the user's key preferences, so the
-Hyprland setup can be rebuilt without caelestia. Refresh it after a caelestia
-update changes `~/.config/hypr`.
+Hyprland setup can be rebuilt without caelestia. Nothing refreshes it now:
+`caelestia update` must not run.
 
 ## Window mode
 
@@ -50,8 +55,8 @@ window sits against the right or bottom side of the usable area (snapped there
 with Ctrl+→ or Ctrl+↓), they move the left or top edge instead, so the window
 stays against that side.
 
-Floating windows stay inside the usable area of their monitor: caelestia's bar
-and frame (the monitor's reserved area) and the 4 px outer gap are excluded,
+Floating windows stay inside the usable area of their monitor: the bar (the
+monitor's reserved area) and the 4 px outer gap are excluded,
 and a step that would cross an edge stops at it. Hyprland resizes a floating
 window around its centre, so the edge keys move it by half the change to keep
 the other edge put.
@@ -88,8 +93,8 @@ stdout, so the package's `print()` at setup broke HyprMod (it wouldn't open);
 `python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home() / ".config/hypr/hyprland.lua")'`.
 
 Ranges: main DP-1 gets Hyprland ids 1–10, right HDMI-A-1 11–20, left DP-2
-21–30 (`monitor_priority`). caelestia's bar labels workspaces by id, so the side
-monitors show 11–20 and 21–30. All 30 workspaces are persistent (the package's
+21–30 (`monitor_priority`). A bar that labels workspaces by id (caelestia's
+did) shows 11–20 and 21–30 on the side monitors. All 30 workspaces are persistent (the package's
 default), so Hyprland's own workspace rules pin each one to its monitor. With
 persistence off, every config reload made the package create a missing
 workspace on whichever monitor had focus and then move it, and Hyprland handed
@@ -122,8 +127,7 @@ repo. A load error shows as a Hyprland notification instead of failing quietly.
 
 Follow caelestia's installer first (it also installs Hyprland, fish, foot,
 fastfetch, starship, the Nerd Font). Then copy the files above in and run
-`hyprctl reload`. The shell picks up `shell.json` live; restart it with
-Ctrl + Super + Alt + R if the bar doesn't change.
+`hyprctl reload`. `shell.json` only matters when caelestia's shell runs.
 
 The installer asks which components to set up. Pick these:
 
@@ -164,11 +168,13 @@ The wallpapers themselves aren't in this repo; they live in
 
 ## Things to know
 
-- Load order: caelestia base → `hyprland/*.lua` → `hypr-user.lua` → HyprMod's
+- Load order: `linux/hypr` base → `hyprland/*.lua` → `hypr-user.lua` → HyprMod's
   `hyprland-gui.lua`. Later wins, but a duplicate bind fires twice; overriding a
   caelestia bind needs an `unbind` first (see `linux/hyprmod`).
-- caelestia sets terminal colours 0–18 from the wallpaper via
-  `~/.local/state/caelestia/sequences.txt`; the prompt and greeting rely on that.
+- caelestia set terminal colours 0–18 from the wallpaper via
+  `~/.local/state/caelestia/sequences.txt`; the prompt and greeting rely on
+  that. Since the Noctalia switch nothing rewrites the file, so the palette is
+  caelestia's last scheme.
 - `singleWindowGapsOut` in `hypr-vars.lua` must track HyprMod's outer gap by hand.
 - Wallpapers: `~/Pictures/Wallpapers`. If the folder is created after the shell
   starts, restart the shell once so the picker sees it.

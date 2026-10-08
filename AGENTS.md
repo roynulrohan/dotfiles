@@ -31,13 +31,16 @@ decision the repo doesn't cover.
 - **Modern CLI replacements**: eza, bat, fd, ripgrep, fzf, zoxide. Aliases only
   activate when the tool exists, so install them.
 - **bun over npm/npx**. `bunx`, not `npx`.
-- **Desktop (Linux)**: caelestia dots, unmodified, with overrides in
-  `linux/caelestia`. `linux/caelestia/hypr-reference` holds a copy of
-  caelestia's Hyprland config and a README: which keys need caelestia, which
-  tools it installs, and the user's key preferences. It is for rebuilding the
-  Hyprland setup without caelestia. Binds and rules go through HyprMod (`linux/hyprmod`) so
-  they're editable in its GUI; HyDE-style keybinds layered on caelestia's, with
-  caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
+- **Desktop (Linux)**: Hyprland with the Noctalia shell (`linux/noctalia`,
+  since 2026-10-08; top bar, launcher, lock, idle, notifications). The Hyprland
+  config started as caelestia's and is now ours (`linux/hypr`); never run
+  `caelestia update`. caelestia stays installed as a fallback, and
+  `linux/caelestia` keeps its override files (two are still loaded:
+  `hypr-vars.lua`, `hypr-user.lua`) and a reference copy of its original
+  Hyprland config (`hypr-reference`, with the user's key preferences). Binds and
+  rules go through HyprMod (`linux/hyprmod`) where it can express them;
+  HyDE-style keybinds layered on caelestia's, with caelestia's originals
+  unbound first. Terminal, browser (Zen) and Discord are
   opaque; each monitor has its own workspaces 1–10, shown as
   numbers in the bar. Default apps: Zen for web
   pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
@@ -45,8 +48,8 @@ decision the repo doesn't cover.
   caelestia "locklike" theme (`linux/sddm`). Discord: Equibop, caelestia-themed,
   is the default (Super+D, `discord://` links); the official app stays installed.
   Live wallpapers: Wallpaper Engine wallpapers per monitor through
-  linux-wallpaperengine (`linux/wallpaper`); caelestia's wallpaper is a still
-  of the main one, for the colours. Audio: PipeWire's own filter-chain runs the
+  linux-wallpaperengine (`linux/wallpaper`); Noctalia's wallpaper is a still
+  of the main one, for the colours (its drawing is off). Audio: PipeWire's own filter-chain runs the
   G432 headset's EQ (`linux/pipewire`); no EasyEffects. Night light:
   hyprsunset, always on (`linux/hyprsunset`). Window and image-viewer
   controls follow one convention: arrows move, Shift resizes, Alt makes the
@@ -57,8 +60,8 @@ decision the repo doesn't cover.
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland
   ones. Never change Hyprland to match the Mac.
 - **Theming follows the terminal.** The prompt and greeting use named ANSI
-  colours, never hex, so they follow whatever sets the palette: caelestia's
-  wallpaper scheme on Linux, the Ghostty/kitty theme on the Mac. **No theming
+  colours, never hex, so they follow whatever sets the palette: on Linux, the
+  last caelestia wallpaper scheme (static since the Noctalia switch), the Ghostty/kitty theme on the Mac. **No theming
   changes on the Mac**: nothing in this repo overrides its terminal palette.
 - **Claude Code is the primary agent.** `shared/agents` holds the global
   instructions every agent reads, copied to `~/.claude/CLAUDE.md` and
@@ -70,7 +73,7 @@ decision the repo doesn't cover.
 | Directory | Applies to | Contents |
 |---|---|---|
 | `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor, orca |
-| `linux/` | CachyOS desktop | caelestia overrides, HyprMod file, snapshots setup, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
+| `linux/` | CachyOS desktop | Hyprland config (`hypr`), Noctalia shell (`noctalia`), caelestia overrides and reference copy, HyprMod file, snapshots setup, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
@@ -80,7 +83,8 @@ gotchas, how to verify.
 
 `shared/fish` and `shared/git` first, then the terminal, then `shared/starship`
 and `shared/fastfetch`, then Claude, then the platform packages. On Linux,
-caelestia's installer runs before any of this. Start a new shell before
+caelestia's installer runs before any of this; then `linux/hypr` overwrites
+`~/.config/hypr` (never run `caelestia update` afterwards). Start a new shell before
 verifying anything shell-dependent.
 
 ## Not in this repo

@@ -1,0 +1,54 @@
+# Keep the live wallpapers (linux-wallpaperengine): Noctalia draws its own
+# wallpaper by default, which would cover them.
+[wallpaper]
+enabled = false
+
+# Colours from the wallpaper, in the same style caelestia used ("tonalspot").
+# Which wallpaper: `noctalia msg wallpaper-set <image>` (see SETUP.md).
+[theme]
+source = "wallpaper"
+wallpaper_scheme = "m3-tonal-spot"
+
+# Idle, carried over from caelestia: lock after 1 h, screens off after 1.5 h,
+# lock and suspend after 4 h (plain suspend: zram swap only, so no hibernate).
+[idle]
+behavior_order = ["lock", "screen-off", "suspend"]
+
+[idle.behavior.lock]
+timeout = 3600
+action = "lock"
+enabled = true
+
+[idle.behavior.screen-off]
+timeout = 5400
+action = "screen_off"
+enabled = true
+
+[idle.behavior.suspend]
+timeout = 14400
+action = "lock_and_suspend"
+enabled = true
+
+# Weather: Ottawa by coordinates (by name, "Ottawa" also matches US towns).
+[location]
+auto_locate = false
+latitude = 45.4215
+longitude = -75.6972
+
+# Session menu: the default five, but log out runs `uwsm stop`. Noctalia's own
+# log out exits Hyprland directly, which once froze the SDDM login screen.
+[[shell.session.actions]]
+action = "lock"
+
+[[shell.session.actions]]
+action = "logout"
+command = "uwsm stop"
+
+[[shell.session.actions]]
+action = "lock_and_suspend"
+
+[[shell.session.actions]]
+action = "reboot"
+
+[[shell.session.actions]]
+action = "shutdown"

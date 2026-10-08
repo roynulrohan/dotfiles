@@ -70,11 +70,11 @@ hl.bind("SUPER + SHIFT + J", hl.dsp.layout("swapsplit"))
 hl.unbind("SUPER + SHIFT + F")
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.pin())
 hl.unbind("SUPER + P")
-hl.bind("SUPER + P", hl.dsp.global("caelestia:screenshot"), {
+hl.bind("SUPER + P", hl.dsp.exec_cmd("noctalia msg screenshot-region"), {
     locked = true,
 })
 hl.unbind("SUPER + CTRL + P")
-hl.bind("SUPER + CTRL + P", hl.dsp.global("caelestia:screenshotFreeze"), {
+hl.bind("SUPER + CTRL + P", hl.dsp.exec_cmd("noctalia msg screenshot-region"), {
     locked = true,
 })
 hl.unbind("SUPER + SHIFT + P")

@@ -3,9 +3,10 @@
 Live wallpapers on CachyOS: Wallpaper Engine wallpapers from the Steam Workshop,
 one per monitor, played by
 [linux-wallpaperengine](https://github.com/Almamu/linux-wallpaperengine).
-caelestia's own wallpaper stays underneath as a still frame: it drives the
-dynamic colour scheme, the lock screen and the login screen, and it shows if
-the live wallpaper isn't running.
+A still frame of the main wallpaper is the shell's wallpaper: Noctalia takes
+its colours and lock screen background from it, with its own wallpaper drawing
+switched off (`linux/noctalia`). The login screen uses the still from the last
+`sddm-sync` (`linux/sddm`).
 
 | Repo | Destination |
 |---|---|
@@ -102,12 +103,12 @@ seconds through a Wallpaper Engine script that doesn't run here, so
 
 ## Colours from the live wallpaper
 
-caelestia builds the scheme from its own wallpaper, not from what
+Noctalia builds its colours from its own wallpaper setting, not from what
 linux-wallpaperengine draws. Give it a still frame of the main wallpaper; the
 stills live in `~/Pictures/Wallpapers/live/` (not in this repo):
 
 ```bash
-caelestia wallpaper -f ~/Pictures/Wallpapers/live/eri-uesugi.png -N   # -N keeps dark mode
+noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
 ```
 
 Ways to get a still:
@@ -116,7 +117,7 @@ Ways to get a still:
   running afterwards, so wrap it in `timeout 25`. Elaina crashes in window mode.
 - **Video:** `ffmpeg -ss 1.5 -i <video> -frames:v 1 out.png`.
 - **What the monitor shows:** switch it to an empty workspace, `grim -o DP-1`,
-  then crop off caelestia's bar and frame (60 px left, 10 px elsewhere, plus a
+  then crop off the bar (caelestia's took 60 px left, 10 px elsewhere, plus a
   little for the rounded corners). Used for Elaina.
 
 In dark mode the accents are always a light tone of the wallpaper's main hue,
@@ -124,10 +125,10 @@ so a red wallpaper gives pink accents whatever the scheme variant.
 
 ## Things to know
 
-- **Layers:** caelestia draws its wallpaper on the `background` layer;
-  linux-wallpaperengine uses `bottom`, one above, so it covers it and stays below
-  windows. Stopping it (`pkill -f '^\./linux-wallpaperengine'`) shows
-  caelestia's still again.
+- **Layers:** linux-wallpaperengine uses the `bottom` layer, so it stays below
+  windows and above any shell wallpaper on `background`. Noctalia's wallpaper
+  drawing is off, so stopping linux-wallpaperengine
+  (`pkill -f '^\./linux-wallpaperengine'`) leaves the plain background.
 - **Performance** for two screens: about 6% of one CPU core, 0.7 GB RAM and
   1.1 GB of GPU memory on the RTX 5070. It runs at 30 fps and pauses while an app
   is fullscreen.

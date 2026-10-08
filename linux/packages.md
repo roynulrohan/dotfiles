@@ -7,7 +7,8 @@ sits around it.
 | Package | Why |
 |---|---|
 | `paru` | AUR helper for the packages marked AUR below; in CachyOS's own repo |
-| `caelestia-shell` `caelestia-cli` (AUR) | desktop shell, wallpaper/scheme tooling |
+| `noctalia` | desktop shell since 2026-10-08: bar, launcher, lock, idle, notifications; see `noctalia/` |
+| `caelestia-shell` `caelestia-cli` (AUR) | the previous shell and its wallpaper/scheme tooling; kept installed as a fallback, not running (see `caelestia/`) |
 | `hyprland` `xdg-desktop-portal-hyprland` `xdg-desktop-portal-gtk` | compositor |
 | `sddm` `caelestia-sddm-locklike-git` (AUR) | login screen in caelestia's lock-screen style; see `sddm/` |
 | `hyprmod` (AUR) | GUI for binds, monitors, workspace and window rules; owns `hyprland-gui.lua` |
