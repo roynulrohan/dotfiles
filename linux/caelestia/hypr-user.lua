@@ -136,6 +136,13 @@ hl.define_submap("window", function()
 end)
 
 -- Live wallpapers run as a systemd user service (linux/wallpaper), not from here.
+-- linux-wallpaperengine only draws on the outputs it saw at start. A monitor
+-- that comes back (replugged, or the DisplayPort VG248 reconnecting when the
+-- screens wake from DPMS) gets no wallpaper, so restart the service then;
+-- try-restart does nothing before the service has started at login.
+hl.on("monitor.added", function()
+    hl.exec_cmd("systemctl --user try-restart live-wallpaper.service")
+end)
 
 -- Per-monitor workspaces: each monitor has its own 1-10 on Super+1..0, from
 -- split-monitor-workspaces (a Lua package, pinned clone in

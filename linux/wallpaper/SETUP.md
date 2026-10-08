@@ -18,7 +18,12 @@ the live wallpaper isn't running.
 exits: right after login Hyprland sometimes closes the wallpaper's layer
 surface while outputs and workspaces settle ("Compositor closed our LS" in the
 log), and the wallpapers used to stay gone until restarted by hand. Plain
-`live-wallpaper` restarts the service, e.g. after plugging a monitor in; stop
+`live-wallpaper` restarts the service by hand. linux-wallpaperengine only
+draws on the outputs it saw at start, so `linux/caelestia/hypr-user.lua`
+restarts the service on Hyprland's `monitor.added` event (`try-restart`, so not
+at login): a replugged monitor, or the DisplayPort VG248, which reconnects as a
+new output when the screens wake from DPMS (seen on 2026-10-08: the left
+monitor came back without its wallpaper). Stop
 the wallpapers with `systemctl --user stop live-wallpaper`. Output goes to the
 journal: `journalctl --user -u live-wallpaper`.
 
