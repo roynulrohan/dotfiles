@@ -82,20 +82,6 @@ hl.unbind("SUPER + SHIFT + P")
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -a"), {
     locked = true,
 })
-hl.unbind("F10")
-hl.bind("F10", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), {
-    locked = true,
-})
-hl.unbind("F11")
-hl.bind("F11", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"), {
-    repeating = true,
-    locked = true,
-})
-hl.unbind("F12")
-hl.bind("F12", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 10%+"), {
-    repeating = true,
-    locked = true,
-})
 
 -- Window rules
 hl.window_rule({
