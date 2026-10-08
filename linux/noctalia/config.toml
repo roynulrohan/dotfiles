@@ -140,6 +140,22 @@ type = "k4n4t4/hypr-submap:hypr-submap"
 hide_when_default = true
 glyph = "arrows-move"
 
+# Media island: "Title - Artist", album art a bit bigger than the default
+# 16 px. No minimum width, so it hugs short titles; long ones stop at 240 px and
+# scroll. Hidden when no player is running. (hide_when_idle, hiding it
+# while paused, is in Noctalia's docs but not in 5.2.1.)
+[widget.media]
+title_scroll = "always"
+art_size = 20
+min_length = 0
+max_length = 240
+hide_when_no_media = true
+
+# Control centre sidebar with icons and names, also when it opens on a tab.
+[control_center]
+sidebar = "full"
+sidebar_section = "full"
+
 [widget.network]
 show_label = false           # icon only, no "enp5s0"
 

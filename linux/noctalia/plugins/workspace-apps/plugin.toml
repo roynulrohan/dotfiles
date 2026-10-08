@@ -4,8 +4,8 @@
 
 id           = "roynul/workspace-apps"
 name         = "Workspace apps"
-version      = "0.1.0"
-plugin_api   = 32 # tooltip on ui.row (32); also needs closures (9) and argv runAsync (24)
+version      = "0.3.0"
+plugin_api   = 32 # tooltip on ui.row (32); also needs closures (9), service lifecycle (17), argv runAsync (24)
 author       = "roynul"
 license      = "MIT"
 icon         = "apps"
@@ -16,3 +16,9 @@ dependencies = ["hyprland"]
 [[widget]]
 id    = "icons"
 entry = "icons.luau"
+
+# One instance per plugin: owns the Hyprland event stream and publishes the
+# per-output window lists that every icons widget renders.
+[[service]]
+id    = "hyprland"
+entry = "hyprland.luau"

@@ -1,18 +1,33 @@
 --!nonstrict
 -- One icon per window on the active Hyprland workspace of the monitor this
--- bar is on. Data comes from `hyprctl -j monitors` and `hyprctl -j clients`,
--- polled every POLL_MS; the tree is re-rendered only when the window list,
--- its order, or the focused window changes. An empty workspace hides the
--- whole capsule.
+-- bar is on. The data comes from the plugin's `hyprland` service through the
+-- "workspaces" state key (a table of output name -> window list); the tree is
+-- re-rendered only when the window list, its order, or the highlighted window
+-- changes. An empty workspace hides the whole capsule.
 
 local ICON_PX = 18
-local POLL_MS = 400
+local RECHECK_MS = 5000 -- safety net in case a state update was missed
 
 -- appIconPath scans the filesystem on a miss, so remember results per app
--- class. `false` records a class with no icon, so it is not retried each tick.
+-- class. `false` records a class with no icon, so it is not retried.
 local iconCache = {}
 local lastSignature = nil -- what the bar shows now; skip identical renders
-local inFlight = false    -- drop a tick while the previous hyprctl pair runs
+local itemCount = 0
+
+-- barWidget.outputName() and isVertical() read the bar snapshot attached to
+-- the current call. The load chunk and update() carry one; noctalia.state
+-- watch callbacks do not, so there both return nil/false. Remember the values
+-- while a snapshot is present and use the copies everywhere.
+local output = nil
+local vertical = false
+
+local function rememberBar()
+  local name = barWidget.outputName()
+  if name ~= nil and name ~= "" then
+    output = name
+    vertical = barWidget.isVertical() and true or false
+  end
+end
 
 local function iconFor(class)
   local cached = iconCache[class]
@@ -29,47 +44,8 @@ local function focusWindow(address)
   noctalia.runAsync({ "hyprctl", "dispatch", 'hl.dsp.focus({ window = "address:' .. address .. '" })' })
 end
 
--- Windows on `output`'s active workspace, left to right. Special workspaces
--- (negative ids) are ignored: the normal workspace stays listed while one is
--- open on top. Unmapped and hidden (collapsed group tab) windows are skipped.
-local function collect(output, monitors, clients)
-  local activeId = nil
-  for _, mon in ipairs(monitors) do
-    if mon.name == output and type(mon.activeWorkspace) == "table" then
-      activeId = mon.activeWorkspace.id
-    end
-  end
-
-  local items = {}
-  if activeId == nil or activeId < 0 then
-    return items
-  end
-  for _, c in ipairs(clients) do
-    if c.mapped and not c.hidden and type(c.workspace) == "table" and c.workspace.id == activeId then
-      table.insert(items, {
-        address = c.address,
-        class = c.class or "",
-        x = (type(c.at) == "table" and c.at[1]) or 0,
-        y = (type(c.at) == "table" and c.at[2]) or 0,
-        -- focusHistoryID 0 is the compositor-wide focused window.
-        focused = c.focusHistoryID == 0,
-      })
-    end
-  end
-  table.sort(items, function(a, b)
-    if a.x ~= b.x then
-      return a.x < b.x
-    end
-    if a.y ~= b.y then
-      return a.y < b.y
-    end
-    return a.address < b.address
-  end)
-  return items
-end
-
 local function render(items)
-  local container = barWidget.isVertical() and ui.column or ui.row
+  local container = vertical and ui.column or ui.row
   local children = {}
   for _, item in ipairs(items) do
     local path = iconFor(item.class)
@@ -80,12 +56,13 @@ local function render(items)
       visual = ui.glyph({ name = "app-window", size = ICON_PX })
     end
     -- A row wrapper carries key, click, tooltip, and group opacity for both
-    -- image and glyph alike. Opacity is the focus mark: full for the focused
-    -- window, dimmed for the rest.
+    -- image and glyph alike. Opacity is the focus mark: full for the window
+    -- this monitor focused most recently (the compositor-wide focused window
+    -- on the focused monitor), dimmed for the rest.
     table.insert(children, ui.row({
       key = item.address,
       align = "center",
-      opacity = item.focused and 1.0 or 0.5,
+      opacity = item.active and 1.0 or 0.5,
       tooltip = item.class,
       onClick = function()
         focusWindow(item.address)
@@ -98,13 +75,14 @@ end
 local function apply(items)
   local parts = {}
   for _, item in ipairs(items) do
-    parts[#parts + 1] = item.address .. (item.focused and "!" or "") .. item.class
+    parts[#parts + 1] = item.address .. (item.active and "!" or "") .. item.class
   end
   local signature = table.concat(parts, ";")
   if signature == lastSignature then
     return
   end
   lastSignature = signature
+  itemCount = #items
 
   if #items == 0 then
     barWidget.setVisible(false)
@@ -114,60 +92,40 @@ local function apply(items)
   barWidget.setVisible(true)
 end
 
-local function decodeArray(result)
-  if result.exitCode ~= 0 or result.timedOut or result.stdoutTruncated then
-    return nil
-  end
-  local value = noctalia.json.decode(result.stdout)
-  if type(value) ~= "table" then
-    return nil
-  end
-  return value
-end
-
-local function refresh()
-  if inFlight then
-    return
-  end
-  local output = barWidget.outputName() or noctalia.focusedOutputName()
+local function applyState(workspaces)
   if output == nil then
     return
   end
-  inFlight = true
-  local started = noctalia.runAsync({ "hyprctl", "-j", "monitors" }, function(monitorsResult)
-    local monitors = decodeArray(monitorsResult)
-    if monitors == nil then
-      inFlight = false
-      return
-    end
-    local ok = noctalia.runAsync({ "hyprctl", "-j", "clients" }, function(clientsResult)
-      inFlight = false
-      local clients = decodeArray(clientsResult)
-      if clients == nil then
-        return
-      end
-      apply(collect(output, monitors, clients))
-    end)
-    if not ok then
-      inFlight = false
-    end
-  end)
-  if not started then
-    inFlight = false
+  if type(workspaces) ~= "table" then
+    -- Nothing published yet (service still starting): no empty capsule.
+    barWidget.setVisible(false)
+    return
   end
+  apply(workspaces[output] or {})
 end
 
+noctalia.state.watch("workspaces", applyState)
+
 function update()
-  noctalia.setUpdateInterval(POLL_MS)
-  refresh()
+  noctalia.setUpdateInterval(RECHECK_MS)
+  rememberBar()
+  applyState(noctalia.state.get("workspaces"))
 end
 
 -- `noctalia msg plugin roynul/workspace-apps:icons <output|all> refresh`
 -- forces a full rebuild, including the icon cache.
+-- `... status` logs which output this bar follows and how many icons it shows.
 function onIpc(event)
   if event == "refresh" then
     iconCache = {}
     lastSignature = nil
-    refresh()
+    noctalia.state.set("refresh-request", noctalia.nowMs())
+  elseif event == "status" then
+    noctalia.log(string.format("icons: output=%s vertical=%s items=%d published=%s",
+      tostring(output), tostring(vertical), itemCount,
+      tostring(noctalia.state.get("workspaces") ~= nil)))
   end
 end
+
+rememberBar()
+applyState(noctalia.state.get("workspaces"))

@@ -101,13 +101,27 @@ from here.
 
 ## Plugin: workspace apps
 
-`plugins/workspace-apps` (Luau): the app icons of the windows on *this* monitor's
-current workspace, in screen order; the focused one bright, the others dimmed;
-click to focus; hidden when the workspace is empty. It replaces the built-in
-`taskbar` with `only_active_workspace`, which shows every window from all
-monitors on a monitor whose workspace is empty (`taskbar_widget.cpp`: the filter
-only runs when it finds a workspace to match). It reads `hyprctl -j` every
-400 ms and never uses window titles.
+`plugins/workspace-apps` (Luau, v0.3): the app icons of the windows on *this*
+monitor's current workspace, in screen order; each monitor's own last-focused
+window bright, the others dimmed; click to focus; hidden when the workspace is
+empty. It replaces the built-in `taskbar` with `only_active_workspace`, which
+shows every window from all monitors on a monitor whose workspace is empty
+(`taskbar_widget.cpp`: the filter only runs when it finds a workspace to match).
+It never uses window titles.
+
+- `hyprland.luau`, a `[[service]]` (one for all bars): follows Hyprland's event
+  socket with one `socat` (`noctalia.runStream`), runs `hyprctl -j monitors` and
+  `clients` after a burst of events, and publishes each monitor's list to plugin
+  state. A 5 s poll covers a dead stream. `noctalia msg plugin
+  roynul/workspace-apps:hyprland all status` logs counters.
+- `icons.luau`, the bar widget: renders its monitor's list from
+  `noctalia.state.watch`. A watch callback carries no bar context, so
+  `barWidget.outputName()` returns nil there (`plugin_bindings.cpp`); the widget
+  remembers its output from load and `update()` instead. Version 0.2 missed this
+  and drew one monitor's list on every bar.
+
+Changing `plugin.toml` needs `noctalia msg plugins disable` then `enable` for
+Noctalia to re-read it.
 
 ## Colour templates
 
@@ -164,6 +178,12 @@ Volume keys stay on `wpctl`.
 - **Log out with `uwsm stop`.** Noctalia's built-in log out exits Hyprland
   directly, which once froze the login screen (`linux/sddm`); the session menu
   is set to run `uwsm stop` instead.
+- **Media island** (`[widget.media]`): "Title - Artist", 20 px album art, no
+  minimum width so it hugs short titles, at most 240 px with long titles
+  scrolling; hidden when no player runs. `hide_when_idle` (hide while paused) is
+  in the docs but not in 5.2.1. Clicking it opens the control centre's Media tab.
+  Tried and dropped: the media-island plugin.
+- **Control centre** sidebar shows icons and names (`[control_center]`).
 - **Night Light** in the control centre is Noctalia's own and off; the night
   light that runs is hyprsunset (`linux/hyprsunset`). Use the `/cmd` actions.
 - Bluetooth shows nothing: the BlueZ service isn't running on this PC.
