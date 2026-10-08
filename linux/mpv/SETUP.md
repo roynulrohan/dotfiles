@@ -48,14 +48,21 @@ mpv is open takes effect on the next image you open from Dolphin. It needs
 
 ## Image bindings
 
+Same convention as the Hyprland window keys (`linux/caelestia`, Window mode):
+arrows move, Alt makes the step fine. `video-zoom` is a power of 2, so 0.1
+is about 7% and ten presses double the size. Alt+arrows and Alt+-/= replace
+mpv's own Alt pan and zoom (steps of 0.1) while an image is open; videos keep
+mpv's defaults.
+
 | Input | Action |
 |---|---|
-| Wheel | Zoom towards the cursor |
+| Wheel | Zoom towards the cursor, 0.05 per notch |
 | Left-drag | Pan |
 | Middle button (hold) | Sweep across the whole image |
-| ← / →, `n` / `p`, PgDn / PgUp | Previous / next image in the folder (hold to flip through) |
-| ↑ / ↓, Shift+arrows | Pan |
-| `=` / `-` | Zoom |
+| `n` / `p`, PgDn / PgUp | Next / previous image in the folder (hold to flip through) |
+| Arrows / Alt+arrows | Pan 10% / 1% of the window |
+| `=` / `-` | Zoom 0.1 |
+| Alt+= / Alt+- | Zoom 0.01 |
 | `0` | Reset the view |
 | `u` | Actual pixels / fit to window |
 | `r` / `t` | Rotate counterclockwise / clockwise |
