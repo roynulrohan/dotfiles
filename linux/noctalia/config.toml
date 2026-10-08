@@ -79,7 +79,7 @@ capsule_fill = "surface"
 capsule_opacity = 0.8        # HyDE: islands slightly see-through; Hyprland blurs behind them
 capsule_thickness = 1.0      # islands fill the bar, so screen→island = island→window = 4 px
 capsule_padding = 8          # radius left automatic: a full pill
-start = ["group:stats", "workspaces"]
+start = ["group:stats", "workspaces", "submap"]
 center = ["workspace-apps"]
 # Left = information, middle = apps, right = controls.
 end = ["media", "group:signal", "group:modes", "tray", "clock", "group:system", "session"]
@@ -131,6 +131,14 @@ visualization = "none"
 type = "sysmon"
 stat = "gpu_temp"
 visualization = "none"
+
+# Community plugin k4n4t4/hypr-submap (enable: noctalia msg plugins enable
+# k4n4t4/hypr-submap): shows the active Hyprland submap, e.g. "window" while
+# window mode (Super+A) is on; hidden otherwise. Click it to leave the mode.
+[widget.submap]
+type = "k4n4t4/hypr-submap:hypr-submap"
+hide_when_default = true
+glyph = "arrows-move"
 
 [widget.network]
 show_label = false           # icon only, no "enp5s0"

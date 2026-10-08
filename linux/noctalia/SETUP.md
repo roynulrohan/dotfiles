@@ -27,8 +27,10 @@ noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
 ```
 
 Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`), in its own
-uwsm scope; verified across a log out and log in on 2026-10-08. Enable the plugin once:
-`noctalia msg plugins enable roynul/workspace-apps`.
+uwsm scope; verified across a log out and log in on 2026-10-08. Enable the plugins once:
+`noctalia msg plugins enable roynul/workspace-apps` and
+`noctalia msg plugins enable k4n4t4/hypr-submap` (a community plugin, fetched
+from Noctalia's community repo).
 
 ## Config
 
@@ -73,7 +75,7 @@ layer rule (`linux/hypr`, `ignore_alpha` keeps the empty bar unblurred). Left
 holds information, the middle the current workspace's apps, the right
 controls:
 
-stats (CPU, RAM, CPU and GPU temperature) · workspaces | app icons |
+stats (CPU, RAM, CPU and GPU temperature) · workspaces · submap | app icons |
 media · signal (network, volume) · modes (caffeine, notifications; right-click
 the bell for do not disturb) · tray · clock · system (wallpaper, control
 centre) · power
@@ -85,6 +87,17 @@ islands fill it, 4 px from the screen top and 4 px above the windows, flush
 with the window edges; 16 px between islands, 8 px inside one, 8 px end
 padding (groups default to 6, so it is set per group). Text ≈ 10.5 px bold
 (Noctalia's bar text is 14 px; `font_scale 0.75`), as HyDE's 10 px.
+
+## Plugin: hypr-submap (community)
+
+`k4n4t4/hypr-submap` 1.0.0 (MIT): shows the active Hyprland submap, so a small
+island reading "window" appears while window mode (Super+A,
+`linux/caelestia`) is on; hidden otherwise, and clicking it leaves the mode. It
+listens to Hyprland's event socket with `socat` and runs only `hyprctl submap`
+and `hyprctl dispatch 'hl.dsp.submap("reset")'`; the code was read before
+installing. Noctalia keeps it under
+`~/.local/state/noctalia/plugins/materialized/community/`, so it isn't copied
+from here.
 
 ## Plugin: workspace apps
 
