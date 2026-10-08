@@ -48,4 +48,5 @@ linux	linux/wallpaper/live-wallpaper-watchdog.service	~/.config/systemd/user/liv
 linux	linux/wallpaper/live-wallpaper-watchdog.timer	~/.config/systemd/user/live-wallpaper-watchdog.timer	copy
 linux	linux/sddm/sddm-theme.conf	~/.config/caelestia/templates/sddm-theme.conf	copy
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
+linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
 linux	linux/hyprsunset/hyprsunset.conf	~/.config/hypr/hyprsunset.conf	copy

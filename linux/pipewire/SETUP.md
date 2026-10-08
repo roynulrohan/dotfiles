@@ -1,11 +1,13 @@
 # PipeWire
 
 A system-wide EQ for the Logitech G432 headset, built into PipeWire. No
-EasyEffects, no other app: PipeWire's own `filter-chain` runs it.
+EasyEffects, no other app: PipeWire's own `filter-chain` runs it. Plus a fixed
+buffer size (below).
 
 | Repo | Destination |
 |---|---|
 | `g432-eq.conf` | `~/.config/pipewire/filter-chain.conf.d/g432-eq.conf` |
+| `quantum.conf` | `~/.config/pipewire/pipewire.conf.d/quantum.conf` |
 
 ## Install
 
@@ -45,12 +47,30 @@ preset: +12 +10 +8 −3 −2 +4 +4 +5 +8 +12 dB at 32 Hz…16 kHz.
 Tried and dropped: EasyEffects (removed), AutoEq's measured G432 correction
 (Rtings data; sounded worse), and HeSuVi's DTS Headphone:X virtual surround.
 
+## Fixed buffer size
+
+`quantum.conf` sets PipeWire's quantum (the number of samples processed per
+cycle) to 512 and stops apps from changing it: default, minimum and maximum
+are all 512. Each change interrupts playback for a moment. caelestia's
+dashboard records the audio for its beat tracker (the dancing cat) and the
+Media tab's visualiser and asks for 512 while it does; everything else ran at
+2048. So opening the dashboard, or moving to the Performance or Weather tab
+and back, made music stutter. PipeWire's error counters (`pw-top`, ERR) stayed
+at 0: these were quantum switches, not dropouts.
+
+512 at 48 kHz is about 11 ms of delay, and caelestia reads at most 512 samples
+per buffer, so a bigger quantum would make it miss audio. 1024 (about 21 ms)
+also played without stutter; use it if 512 ever crackles under load. It takes
+effect at the next login, or at once with
+`pw-metadata -n settings 0 clock.force-quantum 512` (until logout).
+
 ## Verify
 
 ```bash
 systemctl --user is-active filter-chain.service   # active
 wpctl status                                       # "Filters" lists effect_input.g432_eq
 pw-link -l | grep -A1 effect_output.g432_eq        # -> the G432 playback ports
+pw-config -n pipewire.conf merge context.properties | grep clock   # 512 three times
 ```
 
 Sources: [PipeWire filter-chain](https://docs.pipewire.org/page_module_filter_chain.html),
