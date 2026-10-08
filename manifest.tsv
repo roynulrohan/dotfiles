@@ -37,6 +37,7 @@ mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	c
 linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy
 linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
 linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
+linux	linux/mpv/scripts/dolphin-sort.lua	~/.config/mpv/scripts/dolphin-sort.lua	copy
 linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
 linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
 linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x

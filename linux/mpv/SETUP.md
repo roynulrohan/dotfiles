@@ -8,6 +8,7 @@ installed for editing and for SVG.
 | `mpv.conf` | `~/.config/mpv/mpv.conf` |
 | `input.conf` | `~/.config/mpv/input.conf` |
 | `mpv-image.desktop` | `~/.local/share/applications/mpv-image.desktop` |
+| `scripts/dolphin-sort.lua` | `~/.config/mpv/scripts/dolphin-sort.lua` |
 
 `mpv.conf`: start at 30% volume, cap at 100, resume where you stopped, loop
 single files, decode video on the GPU (`hwdec=auto`; a playing video dropped from
@@ -21,6 +22,29 @@ trimmed to mpv's built-in `positioning` script (mpv 0.40 or newer). The
 `[image]` auto profile switches on the `{image}` bindings in `input.conf`,
 hides the on-screen controls and skips resume files; `[non-image]` switches the
 bindings off again, so videos keep mpv's defaults.
+
+## Next / previous in Dolphin's order
+
+`autocreate-playlist` sorts the folder by name only, so ← / → jumped around
+when Dolphin showed the folder sorted another way. `scripts/dolphin-sort.lua`
+reorders that playlist the way Dolphin sorts the folder: name (natural),
+modified, created, accessed, size or type, ascending or descending.
+
+It reads Dolphin 26.08's view settings (`src/views/viewproperties.cpp`):
+
+- Dolphin → Configure → View → General → **Remember display style for each
+  folder** is on (`GlobalViewProps=false` in `dolphinrc`), so each folder keeps
+  its own sort. Dolphin stores it in the folder's `user.kde.fm.viewproperties#1`
+  extended attribute (a `.directory` file where attributes aren't supported);
+  folders outside home and network folders live under
+  `~/.local/share/dolphin/view_properties/local` and `/remote`.
+- Folders without their own settings use the global default, here
+  **Modified, newest first** (`SortRole=modificationtime`, `SortOrder=1` in
+  `view_properties/global`). Set it once from Dolphin's View menu.
+
+It runs once per window, when the first image loads. A folder re-sorted while
+mpv is open takes effect on the next image you open from Dolphin. It needs
+`getfattr` (package `attr`). If anything is missing, mpv's name order stays.
 
 ## Image bindings
 
