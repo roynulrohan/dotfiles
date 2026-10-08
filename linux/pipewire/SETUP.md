@@ -50,19 +50,19 @@ Tried and dropped: EasyEffects (removed), AutoEq's measured G432 correction
 ## Fixed buffer size
 
 `quantum.conf` sets PipeWire's quantum (the number of samples processed per
-cycle) to 512 and stops apps from changing it: default, minimum and maximum
-are all 512. Each change interrupts playback for a moment. caelestia's
+cycle) to 1024 and stops apps from changing it: default, minimum and maximum
+are all 1024. Each change interrupts playback for a moment. caelestia's
 dashboard records the audio for its beat tracker (the dancing cat) and the
 Media tab's visualiser and asks for 512 while it does; everything else ran at
 2048. So opening the dashboard, or moving to the Performance or Weather tab
 and back, made music stutter. PipeWire's error counters (`pw-top`, ERR) stayed
 at 0: these were quantum switches, not dropouts.
 
-512 at 48 kHz is about 11 ms of delay, and caelestia reads at most 512 samples
-per buffer, so a bigger quantum would make it miss audio. 1024 (about 21 ms)
-also played without stutter; use it if 512 ever crackles under load. It takes
-effect at the next login, or at once with
-`pw-metadata -n settings 0 clock.force-quantum 512` (until logout).
+1024 at 48 kHz is about 21 ms of delay. 512 (about 11 ms) also played without
+stutter and suits caelestia better: it reads at most 512 samples per buffer,
+so at 1024 its cat and visualiser miss part of the audio. It takes effect at
+the next login, or at once with
+`pw-metadata -n settings 0 clock.force-quantum 1024` (until logout).
 
 ## Verify
 
@@ -70,7 +70,7 @@ effect at the next login, or at once with
 systemctl --user is-active filter-chain.service   # active
 wpctl status                                       # "Filters" lists effect_input.g432_eq
 pw-link -l | grep -A1 effect_output.g432_eq        # -> the G432 playback ports
-pw-config -n pipewire.conf merge context.properties | grep clock   # 512 three times
+pw-config -n pipewire.conf merge context.properties | grep clock   # 1024 three times
 ```
 
 Sources: [PipeWire filter-chain](https://docs.pipewire.org/page_module_filter_chain.html),
