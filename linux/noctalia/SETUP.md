@@ -10,6 +10,9 @@ Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | `config.toml` | `~/.config/noctalia/config.toml` |
 | `templates/` | `~/.config/noctalia/templates/` (colour templates, below) |
 | `plugins/workspace-apps/` | `~/.local/share/noctalia/plugins/workspace-apps/` (bar plugin, below) |
+| `lock/scripts/` | `~/.local/share/noctalia/lock/scripts/` (lock screen, below) |
+| `lock/avatar-clamshell.png` | `~/.local/share/noctalia/lock/` |
+| `fonts/google-sans-flex/` | `~/.local/share/fonts/google-sans-flex/` |
 
 ## Install
 
@@ -131,6 +134,68 @@ It never uses window titles.
 
 Changing `plugin.toml` needs `noctalia msg plugins disable` then `enable` for
 Noctalia to re-read it.
+
+## Lock screen
+
+Modelled on caelestia's: one 1500x840 surface card on the blurred wallpaper of
+the main monitor (DP-1), never a snapshot of the desktop. Left: weather with a
+3-day forecast and a month calendar without events. Centre: hours, minutes and
+AM/PM in "GSF Lock Clock", the date, the avatar cut to Material's ClamShell
+shape with an audio ring that fades when idle, and the password field. Right:
+CPU, RAM and GPU gauges, temperature and network graphs, and a GIF card. The
+side monitors show the clock group only. No lock or unlock animation.
+
+The config is generated, not edited: `lock/scripts/gen.py` turns
+`params.json` (sizes and opacities) into `~/.config/noctalia/lock.toml`, the
+whole `[lockscreen]` and `[lockscreen_widgets]` sections plus the
+`[hooks] session_unlocked` line. `lock.toml` holds absolute paths, so it is not
+in this repo. To set up or change it, copy the files above, edit
+`params.json`, and run:
+
+```bash
+~/.local/share/noctalia/lock/scripts/apply.sh
+```
+
+It regenerates `lock.toml`, strips `[lockscreen_widgets]` from
+`settings.toml` (`strip.py`), and restarts Noctalia.
+
+**GIFs**: put them in `~/Pictures/lock-gifs` (not in this repo). After every
+unlock, the `session_unlocked` hook runs `reroll.py`: it picks a random GIF,
+renders it once to the card's size with ffmpeg into
+`~/.local/share/noctalia/lock/cards/`, and points `current.gif` at it. The lock
+screen reads `current.gif` again at every lock, so no reload is needed.
+`apply.sh` rerolls too.
+
+Needs `python3`, `ffmpeg`, the two fonts in `fonts/google-sans-flex` (SIL Open
+Font License 1.1, `LICENSE` included; "GSF Lock Clock" is a renamed instance of
+Google Sans Flex at width 30, weight 500, which the licence permits) and
+CaskaydiaCove Nerd Font (`ttf-cascadia-code-nerd`) for the graph titles. Run
+`fc-cache -f` after copying the fonts.
+
+Things to know:
+
+- **`settings.toml` wins.** Noctalia rewrites
+  `~/.local/state/noctalia/settings.toml` whole, and a `[lockscreen_widgets]`
+  in it overrides `lock.toml` entirely. Editing the lock screen in Noctalia's
+  editor puts one there; `apply.sh` strips it.
+- **Write config files atomically.** Noctalia watches its config directory. A
+  half-written file parses without `[lockscreen_widgets]`, and the lock
+  controller then saves an `enabled = false` copy to `settings.toml`. `gen.py`
+  writes a temporary file and renames it.
+- **Merging.** Noctalia loads every `*.toml` in `~/.config/noctalia` in name
+  order, then `settings.toml`. Tables merge key by key; for the same key the
+  later file wins, and arrays (such as `widget_order`) are replaced whole. So a
+  `[hooks]` table in `config.toml` would merge with the one in `lock.toml`, and
+  a second `session_unlocked` there would lose to `lock.toml`. `apply.sh` warns
+  when another file sets `[lockscreen*]` or `[hooks]`.
+- **Rounded GIF corners are in the GIF.** The sticker widget has no corner
+  radius, so `reroll.py` cuts the card's corners into the GIF's transparency
+  with a 1-bit mask.
+- **Long GIFs are cut off.** The sticker decodes at most 512 frames or 96 MiB
+  of pixels (`desktop_sticker_widget.cpp`): about 163 frames at the card's
+  453x340. The log then says "truncated at N frames (resource cap)".
+- **Single-frame GIFs** load as plain images, not through the GIF decoder,
+  and may not change when `current.gif` points to a new card.
 
 ## Colour templates
 
