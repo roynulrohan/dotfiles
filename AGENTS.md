@@ -45,7 +45,10 @@ decision the repo doesn't cover.
   linux-wallpaperengine (`linux/wallpaper`); caelestia's wallpaper is a still
   of the main one, for the colours. Audio: PipeWire's own filter-chain runs the
   G432 headset's EQ (`linux/pipewire`); no EasyEffects. Night light:
-  hyprsunset, always on (`linux/hyprsunset`).
+  hyprsunset, always on (`linux/hyprsunset`). Window and image-viewer
+  controls follow one convention: arrows move, Shift resizes, Alt makes the
+  step fine (`linux/caelestia/SETUP.md`, Window mode; `linux/mpv`). New binds
+  of that kind follow it; workspace and monitor keys keep caelestia's meanings.
 - **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
   from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
   Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland

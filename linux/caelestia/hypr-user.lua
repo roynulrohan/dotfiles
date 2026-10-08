@@ -1,29 +1,13 @@
 -- User overrides loaded after caelestia's base config and before HyprMod's file.
 -- Only things HyprMod cannot represent go here.
 
--- HyDE-style resize on Super+Shift+arrows (relative pixels). caelestia binds
--- these keys to "move window"; unbind first or both fire.
-for _, dir in ipairs({ "Left", "Right", "Up", "Down" }) do
-    hl.unbind("SUPER + SHIFT + " .. dir)
-end
-hl.bind("SUPER + SHIFT + Left",  hl.dsp.window.resize({ x = -30, y = 0, relative = true }), { repeating = true })
-hl.bind("SUPER + SHIFT + Right", hl.dsp.window.resize({ x = 30,  y = 0, relative = true }), { repeating = true })
-hl.bind("SUPER + SHIFT + Up",    hl.dsp.window.resize({ x = 0, y = -30, relative = true }), { repeating = true })
-hl.bind("SUPER + SHIFT + Down",  hl.dsp.window.resize({ x = 0, y = 30,  relative = true }), { repeating = true })
-
--- Pass high-resolution wheel events through with their real direction. With
--- emulation on (the default, 1), Hyprland regroups them into whole notches and
--- sends zero-length scroll events while a notch fills up; swayimg reads a zero
--- length as "scroll up", so Ctrl+wheel only zoomed in. Apps that read the
--- high-resolution value (value120) are unaffected. HyprMod doesn't model this
--- option, so it lives here.
-hl.config({ input = { emulate_discrete_scroll = 0 } })
-
 -- Window mode (Super+A): move, resize and place the active window from the
 -- keyboard. Inside the mode:
 --   arrows        move 40 px (tiled windows: move within the layout)
 --   Alt+arrows    move 5 px
---   Shift+arrows  move the right / bottom edge (tiled: resize)
+--   Shift+arrows  move the right / bottom edge, or the left / top one when the
+--                 window sits against the right / bottom side (tiled: resize)
+--   Alt+Shift+arrows  the same, 5 px
 --   Ctrl+arrows   snap to the left / right / top / bottom half (floating only)
 --   f             fill the height, keeping width and horizontal position
 --   c             centre
@@ -31,7 +15,7 @@ hl.config({ input = { emulate_discrete_scroll = 0 } })
 -- Floating windows never move or grow past the usable screen area: a step that
 -- would cross an edge stops at it.
 local STEP  = 40    -- px per arrow press
-local FINE  = 5     -- px per Alt+arrow press
+local FINE  = 5     -- px per Alt+arrow and Alt+Shift+arrow press
 local EDGE  = 30    -- px per Shift+arrow press
 local INSET = 4 + 2 -- HyprMod's gaps_out + border_size, so placed windows line up with tiled ones
 
@@ -67,8 +51,25 @@ local function nudge(dx, dy, dir)
     hl.dispatch(hl.dsp.window.move({ x = math.floor(x), y = math.floor(y) }))
 end
 
--- Grow (+) or shrink (-) the right / bottom edge. Hyprland resizes a floating
--- window around its centre, so shift it back by half to keep the top-left put.
+-- One axis of edge(): the size change and the shift that keeps the other edge
+-- put. The right / bottom edge moves by d, unless the window touches only the
+-- far side of the usable area (snapped right or down): then the left / top
+-- edge moves, so the window stays against that side. Growth stops at the
+-- usable area.
+local function edge_axis(d, pos, size, lo, len)
+    if d == 0 then return 0, 0 end
+    if math.abs(pos + size - (lo + len)) <= 1 and pos > lo + 1 then
+        local grow = -d
+        if grow > 0 then grow = math.min(grow, pos - lo) end
+        return grow, -grow / 2
+    end
+    local grow = d
+    if grow > 0 then grow = math.max(0, math.min(grow, lo + len - (pos + size))) end
+    return grow, grow / 2
+end
+
+-- Move a window edge by dx / dy (see edge_axis for which one). Hyprland
+-- resizes a floating window around its centre, so it's shifted by half.
 local function edge(dx, dy)
     local win = hl.get_active_window()
     if not win then return end
@@ -77,13 +78,12 @@ local function edge(dx, dy)
         return
     end
     local a = work_area(win)
-    if a then -- don't grow past the right / bottom edge of the usable area
-        dx = math.min(dx, a.x + a.w - (win.at.x + win.size.x))
-        dy = math.min(dy, a.y + a.h - (win.at.y + win.size.y))
-    end
-    if dx == 0 and dy == 0 then return end
-    hl.dispatch(hl.dsp.window.resize({ x = dx, y = dy, relative = true }))
-    hl.dispatch(hl.dsp.window.move({ x = dx / 2, y = dy / 2, relative = true }))
+    if not a then return end
+    local gx, mx = edge_axis(dx, win.at.x, win.size.x, a.x, a.w)
+    local gy, my = edge_axis(dy, win.at.y, win.size.y, a.y, a.h)
+    if gx == 0 and gy == 0 then return end
+    hl.dispatch(hl.dsp.window.resize({ x = gx, y = gy, relative = true }))
+    hl.dispatch(hl.dsp.window.move({ x = mx, y = my, relative = true }))
 end
 
 local function place(x, y, w, h)
@@ -109,6 +109,17 @@ local function fill_height()
     place(win.at.x, a.y, win.size.x, a.h)
 end
 
+-- Super+Shift+arrows resizes outside window mode too, the same way as
+-- Shift+arrows inside it. caelestia binds these keys to "move window";
+-- unbind first or both fire.
+for _, dir in ipairs({ "Left", "Right", "Up", "Down" }) do
+    hl.unbind("SUPER + SHIFT + " .. dir)
+end
+hl.bind("SUPER + SHIFT + Left",  function() edge(-EDGE, 0) end, { repeating = true })
+hl.bind("SUPER + SHIFT + Right", function() edge(EDGE, 0) end, { repeating = true })
+hl.bind("SUPER + SHIFT + Up",    function() edge(0, -EDGE) end, { repeating = true })
+hl.bind("SUPER + SHIFT + Down",  function() edge(0, EDGE) end, { repeating = true })
+
 hl.bind("SUPER + A", hl.dsp.submap("window"))
 hl.define_submap("window", function()
     local keep = { repeating = true }
@@ -124,6 +135,10 @@ hl.define_submap("window", function()
     hl.bind("SHIFT + Right", function() edge(EDGE, 0) end, keep)
     hl.bind("SHIFT + Up",    function() edge(0, -EDGE) end, keep)
     hl.bind("SHIFT + Down",  function() edge(0, EDGE) end, keep)
+    hl.bind("ALT + SHIFT + Left",  function() edge(-FINE, 0) end, keep)
+    hl.bind("ALT + SHIFT + Right", function() edge(FINE, 0) end, keep)
+    hl.bind("ALT + SHIFT + Up",    function() edge(0, -FINE) end, keep)
+    hl.bind("ALT + SHIFT + Down",  function() edge(0, FINE) end, keep)
     hl.bind("CTRL + Left",  function() snap("left") end)
     hl.bind("CTRL + Right", function() snap("right") end)
     hl.bind("CTRL + Up",    function() snap("up") end)

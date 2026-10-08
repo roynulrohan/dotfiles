@@ -25,8 +25,9 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   (see "Per-monitor workspaces" in `linux/caelestia/SETUP.md`). Don't add
   workspace keys or rules in HyprMod: its file loads last and would override them.
 - **HyDE-style keybinds on caelestia**: Super+Shift+arrows resize (in
-  `linux/caelestia/hypr-user.lua`: HyprMod can't convert repeating resize
-  binds), Ctrl+Super+Shift+arrows move window, Super+W float,
+  `linux/caelestia/hypr-user.lua`: they share window mode's Lua resize
+  function, which HyprMod can't express), Ctrl+Super+Shift+arrows move
+  window, Super+W float,
   Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+P /
   Super+Ctrl+P / Super+Shift+P screenshot / freeze / colour picker,
   Super+Shift+F pin, F10–F12 volume. Super+B opens Zen.

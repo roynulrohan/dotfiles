@@ -9,13 +9,16 @@ Only the override layer is here; caelestia's own tree (`~/.config/hypr`,
 
 | Repo | Destination | What |
 |---|---|---|
-| `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out` |
-| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, `emulate_discrete_scroll = 0`, window mode and per-monitor workspaces (below), and loading `hypr-local.lua` if the machine has one; Hyprland config that HyprMod can't express goes here |
+| `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out`; caelestia's resize keys switched off (see Window mode) |
+| `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, window mode and per-monitor workspaces (below), and loading `hypr-local.lua` if the machine has one; Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on; weather for Ottawa (coordinates: the IP lookup said Toronto, and the name "Ottawa" also matches US towns); logout button runs `uwsm stop` (see `linux/sddm/SETUP.md`, frozen screen); no notifications on the lock screen (`lock.hideNotifs`); the lock screen shows the wallpaper, not a blurred screenshot of the desktop (`lock.useWallpaper`: after waking from sleep the blur once failed and the desktop showed sharp behind the lock). Idle (`general.idle.timeouts`): lock after 1 h, screens off after 1.5 h, `systemctl suspend` after 4 h. caelestia's default `suspendThenHibernate` can't work here (zram swap only, so logind reports `CanSuspendThenHibernate=na`) and failed silently. Audio playing (`general.idle.inhibitWhenAudio`, default on) and Keep awake (an idle inhibitor; every step respects it) pause all three. Launcher actions (`launcher.actions`, typed after `>`): caelestia's defaults plus Restart shell, Reload Hyprland, Restart wallpapers and Night light off/on; Sleep runs `systemctl suspend` instead of the impossible `suspendThenHibernate`. The list replaces caelestia's whole default list, so it repeats the defaults; commands run directly, through `sh -c` when they need a shell. The lock screen's media controls have no setting |
 | `user-config.fish` | `~/.config/caelestia/user-config.fish` | runs after caelestia's `config.fish`: resets its wallpaper colours in Orca's terminal; other fish config lives in `shared/fish` |
 | `cli.json` | `~/.config/caelestia/cli.json` | Super+D (the communication special workspace) starts and gathers Equibop instead of the official Discord |
 
 ## Window mode
+
+Window controls follow one convention: **arrows move, Shift resizes, Alt makes
+the step fine**. mpv's image keys use it too (`linux/mpv`).
 
 `hypr-user.lua` defines a Hyprland submap for moving and placing the active
 window from the keyboard. It's Lua functions, which HyprMod can't express.
@@ -26,16 +29,32 @@ inside it.
 |---|---|---|
 | Arrows | Move 40 px | Move within the layout |
 | Alt+arrows | Move 5 px | Move within the layout |
-| Shift+←/→ | Right edge in / out, 30 px | Resize |
-| Shift+↑/↓ | Bottom edge up / down, 30 px | Resize |
+| Shift+arrows | Move an edge 30 px | Resize |
+| Alt+Shift+arrows | Move an edge 5 px | Resize |
 | Ctrl+arrows | Snap to the left / right / top / bottom half | Nothing |
 | `f` | Fill the height | Nothing |
 | `c` | Centre | Centre |
 
+Outside the mode, **Super+Shift+arrows** resize the same way, 30 px. The edge
+keys move the right or bottom edge in the arrow's direction. When a floating
+window sits against the right or bottom side of the usable area (snapped there
+with Ctrl+→ or Ctrl+↓), they move the left or top edge instead, so the window
+stays against that side.
+
 Floating windows stay inside the usable area of their monitor: caelestia's bar
 and frame (the monitor's reserved area) and the 4 px outer gap are excluded,
 and a step that would cross an edge stops at it. Hyprland resizes a floating
-window around its centre, so the edge keys move it back by half the change.
+window around its centre, so the edge keys move it by half the change to keep
+the other edge put.
+
+caelestia's own resize keys are switched off in `hypr-vars.lua` (empty key
+lists): Super+-/=, Super+Shift+-/= and Super+Alt+arrows, which resized by 10%
+of the window per press. Those keys are free.
+
+The convention is for these window controls, not every bind. In caelestia's
+workspace and monitor keys, Shift means "take the window along" (Super+Shift+1…0,
+Super+Shift+[ / ]) and Alt means "send it without following" (Super+Alt+1…0);
+Super+Shift+arrows is the exception there.
 
 ## Per-monitor workspaces
 
@@ -79,9 +98,8 @@ their windows on the wrong monitor.
 | Super+Shift+[ / Super+Shift+] | send the window to the left / right monitor |
 
 caelestia's "groups of 10" (Ctrl+Super+N, Ctrl+Super+scroll,
-Ctrl+Super+Alt+N) are unbound. Super+Alt+arrows stays caelestia's 10 px
-resize. Ctrl+Super+Shift+arrows (move in a direction) carries a tiled window
-across monitors at the edge, but a floating window only slides to its own
+Ctrl+Super+Alt+N) are unbound. Ctrl+Super+Shift+arrows (move in a direction)
+carries a tiled window across monitors at the edge, but a floating window only slides to its own
 monitor's edge (Hyprland's floating layout, `moveTargetInDirection`); use
 Super+Shift+[ / ] for those.
 
