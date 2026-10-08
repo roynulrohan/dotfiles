@@ -109,6 +109,20 @@ caelestia's Super+R (the todo special workspace) then opens an empty scratchpad.
 caelestia records the components it set up in
 `~/.local/state/caelestia/dots-state.json` (`enabled_components`).
 
+The `spotify` component installs Spotify and Spicetify (a Spotify client mod)
+with a "caelestia" theme, so Spotify takes the wallpaper colours. Super+M (the
+music special workspace) starts Spotify through `spicetify watch -s`, which
+refuses to run until Spicetify has been applied once, so Super+M did nothing.
+Apply it after installing, and again after a Spotify update (the package
+resets the folder to root-only and drops the patch):
+
+```bash
+sudo chmod a+wr /opt/spotify && sudo chmod a+wr /opt/spotify/Apps -R
+spicetify backup apply
+```
+
+The `chmod` lines are Spicetify's own instructions for Spotify from the AUR.
+
 AUR helper chosen in the installer: `paru`.
 
 Colour scheme: `dynamic`, which takes its colours from the current wallpaper,
