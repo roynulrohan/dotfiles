@@ -80,7 +80,7 @@ so restore it, then restart the live wallpapers, which only cover monitors that
 were connected when they started:
 
 ```bash
-cp ~/Coding/dotfiles/linux/hyprmod/hyprland-gui.lua ~/.config/hypr/
+cp linux/hyprmod/hyprland-gui.lua ~/.config/hypr/   # from the repo root
 ~/.local/bin/live-wallpaper
 ```
 
