@@ -117,6 +117,12 @@ hl.window_rule({
 })
 hl.window_rule({
     match = {
+        class = "Opera GX",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
         class = "discord",
     },
     opaque = true,

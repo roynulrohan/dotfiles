@@ -34,7 +34,7 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   caelestia's spelling exactly, including modifier order and key capitalisation
   (`CTRL + SUPER + SHIFT + Left`), or both binds stay live.
 - **Window rules**: forced opaque so caelestia's default window opacity doesn't
-  apply: kitty, Zen (`zen`), Discord (`discord`), Jellyfin
+  apply: kitty, Zen (`zen`), Opera GX (`Opera GX`), Discord (`discord`), Jellyfin
   (`org.jellyfin.JellyfinDesktop`), the file explorers Dolphin
   (`org.kde.dolphin`) and Thunar (`[Tt]hunar`), and the viewers Gwenview
   (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`). caelestia's own rules already keep
