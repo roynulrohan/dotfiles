@@ -38,5 +38,27 @@
     "lock": {
         "hideNotifs": true,
         "useWallpaper": true
+    },
+    "general": {
+        "idle": {
+            "timeouts": [
+                {
+                    "timeout": 3600,
+                    "idleAction": "lock"
+                },
+                {
+                    "timeout": 5400,
+                    "idleAction": "dpms off",
+                    "returnAction": "dpms on"
+                },
+                {
+                    "timeout": 14400,
+                    "idleAction": [
+                        "systemctl",
+                        "suspend"
+                    ]
+                }
+            ]
+        }
     }
 }
