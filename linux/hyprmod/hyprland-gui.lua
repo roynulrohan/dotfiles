@@ -123,6 +123,18 @@ hl.window_rule({
 })
 hl.window_rule({
     match = {
+        class = "firefox",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
+        class = "brave-browser",
+    },
+    opaque = true,
+})
+hl.window_rule({
+    match = {
         class = "discord",
     },
     opaque = true,
