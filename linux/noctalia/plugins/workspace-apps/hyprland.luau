@@ -11,6 +11,10 @@
 -- Privacy: window titles never leave hyprctl's JSON. Only address, class,
 -- position, workspace id and focusHistoryID are kept, and event lines are
 -- reduced to their name (the part before ">>") before anything looks at them.
+--
+-- Setting `hidden_tags`: windows carrying any of these Hyprland tags are left
+-- out. Tag changes raise no socket2 event, so whoever retags a window and
+-- wants the bars updated at once sends the `refresh` IPC below.
 
 local POLL_MS = 5000     -- fallback when events are flowing
 local NO_STREAM_MS = 1000 -- no event stream available: plain polling
@@ -44,6 +48,43 @@ local streamStarted = false
 -- Counters for the `status` IPC (numbers only, nothing from the events).
 local stats = { events = 0, exits = 0, refreshes = 0, publishes = 0, lastPublishMs = 0 }
 
+-- Tag names from the hidden_tags setting, as a set.
+local hiddenTags = {}
+
+local function readHiddenTags()
+  hiddenTags = {}
+  local list = noctalia.getConfig("hidden_tags")
+  if type(list) == "table" then
+    for _, tag in ipairs(list) do
+      if type(tag) == "string" and tag ~= "" then
+        hiddenTags[tag] = true
+      end
+    end
+  end
+end
+
+local function hiddenTagCount()
+  local n = 0
+  for _ in pairs(hiddenTags) do
+    n = n + 1
+  end
+  return n
+end
+
+-- hyprctl marks dynamic tags (set by window rules) with a trailing "*";
+-- both forms match.
+local function hasHiddenTag(c)
+  if type(c.tags) ~= "table" then
+    return false
+  end
+  for _, tag in ipairs(c.tags) do
+    if type(tag) == "string" and hiddenTags[(tag:gsub("%*$", ""))] then
+      return true
+    end
+  end
+  return false
+end
+
 local function shellQuote(s)
   return "'" .. s:gsub("'", "'\\''") .. "'"
 end
@@ -60,14 +101,16 @@ local function decodeArray(result)
 end
 
 -- Windows on `activeId`, left to right. Unmapped and hidden (collapsed group
--- tab) windows are skipped. `active` marks the window this output focused
--- most recently (lowest focusHistoryID); for the focused output that is the
--- compositor-wide focused window (id 0). Negative ids mean "never focused".
+-- tab) windows are skipped, and so are windows with a hidden_tags tag.
+-- `active` marks the window this output focused most recently (lowest
+-- focusHistoryID); for the focused output that is the compositor-wide focused
+-- window (id 0). Negative ids mean "never focused".
 local function collect(activeId, clients)
   local items = {}
   local best = nil
   for _, c in ipairs(clients) do
-    if c.mapped and not c.hidden and type(c.workspace) == "table" and c.workspace.id == activeId then
+    if c.mapped and not c.hidden and type(c.workspace) == "table" and c.workspace.id == activeId
+      and not hasHiddenTag(c) then
       local id = c.focusHistoryID
       if type(id) ~= "number" or id < 0 then
         id = nil
@@ -236,11 +279,19 @@ function onIpc(event)
     refresh()
   elseif event == "status" then
     noctalia.log(string.format(
-      "hyprland: stream=%s poll=%dms events=%d exits=%d refreshes=%d publishes=%d lastPublishAge=%ds inFlight=%s",
+      "hyprland: stream=%s poll=%dms events=%d exits=%d refreshes=%d publishes=%d lastPublishAge=%ds inFlight=%s hiddenTags=%d",
       tostring(streamStarted), pollMs, stats.events, stats.exits, stats.refreshes, stats.publishes,
       stats.lastPublishMs > 0 and math.floor((noctalia.nowMs() - stats.lastPublishMs) / 1000) or -1,
-      tostring(inFlight)))
+      tostring(inFlight), hiddenTagCount()))
   end
+end
+
+-- A settings change (hidden_tags) is applied in place: the event stream and
+-- counters survive, and the lists are rebuilt at once.
+function onConfigChanged()
+  readHiddenTags()
+  lastSignature = nil
+  refresh()
 end
 
 -- Widgets ask for a republish (icon cache cleared) by bumping this key.
@@ -249,6 +300,7 @@ noctalia.state.watch("refresh-request", function()
   refresh()
 end)
 
+readHiddenTags()
 streamStarted = startStream()
 if not streamStarted then
   pollMs = NO_STREAM_MS

@@ -1,0 +1,4 @@
+{
+  "settings.hidden_tags.label": "Hidden window tags",
+  "settings.hidden_tags.description": "Windows with any of these Hyprland tags get no icon. Tags set by window rules match without their trailing *."
+}

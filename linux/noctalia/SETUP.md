@@ -101,7 +101,7 @@ from here.
 
 ## Plugin: workspace apps
 
-`plugins/workspace-apps` (Luau, v0.3): the app icons of the windows on *this*
+`plugins/workspace-apps` (Luau, v0.4): the app icons of the windows on *this*
 monitor's current workspace, in screen order; each monitor's own last-focused
 window bright, the others dimmed; click to focus; hidden when the workspace is
 empty. It replaces the built-in `taskbar` with `only_active_workspace`, which
@@ -113,7 +113,16 @@ It never uses window titles.
   socket with one `socat` (`noctalia.runStream`), runs `hyprctl -j monitors` and
   `clients` after a burst of events, and publishes each monitor's list to plugin
   state. A 5 s poll covers a dead stream. `noctalia msg plugin
-  roynul/workspace-apps:hyprland all status` logs counters.
+  roynul/workspace-apps:hyprland all status` logs counters, and `... all
+  refresh` re-reads Hyprland at once.
+- Plugin setting `hidden_tags` (empty by default; set it under
+  `[plugin_settings."roynul/workspace-apps"]` or in Settings → Plugins):
+  windows with any of these Hyprland tags get no icon.
+  Tags from window rules match without their trailing `*`. A tag change raises
+  no Hyprland event, so whatever retags a window sends `refresh` to update the
+  bars at once (otherwise the 5 s poll catches it). The service applies a
+  changed setting in place (`onConfigChanged`). Labels are in
+  `translations/en.json`.
 - `icons.luau`, the bar widget: renders its monitor's list from
   `noctalia.state.watch`. A watch callback carries no bar context, so
   `barWidget.outputName()` returns nil there (`plugin_bindings.cpp`); the widget

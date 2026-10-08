@@ -4,7 +4,7 @@
 
 id           = "roynul/workspace-apps"
 name         = "Workspace apps"
-version      = "0.3.0"
+version      = "0.4.0"
 plugin_api   = 32 # tooltip on ui.row (32); also needs closures (9), service lifecycle (17), argv runAsync (24)
 author       = "roynul"
 license      = "MIT"
@@ -12,6 +12,14 @@ icon         = "apps"
 description  = "Icons of the windows on this monitor's active Hyprland workspace; click to focus."
 tags         = ["hyprland", "taskbar"]
 dependencies = ["hyprland"]
+
+# Plugin-level, so the service (which builds the window lists) can read it.
+[[setting]]
+key             = "hidden_tags"
+type            = "string_list"
+label_key       = "settings.hidden_tags.label"
+description_key = "settings.hidden_tags.description"
+default         = []
 
 [[widget]]
 id    = "icons"
