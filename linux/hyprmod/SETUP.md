@@ -40,8 +40,10 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`). caelestia's own rules already keep
   `imv` and `feh` opaque. Orca (`orca`) is left at caelestia's 95% on purpose:
   its own window is never transparent, so that's the only see-through it gets.
-- **Settings**: dwindle, no tearing, flat mouse accel, gaps 2 / 4. Border size
-  is left at caelestia's 1 px.
+- **Settings**: dwindle, flat mouse accel, gaps 2 / 4. Border size is left at
+  caelestia's 1 px. Tearing is allowed: `allow_tearing` is only Hyprland's master
+  switch; caelestia's `immediate` rule limits it to games (Steam, Lutris,
+  gamescope), and only while one is fullscreen and alone on its monitor.
   `resize_on_border`: drag a window edge to resize (a side edge changes one
   dimension only). `snap:enabled`: floating windows dragged with the mouse snap
   to screen edges and other windows within 10 px.
