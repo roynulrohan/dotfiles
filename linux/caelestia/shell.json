@@ -201,6 +201,18 @@
                 "dangerous": false
             },
             {
+                "name": "Battery",
+                "icon": "battery_full",
+                "description": "Show the charge of wireless devices (mice, controllers)",
+                "command": [
+                    "sh",
+                    "-c",
+                    "b=$(upower -d | awk '/^Device:/{m=\"\";p=\"\";s=\"\"} /^ +model:/{sub(/^ +model: +/,\"\");sub(/^(Logitech|Sony Interactive Entertainment) /,\"\");sub(/ Wireless Controller$/,\"\");m=$0} /^ +state:/{s=\" (\"$2\")\"} /^ +percentage:/{p=$2} /^$/{if(m!=\"\"&&p!=\"\")print m\": \"p s;m=\"\"}'); notify-send -e -a Battery Battery \"${b:-No battery devices connected}\""
+                ],
+                "enabled": true,
+                "dangerous": false
+            },
+            {
                 "name": "Shutdown",
                 "icon": "power_settings_new",
                 "description": "Shutdown the system",
