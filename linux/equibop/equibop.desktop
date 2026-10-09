@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Equibop
+GenericName=Internet Messenger
+Type=Application
+Categories=Network;InstantMessaging;Chat;
+Keywords=discord;vencord;electron;chat;equibop
+MimeType=x-scheme-handler/discord;
+Exec=equibop %U
+Icon=discord
+StartupWMClass=equibop
