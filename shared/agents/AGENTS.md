@@ -51,9 +51,10 @@ searches, long builds, independent tasks.
   tool's own repo. Name the source you used. context7 fetches them for libraries.
 - bun and bunx by default. In a repo with its own lockfile and scripts, use what
   it uses.
-- In web projects the dev server is already running: use it, and leave starting
-  servers to me. Ask before driving a browser or Playwright to check a change,
-  and mention the server only when it is the problem.
+- In web projects I run the dev server myself: never start one. Before you rely
+  on it or say anything about it, check that it's running. Ask before driving a
+  browser or Playwright to check a change, and mention the server only when it
+  is the problem.
 
 ## Git & PRs
 
