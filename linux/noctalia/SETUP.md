@@ -10,6 +10,7 @@ Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | `config.toml` | `~/.config/noctalia/config.toml` |
 | `templates/` | `~/.config/noctalia/templates/` (colour templates, below) |
 | `plugins/workspace-apps/` | `~/.local/share/noctalia/plugins/workspace-apps/` (bar plugin, below) |
+| `plugins/arch-updater/` | `~/.local/share/noctalia/plugins/arch-updater/` (update widget, below) |
 | `lock/scripts/` | `~/.local/share/noctalia/lock/scripts/` (lock screen, below) |
 | `lock/avatar-clamshell.png` | `~/.local/share/noctalia/lock/` |
 | `fonts/google-sans-flex/` | `~/.local/share/fonts/google-sans-flex/` |
@@ -274,3 +275,28 @@ Volume keys stay on `wpctl`.
 - caelestia stays installed as a fallback but doesn't run. Back to it for one
   session: `pkill -x noctalia`, then `caelestia shell -d`. For good: restore
   `~/.config/hypr` from `linux/caelestia/hypr-reference`.
+
+## Update widget (Arch Updater)
+
+A local copy of the community plugin `yuuto/arch-updater` 2.0.3, installed as
+`roynul/arch-updater`: the bar's `updates` widget shows pending pacman and AUR
+updates, and its panel lists both, warns about Arch news, checks, updates and
+rolls back. Needs `pacman-contrib`. It checks every 4 hours
+(`[plugin_settings."roynul/arch-updater"] auto_check_hours`; 0, the default,
+only checks on click). Enable it once with
+`noctalia msg plugins enable roynul/arch-updater`.
+
+Why a copy: plugin panels attach to the bar and share its background, which is
+invisible here, so the panel was transparent. Noctalia has no setting for plugin
+panel placement, and it re-copies community plugins from their source on every
+start, so the change can't be patched in place. The copy differs from upstream
+only in its id (in `plugin.toml`, `widget.luau`'s `PANEL_ID` and `panel.luau`'s
+settings link) and `placement = "floating"` for its panel. To update: copy the
+new upstream folder from
+`~/.local/state/noctalia/plugins/materialized/community/arch-updater` (enable the
+community plugin briefly to fetch it) and reapply those changes.
+
+CachyOS's own `cachy-update` tray applet still runs alongside: it checks two
+minutes after login and then daily (`arch-update.timer`), and its right-click
+menu runs the interactive update with its pre- and post-update tasks.
+

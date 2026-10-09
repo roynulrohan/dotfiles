@@ -84,7 +84,7 @@ capsule_padding = 8          # radius left automatic: a full pill
 start = ["group:stats", "workspaces", "submap"]
 center = ["workspace-apps"]
 # Left = information, middle = apps, right = controls.
-end = ["media", "group:signal", "group:modes", "tray", "clock", "group:system", "session"]
+end = ["media", "group:signal", "group:modes", "updates", "tray", "clock", "group:system", "session"]
 
 [[bar.default.capsule_group]]
 id = "stats"                 # machine state, text only
@@ -141,6 +141,19 @@ visualization = "none"
 type = "k4n4t4/hypr-submap:hypr-submap"
 hide_when_default = true
 glyph = "arrows-move"
+
+# Our local copy of the community plugin yuuto/arch-updater
+# (~/.local/share/noctalia/plugins/arch-updater, id roynul/arch-updater) with
+# its panel floating, since attached panels go transparent on the invisible
+# bar. Needs pacman-contrib. Pending pacman and AUR updates in the bar; click
+# for a panel with both lists, Arch news warnings, a check button, update
+# and rollback.
+[widget.updates]
+type = "roynul/arch-updater:widget"
+
+# Check for updates every 4 hours (the plugin's default, 0, only checks on click).
+[plugin_settings."roynul/arch-updater"]
+auto_check_hours = 4
 
 # Media island: "Title - Artist", album art a bit bigger than the default
 # 16 px. No minimum width, so it hugs short titles; long ones stop at 240 px and

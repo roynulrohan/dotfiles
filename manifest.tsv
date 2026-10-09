@@ -39,6 +39,7 @@ linux	linux/noctalia/config.toml	~/.config/noctalia/config.toml	copy
 linux	linux/hypr/animations	~/.config/hypr/animations	dir
 linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
 linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
+linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
 linux	linux/caelestia/hypr-vars.lua	~/.config/caelestia/hypr-vars.lua	copy
 linux	linux/caelestia/hypr-user.lua	~/.config/caelestia/hypr-user.lua	copy
 linux	linux/caelestia/shell.json	~/.config/caelestia/shell.json	copy
