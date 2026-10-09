@@ -4,6 +4,8 @@ import QtQuick
 Item {
     id: root
 
+    // The synced assets folder; the probe starts once it is set.
+    property string dir
     property bool isActive: false
     readonly property var activeVideoItem: isActive ? videoSurface : null
     readonly property var candidates: ["mp4", "webm", "mkv", "mov", "m4v", "avi"]
@@ -15,10 +17,10 @@ Item {
 
         var ext = candidates[probeIndex];
         probeIndex += 1;
-        player.source = Qt.resolvedUrl("../assets/background." + ext);
+        player.source = "file://" + root.dir + "/background." + ext;
     }
 
-    Component.onCompleted: {
+    onDirChanged: {
         if (config.backgroundVideoEnabled !== "false")
             probeNext();
     }

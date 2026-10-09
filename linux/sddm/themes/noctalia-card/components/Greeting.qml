@@ -15,6 +15,7 @@ Item {
     property int rootWidth
     property string username
     property bool ap
+    property url backgroundSource
     property var videoSourceItem: null
     property date now: new Date()
     // Google Sans Flex, rounded and slightly wide for the greeting.
@@ -74,7 +75,7 @@ Item {
             anchors.centerIn: parent
             width: root.rootWidth
             height: root.rootHeight
-            source: "../assets/background"
+            source: root.backgroundSource
             fillMode: Image.PreserveAspectCrop
 
             ShaderEffectSource {

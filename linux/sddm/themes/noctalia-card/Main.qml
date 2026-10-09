@@ -1,58 +1,79 @@
-import Qt5Compat.GraphicalEffects
+pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Effects
-import QtQuick.Layouts
-import QtQuick.Window
 import "components"
-import "widgets"
 
+// Noctalia Card. Page 1 (components/Greeting.qml) greets the selected user;
+// any key or a click opens page 2, the login card modelled on our Noctalia
+// lock screen: 1500x840, weather and calendar left; clock, date, avatar,
+// name and password centre; GIF, session and power right. Escape goes back.
+// User files (wallpaper, video, faces, GIF, location) come from assetsDir,
+// which a sync fills; colours come from theme.conf(.user).
 Rectangle {
     id: root
 
-    property bool ap: config.ap === "true" ? true : false
-    property bool sessionPickerEnabled: config.sessionPicker === "true" ? true : false
-    property string avatarShape: {
-        const shape = config.AvatarShape || "hexagon";
-        return (shape !== "hexagon" && shape !== "circle") ? "hexagon" : shape;
-    }
-    property bool welcomeMessageEnabled: config.enableWelcomeMessage !== "false"
-    property bool firstInput: welcomeMessageEnabled
+    readonly property bool ap: config.ap === "true"
+    readonly property string assetsDir: config.assetsDir || "/var/lib/sddm-assets"
+    readonly property url backgroundSource: "file://" + assetsDir + "/background"
+    property bool firstInput: config.enableWelcomeMessage !== "false"
     property bool loading: false
-    property string buffer
-    property real welcomeBgBlurAmount: parseFloat(config.welcomeBgBlurAmount) || 1
-    property bool welcomeBgBlur: config.welcomeBgBlur === "true"
-    property real mainCardBlurAmount: parseFloat(config.mainCardBlurAmount) || 1
-    property real mainCardComponentsOpacity: {
-        const value = parseFloat(config.mainCardComponentsOpacity);
-        if (isNaN(value) || value < 0.6)
-            return 1;
+    property bool failed: false
+    property int userIndex: Math.max(0, userModel.lastIndex)
+    readonly property var user: users.count > 0 ? users.objectAt(userIndex) : null
+    readonly property string userName: user ? user.name : ""
+    readonly property var videoItem: videoLoader.item ? (videoLoader.item as VideoBackground).activeVideoItem : null
 
-        return value;
+    function stepUser(delta) {
+        if (users.count > 1)
+            userIndex = (userIndex + delta + users.count) % users.count;
+        failed = false;
     }
-    property bool capsLockOn: false
-    property bool mainCardBgBlur: config.mainCardBgBlur === "true"
-    property int sessionIndex
-    // rounding stuff
-    property real largeRadius: mainCard.radius
-    property real midRadius: mainCard.radius / 1.4
-    property real smallRadius: mainCard.radius / 2
+
+    function tryLogin(password) {
+        failed = false;
+        loading = true;
+        sddm.login(root.userName, password, sessionCard.currentIndex);
+    }
 
     width: 1920
     height: 1080
     color: "#131313"
+    onFirstInputChanged: {
+        if (firstInput) {
+            password.clear();
+            failed = false;
+            pageOneKeys.forceActiveFocus();
+        } else {
+            password.focusField();
+        }
+    }
+
+    FontLoader {
+        source: "assets/google-sans-flex/GoogleSansFlex.ttf"
+    }
+
+    // userModel as a list, so the selected user's name and face can be read.
+    Instantiator {
+        id: users
+
+        model: userModel
+
+        delegate: QtObject {
+            required property string name
+            required property string icon
+        }
+    }
 
     Connections {
         function onLoginFailed() {
-            root.buffer = "";
             root.loading = false;
-            inputRect.color = config.subComponents;
-            inputRect.shake();
+            root.failed = true;
+            password.clear();
+            password.shake();
         }
 
         function onLoginSucceeded() {
             root.loading = false;
-            inputRect.color = config.subComponents;
         }
 
         target: sddm
@@ -62,18 +83,15 @@ Rectangle {
         id: background
 
         anchors.fill: parent
-        source: "assets/background"
+        source: root.backgroundSource
         fillMode: Image.PreserveAspectCrop
-        onStatusChanged: {
-            if (status === Image.Error)
-                console.log("Background missing, using fallback color");
-        }
 
         Loader {
             id: videoLoader
 
             anchors.fill: parent
             source: "components/VideoBackground.qml"
+            onLoaded: (item as VideoBackground).dir = root.assetsDir
         }
 
         Rectangle {
@@ -84,94 +102,44 @@ Rectangle {
             Behavior on opacity {
                 NumberAnimation {
                     duration: 300
-                    easing: Easing.InOutCubic
+                    easing.type: Easing.InOutCubic
                 }
             }
         }
     }
 
-    Item {
-        id: keylogger
-
-        focus: true
-        Keys.onPressed: function (event) {
-            if (event.key === Qt.Key_Escape) {
-                if (root.welcomeMessageEnabled)
-                    root.firstInput = true;
-
-                root.buffer = "";
-                return;
-            }
-            if (event.key === Qt.Key_CapsLock) {
-                root.capsLockOn = !root.capsLockOn;
-                return;
-            }
-            if (event.key === Qt.Key_Tab)
-                return;
-
-            if (root.firstInput) {
-                root.firstInput = false;
-                return;
-            }
-            if (event.key === Qt.Key_Right) {
-                if (userPicker.currentIndex < userModel.count - 1)
-                    userPicker.currentIndex += 1;
-
-                return;
-            }
-            if (event.key === Qt.Key_Left) {
-                if (userPicker.currentIndex > 0)
-                    userPicker.currentIndex -= 1;
-
-                return;
-            }
-            if (event.key === Qt.Key_Up) {
-                if (sessionPickerBtn.selectedIndex < sessionPickerBtn.count - 1)
-                    sessionPickerBtn.selectedIndex += 1;
-
-                return;
-            }
-            if (event.key === Qt.Key_Down) {
-                if (sessionPickerBtn.selectedIndex > 0)
-                    sessionPickerBtn.selectedIndex -= 1;
-
-                return;
-            }
-            if (event.key === Qt.Key_Backspace) {
-                root.buffer = root.buffer.slice(0, -1);
-                return;
-            }
-            if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
-                sddm.login(userPicker.currentText, root.buffer, root.sessionIndex);
-                root.buffer = "";
-                root.loading = true;
-                return;
-            }
-            root.buffer += event.text;
-        }
-    }
-
-    // A click on page 1 opens page 2, like a key press.
-    TapHandler {
-        enabled: root.firstInput
-        onTapped: root.firstInput = false
-    }
-
     MultiEffect {
-        blurEnabled: true
         source: background
-        blur: root.firstInput ? 0 : 1
-        autoPaddingEnabled: false
-        blurMultiplier: 1
-        blurMax: 64
         anchors.fill: background
+        blurEnabled: true
+        blur: root.firstInput ? 0 : 1
+        blurMax: 64
+        blurMultiplier: 1
+        autoPaddingEnabled: false
 
         Behavior on blur {
             NumberAnimation {
                 duration: 400
-                easing: Easing.InOutCubic
+                easing.type: Easing.InOutCubic
             }
         }
+    }
+
+    // Page 1 takes any key; page 2's keys go to the password field.
+    Item {
+        id: pageOneKeys
+
+        focus: true
+        Keys.onPressed: event => {
+            if (root.firstInput && event.key !== Qt.Key_Escape)
+                root.firstInput = false;
+            event.accepted = true;
+        }
+    }
+
+    TapHandler {
+        enabled: root.firstInput
+        onTapped: root.firstInput = false
     }
 
     Greeting {
@@ -179,312 +147,37 @@ Rectangle {
         firstInput: root.firstInput
         rootHeight: root.height
         rootWidth: root.width
-        username: userPicker.currentText
+        username: root.userName
         ap: root.ap
-        blurAmount: root.welcomeBgBlurAmount
-        blurEnabled: root.welcomeBgBlur
-        videoSourceItem: videoLoader.item ? (videoLoader.item as VideoBackground).activeVideoItem : null
+        backgroundSource: root.backgroundSource
+        blurAmount: parseFloat(config.welcomeBgBlurAmount) || 1
+        blurEnabled: config.welcomeBgBlur === "true"
+        videoSourceItem: root.videoItem
     }
 
-    Rectangle {
-        id: mainCard
-
-        property date currentTime: new Date()
-        property string day: Qt.formatDateTime(currentTime, "dddd").toUpperCase()
-        property string date: Qt.formatDateTime(currentTime, "d MMM").toUpperCase()
-
-        Timer {
-            interval: 60000
-            running: true
-            repeat: true
-            onTriggered: mainCard.currentTime = new Date()
-        }
-
-        width: 1350
-        height: 750
-        scale: root.firstInput ? 0.5 : 1
-        opacity: root.firstInput ? 0 : 1
+    // Page 2, laid out at 1920x1080 and scaled to the screen.
+    Item {
+        width: 1920
+        height: 1080
         anchors.centerIn: parent
-        radius: 70
-        color: "transparent"
+        scale: Math.min(root.width / 1920, root.height / 1080)
 
-        BlurWrapper {
-            anchors.centerIn: parent
-            targetWidth: mainCard.width
-            targetHeight: mainCard.height
-            animDuration: 0
-            blurAmount: root.mainCardBlurAmount
-            bgColor: config.mainCard
-            visibleState: !root.firstInput
-            radius: 50
-            videoSourceItem: videoLoader.item ? (videoLoader.item as VideoBackground).activeVideoItem : null
-        }
+        Item {
+            id: mainCard
 
-        MainClock {
-            anchors.horizontalCenter: mainCard.horizontalCenter
-            anchors.top: mainCard.top
-            anchors.topMargin: 170
-            firstInput: root.firstInput
-            mainCardComponentsOpacity: root.mainCardComponentsOpacity
-            ap: root.ap
-        }
+            x: 210
+            y: 120
+            width: 1500
+            height: 840
+            scale: root.firstInput ? 0.5 : 1
+            opacity: root.firstInput ? 0 : 1
+            enabled: !root.firstInput
 
-        FontLoader {
-            id: googleSansFlex
-
-            source: "assets/google-sans-flex/GoogleSansFlex.ttf"
-        }
-
-        Text {
-            anchors.horizontalCenter: mainCard.horizontalCenter
-            anchors.top: mainCard.top
-            anchors.topMargin: 270
-            anchors.bottom: parent.bottom
-            color: config.text
-            text: mainCard.day + " • " + mainCard.date
-            font.pixelSize: 20
-            font.family: googleSansFlex.name
-            font.weight: Font.Bold
-        }
-
-        RowLayout {
-            anchors.fill: parent
-            anchors.margins: 15
-            spacing: 40
-
-            ColumnLayout {
-                spacing: 13
-                Layout.alignment: Qt.AlignLeft
-
-                Rectangle {
-                    id: topLeftRect
-
-                    width: 390
-                    height: 220
-                    color: config.subComponents
-                    radius: root.midRadius
-                    opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-                    clip: true
-
-                    WelcomeText {
-                        id: greeting
-
-                        anchors.centerIn: parent
-                        username: userPicker.currentText
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-                    }
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 300
+                    easing.type: Easing.OutBack
                 }
-
-                Rectangle {
-                    id: middleLeftRect
-
-                    width: 390
-                    Layout.fillHeight: true
-                    color: config.subComponents
-                    radius: mainCard.radius / 4
-                    opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-                    clip: true
-
-                    CaelestiaFetch {
-                        firstInput: root.firstInput
-                        currentUser: userPicker.currentText
-                        currentSession: sessionPickerBtn.currentText
-                        rectHeight: middleLeftRect.height
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-                    }
-                }
-
-                Rectangle {
-                    id: bottomLeftRect
-
-                    width: 390
-                    height: 190
-                    color: "transparent"
-                    bottomLeftRadius: mainCard.radius / 1.9
-                    radius: root.midRadius / 1.7
-                    opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-
-                    SystemButtons {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        rectHeight: bottomLeftRect.height
-                        rectWidth: bottomLeftRect.height - 1
-                        rectRadius: bottomLeftRect.radius
-                        rectBigRadius: mainCard.radius / 1.9
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-                    }
-                }
-            }
-
-            ColumnLayout {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-                spacing: 0
-
-                Rectangle {
-                    Layout.alignment: Qt.AlignHCenter
-                    color: "transparent"
-                    width: 300
-                    height: 140
-                }
-
-                Item {
-                    height: 45
-                }
-
-                Avatar {
-                    avatarShape: root.avatarShape
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: root.avatarShape === "circle" ? 260 : 330
-                    Layout.preferredHeight: root.avatarShape === "circle" ? 260 : 300
-                    Layout.leftMargin: root.avatarShape === "circle" ? 0 : 34
-                    Layout.topMargin: root.avatarShape === "circle" ? 20 : 0
-                    Layout.bottomMargin: root.avatarShape === "circle" ? 20 : 0
-                    opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-                    }
-                }
-
-                PasswordInput {
-                    id: inputRect
-
-                    Layout.alignment: Qt.AlignHCenter
-                    mainCardComponentsOpacity: root.mainCardComponentsOpacity
-                    firstInput: root.firstInput
-                    isLoading: root.loading
-                    buffer: root.buffer
-                    currentUser: userPicker.currentText
-                    currentSession: root.sessionIndex
-                }
-
-                Text {
-                    Layout.margins: 10
-                    Layout.alignment: Qt.AlignHCenter
-                    text: "Caps Lock is activated!"
-                    font.pointSize: 8
-                    font.family: "Roboto"
-                    color: config.text
-                    opacity: 0 // Its buggy rnm fix later
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing: Easing.InOutCubic
-                        }
-                    }
-                }
-
-                Item {
-                    height: 20
-                }
-            }
-
-            ColumnLayout {
-                spacing: 13
-                Layout.alignment: Qt.AlignRight
-
-                Rectangle {
-                    id: topRightRect
-
-                    width: 390
-                    height: 355
-                    color: config.subComponents
-                    radius: root.smallRadius
-                    opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-
-                    RandomQuote {
-                        maxWidth: topRightRect.width - 40
-                        color: config.text
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-                    }
-                }
-
-                Rectangle {
-                    id: bottomRightRect
-
-                    width: 390
-                    height: 355
-                    color: config.subComponents
-                    bottomRightRadius: mainCard.radius / 1.9
-                    radius: mainCard.radius / 4
-                    opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-
-                    Image {
-                        id: dino
-
-                        width: 300
-                        height: 150
-                        source: "assets/dino.png"
-                        anchors.centerIn: parent
-                        fillMode: Image.PreserveAspectCrop
-                        layer.enabled: true
-
-                        layer.effect: ColorOverlay {
-                            color: config.inverseOnSurface
-                        }
-                    }
-
-                    Text {
-                        renderType: Text.NativeRendering
-                        text: "Unlock for notifications"
-                        color: config.inverseOnSurface
-                        font.family: "CaskaydiaCove NF"
-                        font.pointSize: 12
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 50
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-                    }
-                }
-            }
-        }
-
-        SessionPicker {
-            id: sessionPickerBtn
-
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: mainCard.height - 100
-            currentText: sessionPickerBtn.items.length > 0 ? sessionPickerBtn.items[0] : ""
-            selectedIndex: 0
-            opacity: root.firstInput ? 0 : root.mainCardComponentsOpacity
-            visible: root.sessionPickerEnabled
-            onSelectedIndexChanged: {
-                root.sessionIndex = sessionPickerBtn.selectedIndex;
             }
 
             Behavior on opacity {
@@ -493,73 +186,137 @@ Rectangle {
                     easing.type: Easing.OutBack
                 }
             }
-        }
 
-        Behavior on scale {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutBack
+            BlurWrapper {
+                anchors.centerIn: parent
+                targetWidth: mainCard.width
+                targetHeight: mainCard.height
+                animDuration: 0
+                radius: 32
+                blurAmount: parseFloat(config.mainCardBlurAmount) || 1
+                visibleState: !root.firstInput
+                source: root.backgroundSource
+                videoSourceItem: root.videoItem
             }
-        }
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutBack
+            // Left column: weather, then the month.
+            WeatherCard {
+                x: 32
+                y: 32
+                width: 453
+                height: 356
+                assetsDir: root.assetsDir
             }
-        }
-    }
 
-    ComboBox {
-        // invisible just for now
-        id: userPicker
+            CalendarCard {
+                x: 32
+                y: 400
+                width: 453
+                height: 408
+            }
 
-        width: 190
-        height: 50
-        anchors.right: parent.right
-        anchors.top: parent.top
-        model: userModel
-        currentIndex: userModel.lastIndex
-        textRole: "name"
-        font.family: "Rubik"
-        font.pixelSize: 20
-        visible: false
+            // Centre column (x 525..975): clock, date, avatar, name, password.
+            Clock {
+                id: clock
 
-        background: Rectangle {
-            color: "#BF131313"
-            radius: 30
-            border.color: "#353535"
-            border.width: 1
-        }
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 78
+                ap: root.ap
+            }
 
-        contentItem: Text {
-            renderType: Text.NativeRendering
-            text: userPicker.displayText
-            font: userPicker.font
-            color: "#e2e2e2"
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            leftPadding: 0
-            rightPadding: 0
-            topPadding: 0
-            bottomPadding: 0
-            anchors.fill: parent
-        }
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 258
+                text: Qt.formatDate(clock.currentTime, "dddd • d MMM").toUpperCase()
+                color: config.text
+                font.family: "Google Sans Flex"
+                font.pixelSize: 22
+                font.weight: Font.Bold
+                font.letterSpacing: 1
+            }
 
-        indicator: Canvas {
-            x: userPicker.width - 30
-            y: (userPicker.height - 6) / 2
-            width: 12
-            height: 6
-            onPaint: {
-                var context = getContext("2d");
-                context.reset();
-                context.moveTo(0, 0);
-                context.lineTo(width, 0);
-                context.lineTo(width / 2, height);
-                context.closePath();
-                context.fillStyle = "#4cdadb";
-                context.fill();
+            UserAvatar {
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 328
+                width: 315
+                height: 315
+                userName: root.userName
+                faceSource: root.user ? root.user.icon : ""
+                assetsDir: root.assetsDir
+                userCount: users.count
+                onPrevious: root.stepUser(-1)
+                onNext: root.stepUser(1)
+            }
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 603
+                text: root.userName
+                color: config.text
+                font.family: "Google Sans Flex"
+                font.pixelSize: 24
+                font.weight: Font.Bold
+            }
+
+            PasswordField {
+                id: password
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 657
+                loading: root.loading
+                onSubmitted: text => root.tryLogin(text)
+                onEscaped: root.firstInput = true
+                onSessionStep: step => sessionCard.step(step)
+                onUserStep: step => root.stepUser(step)
+                onTextChanged: {
+                    if (text.length > 0)
+                        root.failed = false;
+                }
+            }
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 728
+                text: root.failed ? "Wrong password" : keyboard.capsLock ? "Caps Lock is on" : ""
+                color: root.failed ? config.error : config.tertiary
+                font.family: "Google Sans Flex"
+                font.pixelSize: 16
+                font.weight: Font.Medium
+            }
+
+            // Right column: GIF, session, power.
+            Card {
+                x: 1015
+                y: 32
+                width: 453
+                height: 340
+
+                // The GIF already has the card's size and rounded corners
+                // (reroll.py renders it for the lock screen).
+                AnimatedImage {
+                    anchors.fill: parent
+                    source: "file://" + root.assetsDir + "/current.gif"
+                    fillMode: Image.PreserveAspectCrop
+                    playing: !root.firstInput
+                }
+            }
+
+            // Session card next to the power row: everything about how to
+            // start the session sits together.
+            SessionCard {
+                id: sessionCard
+
+                x: 1015
+                y: 384
+                width: 453
+                height: 300
+            }
+
+            PowerRow {
+                x: 1015
+                y: 696
+                width: 453
+                height: 112
             }
         }
     }
