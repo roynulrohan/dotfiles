@@ -16,6 +16,13 @@ License 1.1, with its own `LICENSE`.
 ## Changes from upstream
 
 - Renamed in `metadata.desktop`; `theme.conf` has `sessionPicker=true`.
+- Page 1 (`components/Greeting.qml`): "Good morning/afternoon/evening/night"
+  and the user name on a second line, both 86 px Google Sans Flex (rounded,
+  `ROND` 100), with the date and time and
+  a "press any key or click" hint, all on one frosted card tinted with
+  `surface`. It names the user SDDM preselects (`userModel.lastIndex`). A
+  click now opens page 2 too. `theme.conf` has `ap=true` (12-hour clock, as on
+  the lock screen).
 - Left out: caelestia's `scripts/sync.sh` (root sync from caelestia's state),
   `theme.conf.template` (caelestia's colour template), the sample
   `background.png` and `avatar.jpg`, the Qt Design Studio project file and an

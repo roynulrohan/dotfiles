@@ -151,6 +151,12 @@ Rectangle {
         }
     }
 
+    // A click on page 1 opens page 2, like a key press.
+    TapHandler {
+        enabled: root.firstInput
+        onTapped: root.firstInput = false
+    }
+
     MultiEffect {
         blurEnabled: true
         source: background
@@ -171,11 +177,10 @@ Rectangle {
     Greeting {
         anchors.centerIn: parent
         firstInput: root.firstInput
-        mainCardRadius: root.midRadius
         rootHeight: root.height
         rootWidth: root.width
-        greetingText: greeting.welcomeString
         username: userPicker.currentText
+        ap: root.ap
         blurAmount: root.welcomeBgBlurAmount
         blurEnabled: root.welcomeBgBlur
         videoSourceItem: videoLoader.item ? (videoLoader.item as VideoBackground).activeVideoItem : null
