@@ -59,16 +59,38 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   override the login screen fails at boot. Files in `/etc/sddm.conf.d` win over
   `/usr/lib/sddm/sddm.conf.d` (`sddm.conf(5)`). The preview works either way,
   because it runs inside Hyprland.
-- **Main monitor only:** X11 mirrors every monitor at the login screen. `x11.conf`
-  makes SDDM run `Xsetup` first, which keeps the main monitor and turns the
-  others off. It finds the main monitor by the model name in its EDID
-  (`MAIN_MODEL=VG279QM`, read from `xrandr --verbose`). Output names don't work,
-  because the NVIDIA driver names them differently under X11 (the left VG248 is
-  X's `DP-2`). Refresh rate doesn't either: on 2026-10-07 X11 gave the VG248 a
-  higher one, so the login screen landed on the left monitor. With no matching
-  monitor it falls back to the highest refresh rate. `XSETUP_DRY_RUN=1 ./Xsetup`
-  prints the `xrandr` command instead of running it. Hyprland sets its own
-  layout after login.
+- **Monitors:** X11 mirrors every monitor at the login screen. `x11.conf`
+  makes SDDM run `Xsetup` first, which places every connected monitor side by
+  side in the order its `ORDER` line gives (VG248, VG279QM, HP 27es, by EDID
+  model name; unlisted monitors go on the right) and makes the main monitor
+  X's primary output. The `noctalia-card` theme shows the login on the primary
+  monitor and, on every other monitor, the lock screen's side view: the clock
+  and date over the blurred still. Only the main monitor plays the login video.
+  Xsetup finds the main monitor by the model name in its EDID
+  (`MAIN_MODEL=VG279QM`, read from `xrandr --verbose`). Output names don't
+  work, because the NVIDIA driver names them differently under X11 (the left
+  VG248 is X's `DP-2`). Refresh rate doesn't either: on 2026-10-07 X11 gave
+  the VG248 a higher one, so the login screen landed on the left monitor. With
+  no matching monitor it falls back to the highest refresh rate.
+  `XSETUP_DRY_RUN=1 ./Xsetup` prints the `xrandr` command instead of running
+  it. Hyprland sets its own layout after login.
+  - **Main monitor unplugged at boot:** the monitor with the highest refresh
+    rate becomes primary (the VG248 today) and gets the full login.
+  - **One monitor:** it becomes primary and gets the full login.
+  - **Keyboard:** keys always go to the login's password field. The side
+    windows refuse focus, so a click on a side monitor changes nothing; the
+    greeter logs a harmless "requestActivate() called for ... which has
+    Qt::WindowDoesNotAcceptFocus set" for each side window at start.
+  - **Monitor plugged in after the login screen appears:** Xsetup has already
+    run, so nothing turns the new monitor on; it stays dark until the next
+    time SDDM starts X (after a log out, or a reboot). If something does turn
+    it on, SDDM opens a window there and it shows the side view.
+  - **Main monitor unplugged while the login screen shows:** untested on real
+    hardware. Nothing reruns `xrandr`, so X most likely keeps the output in
+    its layout and the login stays on the dark monitor; typing the password
+    and pressing Enter still logs in, because the keyboard stays on the
+    login's password field. If X does drop the screen, the theme moves the
+    login to the new primary monitor.
 - **Session picker:** off in the theme's default template; ours sets
   `sessionPicker=true`. Even when hidden, Up/Down on the login screen change the
   session. It always starts on the first session in the list (Hyprland), not the

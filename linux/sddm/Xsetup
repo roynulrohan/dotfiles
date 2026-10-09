@@ -1,8 +1,9 @@
 #!/bin/sh
 # SDDM runs this as root before the X11 login screen appears (DisplayCommand
-# in x11.conf). Show the login screen on the main monitor only and turn the
-# others off; X11 mirrors every monitor otherwise. Hyprland sets its own layout
-# after login, so this affects the login screen only.
+# in x11.conf). X11 mirrors every monitor otherwise, so this places them side
+# by side in ORDER and makes the main monitor X's primary output. The theme
+# shows the login on the primary monitor and a clock on the others. Hyprland
+# sets its own layout after login, so this affects the login screen only.
 #
 # The main monitor is the one whose EDID model name contains MAIN_MODEL. X11's
 # output names don't match Hyprland's (X called the left VG248 "DP-2"), and X11
@@ -12,10 +13,13 @@
 # XSETUP_DRY_RUN=1 prints the xrandr command instead of running it.
 
 MAIN_MODEL=VG279QM
+# Left to right as on the desk, by EDID model name, comma-separated. Monitors
+# not listed go on the right, in xrandr's order.
+ORDER="VG248,VG279QM,HP 27es"
 
-# The connected output whose EDID monitor name (descriptor tag 0xfc) contains
-# MAIN_MODEL, from `xrandr --verbose`.
-named=$(xrandr --verbose | awk -v want="$MAIN_MODEL" '
+# Each connected output and its EDID monitor name (descriptor tag 0xfc),
+# tab-separated, from `xrandr --verbose`.
+names=$(xrandr --verbose | awk '
     BEGIN { for (i = 0; i < 256; i++) val[sprintf("%02x", i)] = i }
     function byte(h, i) { return val[substr(h, 2 * i + 1, 2)] }
     function edid_name(h,    d, o, i, c, s) {
@@ -28,17 +32,27 @@ named=$(xrandr --verbose | awk -v want="$MAIN_MODEL" '
         }
         return ""
     }
-    function check() { if (out != "" && hex != "" && index(edid_name(hex), want)) found = out; hex = ""; inedid = 0 }
-    /^[^ \t]/ { check(); out = ($2 == "connected") ? $1 : ""; next }
-    /^[ \t]+EDID:/ { check(); inedid = 1; next }
+    function end_edid() { if (inedid) name = edid_name(hex); hex = ""; inedid = 0 }
+    function flush() { end_edid(); if (out != "") print out "\t" name; out = ""; name = "" }
+    /^[^ \t]/ { flush(); if ($2 == "connected") out = $1; next }
+    /^[ \t]+EDID:/ { inedid = 1; hex = ""; next }
     inedid && /^[ \t]+[0-9a-f]+$/ { line = $0; gsub(/[ \t]/, "", line); hex = hex line; next }
-    inedid { check() }
-    END { check(); if (found != "") print found }')
+    inedid { end_edid() }
+    END { flush() }')
 
-args=$(xrandr --query | awk -v named="$named" '
+args=$(xrandr --query | awk -v names="$names" -v want="$MAIN_MODEL" -v order="$ORDER" '
+    BEGIN {
+        k = split(names, lines, "\n")
+        for (i = 1; i <= k; i++) { split(lines[i], f, "\t"); model[f[1]] = f[2] }
+        norder = split(order, ord, ",")
+    }
     $2 == "disconnected" { out = ""; next }
-    $2 == "connected"    { out = $1; outs[++n] = out; best[out] = 0; next }
+    $2 == "connected"    { out = $1; outs[++n] = out; best[out] = 0; width[out] = 0; next }
     /^[ \t]/ && out != "" {
+        # Mode lines: "1920x1080  60.00*+ 144.00". --auto picks the mode
+        # marked "+" (preferred), else the first one.
+        w = $1; sub(/x.*/, "", w)
+        if (width[out] == 0 || (!pref[out] && index($0, "+"))) { width[out] = w + 0; if (index($0, "+")) pref[out] = 1 }
         for (i = 2; i <= NF; i++) {
             r = $i; gsub(/[^0-9.]/, "", r)
             if (r + 0 > best[out]) best[out] = r + 0
@@ -48,9 +62,22 @@ args=$(xrandr --query | awk -v named="$named" '
         if (n == 0) exit
         main = outs[1]
         for (i = 2; i <= n; i++) if (best[outs[i]] > best[main]) main = outs[i]
-        if (named != "" && (named in best)) main = named
-        printf "--output %s --auto --primary --pos 0x0", main
-        for (i = 1; i <= n; i++) if (outs[i] != main) printf " --output %s --off", outs[i]
+        for (i = 1; i <= n; i++) if (index(model[outs[i]], want)) { main = outs[i]; break }
+        # Sort by position in ORDER; unlisted monitors keep xrandr order after them.
+        for (i = 1; i <= n; i++) {
+            rank[i] = norder + i
+            for (j = 1; j <= norder; j++) if (index(model[outs[i]], ord[j])) { rank[i] = j; break }
+            idx[i] = i
+        }
+        for (i = 2; i <= n; i++)
+            for (j = i; j > 1 && rank[idx[j]] < rank[idx[j - 1]]; j--) { t = idx[j]; idx[j] = idx[j - 1]; idx[j - 1] = t }
+        x = 0
+        for (i = 1; i <= n; i++) {
+            o = outs[idx[i]]
+            printf "%s--output %s --auto --pos %dx0", (i > 1 ? " " : ""), o, x
+            if (o == main) printf " --primary"
+            x += width[o]
+        }
     }')
 
 [ -n "$args" ] || exit 0
