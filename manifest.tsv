@@ -59,6 +59,8 @@ linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
 linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
 linux	linux/mpv/scripts/dolphin-sort.lua	~/.config/mpv/scripts/dolphin-sort.lua	copy
 linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
+linux	linux/sddm/noctalia-card.conf	/etc/sddm.conf.d/noctalia-card.conf	copy
+linux	linux/sddm/themes/noctalia-card	/usr/share/sddm/themes/noctalia-card	dir
 linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
 linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
 linux	linux/wallpaper/live-wallpaper	~/.local/bin/live-wallpaper	copy-x
@@ -66,7 +68,6 @@ linux	linux/wallpaper/live-wallpaper.service	~/.config/systemd/user/live-wallpap
 linux	linux/ssh/ssh-add.service	~/.config/systemd/user/ssh-add.service	copy
 linux	linux/wallpaper/live-wallpaper-watchdog.service	~/.config/systemd/user/live-wallpaper-watchdog.service	copy
 linux	linux/wallpaper/live-wallpaper-watchdog.timer	~/.config/systemd/user/live-wallpaper-watchdog.timer	copy
-linux	linux/sddm/sddm-theme.conf	~/.config/caelestia/templates/sddm-theme.conf	copy
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
 linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
 linux	linux/hyprsunset/hyprsunset.conf	~/.config/hypr/hyprsunset.conf	copy

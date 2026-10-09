@@ -50,7 +50,10 @@ own `LICENSE`.
 - User files come from `assetsDir` (default `/var/lib/sddm-assets`), not the
   theme folder: `background` (still), `background.<video>`, `current.gif`,
   `location.json`, `faces/<user>.face.icon`. The face falls back to the one
-  SDDM finds, then to the user's initial.
+  SDDM finds, then to the user's initial. The colours come from
+  `theme.conf.user`, which the install links to `colours.conf` in that
+  folder; Noctalia writes it. caelestia's `sync.sh` and its root-owned copies
+  are gone.
 - Left out: caelestia's `scripts/sync.sh` and `theme.conf.template`, the
   sample `background.png` and `avatar.jpg`, the Qt Design Studio project file,
   an editor backup, and upstream's page 2 parts (fetch card, quote, dino,
@@ -61,13 +64,16 @@ own `LICENSE`.
 `qt6-declarative`, `qt6-5compat`, `qt6-multimedia` (video) and
 `ttf-material-symbols-variable` (icons, a system font). Google Sans Flex ships
 in `assets/`. SDDM must not load Qt's on-screen keyboard: CachyOS sets
-`InputMethod=qtvirtualkeyboard`, and our SDDM config clears it.
+`InputMethod=qtvirtualkeyboard`, and our SDDM config (`../../noctalia-card.conf`)
+clears it.
 
 ## Preview
 
 Without sudo, in a window. `<dir>` can be this folder: the greeter only reads
 it. The repo has no wallpaper or avatar, so those show the fallback colour
-there.
+there, and the fallback colours from `theme.conf`. To see the synced files,
+point a copy's `assetsDir` at a folder that has them and link its
+`theme.conf.user` to that folder's `colours.conf`.
 
 ```bash
 QML_XHR_ALLOW_FILE_READ=1 QT_QPA_PLATFORM=xcb sddm-greeter-qt6 --test-mode --theme <dir>

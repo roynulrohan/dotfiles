@@ -45,8 +45,11 @@ them. Changes made in its settings window go to
 
 - **Wallpaper drawing off**: the live wallpapers (`linux/wallpaper`) would be
   covered otherwise. The wallpaper path is still set, for the colours.
-- **Colours** from the wallpaper, style `m3-tonal-spot`, caelestia's
-  "tonalspot". One palette for the whole shell, from the default wallpaper.
+- **Colours** from the wallpaper: one palette for the whole shell, and every
+  template (kitty, Hyprland, GTK, Qt, btop, Spotify, the login screen) follows
+  it. Switch the scheme or wallpaper in Noctalia's settings any time; that is
+  saved in Noctalia's state, not here. `config.toml` only holds the first-run
+  default (`m3-tonal-spot`).
 - **Idle**, as under caelestia: lock after 1 h, screens off after 1.5 h, lock
   and suspend after 4 h. Noctalia pauses for idle inhibitors (browsers and mpv
   during video), not for any audio playing as caelestia did.
@@ -165,7 +168,8 @@ unlock, the `session_unlocked` hook runs `reroll.py`: it picks a random GIF,
 renders it once to the card's size with ffmpeg into
 `~/.local/share/noctalia/lock/cards/`, and points `current.gif` at it. The lock
 screen reads `current.gif` again at every lock, so no reload is needed.
-`apply.sh` rerolls too.
+`apply.sh` rerolls too. When `/var/lib/sddm-assets` exists, `reroll.py` also
+copies the new card there for the login screen (`linux/sddm`).
 
 Needs `python3`, `ffmpeg`, the two fonts in `fonts/google-sans-flex` (SIL Open
 Font License 1.1, `LICENSE` included; "GSF Lock Clock" is a renamed instance of
@@ -188,7 +192,9 @@ Things to know:
   later file wins, and arrays (such as `widget_order`) are replaced whole. So a
   `[hooks]` table in `config.toml` would merge with the one in `lock.toml`, and
   a second `session_unlocked` there would lose to `lock.toml`. `apply.sh` warns
-  when another file sets `[lockscreen*]` or `[hooks]`.
+  when another file sets `[lockscreen*]` or `[hooks]`. The login screen's sync
+  adds no `[hooks]` key: its still rides on the `sddm` template's `post_hook`
+  and its GIF on `reroll.py`.
 - **Rounded GIF corners are in the GIF.** The sticker widget has no corner
   radius, so `reroll.py` cuts the card's corners into the GIF's transparency
   with a 1-bit mask.
@@ -221,7 +227,7 @@ one merges into `kdeglobals`.
 | `thunar.css` | `gtk-3.0/thunar.css` and `gtk-4.0/thunar.css` | |
 | `qtengine.colors` | `~/.config/qtengine/caelestia.colors` | Noctalia's KDE colour-scheme template; qtengine's config still points at this file, `kdeglobals` is left alone |
 | `btop.theme` | `~/.config/btop/themes/caelestia.theme` | the theme `btop.conf` selects (`linux/btop`); hook `pkill -USR2 -x btop` makes a running btop reload |
-| `sddm-theme.conf` | `~/.local/state/caelestia/theme/sddm-theme.conf` | what `sddm-sync` reads for the login screen (`linux/sddm`); a fixed green for its success colour (`custom_colors.success`) |
+| `sddm-theme.conf` | `/var/lib/sddm-assets/colours.conf` | the login screen's colours (`linux/sddm`, How it stays in sync), in the theme's key names with the lock screen's roles; hook: `chmod 644` (the greeter runs as user `sddm`) and copy `{{ image }}`, the wallpaper the palette came from, as the login still. Until that folder exists, the log says "failed to open template output" and the hook is skipped |
 | `equibop.theme.css` | `~/.config/equibop/themes/noctalia.theme.css` | Noctalia's community "Midnight" Discord theme, a new file; switch it on in Equibop → Settings → Themes. It loads its base CSS from `refact0r.github.io`, as caelestia's did |
 
 VS Code is not themed: it keeps One Dark Pro Night Flat.
@@ -262,8 +268,9 @@ Volume keys stay on `wpctl`.
 - **Night Light** in the control centre is Noctalia's own and off; the night
   light that runs is hyprsunset (`linux/hyprsunset`). Use the `/cmd` actions.
 - Bluetooth shows nothing: the BlueZ service isn't running on this PC.
-- The login screen is still SDDM with caelestia's theme. Noctalia has its own
-  greeter, for greetd instead of SDDM; not tried yet.
+- The login screen is SDDM with our `noctalia-card` theme (`linux/sddm`),
+  which follows Noctalia's palette, wallpaper and lock GIF. Noctalia has its
+  own greeter, for greetd instead of SDDM; not tried yet.
 - caelestia stays installed as a fallback but doesn't run. Back to it for one
   session: `pkill -x noctalia`, then `caelestia shell -d`. For good: restore
   `~/.config/hypr` from `linux/caelestia/hypr-reference`.

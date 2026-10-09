@@ -1,31 +1,37 @@
 #!/bin/sh
-# Sync the caelestia SDDM theme (colours, avatar), then install Noctalia's
-# wallpaper as the still and restore the login-screen video, which the theme's
-# sync.sh deletes as a stale background. Run as yourself; it uses sudo for the
-# root-owned theme folder.
-# --posthook stops sync.sh from running `caelestia scheme set`, which would
-# rewrite Noctalia's colour outputs (the SDDM colour file included) with
-# caelestia's old palette. sync.sh still copies caelestia's stale wallpaper
-# link; the still from Noctalia replaces it afterwards.
-# LOGIN_VIDEO overrides the video; without the file, the still is used.
-# SDDM_SYNC_DRY_RUN=1 prints the commands instead of running them.
+# Refresh the login screen's synced assets folder now. Runs as you, no sudo.
+# Noctalia keeps the colours, the still and the GIF fresh by itself (SETUP.md,
+# "How it stays in sync"); run this once after setup and after changing the
+# login video, your face picture (~/.face) or Noctalia's weather location.
+# LOGIN_VIDEO overrides the video. SDDM_ASSETS overrides the folder for a dry
+# run, which then skips the colours and still: Noctalia writes those to
+# /var/lib/sddm-assets only.
 set -e
-theme=/usr/share/sddm/themes/caelestia
-video="${LOGIN_VIDEO:-$HOME/Pictures/Wallpapers/live/login.mp4}"
-wallpaper=$(noctalia msg wallpaper-get 2>/dev/null) || wallpaper=
+dir=${SDDM_ASSETS:-/var/lib/sddm-assets}
+video=${LOGIN_VIDEO:-$HOME/Pictures/Wallpapers/live/login.mp4}
 
-run() {
-    if [ "${SDDM_SYNC_DRY_RUN:-}" = 1 ]; then echo "$*"; else "$@"; fi
+if [ ! -w "$dir" ]; then
+    echo "$dir is missing or not writable; see linux/sddm/SETUP.md" >&2
+    exit 1
+fi
+
+# put <source> <name>: copy a file in, readable by the greeter (user sddm).
+put() {
+    if [ -f "$1" ]; then
+        install -Dm 644 "$1" "$dir/$2"
+        echo "✓ $2"
+    else
+        echo "skipped $2: no $1" >&2
+    fi
 }
 
-run sudo "$theme/scripts/sync.sh" --posthook
-if [ -f "$wallpaper" ]; then
-    run sudo install -m 644 "$wallpaper" "$theme/assets/background"
-    echo "✓ Login still: $wallpaper"
-else
-    echo "Noctalia gave no wallpaper (is it running?); keeping sync.sh's still." >&2
-fi
-if [ -f "$video" ]; then
-    run sudo install -m 644 "$video" "$theme/assets/background.mp4"
-    echo "✓ Login video: $video"
+put "$video" background.mp4
+put "$HOME/.face" "faces/$(id -un).face.icon"
+put "$HOME/.cache/noctalia/location.json" location.json
+put "$(readlink -f "$HOME/.local/share/noctalia/lock/current.gif")" current.gif
+
+# Colours and still: Noctalia renders its templates again, and the sddm
+# entry's hook copies the wallpaper (linux/noctalia/config.toml).
+if [ -z "${SDDM_ASSETS:-}" ]; then
+    noctalia msg templates-apply
 fi

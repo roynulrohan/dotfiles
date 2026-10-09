@@ -5,8 +5,8 @@ one per monitor, played by
 [linux-wallpaperengine](https://github.com/Almamu/linux-wallpaperengine).
 A still frame of the main wallpaper is the shell's wallpaper: Noctalia takes
 its colours and lock screen background from it, with its own wallpaper drawing
-switched off (`linux/noctalia`). The login screen uses the still from the last
-`sddm-sync` (`linux/sddm`).
+switched off (`linux/noctalia`). The login screen gets the same still from
+Noctalia whenever it changes (`linux/sddm`).
 
 | Repo | Destination |
 |---|---|

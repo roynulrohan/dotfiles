@@ -44,9 +44,10 @@ decision the repo doesn't cover.
   opaque; each monitor has its own workspaces 1–10, shown as
   numbers in the bar. Default apps: Zen for web
   pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
-  SVG and editing); see `linux/packages.md`. Login screen: SDDM with the
-  caelestia "locklike" theme (`linux/sddm`). Discord: Equibop, caelestia-themed,
-  is the default (Super+D, `discord://` links); the official app stays installed.
+  SVG and editing); see `linux/packages.md`. Login screen: SDDM with our
+  own `noctalia-card` theme, which follows Noctalia (`linux/sddm`). Discord:
+  Equibop, caelestia-themed, is the default (Super+D, `discord://` links); the
+  official app stays installed.
   Live wallpapers: Wallpaper Engine wallpapers per monitor through
   linux-wallpaperengine (`linux/wallpaper`); Noctalia's wallpaper is a still
   of the main one, for the colours (its drawing is off). Audio: PipeWire's own filter-chain runs the

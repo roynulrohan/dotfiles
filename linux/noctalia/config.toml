@@ -3,8 +3,10 @@
 [wallpaper]
 enabled = false
 
-# Colours from the wallpaper, in the same style caelestia used ("tonalspot").
-# Which wallpaper: `noctalia msg wallpaper-set <image>` (see SETUP.md).
+# Colours from the wallpaper. The scheme here is only the starting default:
+# changing scheme or wallpaper in Noctalia's settings is saved in its own state
+# (~/.local/state/noctalia/settings.toml), which wins over this file, and every
+# template follows the live palette. Nothing in the repo needs to change.
 [theme]
 source = "wallpaper"
 wallpaper_scheme = "m3-tonal-spot"
@@ -288,21 +290,21 @@ input_path = "$XDG_CONFIG_HOME/noctalia/templates/btop.theme"
 output_path = "$XDG_CONFIG_HOME/btop/themes/caelestia.theme"
 post_hook = "pkill -USR2 -x btop || true"
 
-# SDDM: the colour source sddm-sync reads (it copies it into the root-owned
-# theme, so run sddm-sync by hand). onSuccess uses the custom `success` colour.
+# Login screen (linux/sddm): its colours go to the synced assets folder, which
+# the noctalia-card theme reads; the hook copies the wallpaper the palette came
+# from as its still. chmod: the greeter runs as user sddm and must read the
+# file, whatever mode it was first created with. Until /var/lib/sddm-assets
+# exists, Noctalia logs "failed to open template output" and skips the hook.
 [theme.templates.user.sddm]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/sddm-theme.conf"
-output_path = "$XDG_STATE_HOME/caelestia/theme/sddm-theme.conf"
+output_path = "/var/lib/sddm-assets/colours.conf"
+post_hook = "chmod 644 /var/lib/sddm-assets/colours.conf && install -m 644 '{{ image }}' /var/lib/sddm-assets/background"
 
 # Equibop: a second theme file next to caelestia's, off until chosen in
 # Equibop > Settings > Themes. Noctalia community "Midnight" template.
 [theme.templates.user.equibop]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/equibop.theme.css"
 output_path = "$XDG_CONFIG_HOME/equibop/themes/noctalia.theme.css"
-
-# Extra roles for the templates above (on_success etc.); blended into the palette.
-[theme.templates.custom_colors]
-success = "#4caf50"
 
 [widget.clock]
 format = "{:%a %b %-d · %-I:%M %p}"      # short date, 12-hour time: Thu Oct 8 · 3:42 PM

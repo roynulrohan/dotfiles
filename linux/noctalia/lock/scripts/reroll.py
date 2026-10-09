@@ -3,11 +3,13 @@
 # Noctalia runs it from the session_unlocked hook that gen.py writes. The lock
 # screen builds its widgets again at every lock, and the sticker then reads
 # current.gif from disk, so swapping the link is enough: no config change, no reload.
-import os, sys, random, hashlib, subprocess
+import os, sys, random, hashlib, shutil, subprocess
 W, H, R = sys.argv[1:4]
 SRC = os.path.expanduser("~/Pictures/lock-gifs")
 LOCK = os.path.expanduser("~/.local/share/noctalia/lock")
 CUR, CARDS = f"{LOCK}/current.gif", f"{LOCK}/cards"
+# The login screen (linux/sddm) reads its GIF from here; skipped until the folder exists.
+LOGIN = "/var/lib/sddm-assets"
 
 def card_path(name):
     # Keyed by the source's content, so an edited or replaced GIF renders again.
@@ -44,4 +46,10 @@ if not os.path.exists(out):
 tmp = f"{CUR}.{os.getpid()}.tmp"
 os.symlink(out, tmp)
 os.replace(tmp, CUR)
+# A copy, not a link: the greeter runs as user sddm and cannot read this home folder.
+if os.access(LOGIN, os.W_OK):
+    tmp = f"{LOGIN}/current.gif.{os.getpid()}.tmp"
+    shutil.copyfile(out, tmp)
+    os.chmod(tmp, 0o644)
+    os.replace(tmp, f"{LOGIN}/current.gif")
 print(out)

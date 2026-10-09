@@ -10,7 +10,8 @@ sits around it.
 | `noctalia` | desktop shell since 2026-10-08: bar, launcher, lock, idle, notifications; see `noctalia/` |
 | `caelestia-shell` `caelestia-cli` (AUR) | the previous shell and its wallpaper/scheme tooling; kept installed as a fallback, not running (see `caelestia/`) |
 | `hyprland` `xdg-desktop-portal-hyprland` `xdg-desktop-portal-gtk` | compositor |
-| `sddm` `caelestia-sddm-locklike-git` (AUR) | login screen in caelestia's lock-screen style; see `sddm/` |
+| `sddm` `qt6-5compat` `qt6-multimedia` `ttf-material-symbols-variable` | login screen with our `noctalia-card` theme; see `sddm/` |
+| `caelestia-sddm-locklike-git` (AUR) | caelestia's login theme, the one ours is forked from; kept installed as a fallback |
 | `hyprmod` (AUR) | GUI for binds, monitors, workspace and window rules; owns `hyprland-gui.lua` |
 | `kitty` | terminal (foot is caelestia's default; kitty for image logos and tabs) |
 | `fish` `starship` | shell and prompt |
