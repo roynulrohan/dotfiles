@@ -247,6 +247,14 @@ hl.config({
     input = { numlock_by_default = true },
 })
 
+-- Alt+Tab: Noctalia's window switcher (thumbnails, most recent first) instead
+-- of Hyprland's plain cycling. "hold": hold Alt and press Tab to move, release
+-- Alt to switch; a quick tap goes back to the previous window. Shift+Tab moves
+-- back inside the switcher, so Hyprland's Shift+Alt+Tab is unbound.
+hl.unbind("ALT + TAB")
+hl.unbind("SHIFT + ALT + TAB")
+hl.bind("ALT + TAB", hl.dsp.exec_cmd("noctalia msg window-switcher hold"))
+
 -- Hyprland 0.56 eye candy: an inner glow on the focused window in the
 -- palette's primary-to-tertiary gradient (like the border, at half strength;
 -- none on unfocused windows). Motion blur (0.56) stays off: windows flashed
