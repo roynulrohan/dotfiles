@@ -6,8 +6,11 @@ values, coloured from the terminal palette, and a random image logo on the left.
 `fastfetch` on PATH is a wrapper script (`fastfetch` here, installed as
 `~/.local/bin/fastfetch`) that applies this config, picks the logo and falls back
 to the ASCII logo where the terminal can't draw images, so typing `fastfetch` in
-any shell matches the greeting. Arguments bypass the wrapper. fish's greeting
-just calls it.
+any shell matches the greeting. Two flags of its own, in any order:
+`--os-logo` shows fastfetch's built-in logo of the OS instead of an image, and
+`--larp` makes the os, kernel and host rows say Arch Linux, an Arch-style kernel
+name and `archlinux` (with the Arch logo wherever a built-in logo shows). Any
+other arguments bypass the wrapper. fish's greeting just calls it.
 
 ## Files
 
@@ -72,5 +75,6 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
 ```fish
 fastfetch -c ~/.config/fastfetch/greeting.jsonc --logo none   # boxes aligned, no errors
 fastfetch                                                     # wrapper: layout + random image, any shell
+fastfetch --larp --os-logo                                    # "I use Arch": Arch rows and Arch logo
 env TERM=xterm TERM_PROGRAM= KITTY_WINDOW_ID= fastfetch       # the ASCII fallback path
 ```

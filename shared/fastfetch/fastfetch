@@ -10,7 +10,12 @@
 #                            two-column layout survives (VS Code terminal,
 #                            Terminal.app, tmux/screen, a pipe)
 #
-# Any arguments bypass all of this and go straight to the real binary.
+# Our own flags, first on the line, in any order:
+#   --larp       the os, kernel and host rows say Arch Linux, an Arch kernel
+#                and archlinux (for the "I use Arch" screenshot)
+#   --os-logo    fastfetch's built-in logo of the OS instead of an image
+#                (the Arch logo with --larp)
+# Any other arguments bypass all of this and go straight to the real binary.
 
 # The real binary is the first fastfetch on PATH that is not this script.
 self=$(cd "$(dirname "$0")" 2>/dev/null && pwd -P)/$(basename "$0")
@@ -28,9 +33,36 @@ if [ -z "$real" ]; then
     exit 127
 fi
 
+larp= oslogo=
+while [ $# -gt 0 ]; do
+    case "$1" in
+    --larp) larp=1 ;;
+    --os-logo) oslogo=1 ;;
+    *) break ;;
+    esac
+    shift
+done
 [ $# -gt 0 ] && exec "$real" "$@"
 cfg=$HOME/.config/fastfetch/greeting.jsonc
 [ -f "$cfg" ] || exec "$real"
+
+# --larp: a copy of the layout whose Linux os and kernel rows print fixed text,
+# kept in the runtime dir and overwritten each time.
+if [ -n "$larp" ]; then
+    LARP_OS="        { \"type\": \"command\",  \"key\": \"{\$5}│ {\$2}󰣇{\$1}  os\",       \"format\": \"{\$2}{>20}{\$5} │\", \"condition\": { \"system\": \"Linux\" }, \"text\": \"echo Arch Linux\" },"
+    LARP_KERNEL="        { \"type\": \"command\",  \"key\": \"{\$5}│ {\$2}󰌽{\$1}  kernel\",   \"format\": \"{>20}{\$5} │\", \"condition\": { \"system\": \"Linux\" }, \"text\": \"uname -r | sed 's/-[0-9]*-cachyos.*/-arch1-1/'\" },"
+    LARP_HOST="        { \"type\": \"command\",  \"key\": \"{\$5}│ {\$2}󰇅{\$1}  host\",     \"format\": \"{>20}{\$5} │\", \"text\": \"echo archlinux\" },"
+    export LARP_OS LARP_KERNEL LARP_HOST
+    larpcfg=${XDG_RUNTIME_DIR:-/tmp}/fastfetch-larp.jsonc
+    awk '/"type": "os"/ && /"Linux"/ { print ENVIRON["LARP_OS"]; next }
+         /"type": "kernel"/ && /"Linux"/ { print ENVIRON["LARP_KERNEL"]; next }
+         /"type": "title"/ && /host-name/ { print ENVIRON["LARP_HOST"]; next }
+         { print }' "$cfg" > "$larpcfg" && cfg=$larpcfg
+fi
+if [ -n "$oslogo" ]; then
+    [ -n "$larp" ] && exec "$real" -c "$cfg" --logo-type builtin --logo arch
+    exec "$real" -c "$cfg" --logo-type builtin
+fi
 
 # What can this terminal draw? Decided from the environment, so it costs
 # nothing. tmux and screen sit between us and the terminal, so they get ASCII.
@@ -44,7 +76,10 @@ if [ -t 1 ] && [ -z "${TMUX-}" ] && [ -z "${STY-}" ]; then
         type=iterm
     fi
 fi
-[ "$type" = builtin ] && exec "$real" -c "$cfg" --logo-type builtin
+if [ "$type" = builtin ]; then
+    [ -n "$larp" ] && exec "$real" -c "$cfg" --logo-type builtin --logo arch
+    exec "$real" -c "$cfg" --logo-type builtin
+fi
 
 # Random logo. (No `case` inside $(...): bash 3.2, macOS's /bin/sh, can't parse it.)
 logos=
