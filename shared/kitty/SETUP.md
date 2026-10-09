@@ -36,9 +36,9 @@ Live colours come from Noctalia's wallpaper palette: a Noctalia template
 and reloads kitty, and `kitty.conf` loads it with `globinclude`, so the Mac,
 which has no such file, loads nothing. The template is a copy of Noctalia's
 built-in kitty template; the built-in one also appends an `include` line to
-`kitty.conf`, which would reach the Mac. caelestia's colour escape codes, which
-its fish config still prints, are reset in kitty by
-`linux/caelestia/user-config.fish`. `colors.conf` is only the fallback (it is
+`kitty.conf`, which would reach the Mac. Nothing prints colour escape codes at
+shell start any more (caelestia's fish config did; `linux/fish` replaced it).
+`colors.conf` is only the fallback (it is
 caelestia's last scheme); to regenerate it from caelestia's scheme file:
 
 ```fish

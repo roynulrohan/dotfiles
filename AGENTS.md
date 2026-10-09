@@ -74,7 +74,7 @@ decision the repo doesn't cover.
 | Directory | Applies to | Contents |
 |---|---|---|
 | `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor, orca |
-| `linux/` | CachyOS desktop | Hyprland config (`hypr`), Noctalia shell (`noctalia`), caelestia overrides and reference copy, HyprMod file, snapshots setup, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
+| `linux/` | CachyOS desktop | fish entry point, Hyprland config (`hypr`), Noctalia shell (`noctalia`), caelestia overrides and reference copy, HyprMod file, snapshots setup, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,

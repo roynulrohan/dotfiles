@@ -1,5 +1,6 @@
-# macOS fish entry point. On Linux, caelestia ships its own config.fish that does
-# the same job, so this file is macOS only. Everything shared lives in conf.d/.
+# macOS fish entry point; linux/fish/config.fish is the Linux one. Everything
+# shared lives in conf.d/. starship, zoxide and direnv start here, not in
+# conf.d/05, so they still come after the conda hook below.
 
 # ---------------------------------------------------------------------------
 # PATH carried over from legacy/zsh (zprofile + zshrc + zshenv). Every entry is
@@ -54,8 +55,7 @@ if status is-interactive
     command -q zoxide;   and zoxide init fish --cmd cd | source
     command -q direnv;   and direnv hook fish | source
 
-    # From legacy/zsh. macOS only: on Linux caelestia's config.fish cats its
-    # colour sequences, which bat would mangle.
+    # From legacy/zsh. macOS only.
     command -q bat; and alias cat bat
 
     # fzf from legacy/zsh: fd-backed and .gitignore-aware, bat/eza previews,

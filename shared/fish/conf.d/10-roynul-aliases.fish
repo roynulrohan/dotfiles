@@ -8,6 +8,14 @@ if command -q eza
     alias tree 'eza --tree --icons --level=2 --git-ignore --group-directories-first'
 end
 
+# Short ls forms, from caelestia's config.fish. Linux only: on macOS `la` stays
+# fish's own function (ls -lAh).
+if test (uname) != Darwin
+    abbr -a l   ls
+    abbr -a la  'ls -a'
+    abbr -a lla 'ls -la'
+end
+
 # Git
 abbr -a lg  lazygit
 abbr -a gs  'git status'
@@ -20,6 +28,11 @@ abbr -a gpl 'git pull'
 abbr -a gsw 'git switch'
 abbr -a gco 'git checkout'
 abbr -a gb  'git branch'
+abbr -a gbd 'git branch -d'
+abbr -a gsh 'git show'
+abbr -a gst 'git stash'
+abbr -a gsp 'git stash pop'
+abbr -a gsm 'git switch main'
 
 # JS: bun over npm/npx
 abbr -a dev   'bun run dev'

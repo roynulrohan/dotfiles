@@ -6,8 +6,7 @@ Everything of mine on top of [caelestia dots](https://github.com/caelestia-dots/
 fallback but doesn't run, and `caelestia update` must not run (it would
 overwrite `~/.config/hypr`). Still in use from this package: `hypr-vars.lua`
 and `hypr-user.lua` (loaded by `linux/hypr/hyprland.lua`), `cli.json` (the
-pop-up workspaces), `user-config.fish` (caelestia's `~/.config/fish` is
-still theirs). `shell.json` only applies when caelestia's shell runs. A copy
+pop-up workspaces). `shell.json` only applies when caelestia's shell runs. A copy
 of caelestia's original Hyprland config, which nothing loads, is kept in
 `hypr-reference/` (see "Reference copy" below).
 
@@ -18,7 +17,6 @@ of caelestia's original Hyprland config, which nothing loads, is kept in
 | `hypr-vars.lua` | `~/.config/caelestia/hypr-vars.lua` | kitty as terminal; single-window outer gap matched to HyprMod's `gaps_out`; caelestia's resize keys switched off (see Window mode); Super+C opens VS Code (`code`; caelestia's default `codium` isn't installed), Super+Shift+L runs `systemctl suspend` (caelestia's `suspend-then-hibernate` can't work, see `shell.json` below), cursor theme `breeze_cursors` (caelestia's `sweet-cursors` isn't installed); the look (window transparency, gradient borders, no shadows, blur behind pop-up workspaces; see Look) |
 | `hypr-user.lua` | `~/.config/caelestia/hypr-user.lua` | Super+Shift+arrow resize binds, HyDE's behaviour defaults (see Look), window mode and per-monitor workspaces (below), and loading `hypr-local.lua` if the machine has one; Hyprland config that HyprMod can't express goes here |
 | `shell.json` | `~/.config/caelestia/shell.json` | bar: numbered workspaces, 5 shown; dashboard and sidebar on; weather for Ottawa (coordinates: the IP lookup said Toronto, and the name "Ottawa" also matches US towns); logout button runs `uwsm stop` (see `linux/sddm/SETUP.md`, frozen screen); no notifications on the lock screen (`lock.hideNotifs`); the lock screen shows the wallpaper, not a blurred screenshot of the desktop (`lock.useWallpaper`: after waking from sleep the blur once failed and the desktop showed sharp behind the lock). Idle (`general.idle.timeouts`): lock after 1 h, screens off after 1.5 h, `systemctl suspend` after 4 h. caelestia's default `suspendThenHibernate` can't work here (zram swap only, so logind reports `CanSuspendThenHibernate=na`) and failed silently. Audio playing (`general.idle.inhibitWhenAudio`, default on) and Keep awake (an idle inhibitor; every step respects it) pause all three. Launcher actions (`launcher.actions`, typed after `>`): caelestia's defaults plus Restart shell, Reload Hyprland, Restart wallpapers, Night light off/on and Battery (a notification with each wireless device's charge from UPower, such as the Lightspeed mice: caelestia only shows laptop and Bluetooth batteries); Sleep runs `systemctl suspend` instead of the impossible `suspendThenHibernate`. The list replaces caelestia's whole default list, so it repeats the defaults; commands run directly, through `sh -c` when they need a shell. The lock screen's media controls have no setting |
-| `user-config.fish` | `~/.config/caelestia/user-config.fish` | runs after caelestia's `config.fish`: resets its frozen wallpaper colours in Orca's terminal and in kitty (kitty takes Noctalia's palette instead); other fish config lives in `shared/fish` |
 | `cli.json` | `~/.config/caelestia/cli.json` | Super+D (the communication special workspace) starts and gathers Equibop instead of the official Discord |
 
 ## Reference copy
@@ -203,9 +201,10 @@ The wallpapers themselves aren't in this repo; they live in
   `hyprland-gui.lua`. Later wins, but a duplicate bind fires twice; overriding a
   caelestia bind needs an `unbind` first (see `linux/hyprmod`).
 - caelestia set terminal colours 0–18 from the wallpaper via
-  `~/.local/state/caelestia/sequences.txt`. Since the Noctalia switch nothing
-  rewrites the file; kitty resets those colours and takes Noctalia's palette
-  instead (`shared/kitty`).
+  `~/.local/state/caelestia/sequences.txt`, printed by its fish `config.fish`.
+  Since the Noctalia switch nothing rewrites the file, and our own
+  `config.fish` (`linux/fish`) no longer prints it; kitty takes Noctalia's
+  palette (`shared/kitty`).
 - **Qt apps turn light after a Qt update.** Qt apps (Dolphin and others) get
   their dark colours from `qtengine`, caelestia's Qt theme engine, built from
   the AUR against Qt's private API. When `qt6-base` moves to a new version (6.11
