@@ -247,6 +247,25 @@ hl.config({
     input = { numlock_by_default = true },
 })
 
+-- Hyprland 0.56 eye candy: an inner glow on the focused window in the
+-- palette's primary-to-tertiary gradient (like the border, at half strength;
+-- none on unfocused windows). Motion blur (0.56) stays off: windows flashed
+-- while moving on this NVIDIA setup.
+do
+    local scheme = require("scheme.current")
+    hl.config({
+        decoration = {
+            glow = {
+                enabled = true,
+                range = 10,
+                render_power = 3,
+                color = { colors = { "rgba(" .. scheme.primary .. "80)", "rgba(" .. scheme.tertiary .. "80)" }, angle = 45 },
+                color_inactive = "rgba(00000000)",
+            },
+        },
+    })
+end
+
 -- Machine-local config that stays out of the repo, if this machine has one.
 -- Errors show as a Hyprland notification instead of failing silently.
 local local_file = os.getenv("HOME") .. "/.config/caelestia/hypr-local.lua"
