@@ -1,14 +1,31 @@
 #!/bin/sh
-# Sync the caelestia SDDM theme (wallpaper still, colours, avatar), then restore
-# the login-screen video, which the theme's sync.sh deletes as a stale
-# background. Run as yourself; it uses sudo for the root-owned theme folder.
+# Sync the caelestia SDDM theme (colours, avatar), then install Noctalia's
+# wallpaper as the still and restore the login-screen video, which the theme's
+# sync.sh deletes as a stale background. Run as yourself; it uses sudo for the
+# root-owned theme folder.
+# --posthook stops sync.sh from running `caelestia scheme set`, which would
+# rewrite Noctalia's colour outputs (the SDDM colour file included) with
+# caelestia's old palette. sync.sh still copies caelestia's stale wallpaper
+# link; the still from Noctalia replaces it afterwards.
 # LOGIN_VIDEO overrides the video; without the file, the still is used.
+# SDDM_SYNC_DRY_RUN=1 prints the commands instead of running them.
 set -e
 theme=/usr/share/sddm/themes/caelestia
 video="${LOGIN_VIDEO:-$HOME/Pictures/Wallpapers/live/login.mp4}"
+wallpaper=$(noctalia msg wallpaper-get 2>/dev/null) || wallpaper=
 
-sudo "$theme/scripts/sync.sh"
+run() {
+    if [ "${SDDM_SYNC_DRY_RUN:-}" = 1 ]; then echo "$*"; else "$@"; fi
+}
+
+run sudo "$theme/scripts/sync.sh" --posthook
+if [ -f "$wallpaper" ]; then
+    run sudo install -m 644 "$wallpaper" "$theme/assets/background"
+    echo "✓ Login still: $wallpaper"
+else
+    echo "Noctalia gave no wallpaper (is it running?); keeping sync.sh's still." >&2
+fi
 if [ -f "$video" ]; then
-    sudo install -m 644 "$video" "$theme/assets/background.mp4"
+    run sudo install -m 644 "$video" "$theme/assets/background.mp4"
     echo "✓ Login video: $video"
 fi
