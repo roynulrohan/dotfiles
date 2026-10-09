@@ -223,10 +223,18 @@ else
     hl.unbind("CTRL + SUPER + mouse_up")
 
     -- Monitors: Super+[ ] jumps left/right, Super+Shift+[ ] sends the window.
+    -- Hyprland reports a move towards a missing monitor as an error, one
+    -- notification per press, so do nothing at the outer monitors. A failed
+    -- focus is only a logged warning.
+    local function send_to_monitor(dir)
+        return function()
+            if hl.get_monitor(dir) then hl.dispatch(hl.dsp.window.move({ monitor = dir })) end
+        end
+    end
     hl.bind("SUPER + bracketleft", hl.dsp.focus({ monitor = "l" }))
     hl.bind("SUPER + bracketright", hl.dsp.focus({ monitor = "r" }))
-    hl.bind("SUPER + SHIFT + bracketleft", hl.dsp.window.move({ monitor = "l" }))
-    hl.bind("SUPER + SHIFT + bracketright", hl.dsp.window.move({ monitor = "r" }))
+    hl.bind("SUPER + SHIFT + bracketleft", send_to_monitor("l"))
+    hl.bind("SUPER + SHIFT + bracketright", send_to_monitor("r"))
 end
 
 -- HyDE's defaults (Configs/.local/share/hypr/lua/defaults.lua) where they differ
