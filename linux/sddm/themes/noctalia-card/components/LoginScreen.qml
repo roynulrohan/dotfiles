@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Effects
+import "util.js" as U
 
 // The main monitor's login. Page 1 (Greeting.qml) greets the selected user;
 // any key or a click opens page 2, the login card modelled on our Noctalia
@@ -211,23 +212,17 @@ Rectangle {
             }
 
             // Centre column (x 525..975): clock, date, avatar, name, password.
-            Clock {
-                id: clock
-
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: 78
-                ap: root.ap
-            }
-
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: 258
-                text: Qt.formatDate(clock.currentTime, "dddd • d MMM").toUpperCase()
-                color: config.text
-                font.family: "Google Sans Flex"
-                font.pixelSize: 22
-                font.weight: Font.Bold
-                font.letterSpacing: 1
+            // The lock screen's main clock group, gen.py clock_group(M, 0,
+            // center_dy, False), in the same 1920x1080 space as the lock's
+            // card, which also sits at 210,120.
+            ClockGroup {
+                x: -mainCard.x
+                y: -mainCard.y
+                width: 1920
+                height: 1080
+                dy: -21
+                shadow: false
+                chipColor: U.alpha(config.text, 0.1)
             }
 
             UserAvatar {

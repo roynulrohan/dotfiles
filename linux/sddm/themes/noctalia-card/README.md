@@ -29,8 +29,8 @@ own `LICENSE`.
   - Left: `WeatherCard.qml` (Open-Meteo, current weather and 3 days, for
     `location.json`; retries every 30 s until the network is up) and
     `CalendarCard.qml` (this month, today marked).
-  - Centre: `Clock.qml` (Google Sans Flex at width 30, weight 500: the lock
-    screen's "GSF Lock Clock"), the date, `UserAvatar.qml` (the face cut to
+  - Centre: `ClockGroup.qml` (the lock screen's main clock and date, 1:1:
+    same boxes, font, colours and chip), `UserAvatar.qml` (the face cut to
     Material's ClamShell shape, arrows only with more than one user), the
     name, and `PasswordField.qml` (a real text field; Enter logs in, Escape
     goes back, Up/Down change the session, Left/Right change the user while
@@ -41,7 +41,7 @@ own `LICENSE`.
     dimmed when SDDM says it can't) directly below it.
 - One window per screen (SDDM's way): `Main.qml` loads the login on X's
   primary screen and `SideScreen.qml` on the others: our lock screen's side
-  monitors, 1:1. The clock group uses the lock's boxes from
+  monitors, 1:1. `ClockGroup.qml` uses the lock's boxes from
   `linux/noctalia/lock` and its font, "GSF Lock Clock"; `LockText.qml` sizes
   and places text the way Noctalia 5.2.1 does. The blurred still uses the
   lock's blur (three Gaussian rounds, sigma 20 px). No video, no input.

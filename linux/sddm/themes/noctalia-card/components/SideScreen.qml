@@ -10,27 +10,8 @@ Rectangle {
     id: root
 
     readonly property string assetsDir: config.assetsDir || "/var/lib/sddm-assets"
-    readonly property bool ap: config.ap === "true"
-    property date now: new Date()
-
-    // Noctalia places a widget by its centre, given for 1920x1080 and
-    // scaled per axis to the screen; the box and the text keep their size.
-    function sx(cx) {
-        return cx * width / 1920;
-    }
-
-    function sy(cy) {
-        return cy * height / 1080;
-    }
 
     color: "#131313"
-
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: root.now = new Date()
-    }
 
     Image {
         id: background
@@ -79,61 +60,12 @@ Rectangle {
         cached: true
     }
 
-    // gen.py clock_group(out, 0, side_dy = 235, shadow = True); centres and
-    // boxes from params.json "clock".
-    LockText {
-        cx: root.sx(914.5)
-        cy: root.sy(516)
-        boxWidth: 220
-        boxHeight: 388
-        text: Qt.formatTime(root.now, root.ap ? "hh AP" : "hh").split(" ")[0]
-        color: config.primary
-        family: "GSF Lock Clock"
-    }
-
-    LockText {
-        cx: root.sx(1042)
-        cy: root.sy(478.5)
-        boxWidth: 110
-        boxHeight: 207
-        text: Qt.formatTime(root.now, "mm")
-        color: config.secondary
-        family: "GSF Lock Clock"
-    }
-
-    // The AM/PM chip: a label widget whose background is exactly its box,
-    // surface at side_chip_alpha (0.6), radius 16.
-    Rectangle {
-        visible: root.ap
-        x: root.sx(1042) - width / 2
-        y: root.sy(568) - height / 2
-        width: 76
-        height: 66
-        radius: 16
-        color: U.alpha(config.surface, 0.6)
-    }
-
-    LockText {
-        visible: root.ap
-        cx: root.sx(1042)
-        cy: root.sy(568)
-        boxWidth: 76
-        boxHeight: 84
-        text: Qt.formatTime(root.now, "AP")
-        color: config.text
-        family: "GSF Lock Clock"
-    }
-
-    LockText {
-        cx: root.sx(960)
-        cy: root.sy(648)
-        boxWidth: 320
-        boxHeight: 37
-        text: Qt.formatDate(root.now, "dddd • d MMM").toUpperCase()
-        color: config.text
-        family: "Google Sans Flex"
-        axes: ({
-                "wght": 700
-            })
+    // gen.py clock_group(out, 0, side_dy, True); the chip in surface at
+    // side_chip_alpha (0.6).
+    ClockGroup {
+        anchors.fill: parent
+        dy: 235
+        shadow: true
+        chipColor: U.alpha(config.surface, 0.6)
     }
 }
