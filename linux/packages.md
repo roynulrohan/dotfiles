@@ -15,6 +15,7 @@ sits around it.
 | `kitty` | terminal (foot is caelestia's default; kitty for image logos and tabs) |
 | `fish` `starship` | shell and prompt |
 | `fastfetch` `imagemagick` | greeting and its logo sizing |
+| `btop` | system monitor, coloured by Noctalia; see `btop/` |
 | `ttf-jetbrains-mono-nerd` | the font everything assumes |
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |

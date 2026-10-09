@@ -70,6 +70,7 @@ linux	linux/sddm/sddm-theme.conf	~/.config/caelestia/templates/sddm-theme.conf	c
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
 linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
 linux	linux/hyprsunset/hyprsunset.conf	~/.config/hypr/hyprsunset.conf	copy
+linux	linux/btop/btop.conf	~/.config/btop/btop.conf	copy
 linux	linux/noctalia/lock/scripts/gen.py	~/.local/share/noctalia/lock/scripts/gen.py	copy
 linux	linux/noctalia/lock/scripts/params.json	~/.local/share/noctalia/lock/scripts/params.json	copy
 linux	linux/noctalia/lock/scripts/apply.sh	~/.local/share/noctalia/lock/scripts/apply.sh	copy-x

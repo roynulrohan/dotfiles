@@ -23,8 +23,9 @@ clock. A blank line separates prompts.
 |---|---|
 | `starship.toml` | `~/.config/starship/starship.toml` |
 
-`shared/fish/conf.d/00-roynul-env.fish` sets `STARSHIP_CONFIG` to that path, so
-caelestia's `~/.config/starship.toml` on Linux is left alone and unused.
+`shared/fish/conf.d/00-roynul-env.fish` sets `STARSHIP_CONFIG` to that path.
+The `~/.config/starship.toml` that caelestia's installer writes on Linux is
+unused; delete it.
 
 ## Notes
 

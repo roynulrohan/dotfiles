@@ -6,10 +6,10 @@
     //
     // Colours are plain ANSI so the theme follows the terminal, whatever sets it:
     //   $1 = white (7), $2 = blue (4), $3 = magenta (5), $4 = cyan (6), $5 = bright black (8)
-    // On Linux caelestia sets them from the wallpaper; on macOS they are the
-    // terminal theme's own colours. Nothing in this repo overrides the palette.
+    // On Linux Noctalia sets them from the wallpaper (its kitty template); on macOS
+    // they are the terminal theme's own colours. Nothing in this repo overrides the palette.
     //
-    // The logo is passed on the command line by the fish greeting (random image,
+    // The logo is passed on the command line by the fastfetch wrapper (random image,
     // width computed from aspect ratio). "kitty" works in kitty and Ghostty.
     "logo": {
         "type": "kitty",

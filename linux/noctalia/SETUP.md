@@ -220,7 +220,7 @@ one merges into `kdeglobals`.
 | `gtk.css` | `gtk-3.0/gtk.css` and `gtk-4.0/gtk.css` | caelestia's layout with Noctalia colours; keeps `@import "thunar.css"` and kde-gtk-config's `@import 'colors.css'`. Open GTK apps pick it up on restart |
 | `thunar.css` | `gtk-3.0/thunar.css` and `gtk-4.0/thunar.css` | |
 | `qtengine.colors` | `~/.config/qtengine/caelestia.colors` | Noctalia's KDE colour-scheme template; qtengine's config still points at this file, `kdeglobals` is left alone |
-| `btop.theme` | `~/.config/btop/themes/caelestia.theme` | hook `pkill -USR2 -x btop` makes a running btop reload |
+| `btop.theme` | `~/.config/btop/themes/caelestia.theme` | the theme `btop.conf` selects (`linux/btop`); hook `pkill -USR2 -x btop` makes a running btop reload |
 | `sddm-theme.conf` | `~/.local/state/caelestia/theme/sddm-theme.conf` | what `sddm-sync` reads for the login screen (`linux/sddm`); a fixed green for its success colour (`custom_colors.success`) |
 | `equibop.theme.css` | `~/.config/equibop/themes/noctalia.theme.css` | Noctalia's community "Midnight" Discord theme, a new file; switch it on in Equibop → Settings → Themes. It loads its base CSS from `refact0r.github.io`, as caelestia's did |
 

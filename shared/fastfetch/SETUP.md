@@ -17,8 +17,10 @@ just calls it.
 | `fastfetch` | `~/.local/bin/fastfetch` | wrapper script, `chmod +x`; `~/.local/bin` must precede the binary on PATH |
 | `logo/` | `~/.config/fastfetch/logo/` | **images are not committed**; drop your own in (png, jpg, webp, `.icon`, gif) |
 
-Keep the filename `greeting.jsonc`. On Linux caelestia owns `config.jsonc` in the
-same directory and overwrites it on update.
+Keep the filename `greeting.jsonc`. `config.jsonc` is fastfetch's own default,
+which caelestia's installer writes on Linux; nothing here uses it, so delete it.
+`fastfetch` with arguments skips the wrapper and then shows fastfetch's built-in
+layout.
 
 ## Install
 
