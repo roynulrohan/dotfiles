@@ -1,0 +1,9 @@
+[SddmGreeterTheme]
+Name=Noctalia Card
+Description=Login screen modelled on our Noctalia lock screen; a fork of Caelestia SDDM Locklike by AkhiLeith.
+Author=Roynul Rohan, after AkhiLeith
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+QtVersion=6
+X-SDDM-Theme-InterfaceVersion=2
