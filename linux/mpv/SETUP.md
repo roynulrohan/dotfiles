@@ -51,8 +51,19 @@ mpv is open takes effect on the next image you open from Dolphin. It needs
 Same convention as the Hyprland window keys (`linux/caelestia`, Window mode):
 arrows move, Alt makes the step fine. `video-zoom` is a power of 2, so 0.1
 is about 7% and ten presses double the size. Alt+arrows and Alt+-/= replace
-mpv's own Alt pan and zoom (steps of 0.1) while an image is open; videos keep
-mpv's defaults.
+mpv's own Alt pan and zoom (steps of 0.1) while an image is open.
+
+Videos keep mpv's defaults (arrows seek, wheel is volume) plus the same zoom
+keys; panning adds Ctrl because plain arrows seek:
+
+| Input (videos) | Action |
+|---|---|
+| `=` / `-` | Zoom 0.1 |
+| Alt+= / Alt+- | Zoom 0.01 |
+| Ctrl+arrows / Ctrl+Alt+arrows | Pan 10% / 1% of the window (Ctrl+Left/Right were subtitle seek) |
+| Alt+Backspace | Reset zoom and pan (mpv's default; `0` is volume) |
+
+Images:
 
 | Input | Action |
 |---|---|
