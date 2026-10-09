@@ -9,6 +9,8 @@ installed for editing and for SVG.
 | `input.conf` | `~/.config/mpv/input.conf` |
 | `mpv-image.desktop` | `~/.local/share/applications/mpv-image.desktop` |
 | `scripts/dolphin-sort.lua` | `~/.config/mpv/scripts/dolphin-sort.lua` |
+| `script-opts/uosc.conf` | `~/.config/mpv/script-opts/uosc.conf` |
+| `script-opts/thumbfast.conf` | `~/.config/mpv/script-opts/thumbfast.conf` |
 
 `mpv.conf`: start at 30% volume, cap at 100, resume where you stopped, loop
 single files, decode video on the GPU (`hwdec=auto`; a playing video dropped from
@@ -53,8 +55,17 @@ arrows move, Alt makes the step fine. `video-zoom` is a power of 2, so 0.1
 is about 7% and ten presses double the size. Alt+arrows and Alt+-/= replace
 mpv's own Alt pan and zoom (steps of 0.1) while an image is open.
 
-Videos keep mpv's defaults (arrows seek, wheel is volume) plus the same zoom
-keys; panning adds Ctrl because plain arrows seek:
+Videos get [uosc](https://github.com/tomasklaen/uosc) controls (AUR `mpv-uosc`)
+with [thumbfast](https://github.com/po5/thumbfast) timeline thumbnails (AUR
+`mpv-thumbfast-git`, provider 1, not `-noenabled`). The controls stay hidden
+until the cursor nears them; there is no always-visible progress line. uosc
+installs to `/usr/share/mpv`, which mpv doesn't search, so `mpv.conf` loads it
+from there. Images get no uosc at all (`[image]` disables every element).
+`thumbfast.conf` sets `network=yes`, because mpv counts SMB files as network
+streams and thumbfast skips those by default.
+
+Video keys: mpv's defaults (Left/Right seek, wheel is volume) plus these;
+panning adds Ctrl because plain Left/Right seek:
 
 | Input (videos) | Action |
 |---|---|
@@ -62,6 +73,9 @@ keys; panning adds Ctrl because plain arrows seek:
 | Alt+= / Alt+- | Zoom 0.01 |
 | Ctrl+arrows / Ctrl+Alt+arrows | Pan 10% / 1% of the window (Ctrl+Left/Right were subtitle seek) |
 | Alt+Backspace | Reset zoom and pan (mpv's default; `0` is volume) |
+| Up / Down, Alt+Up / Alt+Down | Volume ±5% / ±1% (mpv's default was seeking a minute) |
+| Tab | Keep uosc's controls up until pressed again |
+| Right-click, Menu key | uosc's menu: tracks, chapters, playlist (Space still pauses) |
 
 Images:
 

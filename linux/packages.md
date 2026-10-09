@@ -22,6 +22,7 @@ sits around it.
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |
 | `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
 | `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
+| `mpv-uosc` (AUR) `mpv-thumbfast-git` (AUR) | mpv's on-screen controls and timeline thumbnails for videos; see `mpv/` |
 | `zen-browser-bin` (AUR) `opera-gx` (AUR) `discord` | apps referenced by window rules |
 | `equibop-bin` (AUR) | Equibop, the default Discord app: caelestia's `discord` component installs it and themes it with its colours. The official `discord` stays installed alongside |
 | `linux-wallpaperengine-git` (AUR) | live wallpapers from Wallpaper Engine (installed through Steam/Proton); see `wallpaper/` |
