@@ -32,6 +32,9 @@ sits around it.
 | `ksshaskpass` | unlocks the SSH key at login from KDE Wallet (see `ssh/`) |
 | `hyprsunset` | night light, always on (see `hyprsunset/`) |
 | `gvfs-smb` | SMB shares (the NAS) in GTK apps such as Thunar; Dolphin and Gwenview use KDE's own SMB support |
+| `tumbler` `ffmpegthumbnailer` | image and video thumbnails in GTK file managers such as Thunar |
+| `appimagelauncher` (AUR) | adds downloaded AppImages to the app menu; enable its user service: `systemctl --user enable --now appimagelauncherd` |
+| `profile-sync-daemon` | keeps the Firefox profile in RAM (it has no Zen definition); enable its user service: `systemctl --user enable --now psd` |
 | `cachyos-gaming-meta` `cachyos-gaming-applications` | CachyOS's gaming bundle (Steam, Lutris and the rest), installed as a set rather than listed one by one |
 
 Reproduce the list from a live machine with `pacman -Qqe`.
