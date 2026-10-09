@@ -296,7 +296,15 @@ new upstream folder from
 `~/.local/state/noctalia/plugins/materialized/community/arch-updater` (enable the
 community plugin briefly to fetch it) and reapply those changes.
 
-CachyOS's own `cachy-update` tray applet still runs alongside: it checks two
-minutes after login and then daily (`arch-update.timer`), and its right-click
-menu runs the interactive update with its pre- and post-update tasks.
+CachyOS's own `cachy-update` is switched off in favour of the widget: its tray
+icon by `arch-update-tray.desktop` in `~/.config/autostart` (`Hidden=true`
+overrides the copy in `/etc/xdg/autostart`), and its daily check, enabled
+for every user by the package, by masking the timer:
+
+```bash
+systemctl --user mask --now arch-update.timer
+```
+
+The package stays installed; `arch-update` in a terminal still runs its
+interactive update (Arch news, `.pacnew` files, orphans, cache cleanup).
 

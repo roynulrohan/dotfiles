@@ -1,0 +1,6 @@
+# Overrides /etc/xdg/autostart/arch-update-tray.desktop (cachy-update's tray
+# icon): the Noctalia bar's Arch Updater widget shows pending updates instead.
+[Desktop Entry]
+Type=Application
+Name=Arch-Update Tray
+Hidden=true
