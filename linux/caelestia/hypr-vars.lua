@@ -13,6 +13,8 @@ return {
     -- can't hibernate) and the sweet-cursors theme (not installed).
     editor = "code",
     sleepGestureCmd = "systemctl suspend",
+    -- Volume keys and the keyboard's knob change volume by 1% per step (caelestia: 10).
+    volumeStep = 1,
     cursorTheme = "breeze_cursors",
     -- No window shadows, as in HyDE's themes (caelestia's were large and faint).
     -- Blur stays caelestia's (8, 2 passes); HyDE's 6 with 3 passes was also liked.
