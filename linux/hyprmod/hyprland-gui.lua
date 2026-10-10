@@ -70,14 +70,6 @@ hl.unbind("SUPER + SHIFT + J")
 hl.bind("SUPER + SHIFT + J", hl.dsp.layout("swapsplit"))
 hl.unbind("SUPER + SHIFT + F")
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.pin())
-hl.unbind("SUPER + P")
-hl.bind("SUPER + P", hl.dsp.exec_cmd("noctalia msg screenshot-region"), {
-    locked = true,
-})
-hl.unbind("SUPER + CTRL + P")
-hl.bind("SUPER + CTRL + P", hl.dsp.exec_cmd("noctalia msg screenshot-region"), {
-    locked = true,
-})
 hl.unbind("SUPER + SHIFT + P")
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -a"), {
     locked = true,

@@ -7,7 +7,6 @@ return {
 
     -- Apps
     terminal                   = "foot",
-    browser                    = "firefox",
     editor                     = "codium",
     fileExplorer               = "thunar",
     audioSettings              = "pwvucontrol",
@@ -96,7 +95,6 @@ return {
     kbCenterWindow             = "CTRL + SUPER + Backslash",
     kbNormalizeWindow          = "CTRL + SUPER + ALT + Backslash",
     kbWindowPip                = "SUPER + ALT + Backslash",
-    kbPinWindow                = "SUPER + P",
     kbWindowFullscreen         = "SUPER + F",
     kbWindowBorderedFullscreen = "SUPER + ALT + F",
     kbToggleWindowFloating     = "SUPER + ALT + Space",
@@ -111,7 +109,6 @@ return {
 
     -- Apps
     kbTerminal                 = "SUPER + T",
-    kbBrowser                  = "SUPER + W",
     kbEditor                   = "SUPER + C",
     kbFileExplorer             = "SUPER + E",
     kbAudioSettings            = "CTRL + ALT + V",
@@ -119,11 +116,6 @@ return {
     -- Utilities
     kbScreenshot               = "Print",
     kbScreenshotFreeze         = "SUPER + SHIFT + S",
-    kbScreenshotRegion         = "SUPER + SHIFT + ALT + S",
-    kbRecord                   = "CTRL + ALT + R",
-    kbRecordSound              = "SUPER + ALT + R",
-    kbRecordRegion             = "SUPER + SHIFT + ALT + R",
-    kbColorPicker              = "SUPER + SHIFT + C",
 
     -- Media
     kbMediaToggle              = "CTRL + SUPER + Space",
@@ -137,13 +129,10 @@ return {
     kbSession                  = "CTRL + ALT + Delete",
     kbShowSidebar              = "SUPER + N",
     kbClearNotifs              = "CTRL + ALT + C",
-    kbShowPanels               = "SUPER + K",
     kbLock                     = "SUPER + L",
-    kbRestoreLock              = "SUPER + ALT + L",
     kbSleep                    = "SUPER + SHIFT + L",
 
     -- Clipboard and emoji picker
     kbClipboard                = "SUPER + V",
-    kbClipboardDel             = "SUPER + ALT + V",
     kbEmoji                    = "SUPER + Period",
 }

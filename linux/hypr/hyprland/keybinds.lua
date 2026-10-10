@@ -135,7 +135,6 @@ create_bind(vars.kbWindowPip, function()
         end
     end
 end)
-create_bind(vars.kbPinWindow, hl.dsp.window.pin())
 create_bind(vars.kbWindowFullscreen, hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 create_bind(vars.kbWindowBorderedFullscreen, hl.dsp.window.fullscreen({ mode = "maximized" }))
 create_bind(vars.kbToggleWindowFloating, hl.dsp.window.float())
@@ -150,7 +149,6 @@ create_bind(vars.kbTodoWs, fn.toggle("todo"))
 
 -- Apps
 create_bind(vars.kbTerminal, hl.dsp.exec_cmd(vars.terminal))
-create_bind(vars.kbBrowser, hl.dsp.exec_cmd(vars.browser))
 create_bind(vars.kbEditor, hl.dsp.exec_cmd(vars.editor))
 create_bind(vars.kbFileExplorer, hl.dsp.exec_cmd(vars.fileExplorer))
 create_bind(vars.kbAudioSettings, hl.dsp.exec_cmd(vars.audioSettings))
@@ -158,8 +156,6 @@ create_bind(vars.kbAudioSettings, hl.dsp.exec_cmd(vars.audioSettings))
 -- Utilities
 create_bind(vars.kbScreenshot, hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"), locked)
 create_bind(vars.kbScreenshotFreeze, hl.dsp.exec_cmd("noctalia msg screenshot-region"))
-create_bind(vars.kbScreenshotRegion, hl.dsp.exec_cmd("noctalia msg screenshot-region"))
-create_bind(vars.kbColorPicker, hl.dsp.exec_cmd("hyprpicker -a"))
 
 -- Brightness
 create_bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("noctalia msg brightness-up"), locked)
@@ -196,13 +192,3 @@ create_bind(vars.kbSleep, hl.dsp.exec_cmd(vars.sleepGestureCmd), locked)
 -- Clipboard and emoji picker
 create_bind(vars.kbClipboard, hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
 create_bind(vars.kbEmoji, hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"))
-
--- Testing
-create_bind(
-    "SUPER + ALT + F12",
-    hl.dsp.exec_cmd(
-        "notify-send -u low -i dialog-information-symbolic 'Test notification' " ..
-        [["Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!"]] ..
-        " -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action'"
-    )
-)

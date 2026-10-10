@@ -44,7 +44,15 @@ their caelestia path; see `linux/caelestia/SETUP.md`.
 - **Shell keys** (`hyprland/keybinds.lua`) call `noctalia msg …` instead of
   caelestia's shell. See `linux/noctalia/SETUP.md` for the list. caelestia's
   recording keys, "show all panels", "restart and lock" and "delete clipboard
-  entry" have no Noctalia counterpart and are removed.
+  entry" have no Noctalia counterpart and are removed. Also removed: the
+  ydotool "paste latest" key and the cliphist watchers (Noctalia keeps its own
+  clipboard history), the duplicate region-screenshot and colour-picker keys
+  (Super+Shift+S and HyprMod's Super+Shift+P stay), Super+P pin (HyprMod's
+  Super+Shift+F pins), the test-notification key, and the autostart lines for
+  a second gnome-keyring and mpris-proxy.
+- **Environment:** uwsm gives apps started by systemd or D-Bus the variables
+  in `~/.config/uwsm/env` and `env-hyprland` (`linux/uwsm`), not those in
+  `hyprland/env.lua`. Change both when a variable changes.
 - **Rules** (`hyprland/rules.lua`): Noctalia's recommended blur for its bar,
   panels and notifications, a floating settings window, and no Hyprland
   animation on any Noctalia layer. caelestia's slide-in for layers otherwise

@@ -28,8 +28,8 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   `linux/caelestia/hypr-user.lua`: they share window mode's Lua resize
   function, which HyprMod can't express), Ctrl+Super+Shift+arrows move
   window, Super+W float,
-  Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+P /
-  Super+Ctrl+P region screenshot (Noctalia), Super+Shift+P colour picker,
+  Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+Shift+P colour
+  picker,
   Super+Shift+F pin. Super+B opens Zen. F10–F12 were volume keys until
   2026-10-08: the keyboard has its own media keys and knob, and the binds took
   F11 (fullscreen) and F12 (developer tools) from apps.

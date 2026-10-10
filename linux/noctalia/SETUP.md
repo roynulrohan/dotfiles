@@ -235,8 +235,7 @@ VS Code is not themed: it keeps One Dark Pro Night Flat.
 
 ## Keys
 
-In `linux/hypr/hyprland/keybinds.lua` (and HyprMod's Super+P / Super+Ctrl+P),
-most through `noctalia msg`:
+In `linux/hypr/hyprland/keybinds.lua`, most through `noctalia msg`:
 
 | Key | Command |
 |---|---|
@@ -248,7 +247,7 @@ most through `noctalia msg`:
 | Super+V | `panel-toggle clipboard` |
 | Super+Period | `panel-toggle launcher /emo` |
 | Print | `screenshot-fullscreen` |
-| Super+Shift+S, Super+Shift+Alt+S, Super+P, Super+Ctrl+P | `screenshot-region` |
+| Super+Shift+S | `screenshot-region` |
 | media keys, Ctrl+Super+Space / = / - / Backspace | `media toggle` / `next` / `previous` / `stop` |
 | brightness keys | `brightness-up` / `brightness-down` |
 | Ctrl+Super+Alt+R / Ctrl+Super+Shift+R | restart / stop Noctalia |
