@@ -84,7 +84,7 @@ capsule_padding = 8          # radius left automatic: a full pill
 start = ["group:stats", "workspaces", "submap"]
 center = ["workspace-apps"]
 # Left = information, middle = apps, right = controls.
-end = ["media", "group:signal", "group:modes", "updates", "tray", "clock", "group:system", "session"]
+end = ["media", "group:signal", "updates", "tray", "clock", "group:system", "session"]
 
 [[bar.default.capsule_group]]
 id = "stats"                 # machine state, text only
@@ -101,15 +101,10 @@ opacity = 0.8                # match the single islands
 widget_spacing = 8
 
 [[bar.default.capsule_group]]
-id = "modes"                 # how the PC behaves: stay awake, do not disturb (right-click the bell)
-members = ["caffeine", "notifications"]
-padding = 8                  # same end padding as single islands (group default is 6)
-opacity = 0.8                # match the single islands
-widget_spacing = 8
-
-[[bar.default.capsule_group]]
-id = "system"                # customising and settings; power sits alone at the edge
-members = ["wallpaper", "control-center"]
+id = "system"                # how the PC behaves and is set up: stay awake, notifications
+                             # (right-click the bell for do not disturb), wallpaper, control
+                             # centre; power sits alone at the edge
+members = ["caffeine", "notifications", "wallpaper", "control-center"]
 padding = 8                  # same end padding as single islands (group default is 6)
 opacity = 0.8                # match the single islands
 widget_spacing = 8

@@ -83,9 +83,9 @@ holds information, the middle the current workspace's apps, the right
 controls:
 
 stats (CPU, RAM, CPU and GPU temperature) · workspaces · submap | app icons |
-media · signal (network, volume) · modes (caffeine, notifications; right-click
-the bell for do not disturb) · tray · clock · system (wallpaper, control
-centre) · power
+media · signal (network, volume) · updates · tray · clock · system (caffeine,
+notifications, wallpaper, control centre; right-click the bell for do not
+disturb) · power
 
 Workspaces show only occupied ones as bare numbers; the active one is a wider
 filled pill (inactive pills are transparent). Spacing follows the window grid
