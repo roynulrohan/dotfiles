@@ -164,7 +164,7 @@ end)
 -- ~/.local/share/hypr-plugins; see linux/caelestia/SETUP.md). Hyprland ids:
 -- main DP-1 1-10, right HDMI-A-1 11-20, left DP-2 21-30.
 -- Required by its full name: its modules are called globals/helpers/monitors,
--- and caelestia's own modules are required by bare names too.
+-- and this config's own modules are required by bare names too.
 local smw_dir = os.getenv("HOME") .. "/.local/share/hypr-plugins"
 package.path = package.path .. ";" .. smw_dir .. "/?.lua;" .. smw_dir .. "/?/init.lua"
 local smw_ok, smw = pcall(require, "split-monitor-workspaces")
@@ -276,7 +276,7 @@ end
 
 -- Machine-local config that stays out of the repo, if this machine has one.
 -- Errors show as a Hyprland notification instead of failing silently.
-local local_file = os.getenv("HOME") .. "/.config/caelestia/hypr-local.lua"
+local local_file = os.getenv("HOME") .. "/.config/hypr/hypr-local.lua"
 local lf = io.open(local_file)
 if lf then
     lf:close()

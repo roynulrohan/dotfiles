@@ -89,11 +89,8 @@ local function move_actions(win)
 end
 
 -- Toggle function
-local home       = os.getenv("HOME")
-local config_dir = os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")
-local json       = require("utils.json") -- rxi's peak library
 
--- Default config
+-- Default config (hypr-vars.lua's `toggles` override it)
 local function default_config()
     return {
         communication = {
@@ -198,29 +195,10 @@ local function shell_join(argv) -- uhh praise danny for this
     return table.concat(quoted, " ")
 end
 
--- Merge user config with defaults
+-- Merge the toggles in hypr-vars.lua (same shape as default_config) with the defaults
 local function load_toggle_config()
     local config = default_config()
-
-    local user_file = io.open(config_dir .. "/caelestia/cli.json", "r") -- CLI config
-    if not user_file then
-        return config
-    end
-
-    local content = user_file:read("*a")
-    user_file:close()
-
-    local recognized, conf_or_error = pcall(json.decode, content)
-    if recognized and type(conf_or_error) == "table" then
-        merge(config, conf_or_error.toggles or {})
-    else
-        -- Invalid cli.json: notify and fall back to defaults.
-        -- conf_or_error holds the parse error (string) or a non-table value on success.
-        local reason = recognized and "Expected a JSON object" or tostring(conf_or_error):gsub("^.-:%d+: ", "")
-        hl.exec_cmd("caelestia shell toaster error " ..
-            shell_join({ "Failed to parse CLI config", reason }) .. " error")
-    end
-
+    merge(config, require("variables").toggles or {})
     return config
 end
 

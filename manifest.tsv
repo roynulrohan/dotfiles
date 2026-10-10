@@ -35,7 +35,6 @@ linux	linux/hypr/hyprland/keybinds.lua	~/.config/hypr/hyprland/keybinds.lua	copy
 linux	linux/hypr/hyprland/misc.lua	~/.config/hypr/hyprland/misc.lua	copy
 linux	linux/hypr/hyprland/rules.lua	~/.config/hypr/hyprland/rules.lua	copy
 linux	linux/hypr/utils/functions.lua	~/.config/hypr/utils/functions.lua	copy
-linux	linux/hypr/utils/json.lua	~/.config/hypr/utils/json.lua	copy
 linux	linux/hypr/scheme/default.lua	~/.config/hypr/scheme/default.lua	copy
 linux	linux/noctalia/config.toml	~/.config/noctalia/config.toml	copy
 linux	linux/hypr/animations	~/.config/hypr/animations	dir
@@ -43,10 +42,9 @@ linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
 linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
 linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
 linux	linux/noctalia/arch-update-tray.desktop	~/.config/autostart/arch-update-tray.desktop	copy
-linux	linux/caelestia/hypr-vars.lua	~/.config/caelestia/hypr-vars.lua	copy
-linux	linux/caelestia/hypr-user.lua	~/.config/caelestia/hypr-user.lua	copy
+linux	linux/hypr/hypr-vars.lua	~/.config/hypr/hypr-vars.lua	copy
+linux	linux/hypr/hypr-user.lua	~/.config/hypr/hypr-user.lua	copy
 linux	linux/caelestia/shell.json	~/.config/caelestia/shell.json	copy
-linux	linux/caelestia/cli.json	~/.config/caelestia/cli.json	copy
 linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
 linux	shared/ghostty/config	~/.config/ghostty/config	copy
 mac	mac/fish/config.fish	~/.config/fish/config.fish	copy

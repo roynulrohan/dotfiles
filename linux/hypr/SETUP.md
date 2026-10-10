@@ -15,9 +15,10 @@ Every file is in `manifest.tsv` with its destination under `~/.config/hypr`.
 | Repo | What |
 |---|---|
 | `hyprland.lua` | entry point: loads the modules, then the override layers (below) |
-| `variables.lua` | key names, apps, colours read by the modules; `linux/caelestia/hypr-vars.lua` overrides values |
+| `variables.lua` | key names, apps, colours read by the modules; `hypr-vars.lua` overrides values |
 | `hyprland/*.lua` | env, general, input, misc, animations, decoration, group, autostart (`execs.lua`), rules, gestures, binds |
-| `utils/functions.lua`, `utils/json.lua` | helpers the binds and autostart use (pop-up workspaces, picture-in-picture) |
+| `hypr-vars.lua`, `hypr-user.lua` | the override layers (below); documented in `linux/caelestia/SETUP.md` |
+| `utils/functions.lua` | helpers the binds and autostart use (pop-up workspaces, picture-in-picture) |
 | `animations/` | animation presets, one picked by name in `hyprland/animations.lua` (below) |
 | `scheme/default.lua` | fallback colours, copied to `scheme/current.lua` when that is missing |
 
@@ -30,10 +31,10 @@ caelestia generated; nothing reads it.
 
 ## Load order
 
-`hyprland.lua` loads `~/.config/caelestia/hypr-vars.lua`, the `hyprland/*.lua`
-modules, `~/.config/caelestia/hypr-user.lua` (window mode, per-monitor
-workspaces), then HyprMod's `hyprland-gui.lua`. The two override files keep
-their caelestia path; see `linux/caelestia/SETUP.md`.
+`hyprland.lua` loads `hypr-vars.lua`, the `hyprland/*.lua` modules,
+`hypr-user.lua` (window mode, per-monitor workspaces), then HyprMod's
+`hyprland-gui.lua`, all from `~/.config/hypr`. Until 2026-10-09 the two
+override files lived in `~/.config/caelestia`.
 
 ## Changes from caelestia's original
 

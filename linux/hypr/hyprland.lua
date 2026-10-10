@@ -1,6 +1,5 @@
 local home   = os.getenv("HOME")
 local hypr   = home .. "/.config/hypr"
-package.path = package.path .. ";" .. home .. "/.config/caelestia/?.lua"
 
 -- Create a file if it doesn't exist, optionally with initial content
 local function maybe_create(file, content)
@@ -41,7 +40,7 @@ end
 maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
 
 -- User variables
-maybe_create(home .. "/.config/caelestia/hypr-vars.lua", "return {}\n")
+maybe_create(hypr .. "/hypr-vars.lua", "return {}\n")
 local overrides = require("hypr-vars")
 if type(overrides) == "table" then
     local vars = require("variables")
@@ -72,7 +71,7 @@ require("hyprland.gestures")
 require("hyprland.keybinds")
 
 -- User configs
-maybe_create(home .. "/.config/caelestia/hypr-user.lua")
+maybe_create(hypr .. "/hypr-user.lua")
 require("hypr-user")
 
 -- HyprMod managed settings

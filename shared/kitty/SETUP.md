@@ -26,7 +26,7 @@ Copy `macos.conf` on the Mac, or kitty starts without remote control there.
 ## Install
 
 - CachyOS: `pacman -S kitty`, then set `terminal = "kitty"` in
-  `~/.config/caelestia/hypr-vars.lua` (see `linux/caelestia`)
+  `~/.config/hypr/hypr-vars.lua` (see `linux/hypr`)
 - macOS: `brew install --cask kitty`
 
 ## Linux colours

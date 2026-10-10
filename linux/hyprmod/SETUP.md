@@ -21,11 +21,11 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 
 - **Monitors**: DP-2 left, DP-1 middle 280 Hz, HDMI-A-1 right.
   Machine-specific; redo on different hardware. No workspace rules: each
-  monitor has its own workspaces, set up in `linux/caelestia/hypr-user.lua`
+  monitor has its own workspaces, set up in `linux/hypr/hypr-user.lua`
   (see "Per-monitor workspaces" in `linux/caelestia/SETUP.md`). Don't add
   workspace keys or rules in HyprMod: its file loads last and would override them.
 - **HyDE-style keybinds on caelestia**: Super+Shift+arrows resize (in
-  `linux/caelestia/hypr-user.lua`: they share window mode's Lua resize
+  `linux/hypr/hypr-user.lua`: they share window mode's Lua resize
   function, which HyprMod can't express), Ctrl+Super+Shift+arrows move
   window, Super+W float,
   Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+Shift+P colour
