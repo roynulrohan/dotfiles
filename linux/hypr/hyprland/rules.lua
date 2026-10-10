@@ -214,10 +214,6 @@ hl.layer_rule({ match = { namespace = "selection" }, animation = "fade" })      
 hl.layer_rule({ match = { namespace = "wayfreeze" }, animation = "fade" })                  -- wayfreeze
 hl.layer_rule({ match = { namespace = "launcher" }, animation = "popin 80%", blur = true }) -- Fuzzel
 
--- Shell
-hl.layer_rule({ match = { namespace = "caelestia-(border-exclusion|area-picker)" }, no_anim = true })
-hl.layer_rule({ match = { namespace = "caelestia-(drawers|background)" }, animation = "fade" })
-
 -- Noctalia (docs.noctalia.dev, Hyprland page): blur its bar, panels, dock and
 -- notifications, and leave their animations to Noctalia; float its settings.
 hl.layer_rule({

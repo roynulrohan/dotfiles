@@ -44,7 +44,6 @@ linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-u
 linux	linux/noctalia/arch-update-tray.desktop	~/.config/autostart/arch-update-tray.desktop	copy
 linux	linux/hypr/hypr-vars.lua	~/.config/hypr/hypr-vars.lua	copy
 linux	linux/hypr/hypr-user.lua	~/.config/hypr/hypr-user.lua	copy
-linux	linux/caelestia/shell.json	~/.config/caelestia/shell.json	copy
 linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
 linux	shared/ghostty/config	~/.config/ghostty/config	copy
 mac	mac/fish/config.fish	~/.config/fish/config.fish	copy
