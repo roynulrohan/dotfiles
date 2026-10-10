@@ -27,7 +27,7 @@ own `LICENSE`.
 - Page 2 (`components/LoginScreen.qml`) is rebuilt after our Noctalia lock screen: a 1500x840
   card laid out at 1920x1080 and scaled to the screen.
   - Left: `WeatherCard.qml` (Open-Meteo, current weather and 3 days, for
-    `location.json`; retries every 30 s until the network is up) and
+    `location.json`; retries every 3 s for its first 90 s, then every 30 s, and says it is waiting until a fetch works) and
     `CalendarCard.qml` (this month, today marked).
   - Centre: `ClockGroup.qml` (the lock screen's main clock and date, 1:1:
     same boxes, font, colours and chip), `UserAvatar.qml` (the face cut to

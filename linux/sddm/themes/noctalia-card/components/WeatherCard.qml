@@ -3,9 +3,10 @@ import QtQuick
 import "util.js" as U
 
 // Current weather and a 3-day forecast from Open-Meteo, for the location in
-// <assetsDir>/location.json (Noctalia's, synced). SDDM doesn't wait for the
-// network, so a failed fetch retries every 30 s and the card stays empty
-// until one works; after that it refreshes every 30 min.
+// <assetsDir>/location.json (Noctalia's, synced). SDDM starts a few seconds
+// before the network is up, so a failed fetch retries every 3 s for the first
+// 90 s, then every 30 s; until one works the card says it's waiting. After
+// that it refreshes every 30 min.
 Card {
     id: root
 
@@ -14,6 +15,7 @@ Card {
     property string place: ""
     property var current: null
     property var days: []
+    property int attempts: 0
 
     // WMO weather code to a Material Symbols glyph and a short description.
     function describe(code, isDay) {
@@ -45,6 +47,7 @@ Card {
     }
 
     function fetch() {
+        attempts++;
         get(U.asset(assetsDir, "location.json"), text => {
             let loc = null;
             try {
@@ -85,7 +88,7 @@ Card {
     Timer {
         id: retry
 
-        interval: 30000
+        interval: root.attempts < 30 ? 3000 : 30000
         onTriggered: root.fetch()
     }
 
@@ -94,6 +97,28 @@ Card {
 
         interval: 1800000
         onTriggered: root.fetch()
+    }
+
+    // Shown until the first fetch works, so the card is never a blank box.
+    Column {
+        anchors.centerIn: parent
+        spacing: 12
+        visible: root.current === null
+
+        Icon {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "cloud_sync"
+            size: 56
+            color: config.outline
+        }
+
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: root.attempts < 30 ? "Waiting for the network…" : "Weather unavailable"
+            color: config.outline
+            font.family: "Google Sans Flex"
+            font.pixelSize: 15
+        }
     }
 
     Column {
