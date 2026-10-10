@@ -225,7 +225,7 @@ builtin_ids = []
 [theme.templates.user.kitty]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/kitty.conf"
 output_path = "$XDG_CONFIG_HOME/kitty/themes/noctalia.conf"
-post_hook = "pkill -USR1 -x kitty"
+post_hook = "pkill -USR1 -x kitty || true"
 
 # Launcher actions, ported from caelestia's ">" actions: type /cmd to list them
 # (they also show up when you search by name). Each line is title<TAB>description;
