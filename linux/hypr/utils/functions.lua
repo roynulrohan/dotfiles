@@ -229,6 +229,13 @@ end
 
 local function toggle(special_workspace)
     return function()
+        -- Pinned in hypr-vars.lua (specialWsMonitors): open on that monitor when it
+        -- is connected. Hyprland itself opens a special workspace on the focused one.
+        local pinned = (require("variables").specialWsMonitors or {})[special_workspace]
+        if pinned and hl.get_monitor(pinned) then
+            hl.dispatch(hl.dsp.focus({ monitor = pinned }))
+        end
+
         local active_workspace = hl.get_active_special_workspace()
 
         -- Generic special workspace toggle: close if any is open, or open "special"

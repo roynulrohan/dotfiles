@@ -36,6 +36,8 @@ return {
     kbWindowIncreaseHeight = {},
     -- Pop-up workspace apps, merged over the defaults in utils/functions.lua
     -- (caelestia kept these in cli.json): Super+D starts Equibop, not Discord.
+    -- Pop-up workspaces that always open on one monitor (if it's connected).
+    specialWsMonitors = { communication = "HDMI-A-1" },
     toggles = {
         communication = {
             discord = { enable = false },
