@@ -24,6 +24,8 @@ linux	linux/hypr/variables.lua	~/.config/hypr/variables.lua	copy
 linux	linux/hypr/hyprland/animations.lua	~/.config/hypr/hyprland/animations.lua	copy
 linux	linux/hypr/hyprland/decoration.lua	~/.config/hypr/hyprland/decoration.lua	copy
 linux	linux/hypr/hyprland/env.lua	~/.config/hypr/hyprland/env.lua	copy
+linux	linux/uwsm/env	~/.config/uwsm/env	copy
+linux	linux/uwsm/env-hyprland	~/.config/uwsm/env-hyprland	copy
 linux	linux/hypr/hyprland/execs.lua	~/.config/hypr/hyprland/execs.lua	copy
 linux	linux/hypr/hyprland/general.lua	~/.config/hypr/hyprland/general.lua	copy
 linux	linux/hypr/hyprland/gestures.lua	~/.config/hypr/hyprland/gestures.lua	copy
