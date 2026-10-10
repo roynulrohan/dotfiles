@@ -13,6 +13,11 @@ ExecStart=%h/.local/bin/live-wallpaper --run
 Restart=always
 RestartSec=3
 Slice=session.slice
+# linux-wallpaperengine logs an error on every media-player poll when a player
+# stops answering on D-Bus, about 30 a second, and once filled the 50 MB
+# journal. Normal start-up output (~80 lines) stays under the limit.
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=300
 
 [Install]
 WantedBy=graphical-session.target
