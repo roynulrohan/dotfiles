@@ -223,11 +223,11 @@ one merges into `kdeglobals`.
 
 | Template | Writes | Notes |
 |---|---|---|
-| `spicetify.ini` | `~/.config/spicetify/Themes/caelestia/color.ini` | keeps the `[caelestia]` section Spicetify selects; hook `spicetify -q -n refresh` re-patches Spotify without restarting it |
+| `spicetify.ini` | `~/.config/spicetify/Themes/noctalia/color.ini` | caelestia's Spotify scheme and `user.css` in a theme folder named `noctalia` (`spicetify config current_theme noctalia color_scheme noctalia`); hook `spicetify -q -n refresh` re-patches Spotify without restarting it |
 | `gtk.css` | `gtk-3.0/gtk.css` and `gtk-4.0/gtk.css` | caelestia's layout with Noctalia colours; keeps `@import "thunar.css"` and kde-gtk-config's `@import 'colors.css'`. Open GTK apps pick it up on restart |
 | `thunar.css` | `gtk-3.0/thunar.css` and `gtk-4.0/thunar.css` | |
-| `qtengine.colors` | `~/.config/qtengine/caelestia.colors` | Noctalia's KDE colour-scheme template; qtengine's config still points at this file, `kdeglobals` is left alone |
-| `btop.theme` | `~/.config/btop/themes/caelestia.theme` | the theme `btop.conf` selects (`linux/btop`); hook `pkill -USR2 -x btop` makes a running btop reload |
+| `qtengine.colors` | `~/.config/qtengine/noctalia.colors` | Noctalia's KDE colour-scheme template; `qtengine/config.json`'s `colorScheme` points at this file, `kdeglobals` is left alone |
+| `btop.theme` | `~/.config/btop/themes/noctalia.theme` | the theme `btop.conf` selects (`linux/btop`); hook `pkill -USR2 -x btop` makes a running btop reload |
 | `sddm-theme.conf` | `/var/lib/sddm-assets/colours.conf` | the login screen's colours (`linux/sddm`, How it stays in sync), in the theme's key names with the lock screen's roles; hook: `chmod 644` (the greeter runs as user `sddm`) and copy `{{ image }}`, the wallpaper the palette came from, as the login still. Until that folder exists, the log says "failed to open template output" and the hook is skipped |
 | `equibop.theme.css` | `~/.config/equibop/themes/noctalia.theme.css` | Noctalia's community "Midnight" Discord theme, a new file; switch it on in Equibop → Settings → Themes. It loads its base CSS from `refact0r.github.io`, as caelestia's did |
 
