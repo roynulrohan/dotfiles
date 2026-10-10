@@ -2,8 +2,7 @@ local vars = require("variables")
 local fn   = require("utils.functions")
 
 hl.on("hyprland.start", function()
-    -- Keyring and auth
-    hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
+    -- Auth agent (systemd's gnome-keyring-daemon.service already runs the keyring)
     hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
     -- Auto delete trash 30 days old
@@ -13,9 +12,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hyprctl setcursor " .. vars.cursorTheme .. " " .. vars.cursorSize)
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme " .. vars.cursorTheme)
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. vars.cursorSize)
-
-    -- Forward bluetooth media commands to MPRIS
-    hl.exec_cmd("mpris-proxy")
 
     -- Start shell
     hl.exec_cmd("uwsm app -- noctalia")
