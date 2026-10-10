@@ -14,7 +14,9 @@ installed for editing and for SVG.
 
 `mpv.conf`: start at 30% volume, cap at 100, resume where you stopped, loop
 single files, decode video on the GPU (`hwdec=auto`; a playing video dropped from
-39% to about 3% of a CPU core). The read-ahead cache is capped at 32 MiB ahead and 16 MiB behind: mpv counts
+39% to about 3% of a CPU core), and render through OpenGL (`gpu-api=opengl`:
+a window appears in about 0.2 s instead of 1.2 s with Vulkan, and decoding
+stays on NVDEC). The read-ahead cache is capped at 32 MiB ahead and 16 MiB behind: mpv counts
 SMB and FUSE paths as network streams and otherwise holds up to 200 MiB per
 window (`demuxer-max-bytes`, `demuxer-max-back-bytes`). Each mpv window also
 carries about 80 MiB for the NVIDIA driver, so many open windows add up. Opening a file loads the rest of its folder, same kind only
