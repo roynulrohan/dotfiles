@@ -33,28 +33,27 @@ decision the repo doesn't cover.
 - **bun over npm/npx**. `bunx`, not `npx`.
 - **Desktop (Linux)**: Hyprland with the Noctalia shell (`linux/noctalia`,
   since 2026-10-08; top bar, launcher, lock, idle, notifications). The Hyprland
-  config started as caelestia's and is now ours (`linux/hypr`); never run
-  `caelestia update`. caelestia stays installed as a fallback, and
-  `linux/caelestia` keeps its override files (two are still loaded:
-  `hypr-vars.lua`, `hypr-user.lua`) and a reference copy of its original
-  Hyprland config (`hypr-reference`, with the user's key preferences). Binds and
-  rules go through HyprMod (`linux/hyprmod`) where it can express them;
-  HyDE-style keybinds layered on caelestia's, with caelestia's originals
-  unbound first. Terminal, browser (Zen) and Discord are
+  config started as caelestia's and is now ours (`linux/hypr`). Until
+  2026-10-08 the desktop ran on caelestia; it was uninstalled on 2026-10-09.
+  `linux/caelestia` records that history and keeps a reference copy of its
+  original Hyprland config (`hypr-reference`, with the user's key
+  preferences). Binds and rules go through HyprMod (`linux/hyprmod`) where it
+  can express them; HyDE-style keybinds layered on caelestia's, with
+  caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
   opaque; each monitor has its own workspaces 1–10, shown as
   numbers in the bar. Default apps: Zen for web
   pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
   SVG and editing); see `linux/packages.md`. Login screen: SDDM with our
   own `noctalia-card` theme, which follows Noctalia (`linux/sddm`). Discord:
-  Equibop, caelestia-themed, is the default (Super+D, `discord://` links); the
-  official app stays installed.
+  Equibop is the default (Super+D, `discord://` links); the official app
+  stays installed.
   Live wallpapers: Wallpaper Engine wallpapers per monitor through
   linux-wallpaperengine (`linux/wallpaper`); Noctalia's wallpaper is a still
   of the main one, for the colours (its drawing is off). Audio: PipeWire's own filter-chain runs the
   G432 headset's EQ (`linux/pipewire`); no EasyEffects. Night light:
   hyprsunset, always on (`linux/hyprsunset`). Window and image-viewer
   controls follow one convention: arrows move, Shift resizes, Alt makes the
-  step fine (`linux/caelestia/SETUP.md`, Window mode; `linux/mpv`). New binds
+  step fine (`linux/hypr/SETUP.md`, Window mode; `linux/mpv`). New binds
   of that kind follow it; workspace and monitor keys keep caelestia's meanings.
 - **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
   from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
@@ -75,7 +74,7 @@ decision the repo doesn't cover.
 | Directory | Applies to | Contents |
 |---|---|---|
 | `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor, orca |
-| `linux/` | CachyOS desktop | fish entry point, Hyprland config (`hypr`), Noctalia shell (`noctalia`), caelestia overrides and reference copy, HyprMod file, snapshots setup, btop, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
+| `linux/` | CachyOS desktop | fish entry point, Hyprland config (`hypr`), Noctalia shell (`noctalia`), caelestia history and reference copy, HyprMod file, snapshots setup, btop, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
 | `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
@@ -85,9 +84,8 @@ gotchas, how to verify.
 
 `shared/fish` and `shared/git` first, then the terminal, then `shared/starship`
 and `shared/fastfetch`, then Claude, then the platform packages. On Linux,
-caelestia's installer runs before any of this; then `linux/hypr` overwrites
-`~/.config/hypr` (never run `caelestia update` afterwards). Start a new shell before
-verifying anything shell-dependent.
+install `linux/packages.md` first. Start a new shell before verifying anything
+shell-dependent.
 
 ## Not in this repo
 

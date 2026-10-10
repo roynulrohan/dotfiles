@@ -313,7 +313,7 @@ input_path = "$XDG_CONFIG_HOME/noctalia/templates/sddm-theme.conf"
 output_path = "/var/lib/sddm-assets/colours.conf"
 post_hook = "chmod 644 /var/lib/sddm-assets/colours.conf && install -m 644 '{{ image }}' /var/lib/sddm-assets/background"
 
-# Equibop: a second theme file next to caelestia's, off until chosen in
+# Equibop: a second theme file next to caelestia's old one, off until chosen in
 # Equibop > Settings > Themes. Noctalia community "Midnight" template.
 [theme.templates.user.equibop]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/equibop.theme.css"

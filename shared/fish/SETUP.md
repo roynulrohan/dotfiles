@@ -9,7 +9,7 @@ built in, so there are no plugins to install. Starship draws the prompt.
 |---|---|---|
 | `conf.d/*.fish` | `~/.config/fish/conf.d/` | fish sources these automatically, on both OSes |
 | `../../mac/fish/config.fish` | `~/.config/fish/config.fish` | **macOS only** |
-| `../../linux/fish/config.fish` | `~/.config/fish/config.fish` | **Linux only**; replaces caelestia's |
+| `../../linux/fish/config.fish` | `~/.config/fish/config.fish` | **Linux only**; replaced caelestia's |
 
 The `conf.d` files do the work: `00` environment, `05` starship, zoxide (as
 `cd`) and direnv (Linux; the Mac's `config.fish` does these itself, after its

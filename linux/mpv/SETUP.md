@@ -50,7 +50,7 @@ mpv is open takes effect on the next image you open from Dolphin. It needs
 
 ## Image bindings
 
-Same convention as the Hyprland window keys (`linux/caelestia`, Window mode):
+Same convention as the Hyprland window keys (`linux/hypr`, Window mode):
 arrows move, Alt makes the step fine. `video-zoom` is a power of 2, so 0.1
 is about 7% and ten presses double the size. Alt+arrows and Alt+-/= replace
 mpv's own Alt pan and zoom (steps of 0.1) while an image is open.

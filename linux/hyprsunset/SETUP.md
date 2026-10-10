@@ -1,13 +1,13 @@
 # hyprsunset
 
 Night light: a warmer screen, always on. hyprsunset is the Hyprland project's
-blue-light filter; caelestia and CachyOS's Hyprland setup have none.
+blue-light filter; caelestia had none, and CachyOS's Hyprland setup has none.
 
 | Repo | Destination |
 |---|---|
 | `hyprsunset.conf` | `~/.config/hypr/hyprsunset.conf` |
 
-`~/.config/hypr` is caelestia's tree, but this file isn't part of it (like
+`~/.config/hypr` is our Hyprland config (`linux/hypr`), but this file isn't part of it (like
 HyprMod's `hyprland-gui.lua`). It sits there because that's the path the stock
 service reads.
 

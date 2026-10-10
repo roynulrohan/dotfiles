@@ -89,7 +89,7 @@ centre) · power
 
 Workspaces show only occupied ones as bare numbers; the active one is a wider
 filled pill (inactive pills are transparent). Spacing follows the window grid
-(see "Look" in `linux/caelestia/SETUP.md`): the bar is 24 px tall and the
+(see "Look" in `linux/hypr/SETUP.md`): the bar is 24 px tall and the
 islands fill it, 4 px from the screen top and 4 px above the windows, flush
 with the window edges; 16 px between islands, 8 px inside one, 8 px end
 padding (groups default to 6, so it is set per group). Text ≈ 10.5 px bold
@@ -99,7 +99,7 @@ padding (groups default to 6, so it is set per group). Text ≈ 10.5 px bold
 
 `k4n4t4/hypr-submap` 1.0.0 (MIT): shows the active Hyprland submap, so a small
 island reading "window" appears while window mode (Super+A,
-`linux/caelestia`) is on; hidden otherwise, and clicking it leaves the mode. It
+`linux/hypr`) is on; hidden otherwise, and clicking it leaves the mode. It
 listens to Hyprland's event socket with `socat` and runs only `hyprctl submap`
 and `hyprctl dispatch 'hl.dsp.submap("reset")'`; the code was read before
 installing. Noctalia keeps it under
@@ -271,9 +271,13 @@ Volume keys stay on `wpctl`.
 - The login screen is SDDM with our `noctalia-card` theme (`linux/sddm`),
   which follows Noctalia's palette, wallpaper and lock GIF. Noctalia has its
   own greeter, for greetd instead of SDDM; not tried yet.
-- caelestia stays installed as a fallback but doesn't run. Back to it for one
-  session: `pkill -x noctalia`, then `caelestia shell -d`. For good: restore
-  `~/.config/hypr` from `linux/caelestia/hypr-reference`.
+- **Qt apps turn light after a Qt update.** Qt apps (Dolphin and others) get
+  their dark colours from `qtengine`, the Qt theme engine caelestia set up,
+  built from the AUR against Qt's private API. When `qt6-base` moves to a new
+  version (6.11 to 6.12 on 2026-10-08), the engine still loads but stops
+  applying the colour scheme, so newly started Qt apps come up light. Rebuild
+  it, then restart the Qt apps: `paru -S --rebuild qtengine`. Darkly
+  (`darkly-bin`) only uses Qt's public API and survives updates.
 
 ## Update widget (Arch Updater)
 

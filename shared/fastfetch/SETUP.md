@@ -21,7 +21,8 @@ other arguments bypass the wrapper. fish's greeting just calls it.
 | `logo/` | `~/.config/fastfetch/logo/` | **images are not committed**; drop your own in (png, jpg, webp, `.icon`, gif) |
 
 Keep the filename `greeting.jsonc`. `config.jsonc` is fastfetch's own default,
-which caelestia's installer writes on Linux; nothing here uses it, so delete it.
+which caelestia's installer used to write on Linux; nothing here uses it, so
+delete it if it exists.
 `fastfetch` with arguments skips the wrapper and then shows fastfetch's built-in
 layout.
 

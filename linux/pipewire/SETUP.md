@@ -52,15 +52,16 @@ Tried and dropped: EasyEffects (removed), AutoEq's measured G432 correction
 `quantum.conf` sets PipeWire's quantum (the number of samples processed per
 cycle) to 1024 and stops apps from changing it: default, minimum and maximum
 are all 1024. Each change interrupts playback for a moment. caelestia's
-dashboard records the audio for its beat tracker (the dancing cat) and the
-Media tab's visualiser and asks for 512 while it does; everything else ran at
+dashboard (the shell until 2026-10-08) recorded the audio for its beat tracker
+(the dancing cat) and the Media tab's visualiser and asked for 512 while it
+did; everything else ran at
 2048. So opening the dashboard, or moving to the Performance or Weather tab
 and back, made music stutter. PipeWire's error counters (`pw-top`, ERR) stayed
 at 0: these were quantum switches, not dropouts.
 
 1024 at 48 kHz is about 21 ms of delay. 512 (about 11 ms) also played without
-stutter and suits caelestia better: it reads at most 512 samples per buffer,
-so at 1024 its cat and visualiser miss part of the audio. It takes effect at
+stutter and suited caelestia better: it read at most 512 samples per buffer,
+so at 1024 its cat and visualiser missed part of the audio. It takes effect at
 the next login, or at once with
 `pw-metadata -n settings 0 clock.force-quantum 1024` (until logout).
 

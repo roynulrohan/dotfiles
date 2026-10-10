@@ -13,7 +13,7 @@ greeting's image logo works here too.
 ## Install
 
 macOS: `brew install --cask ghostty`. Linux: distro package (`pacman -S ghostty`),
-though on the CachyOS desktop kitty is the terminal caelestia launches.
+though on the CachyOS desktop kitty is the terminal Super+T launches.
 
 ## Notes
 

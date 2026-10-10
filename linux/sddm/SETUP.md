@@ -112,21 +112,23 @@ stop`), log in, and check that KDE Wallet unlocks.
 ## The way back
 
 If the login screen is black or broken: Ctrl+Alt+F3 for a text login, log in,
-then put the caelestia theme (`caelestia-sddm-locklike-git`, still installed)
-and the old monitor setup back:
+then switch to Breeze, the theme CachyOS's
+`/usr/lib/sddm/sddm.conf.d/general.conf` selects, and put the old monitor setup
+back:
 
 ```bash
-sudo sed -i 's/^Current=noctalia-card$/Current=caelestia/' /etc/sddm.conf.d/noctalia-card.conf
+sudo sed -i 's/^Current=noctalia-card$/Current=breeze/' /etc/sddm.conf.d/noctalia-card.conf
 sudo cp /etc/sddm/before-noctalia-card/Xsetup /etc/sddm/Xsetup
 sudo cp /etc/sddm/before-noctalia-card/x11.conf /etc/sddm.conf.d/x11.conf
 sudo systemctl restart sddm
 ```
 
-The old Xsetup turns the side monitors off; caelestia's theme would draw a
-whole login on each. `InputMethod` stays empty, which caelestia's theme
-doesn't mind. To drop our config completely, delete
-`/etc/sddm.conf.d/noctalia-card.conf` instead of the `sed` line: the package's
-`caelestia.conf` then applies alone, as before.
+The old Xsetup turns the side monitors off, so the login shows on one
+monitor. To drop our config completely, delete
+`/etc/sddm.conf.d/noctalia-card.conf` instead of the `sed` line: CachyOS's
+defaults then apply alone, Breeze included, with Qt's on-screen keyboard back
+on the password field. Until 2026-10-09 the way back was caelestia's login
+theme; it was uninstalled with caelestia.
 
 Back to Plasma Login Manager:
 
@@ -182,13 +184,11 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   uses (`primary` is Noctalia's `primary`, `text` its `on_surface`), from the
   palette the shell uses, scheme included. The fallback colours in `theme.conf`
   show only while `colours.conf` is missing.
-- **The old `sddm-sync`** copied caelestia's root-owned theme with sudo, and
-  the old template output (`~/.local/state/caelestia/theme/sddm-theme.conf`)
-  fed it. Both are retired: the caelestia theme keeps the colours and pictures
-  of its last sync, as a fallback. `~/.config/caelestia/templates/sddm-theme.conf`
-  and that state file can go.
+- **The old `sddm-sync`** copied caelestia's root-owned theme with sudo, fed
+  by a caelestia template. Both are retired, and caelestia's theme was
+  uninstalled on 2026-10-09.
 - **Frozen screen after logging out:** happened twice on 2026-10-07. caelestia's
-  logout button killed the whole login session, `sddm-helper` included, so SDDM
+  logout button (the shell in use then) killed the whole login session, `sddm-helper` included, so SDDM
   logged "Process crashed" and never showed the login screen again (Hyprland
   also segfaults in `libaquamarine` while closing, an upstream bug). Log out
   with `uwsm stop`, which the Hyprland wiki recommends for uwsm sessions: it

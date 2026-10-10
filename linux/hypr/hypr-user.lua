@@ -110,8 +110,8 @@ local function fill_height()
 end
 
 -- Super+Shift+arrows resizes outside window mode too, the same way as
--- Shift+arrows inside it. caelestia binds these keys to "move window";
--- unbind first or both fire.
+-- Shift+arrows inside it. caelestia's binds in hyprland/keybinds.lua use these
+-- keys for "move window"; unbind first or both fire.
 for _, dir in ipairs({ "Left", "Right", "Up", "Down" }) do
     hl.unbind("SUPER + SHIFT + " .. dir)
 end
@@ -161,7 +161,7 @@ end)
 
 -- Per-monitor workspaces: each monitor has its own 1-10 on Super+1..0, from
 -- split-monitor-workspaces (a Lua package, pinned clone in
--- ~/.local/share/hypr-plugins; see linux/caelestia/SETUP.md). Hyprland ids:
+-- ~/.local/share/hypr-plugins; see linux/hypr/SETUP.md). Hyprland ids:
 -- main DP-1 1-10, right HDMI-A-1 11-20, left DP-2 21-30.
 -- Required by its full name: its modules are called globals/helpers/monitors,
 -- and this config's own modules are required by bare names too.

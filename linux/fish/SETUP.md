@@ -9,6 +9,6 @@ See `shared/fish/SETUP.md`. This `config.fish` only keeps two PATH lines;
 |---|---|
 | `config.fish` | `~/.config/fish/config.fish` |
 
-If caelestia's installer has already written `~/.config/fish/config.fish`,
-replace it; delete its `functions/fish_greeting.fish` too (a banner that
-`conf.d/20` overrides anyway).
+On a machine where caelestia's installer once ran, `~/.config/fish/config.fish`
+is still caelestia's: replace it, and delete its `functions/fish_greeting.fish`
+too (a banner that `conf.d/20` overrides anyway).

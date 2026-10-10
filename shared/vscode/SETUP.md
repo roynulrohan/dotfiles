@@ -40,8 +40,8 @@ Windows side. Most of the list wants both.
 ## Install
 
 - macOS: `brew install --cask visual-studio-code`
-- CachyOS: `paru -S visual-studio-code-bin` (AUR, Microsoft's build). It replaces
-  Arch's `code` (Code - OSS), which caelestia's installer adds: Code - OSS uses the
+- CachyOS: `paru -S visual-studio-code-bin` (AUR, Microsoft's build). It replaced
+  Arch's `code` (Code - OSS), which caelestia's installer added: Code - OSS uses the
   Open VSX store (no Microsoft-only extensions), has no Microsoft Settings Sync,
   and reads `~/.config/Code - OSS/` instead of `~/.config/Code/`.
 - Debian/Ubuntu: Microsoft apt repo — see
@@ -91,7 +91,8 @@ copy these files in after signing in.
 ## Notes
 
 - Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at weight
-  500. VS Code is left see-through at caelestia's 95% window opacity on purpose.
+  500. VS Code is left see-through at the default window transparency
+  (`windowOpacity` in `linux/hypr/hypr-vars.lua`) on purpose.
 - Discord presence (`vscord`) shows the project and file only: no line numbers,
   error counts or "View Repository" button, and it disconnects after 5 minutes
   idle. On CachyOS it reaches Discord through Equibop's built-in arRPC bridge
@@ -101,12 +102,13 @@ copy these files in after signing in.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports
   (`editor.codeActionsOnSave`, `explicit`); auto save after a delay doesn't, so
   nothing reshuffles while typing.
-- CachyOS: caelestia's `vscode` component installs `~/.config/code-flags.conf`
-  (read by `visual-studio-code-bin`): native Wayland, GTK 4, Wayland IME, and
+- CachyOS: `~/.config/code-flags.conf` (read by `visual-studio-code-bin`)
+  turns on native Wayland, GTK 4, Wayland IME, and
   `--password-store=gnome-libsecret`, which KDE Wallet answers through its
   Secret Service API (`org.freedesktop.secrets`), so GitHub logins stay in the
-  wallet. caelestia also installs its own VS Code settings and keybindings
-  (copies in `~/.local/state/caelestia/dots/vscode/`); these files replace them.
+  wallet. caelestia's `vscode` component wrote it; it isn't in this repo, so a
+  new machine needs it written by hand. caelestia also installed its own VS
+  Code settings and keybindings; these files replaced them.
 
 ## Verify
 

@@ -1,6 +1,6 @@
 # dotfiles
 
-Config for a CachyOS + Hyprland desktop (caelestia dots, HyprMod) and a Mac
+Config for a CachyOS + Hyprland desktop (Noctalia, HyprMod) and a Mac
 (AeroSpace, SketchyBar, kitty), sharing fish, starship, a fastfetch greeting,
 kitty, git and Claude Code config between them.
 
@@ -23,7 +23,7 @@ Mac). Or do it by hand from the `SETUP.md` files.
 
 ```
 shared/   fish  starship  fastfetch  kitty  ghostty  git  agents  claude  ccstatusline  nvim  vscode  cursor  orca
-linux/    caelestia (overrides only)  hyprmod  packages.md
+linux/    fish  hypr  noctalia  hyprmod  sddm  wallpaper  mpv  pipewire  hyprsunset  btop  equibop  uwsm  ssh  snapshots  caelestia (history)  packages.md
 mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewfile
 ```
 
