@@ -34,6 +34,7 @@
  "tint": 0.0,
  "login_alpha": 0.0,
  "side_chip_alpha": 0.6,
+ "card_alpha": 0.9,
  "card": {
   "w": 1500.0,
   "h": 840.0
@@ -42,13 +43,13 @@
  "weather_text_w": 130.0,
  "forecast_days": 3,
  "tile": 125.0,
- "graphs_h": 160.0,
  "center_dy": -21.0,
  "viz": true,
  "viz_mode": "bars",
  "viz_size": 380.0,
  "viz_inner": 0.78,
  "gif_h": 340.0,
+ "power_h": 112.0,
  "name_dy": 132.0,
  "name_h": 30.0
 }

@@ -141,14 +141,18 @@ Noctalia to re-read it.
 
 ## Lock screen
 
-Modelled on caelestia's: one 1500x840 surface card on the blurred wallpaper of
-the main monitor (DP-1), never a snapshot of the desktop. Left: weather with a
+Modelled on caelestia's, and laid out like the login screen (`linux/sddm`):
+one 1500x840 surface card on the blurred wallpaper of the main monitor (DP-1),
+never a snapshot of the desktop. The card is 90% opaque (`card_alpha`), so the
+blurred wallpaper shows through, as on the login. Left: weather with a
 3-day forecast and a month calendar without events. Centre: hours, minutes and
 AM/PM in "GSF Lock Clock", the date, the avatar cut to Material's ClamShell
 shape with an audio ring that fades when idle, the login name under it (read
-from the account when `gen.py` runs), and the password field. Right:
-CPU, RAM and GPU gauges, temperature and network graphs, and a GIF card. The
-side monitors show the clock group only. No lock or unlock animation.
+from the account when `gen.py` runs), and the password field. Right, in the
+login's places: a GIF card, CPU, RAM and GPU gauges where the login has its
+session card, and Suspend, Reboot and Shut down buttons (Noctalia `button`
+widgets running `noctalia msg session <action>`). The side monitors show the
+clock group only. No lock or unlock animation.
 
 The config is generated, not edited: `lock/scripts/gen.py` turns
 `params.json` (sizes and opacities) into `~/.config/noctalia/lock.toml`, the
@@ -174,8 +178,7 @@ copies the new card there for the login screen (`linux/sddm`).
 
 Needs `python3`, `ffmpeg`, the two fonts in `fonts/google-sans-flex` (SIL Open
 Font License 1.1, `LICENSE` included; "GSF Lock Clock" is a renamed instance of
-Google Sans Flex at width 30, weight 500, which the licence permits) and
-CaskaydiaCove Nerd Font (`ttf-cascadia-code-nerd`) for the graph titles. Run
+Google Sans Flex at width 30, weight 500, which the licence permits). Run
 `fc-cache -f` after copying the fonts.
 
 Things to know:

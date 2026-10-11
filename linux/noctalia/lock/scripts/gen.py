@@ -16,7 +16,7 @@ def text(id_, out, cx, cy, bw, bh, title, color="on_surface", opacity=1.0, font=
     if font: s["font_family"] = font
     w(id_, "label", out, cx, cy, bw, bh, s)
 P = json.load(open(sys.argv[1]))  # tunables
-GSF, MONO, CLOCK = "Google Sans Flex", "CaskaydiaCove NF", "GSF Lock Clock"
+GSF, CLOCK = "Google Sans Flex", "GSF Lock Clock"
 RR, PAD = 28.0, 16.0  # one radius and padding for every inner card and tile
 C = P["container"]; CA = P["container_alpha"]
 
@@ -38,7 +38,8 @@ def clock_group(out, dx, dy, shadow):
 
 M = "DP-1"
 K = P["card"]  # caelestia's card, enlarged: 1500x840, content inset 32
-card("lock-card", M, 960.0, 540.0, K["w"], K["h"], "surface", 1.0, 32.0)
+# Frosted like the login screen's card: the blurred wallpaper shows through the rest.
+card("lock-card", M, 960.0, 540.0, K["w"], K["h"], "surface", P["card_alpha"], 32.0)
 top = 540.0 - K["h"]/2 + 32.0; bottom = 540.0 + K["h"]/2 - 32.0
 side_w = (K["w"] - 64.0 - 450.0 - 80.0) / 2
 L = 960.0 - 225.0 - 40.0 - side_w/2; R = 960.0 + 225.0 + 40.0 + side_w/2
@@ -73,39 +74,48 @@ w("lock-avatar", "sticker", M, 960.0, P["avatar_cy"], 315.0, 215.0,
 # The login name under the avatar.
 NAME = pwd.getpwuid(os.getuid()).pw_name
 text("lock-name", M, 960.0, P["avatar_cy"] + P["name_dy"], 320.0, P["name_h"], NAME, font=GSF, bold=True)
-# Right column: the machine. Load tiles, temperature and network graphs, then a GIF.
-# The GIF card has one fixed shape, the column width by gif_h, bottom-aligned; the tiles
-# and graphs share the height above it in proportion to their base sizes.
-th0, gh0 = P["tile"] + 32.0, P["graphs_h"]
-mw, mh = side_w, P["gif_h"]
-avail = bottom - mh - G - top - G
-th = float(round(th0*avail/(th0 + gh0)))
-card("lock-res-card", M, R, top + th/2, side_w, th, C, CA, RR)
-gap = (side_w - 32.0 - 3*P["tile"]) / 2
-for i, (stat, role) in enumerate([("cpu_usage", "primary"), ("ram_pct", "tertiary"), ("gpu_usage", "secondary")]):
-    w(f"lock-res{i}", "sysmon", M, R - side_w/2 + 16.0 + P["tile"]/2 + i*(P["tile"] + gap), top + th/2, P["tile"], th - 32.0,
-      dict(display="gauge", gauge_layout="vertical", stat=stat, color=role, show_label=True, font_family=GSF, shadow=False,
-           background=True, background_color=role, background_opacity=P["res_alpha"], background_radius=RR,
-           background_padding=P["res_pad"]))
-gy = top + th + G; gh = avail - th
-card("lock-graphs-card", M, R, gy + gh/2, side_w, gh, C, CA, RR)
-hw2 = (side_w - 32.0 - G) / 2  # two graphs side by side: their natural shape is about 2:1
-for i, (title, stat, stat2) in enumerate([("Temps", "cpu_temp", "gpu_temp"), ("Network", "net_rx", "net_tx")]):
-    x0 = R - side_w/2 + 16.0 + i*(hw2 + G)
-    tw = len(title) * 9.6 + 4.0
-    text(f"lock-graph{i}-title", M, x0 + 4.0 + tw/2, gy + 26.0, tw, 20.0, title, color="outline", font=MONO)
-    w(f"lock-graph{i}", "sysmon", M, x0 + hw2/2, gy + 40.0 + (gh - 56.0)/2, hw2, gh - 56.0,
-      dict(display="graph", stat=stat, stat2=stat2, color="primary", color2="tertiary", show_label=True,
-           network_speed_compact=True, font_family=GSF, shadow=False, background=False))
+# Right column, laid out as on the login screen (linux/sddm, LoginScreen.qml): a GIF on
+# top, the machine's load where the login has its session card, power buttons below.
 # GIF: the sticker draws current.gif, a random GIF from ~/Pictures/lock-gifs that
 # reroll.py cover-fits to the card with rounded transparent corners; the card under it
 # shows only there. reroll.py runs once now and again after every unlock (the hook below).
-mcy = bottom - mh/2
+mw, mh = side_w, P["gif_h"]
+mcy = top + mh/2
 card("lock-gif-card", M, R, mcy, mw, mh, C, CA, RR)
 w("lock-gif", "sticker", M, R, mcy, mw, mh,
   dict(image_path=f"{LOCK}/current.gif", opacity=1.0, background=False))
 REROLL = f"python3 -I {LOCK}/scripts/reroll.py {mw:g} {mh:g} {RR:g}"
 subprocess.run(REROLL.split(), check=True, stdout=sys.stderr)
+# Power row: Suspend, Reboot, Shut down, the login's PowerRow.qml (three cards, 12 apart).
+# The button widget lays its glyph and label side by side, scaled to the box height, so
+# each card gets a glyph-only button over the upper part (box height 104 makes the glyph
+# about the login's 34 px) and a text label under it, as on the login. The label takes
+# no clicks, so the lower edge of a card does nothing. Tabler's moon stands in for the
+# login's bedtime glyph; Noctalia's own "suspend" glyph is a pause sign.
+ph = P["power_h"]; pw = (side_w - 2*G) / 3; pcy = bottom - ph/2
+for i, (glyph, label, action) in enumerate([("moon", "Suspend", "suspend"), ("reboot", "Reboot", "reboot"),
+                                            ("shutdown", "Shut down", "shutdown")]):
+    x = R - side_w/2 + pw/2 + i*(pw + G)
+    card(f"lock-power{i}-card", M, x, pcy, pw, ph, C, CA, RR)
+    # Glyph ink at 26..61 and label ink at 74..87 of the 112 px card: a 12 px gap
+    # between them and about 25 px above and below.
+    w(f"lock-power{i}", "button", M, x, pcy - ph/2 + 40.0, pw, 104.0,
+      dict(glyph=glyph, label="", command=f"noctalia msg session {action}", color="primary", background=False))
+    text(f"lock-power{i}-label", M, x, pcy - ph/2 + 79.0, pw, 23.0, label, font=GSF)
+# The machine's load between them, in the login's session card slot.
+ty = top + mh + G; th = bottom - ph - G - ty
+card("lock-res-card", M, R, ty + th/2, side_w, th, C, CA, RR)
+gap = (side_w - 32.0 - 3*P["tile"]) / 2
+for i, (stat, role, name) in enumerate([("cpu_usage", "primary", "CPU"), ("ram_pct", "tertiary", "RAM"),
+                                        ("gpu_usage", "secondary", "GPU")]):
+    x = R - side_w/2 + 16.0 + P["tile"]/2 + i*(P["tile"] + gap)
+    w(f"lock-res{i}", "sysmon", M, x, ty + th/2, P["tile"], th - 32.0,
+      dict(display="gauge", gauge_layout="vertical", stat=stat, color=role, show_label=True, font_family=GSF, shadow=False,
+           background=True, background_color=role, background_opacity=P["res_alpha"], background_radius=RR,
+           background_padding=P["res_pad"]))
+    # The gauge draws its icon, bar and percentage in the middle of the tile and leaves
+    # about 60 px free at the bottom; the name goes there, styled like the power labels.
+    text(f"lock-res{i}-label", M, x, ty + th - 16.0 - 30.0, P["tile"], 23.0, name, font=GSF)
 # Side monitors: the clock group and date, centred, over the blurred wallpaper.
 for out in ["DP-2", "HDMI-A-1"]:
     clock_group(out, 0.0, P["side_dy"], True)
@@ -130,8 +140,10 @@ o.append("""# Lock screen, modelled on caelestia's (caelestia-shell modules/lock
 # Card enlarged to 1500x840. Left: weather + 3-day forecast, month calendar
 # (no events). Centre: hours/minutes/AM-PM clock in condensed Google Sans Flex,
 # date, ClamShell avatar with an audio ring that fades when idle, pill password
-# field. Right: CPU/RAM/GPU tiles, temperature and network graphs, a random GIF
-# from ~/Pictures/lock-gifs, a new one after every unlock (hook at the end).
+# field. Right, as on the login screen: a random GIF from ~/Pictures/lock-gifs, a
+# new one after every unlock (hook at the end), CPU/RAM/GPU tiles, and Suspend,
+# Reboot and Shut down buttons. The blurred wallpaper shows through the card
+# (card_alpha), frosted like the login's.
 # Widgets draw in widget_order, so the card comes first. Side monitors: the
 # clock group only. Generated by ~/.local/share/noctalia/lock/scripts/gen.py from
 # params.json; edit those and run apply.sh, not this file.
