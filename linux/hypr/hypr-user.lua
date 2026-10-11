@@ -259,6 +259,12 @@ hl.bind("ALT + TAB", hl.dsp.exec_cmd("noctalia msg window-switcher hold"))
 -- HyDE's window.mute.py; see linux/hypr/window-mute).
 hl.bind("SUPER + CTRL + M", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/window-mute"))
 
+-- Super+Ctrl+F: "fake fullscreen". The app is told it's fullscreen (client = 2)
+-- while the window keeps its tiled or floating size (internal = 0), so a
+-- browser hides its tabs and a video's own fullscreen button then fills only
+-- this window. Press again to undo. Normal fullscreen is unchanged.
+hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen_state({ action = "toggle", internal = 0, client = 2 }))
+
 -- Hyprland 0.56 eye candy: an inner glow on the focused window in the
 -- palette's primary-to-tertiary gradient (like the border, at half strength;
 -- none on unfocused windows). Motion blur (0.56) stays off: windows flashed
