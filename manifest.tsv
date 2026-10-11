@@ -68,6 +68,7 @@ linux	linux/sddm/themes/noctalia-card	/usr/share/sddm/themes/noctalia-card	dir
 linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
 linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
 linux	linux/wallpaper/live-wallpaper	~/.local/bin/live-wallpaper	copy-x
+linux	linux/hypr/window-mute	~/.local/bin/window-mute	copy-x
 linux	linux/wallpaper/live-wallpaper.service	~/.config/systemd/user/live-wallpaper.service	copy
 linux	linux/ssh/ssh-add.service	~/.config/systemd/user/ssh-add.service	copy
 linux	linux/wallpaper/live-wallpaper-watchdog.service	~/.config/systemd/user/live-wallpaper-watchdog.service	copy

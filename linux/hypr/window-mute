@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""Toggle mute for the focused window's audio streams (Super+Ctrl+M).
+
+A port of HyDE's window.mute.py (HyDE-Project/HyDE,
+Configs/.local/lib/hyde/window.mute.py) using only hyprctl, pactl and
+notify-send. Streams are matched to the window the way HyDE does it, in order:
+the window's own process, then the app's name, then any child process (browsers
+play audio from a helper), then any process whose parent chain has the app's
+name. If every matched stream is muted it unmutes them, otherwise it mutes them.
+The notification names the app, not the window title, because titles can hold
+file or page names and notifications are kept in the history.
+"""
+import json
+import subprocess
+import sys
+
+NOTIFY_ID = "91190"   # one notification that each toggle replaces
+
+
+def run(*args):
+    return subprocess.run(args, capture_output=True, text=True, timeout=3)
+
+
+def notify(summary, body="", icon="audio-volume-muted"):
+    run("notify-send", "-a", "Window mute", "-r", NOTIFY_ID, "-t", "1200", "-i", icon, summary, body)
+
+
+def proc_stat(pid, cache):
+    """(parent pid, command name) from /proc, or None."""
+    if pid not in cache:
+        try:
+            with open(f"/proc/{pid}/stat", encoding="utf-8", errors="ignore") as f:
+                data = f.read()
+            right = data.rindex(")")
+            cache[pid] = (int(data[right + 2:].split()[1]), data[data.find("(") + 1:right])
+        except (OSError, ValueError, IndexError):
+            cache[pid] = None
+    return cache[pid]
+
+
+def lineage(pid, cache):
+    """pid, its parent, its grandparent ... up to init."""
+    seen = set()
+    while pid > 1 and pid not in seen:
+        seen.add(pid)
+        yield pid
+        info = proc_stat(pid, cache)
+        if info is None:
+            return
+        pid = info[0]
+
+
+def normalize(text):
+    text = (text or "").lower()
+    for ch in "-_~.":
+        text = text.replace(ch, " ")
+    return " ".join(text.split())
+
+
+def stream_pid(stream):
+    try:
+        return int(stream["properties"].get("application.process.id", ""))
+    except (TypeError, ValueError):
+        return None
+
+
+def match(streams, pid, app_class, title):
+    cache = {}
+    ids = [s["index"] for s in streams if stream_pid(s) == pid]
+    if ids:
+        return ids
+    cls, title_n = app_class.lower(), normalize(title)
+    for s in streams:
+        p = s["properties"]
+        if cls and any(cls in str(p.get(k, "")).lower()
+                       for k in ("application.name", "application.id", "application.process.binary")):
+            ids.append(s["index"])
+        elif title_n and title_n in normalize(str(p.get("media.name", ""))):
+            ids.append(s["index"])
+    if ids:
+        return ids
+    ids = [s["index"] for s in streams if (sp := stream_pid(s)) and pid in lineage(sp, cache)]
+    if ids or not app_class:
+        return ids
+    return [s["index"] for s in streams
+            if (sp := stream_pid(s)) and any((proc_stat(q, cache) or (0, ""))[1] == app_class
+                                             for q in lineage(sp, cache))]
+
+
+def main():
+    try:
+        win = json.loads(run("hyprctl", "-j", "activewindow").stdout)
+    except (ValueError, subprocess.TimeoutExpired):
+        notify("Window mute failed", "Hyprland didn't answer")
+        return 1
+    pid = int(win.get("pid") or 0)
+    app = str(win.get("class") or "this window")
+    if pid <= 0:
+        notify("Nothing to mute", "No window is focused")
+        return 1
+    try:
+        streams = json.loads(run("pactl", "--format=json", "list", "sink-inputs").stdout)
+    except (ValueError, subprocess.TimeoutExpired):
+        streams = []
+    ids = list(dict.fromkeys(match(streams, pid, str(win.get("class") or ""), str(win.get("title") or ""))))
+    if not ids:
+        notify(f"{app} isn't playing sound", icon="audio-volume-high")
+        return 1
+    want_mute = not all(s.get("mute") for s in streams if s["index"] in ids)
+    failed = [i for i in ids if run("pactl", "set-sink-input-mute", str(i), "1" if want_mute else "0").returncode]
+    if failed:
+        notify(f"Couldn't {'mute' if want_mute else 'unmute'} {app}")
+        return 1
+    notify(f"{'Muted' if want_mute else 'Unmuted'} {app}",
+           icon="audio-volume-muted" if want_mute else "audio-volume-high")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

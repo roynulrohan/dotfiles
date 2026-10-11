@@ -255,6 +255,10 @@ hl.unbind("ALT + TAB")
 hl.unbind("SHIFT + ALT + TAB")
 hl.bind("ALT + TAB", hl.dsp.exec_cmd("noctalia msg window-switcher hold"))
 
+-- Super+Ctrl+M mutes or unmutes only the focused window's sound (a port of
+-- HyDE's window.mute.py; see linux/hypr/window-mute).
+hl.bind("SUPER + CTRL + M", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/window-mute"))
+
 -- Hyprland 0.56 eye candy: an inner glow on the focused window in the
 -- palette's primary-to-tertiary gradient (like the border, at half strength;
 -- none on unfocused windows). Motion blur (0.56) stays off: windows flashed
