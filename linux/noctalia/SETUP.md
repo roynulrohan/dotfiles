@@ -10,6 +10,7 @@ Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | `config.toml` | `~/.config/noctalia/config.toml` |
 | `templates/` | `~/.config/noctalia/templates/` (colour templates, below) |
 | `plugins/workspace-apps/` | `~/.local/share/noctalia/plugins/workspace-apps/` (bar plugin, below) |
+| `plugins/workspace-pills/` | `~/.local/share/noctalia/plugins/workspace-pills/` (bar plugin, below) |
 | `plugins/arch-updater/` | `~/.local/share/noctalia/plugins/arch-updater/` (update widget, below) |
 | `lock/scripts/` | `~/.local/share/noctalia/lock/scripts/` (lock screen, below) |
 | `lock/avatar-clamshell.png` | `~/.local/share/noctalia/lock/` |
@@ -32,7 +33,8 @@ noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
 
 Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`), in its own
 uwsm scope; verified across a log out and log in on 2026-10-08. Enable the plugins once:
-`noctalia msg plugins enable roynul/workspace-apps` and
+`noctalia msg plugins enable roynul/workspace-apps`,
+`noctalia msg plugins enable roynul/workspace-pills` and
 `noctalia msg plugins enable k4n4t4/hypr-submap` (a community plugin, fetched
 from Noctalia's community repo).
 
@@ -138,6 +140,37 @@ It never uses window titles.
 
 Changing `plugin.toml` needs `noctalia msg plugins disable` then `enable` for
 Noctalia to re-read it.
+
+## Plugin: workspace pills
+
+`plugins/workspace-pills` (Luau, v0.1): the workspaces widget again, animated
+like HyDE's waybar. It is on the bar in place of the built-in `workspaces`
+(`"roynul/workspace-pills:pills"` in `[bar.default]` `start`; a bar can name a
+plugin entry directly, no `[widget]` block needed). To go back, put
+`"workspaces"` there again.
+
+Why: with `hide_when_empty`, the built-in widget rebuilds without its
+animation snapshot when a workspace gains its first window or loses its last
+(`workspaces_widget.cpp`, 5.2.1), so those pills snap in and out.
+
+- Same look as the built-in at our `[widget.workspaces]` settings, matched
+  pixel for pixel in a sandbox: numbers by Hyprland id, occupied workspaces
+  plus the active one, active pill 2.2 x 16 px filled with `primary`, white
+  digits on transparent inactive pills. The sizes are constants in
+  `pills.luau`, so `[widget.workspaces]` settings do not apply to it.
+- Motion: HyDE's `cubic-bezier(.55, -0.68, .48, 1.682)` (anticipation, then
+  overshoot). The active pill widens and fills in 0.4 s; new pills grow in
+  from zero width and empty ones shrink out on the same curve; hover fades in
+  `primary` at 40 % in 0.3 s. Click switches with `hyprctl eval
+  'hl.dispatch(hl.dsp.focus({ workspace = N }))'`. Special workspaces never show.
+- Bar plugins get no frame tick: the widget sets its update interval to 16 ms
+  only while something moves and back to 5 s once everything settles.
+- `hyprland.luau`, a `[[service]]` like workspace-apps': `socat` on the event
+  socket, then `hyprctl -j monitors` and `workspaces`; a `workspacev2` event
+  moves the active pill at once, before hyprctl answers. `noctalia msg plugin
+  roynul/workspace-pills:hyprland all status` logs counters and the published
+  ids. `... all fake '{"DP-1": {"active": 3, "ids": [1, 3]}}'` shows a test
+  state (until `... all real`); without Hyprland the service only takes `fake`.
 
 ## Lock screen
 

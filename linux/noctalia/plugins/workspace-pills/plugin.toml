@@ -1,0 +1,26 @@
+# HyDE-style workspace numbers. Replaces the built-in workspaces widget, which
+# snaps (no animation) when a workspace gains its first window or loses its
+# last one under hide_when_empty. Here every change animates: the active pill
+# widens and fills, new pills grow in and empty ones shrink out, all on HyDE's
+# overshooting cubic-bezier.
+
+id           = "roynul/workspace-pills"
+name         = "Workspace pills"
+version      = "0.1.0"
+plugin_api   = 32 # getColor (31); also closures (9), service lifecycle (17), argv runAsync (24)
+author       = "roynul"
+license      = "MIT"
+icon         = "layout-columns"
+description  = "This monitor's occupied Hyprland workspaces plus the active one, animated like HyDE's waybar; click to switch."
+tags         = ["hyprland", "workspaces"]
+dependencies = ["hyprland", "socat"]
+
+[[widget]]
+id    = "pills"
+entry = "pills.luau"
+
+# One instance per plugin: owns the Hyprland event stream and publishes the
+# per-output workspace lists that every pills widget renders.
+[[service]]
+id    = "hyprland"
+entry = "hyprland.luau"

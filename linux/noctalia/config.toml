@@ -81,7 +81,7 @@ capsule_fill = "surface"
 capsule_opacity = 0.8        # HyDE: islands slightly see-through; Hyprland blurs behind them
 capsule_thickness = 1.0      # islands fill the bar, so screen→island = island→window = 4 px
 capsule_padding = 8          # radius left automatic: a full pill
-start = ["group:stats", "workspaces", "submap"]
+start = ["group:stats", "roynul/workspace-pills:pills", "submap"]
 center = ["workspace-apps"]
 # Left = information, middle = apps, right = controls.
 end = ["media", "group:signal", "updates", "tray", "clock", "group:system", "session"]

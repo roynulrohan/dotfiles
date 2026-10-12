@@ -40,6 +40,7 @@ linux	linux/noctalia/config.toml	~/.config/noctalia/config.toml	copy
 linux	linux/hypr/animations	~/.config/hypr/animations	dir
 linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
 linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
+linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
 linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
 linux	linux/noctalia/arch-update-tray.desktop	~/.config/autostart/arch-update-tray.desktop	copy
 linux	linux/hypr/hypr-vars.lua	~/.config/hypr/hypr-vars.lua	copy
