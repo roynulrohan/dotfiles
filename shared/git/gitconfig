@@ -35,3 +35,6 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !gh auth git-credential
+[include]
+	# Machine-only settings; the file stays out of the repo. Included last, so its values win.
+	path = ~/.gitconfig.local

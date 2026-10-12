@@ -74,3 +74,7 @@ if status is-interactive
     # claude-mem worker (legacy/zsh alias)
     alias claude-mem 'bun "$HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
 end
+
+# Machine-only lines, such as PATH additions from installers, go in local.fish.
+# It stays out of the repo and is sourced last, so it can override anything.
+test -r $__fish_config_dir/local.fish; and source $__fish_config_dir/local.fish

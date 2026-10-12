@@ -5,6 +5,7 @@
 | Repo | Destination |
 |---|---|
 | `gitconfig` | `~/.gitconfig` |
+| — | `~/.gitconfig.local`: machine-only settings, not in the repo. `gitconfig` includes it last, and git ignores it if it doesn't exist |
 
 ## Install
 

@@ -10,12 +10,16 @@ built in, so there are no plugins to install. Starship draws the prompt.
 | `conf.d/*.fish` | `~/.config/fish/conf.d/` | fish sources these automatically, on both OSes |
 | `../../mac/fish/config.fish` | `~/.config/fish/config.fish` | **macOS only** |
 | `../../linux/fish/config.fish` | `~/.config/fish/config.fish` | **Linux only**; replaced caelestia's |
+| — | `~/.config/fish/local.fish` | machine-only lines, not in the repo; both `config.fish` files source it last if it exists |
 
 The `conf.d` files do the work: `00` environment, `05` starship, zoxide (as
 `cd`) and direnv (Linux; the Mac's `config.fish` does these itself, after its
 conda hook), `10` aliases and abbreviations, `20` the fastfetch greeting, `30`
 syntax colours (macOS only). fish sources `conf.d` before `config.fish`, so each
 OS's `config.fish` only adds what must come later.
+
+When an installer appends to `config.fish` (a PATH line, say), move those lines
+into `local.fish`, so `config.fish` matches the repo again.
 
 ## Install
 

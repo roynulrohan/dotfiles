@@ -259,6 +259,13 @@ Example subject:
 A new machine picks a short kebab-case tag and adds a row to this table in its
 first commit. Commits before 2026-10-07 have no tag.
 
+6. **Read the diff before you copy a live file back.** Copy back only the lines
+   that belong in the repo. Lines for one machine only, such as an installer's
+   PATH addition, go in that file's local slot, which stays out of the repo:
+   `~/.config/fish/local.fish`, `~/.gitconfig.local` or kitty's `local.conf`.
+   Never copy a whole live file over its repo copy without reading the
+   difference first.
+
 ## When you're done
 
 Report what you copied, what you skipped and why, what you backed up, and the
