@@ -16,6 +16,7 @@ here too.
 | `fish` `starship` | shell and prompt |
 | `fastfetch` `imagemagick` | greeting and its logo sizing |
 | `btop` | system monitor, coloured by Noctalia; see `btop/` |
+| `neo-matrix` (AUR) | matrix rain; the `cmatrix` alias runs it on kitty's see-through background (cmatrix paints black) |
 | `ttf-jetbrains-mono-nerd` | the font everything assumes |
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |

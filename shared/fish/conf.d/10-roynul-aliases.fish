@@ -8,6 +8,13 @@ if command -q eza
     alias tree 'eza --tree --icons --level=2 --git-ignore --group-directories-first'
 end
 
+# The matrix rain on the terminal's own see-through background (-D) in the
+# theme's colours (16-colour mode). cmatrix always paints a black background.
+# Arch's neo-matrix package names the program neo-matrix, not neo.
+if command -q neo-matrix
+    alias cmatrix 'neo-matrix -D --colormode=16'
+end
+
 # Short ls forms, from caelestia's config.fish. Linux only: on macOS `la` stays
 # fish's own function (ls -lAh).
 if test (uname) != Darwin
