@@ -44,6 +44,8 @@ brew "gemini-cli"
 brew "gh"
 # Distributed revision control system
 brew "git"
+# Finds secrets before they are committed (check.sh)
+brew "gitleaks"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Lightweight and flexible command-line JSON processor

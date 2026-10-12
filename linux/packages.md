@@ -24,6 +24,7 @@ here too.
 | `ttf-jetbrains-mono-nerd` | the font everything assumes |
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |
+| `gitleaks` | the secret scan in `check.sh`, run before every commit |
 | `jq` `sqlite` | `live-wallpaper` reads the monitor list with `jq`; `shared/orca/orca-settings.sh` needs both |
 | `neovim` | installed for learning; `VISUAL` points at it when it exists (`shared/fish`). Config in `shared/nvim` |
 | `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |

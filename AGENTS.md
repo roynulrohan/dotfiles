@@ -271,6 +271,10 @@ first commit. Commits before 2026-10-07 have no tag.
    `~/.config/fish/local.fish`, `~/.gitconfig.local` or kitty's `local.conf`.
    Never copy a whole live file over its repo copy without reading the
    difference first.
+7. **Run `./check.sh` after `git add` and before every commit.** It checks
+   syntax (JSON, TOML, Python, Lua, shell, fish), the manifest rows, that every
+   file has a manifest row, and secrets through gitleaks. Commit only when it
+   prints no `FAIL` line.
 
 ## When you're done
 

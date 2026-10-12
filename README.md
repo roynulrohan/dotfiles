@@ -29,7 +29,8 @@ mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewf
 
 ## Keeping it current
 
-Edit the live file, check with `./status.sh --diff`, copy into the repo, commit.
+Edit the live file, check with `./status.sh --diff`, copy into the repo, run
+`./check.sh`, commit.
 Or tell the agent "sync my kitty config into dotfiles".
 
 ## Not in here
