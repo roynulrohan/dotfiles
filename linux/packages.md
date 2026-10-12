@@ -25,7 +25,7 @@ here too.
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |
 | `jq` `sqlite` | `live-wallpaper` reads the monitor list with `jq`; `shared/orca/orca-settings.sh` needs both |
-| `neovim` | installed for learning; `VISUAL` points at it when it exists (`shared/fish`). Its config, `shared/nvim`, isn't set up on this machine yet |
+| `neovim` | installed for learning; `VISUAL` points at it when it exists (`shared/fish`). Config in `shared/nvim` |
 | `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
 | `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
 | `mpv-uosc` (AUR) `mpv-thumbfast-git` (AUR) | mpv's on-screen controls and timeline thumbnails for videos; see `mpv/` |

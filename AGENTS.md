@@ -128,9 +128,12 @@ gotchas, how to verify. `linux/caelestia` is history, not a package, and has a
 ## Order
 
 Do the steps for the machine in order, and check each step before the next.
-`./status.sh` prints `ok`, `differs` or `missing` for every destination in
-`manifest.tsv`. A copy step is done when its destinations print `ok`. Start a
-new shell before you check anything that depends on the shell.
+`./status.sh` prints one line per destination in `manifest.tsv`: `ok`,
+`differs` or `missing`, or `seeded` (the app rewrites that file), `skipped` (the
+app isn't installed) or `leftover` (a retired destination still exists). The
+comment at the top of `status.sh` explains each. A copy step is done when its
+destinations print `ok` or `seeded`. Start a new shell before you check
+anything that depends on the shell.
 
 ### CachyOS
 
@@ -148,9 +151,9 @@ new shell before you check anything that depends on the shell.
    `~/.codex/AGENTS.md`), `shared/claude` and `shared/ccstatusline`. Then run
    `rtk init -g`: it adds an `@RTK.md` line to the end of `~/.claude/CLAUDE.md`.
    Check: `rtk init --show` reports the hook, `RTK.md` and `@RTK.md` as
-   configured. Expected drift: `./status.sh` reports `~/.claude/CLAUDE.md` as
-   `differs` because of that line, and `~/.claude/settings.json` as `differs`
-   once you enable plugins.
+   configured. From then on `./status.sh` reports `~/.claude/CLAUDE.md` as
+   `seeded` because of that line, and `~/.claude/settings.json` too once you
+   enable plugins.
 6. **Desktop**, in this order: `linux/hypr` with `linux/uwsm` and the
    split-monitor-workspaces clone, `linux/hyprmod`, `linux/noctalia`,
    `linux/sddm`, `linux/wallpaper`. Check: `./status.sh`, then log out and back
@@ -234,6 +237,9 @@ These rules apply to every edit, by any agent.
 2. **Copy, don't symlink.** Machines keep normal files in normal places. This
    repo is the source to copy from and the place to copy changes back to.
    `manifest.tsv` maps repo paths to destinations; `./status.sh` shows drift.
+   Its header explains the modes: `seed` for a file the app rewrites, the
+   `needs` column for an app a machine may not have, `manual` for a file that
+   is run or applied in place, and a `gone` row when you retire a destination.
 3. **Own what you adopt; never mix in a framework's live tree.**
    `~/.config/hypr` started as caelestia's and is now ours (`linux/hypr`);
    caelestia's original stays as a reference copy in

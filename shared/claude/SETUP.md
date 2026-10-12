@@ -44,7 +44,7 @@ which `shared/fish` puts on PATH (`conf.d/00-roynul-env.fish`).
   no `enabledPlugins` or `extraKnownMarketplaces`, so a fresh machine starts with
   none and you install what you want per machine. Claude Code writes those keys
   back into the live file as you enable plugins, so `./status.sh` will report
-  `settings.json` as differing. That is expected.
+  `settings.json` as `seeded` (its manifest mode). That is expected.
 - `settings.json` sets `"permissions": {"defaultMode": "auto"}`. Worth
   confirming that's wanted on a shared or production machine before copying.
 - **Claude Code rewrites `settings.json`** when you change things via `/config`.

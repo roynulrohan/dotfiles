@@ -1,31 +1,22 @@
-# os	repo path	destination	mode
-# os: all | linux | mac.  mode: copy | copy-x (chmod +x) | dir (copy directory contents)
-all	shared/fish/conf.d	~/.config/fish/conf.d	dir
-all	shared/starship/starship.toml	~/.config/starship/starship.toml	copy
-all	shared/fastfetch/greeting.jsonc	~/.config/fastfetch/greeting.jsonc	copy
-all	shared/fastfetch/fastfetch	~/.local/bin/fastfetch	copy-x
-all	shared/kitty/kitty.conf	~/.config/kitty/kitty.conf	copy
-all	shared/git/gitconfig	~/.gitconfig	copy
-all	shared/claude/settings.json	~/.claude/settings.json	copy
-all	shared/agents/AGENTS.md	~/.claude/CLAUDE.md	copy
-all	shared/agents/AGENTS.md	~/.codex/AGENTS.md	copy
-all	shared/ccstatusline/settings.json	~/.config/ccstatusline/settings.json	copy
-all	shared/nvim	~/.config/nvim	dir
-mac	shared/vscode/settings.json	~/Library/Application Support/Code/User/settings.json	copy
-mac	shared/vscode/keybindings.json	~/Library/Application Support/Code/User/keybindings.json	copy
-mac	shared/cursor/settings.json	~/Library/Application Support/Cursor/User/settings.json	copy
-mac	shared/cursor/keybindings.json	~/Library/Application Support/Cursor/User/keybindings.json	copy
-linux	shared/vscode/settings.json	~/.config/Code/User/settings.json	copy
-linux	shared/vscode/keybindings.json	~/.config/Code/User/keybindings.json	copy
-linux	shared/cursor/settings.json	~/.config/Cursor/User/settings.json	copy
-linux	shared/cursor/keybindings.json	~/.config/Cursor/User/keybindings.json	copy
+# os	repo path	destination	mode	needs
+# os: all | linux | mac.
+# mode: copy | copy-x (chmod +x) | dir (copy the directory's contents)
+#   | seed (copy once; the app rewrites it, so status.sh reports drift as "seeded")
+#   | manual (run or applied in place; destination "-", see the package's SETUP.md)
+#   | gone (a retired destination; repo "-"; status.sh reports it while it exists).
+# needs (optional): a command, or a path that must exist; status.sh skips the row
+#   without it.
+# Destinations outside ~ need sudo to copy.
+linux	linux/btop/btop.conf	~/.config/btop/btop.conf	copy
+linux	linux/equibop/equibop.desktop	~/.local/share/applications/equibop.desktop	copy
+linux	linux/fish/config.fish	~/.config/fish/config.fish	copy
+linux	linux/hypr/animations	~/.config/hypr/animations	dir
+linux	linux/hypr/hypr-user.lua	~/.config/hypr/hypr-user.lua	copy
+linux	linux/hypr/hypr-vars.lua	~/.config/hypr/hypr-vars.lua	copy
 linux	linux/hypr/hyprland.lua	~/.config/hypr/hyprland.lua	copy
-linux	linux/hypr/variables.lua	~/.config/hypr/variables.lua	copy
 linux	linux/hypr/hyprland/animations.lua	~/.config/hypr/hyprland/animations.lua	copy
 linux	linux/hypr/hyprland/decoration.lua	~/.config/hypr/hyprland/decoration.lua	copy
 linux	linux/hypr/hyprland/env.lua	~/.config/hypr/hyprland/env.lua	copy
-linux	linux/uwsm/env	~/.config/uwsm/env	copy
-linux	linux/uwsm/env-hyprland	~/.config/uwsm/env-hyprland	copy
 linux	linux/hypr/hyprland/execs.lua	~/.config/hypr/hyprland/execs.lua	copy
 linux	linux/hypr/hyprland/general.lua	~/.config/hypr/hyprland/general.lua	copy
 linux	linux/hypr/hyprland/gestures.lua	~/.config/hypr/hyprland/gestures.lua	copy
@@ -34,54 +25,84 @@ linux	linux/hypr/hyprland/input.lua	~/.config/hypr/hyprland/input.lua	copy
 linux	linux/hypr/hyprland/keybinds.lua	~/.config/hypr/hyprland/keybinds.lua	copy
 linux	linux/hypr/hyprland/misc.lua	~/.config/hypr/hyprland/misc.lua	copy
 linux	linux/hypr/hyprland/rules.lua	~/.config/hypr/hyprland/rules.lua	copy
-linux	linux/hypr/utils/functions.lua	~/.config/hypr/utils/functions.lua	copy
 linux	linux/hypr/scheme/default.lua	~/.config/hypr/scheme/default.lua	copy
-linux	linux/noctalia/config.toml	~/.config/noctalia/config.toml	copy
-linux	linux/hypr/animations	~/.config/hypr/animations	dir
-linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
-linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
-linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
-linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
-linux	linux/noctalia/arch-update-tray.desktop	~/.config/autostart/arch-update-tray.desktop	copy
-linux	linux/hypr/hypr-vars.lua	~/.config/hypr/hypr-vars.lua	copy
-linux	linux/hypr/hypr-user.lua	~/.config/hypr/hypr-user.lua	copy
-linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
-linux	shared/ghostty/config	~/.config/ghostty/config	copy
-mac	mac/fish/config.fish	~/.config/fish/config.fish	copy
-linux	linux/fish/config.fish	~/.config/fish/config.fish	copy
-mac	mac/kitty/colors.conf	~/.config/kitty/colors.conf	copy
-mac	mac/kitty/macos.conf	~/.config/kitty/macos.conf	copy
-mac	shared/ghostty/config	~/Library/Application Support/com.mitchellh.ghostty/config	copy
-mac	mac/wm/aerospace/aerospace.toml	~/.config/aerospace/aerospace.toml	copy
-mac	mac/wm/sketchybar	~/.config/sketchybar	dir
-mac	mac/wm/karabiner/karabiner.json	~/.config/karabiner/karabiner.json	copy
-mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	copy
-linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy
-linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
-linux	linux/mpv/script-opts/uosc.conf	~/.config/mpv/script-opts/uosc.conf	copy
-linux	linux/mpv/script-opts/thumbfast.conf	~/.config/mpv/script-opts/thumbfast.conf	copy
-linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
-linux	linux/equibop/equibop.desktop	~/.local/share/applications/equibop.desktop	copy
-linux	linux/mpv/scripts/dolphin-sort.lua	~/.config/mpv/scripts/dolphin-sort.lua	copy
-linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
-linux	linux/sddm/noctalia-card.conf	/etc/sddm.conf.d/noctalia-card.conf	copy
-linux	linux/sddm/themes/noctalia-card	/usr/share/sddm/themes/noctalia-card	dir
-linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
-linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
-linux	linux/wallpaper/live-wallpaper	~/.local/bin/live-wallpaper	copy-x
+linux	linux/hypr/utils/functions.lua	~/.config/hypr/utils/functions.lua	copy
+linux	linux/hypr/variables.lua	~/.config/hypr/variables.lua	copy
 linux	linux/hypr/window-mute	~/.local/bin/window-mute	copy-x
-linux	linux/wallpaper/live-wallpaper.service	~/.config/systemd/user/live-wallpaper.service	copy
-linux	linux/ssh/ssh-add.service	~/.config/systemd/user/ssh-add.service	copy
-linux	linux/wallpaper/live-wallpaper-watchdog.service	~/.config/systemd/user/live-wallpaper-watchdog.service	copy
-linux	linux/wallpaper/live-wallpaper-watchdog.timer	~/.config/systemd/user/live-wallpaper-watchdog.timer	copy
-linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
-linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
+linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
 linux	linux/hyprsunset/hyprsunset.conf	~/.config/hypr/hyprsunset.conf	copy
-linux	linux/btop/btop.conf	~/.config/btop/btop.conf	copy
+linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
+linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
+linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy
+linux	linux/mpv/script-opts/thumbfast.conf	~/.config/mpv/script-opts/thumbfast.conf	copy
+linux	linux/mpv/script-opts/uosc.conf	~/.config/mpv/script-opts/uosc.conf	copy
+linux	linux/mpv/scripts/dolphin-sort.lua	~/.config/mpv/scripts/dolphin-sort.lua	copy
+linux	linux/noctalia/arch-update-tray.desktop	~/.config/autostart/arch-update-tray.desktop	copy
+linux	linux/noctalia/config.toml	~/.config/noctalia/config.toml	copy
+linux	linux/noctalia/fonts/google-sans-flex	~/.local/share/fonts/google-sans-flex	dir
+linux	linux/noctalia/lock/avatar-clamshell.png	~/.local/share/noctalia/lock/avatar-clamshell.png	copy
+linux	linux/noctalia/lock/scripts/apply.sh	~/.local/share/noctalia/lock/scripts/apply.sh	copy-x
 linux	linux/noctalia/lock/scripts/gen.py	~/.local/share/noctalia/lock/scripts/gen.py	copy
 linux	linux/noctalia/lock/scripts/params.json	~/.local/share/noctalia/lock/scripts/params.json	copy
-linux	linux/noctalia/lock/scripts/apply.sh	~/.local/share/noctalia/lock/scripts/apply.sh	copy-x
 linux	linux/noctalia/lock/scripts/reroll.py	~/.local/share/noctalia/lock/scripts/reroll.py	copy
 linux	linux/noctalia/lock/scripts/strip.py	~/.local/share/noctalia/lock/scripts/strip.py	copy
-linux	linux/noctalia/lock/avatar-clamshell.png	~/.local/share/noctalia/lock/avatar-clamshell.png	copy
-linux	linux/noctalia/fonts/google-sans-flex	~/.local/share/fonts/google-sans-flex	dir
+linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
+linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
+linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
+linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
+linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
+linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
+linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
+linux	linux/sddm/noctalia-card.conf	/etc/sddm.conf.d/noctalia-card.conf	copy
+linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
+linux	linux/sddm/themes/noctalia-card	/usr/share/sddm/themes/noctalia-card	dir
+linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
+linux	linux/ssh/ssh-add.service	~/.config/systemd/user/ssh-add.service	copy
+linux	linux/uwsm/env	~/.config/uwsm/env	copy
+linux	linux/uwsm/env-hyprland	~/.config/uwsm/env-hyprland	copy
+linux	linux/wallpaper/live-wallpaper	~/.local/bin/live-wallpaper	copy-x
+linux	linux/wallpaper/live-wallpaper-watchdog.service	~/.config/systemd/user/live-wallpaper-watchdog.service	copy
+linux	linux/wallpaper/live-wallpaper-watchdog.timer	~/.config/systemd/user/live-wallpaper-watchdog.timer	copy
+linux	linux/wallpaper/live-wallpaper.service	~/.config/systemd/user/live-wallpaper.service	copy
+mac	mac/fish/config.fish	~/.config/fish/config.fish	copy
+mac	mac/kitty/colors.conf	~/.config/kitty/colors.conf	copy
+mac	mac/kitty/macos.conf	~/.config/kitty/macos.conf	copy
+mac	mac/wm/aerospace/aerospace.toml	~/.config/aerospace/aerospace.toml	copy
+mac	mac/wm/karabiner/karabiner.json	~/.config/karabiner/karabiner.json	copy
+mac	mac/wm/linearmouse/linearmouse.json	~/.config/linearmouse/linearmouse.json	copy
+mac	mac/wm/sketchybar	~/.config/sketchybar	dir
+all	shared/agents/AGENTS.md	~/.claude/CLAUDE.md	seed
+all	shared/agents/AGENTS.md	~/.codex/AGENTS.md	copy
+all	shared/ccstatusline/settings.json	~/.config/ccstatusline/settings.json	seed
+all	shared/claude/settings.json	~/.claude/settings.json	seed
+linux	shared/cursor/keybindings.json	~/.config/Cursor/User/keybindings.json	copy	cursor
+mac	shared/cursor/keybindings.json	~/Library/Application Support/Cursor/User/keybindings.json	copy	/Applications/Cursor.app
+linux	shared/cursor/settings.json	~/.config/Cursor/User/settings.json	copy	cursor
+mac	shared/cursor/settings.json	~/Library/Application Support/Cursor/User/settings.json	copy	/Applications/Cursor.app
+all	shared/fastfetch/fastfetch	~/.local/bin/fastfetch	copy-x
+all	shared/fastfetch/greeting.jsonc	~/.config/fastfetch/greeting.jsonc	copy
+all	shared/fish/conf.d	~/.config/fish/conf.d	dir
+linux	shared/ghostty/auto/theme.ghostty	~/.config/ghostty/auto/theme.ghostty	seed	ghostty
+mac	shared/ghostty/auto/theme.ghostty	~/Library/Application Support/com.mitchellh.ghostty/auto/theme.ghostty	seed
+linux	shared/ghostty/config	~/.config/ghostty/config	copy	ghostty
+mac	shared/ghostty/config	~/Library/Application Support/com.mitchellh.ghostty/config	copy
+all	shared/git/gitconfig	~/.gitconfig	copy
+all	shared/kitty/kitty.conf	~/.config/kitty/kitty.conf	copy
+all	shared/nvim	~/.config/nvim	dir
+all	shared/starship/starship.toml	~/.config/starship/starship.toml	copy
+linux	shared/vscode/keybindings.json	~/.config/Code/User/keybindings.json	copy
+mac	shared/vscode/keybindings.json	~/Library/Application Support/Code/User/keybindings.json	copy
+linux	shared/vscode/settings.json	~/.config/Code/User/settings.json	copy
+mac	shared/vscode/settings.json	~/Library/Application Support/Code/User/settings.json	copy
+
+# Run or applied in place, not copied
+linux	linux/snapshots/setup-snapshots.sh	-	manual
+mac	mac/Brewfile	-	manual
+mac	mac/wm/macos-settings.sh	-	manual
+all	shared/orca	-	manual
+
+# Retired destinations: remove them where they still exist
+linux	-	~/.config/hypr/scheme/current.conf	gone
+mac	-	~/.config/borders	gone
+mac	-	~/.config/yabai	gone
+mac	-	~/.config/skhd	gone

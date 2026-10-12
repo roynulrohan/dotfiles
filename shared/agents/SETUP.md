@@ -6,7 +6,8 @@ agent reads global instructions, usually `~/.claude/CLAUDE.md` or
 
 After copying it to `~/.claude/CLAUDE.md`, run `rtk init -g`. rtk adds an
 `@RTK.md` line to the end of that file, so `./status.sh` then reports
-`~/.claude/CLAUDE.md` as differing. That difference is expected.
+`~/.claude/CLAUDE.md` as `seeded` (its manifest mode). That difference is
+expected.
 
 ## Tools I like
 

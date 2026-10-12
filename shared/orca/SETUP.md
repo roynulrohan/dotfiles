@@ -53,8 +53,8 @@ data. `apply` leaves a backup at `profile-state.db.dotfiles-bak` or
 `orca-data.json.dotfiles-bak`. The script needs `jq` and, for the database,
 `sqlite3`.
 
-`manifest.tsv` has no row for Orca and `./status.sh` does not check it, because
-the destination is part of a file. Use `./orca-settings.sh diff`.
+`manifest.tsv` lists Orca as a `manual` row and `./status.sh` does not check
+it, because the destination is part of a file. Use `./orca-settings.sh diff`.
 
 ## Install
 

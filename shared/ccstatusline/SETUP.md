@@ -22,7 +22,7 @@ until you run `bun add -g ccstatusline@latest`.
 
 ccstatusline records the install in an `installation` block in the live
 `settings.json`. That block is per machine and is not in this repo, so
-`./status.sh` reports the file as differing.
+`./status.sh` reports the file as `seeded` (its manifest mode).
 
 `gh` is optional and only feeds the `git-pr` segment.
 
