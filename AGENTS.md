@@ -179,8 +179,11 @@ section to [`machines.md`](machines.md), in its first commit. Commits before 202
    difference first.
 7. **Run `./check.sh` after `git add` and before every commit.** It checks
    syntax (JSON, TOML, Python, Lua, shell, fish), the manifest rows, that every
-   file has a manifest row, and secrets through gitleaks. Commit only when it
-   prints no `FAIL` line.
+   file has a manifest row, that every link in the docs leads to a file, and
+   secrets through gitleaks. Commit only when it prints no `FAIL` line.
+8. **Write repo paths in docs as links**, such as
+   [`linux/hypr/SETUP.md`](linux/hypr/SETUP.md), relative to the doc, so
+   readers can click through. A folder links to its `SETUP.md`.
 
 ## When you're done
 
