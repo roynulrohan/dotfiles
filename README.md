@@ -2,7 +2,8 @@
 
 Config for a CachyOS + Hyprland desktop (Noctalia, HyprMod) and a Mac
 (AeroSpace, SketchyBar, kitty), sharing fish, starship, a fastfetch greeting,
-kitty, git and Claude Code config between them.
+kitty, git and Claude Code config between them. The hardware of each machine
+is in `machines.md`.
 
 No install script, no symlinks. Files get copied to where the app expects them
 and copied back when they change. Every package has a `SETUP.md` saying where its

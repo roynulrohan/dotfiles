@@ -264,8 +264,8 @@ Example subject:
 | `cachy-os` | CachyOS desktop | `cachyos` |
 | `macbook-pro` | the Mac | TODO: ask the user |
 
-A new machine picks a short kebab-case tag and adds a row to this table in its
-first commit. Commits before 2026-10-07 have no tag.
+A new machine picks a short kebab-case tag and adds a row to this table, and a
+section to `machines.md`, in its first commit. Commits before 2026-10-07 have no tag.
 
 6. **Read the diff before you copy a live file back.** Copy back only the lines
    that belong in the repo. Lines for one machine only, such as an installer's
