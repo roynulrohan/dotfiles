@@ -44,20 +44,24 @@ journal: `journalctl --user -u live-wallpaper`.
 
 ## Picks
 
-The list at the top of `live-wallpaper` maps monitors to Workshop IDs; only
-connected monitors get a wallpaper. Change a pick there, then rerun it.
+The list at the top of `live-wallpaper` maps monitors to wallpapers: a Workshop
+ID, or the name of a local copy (below). Only connected monitors get a
+wallpaper. Change a pick there, then rerun it.
 
 | Monitor | Wallpaper | ID |
 |---|---|---|
-| DP-1 (main, middle) | 世界很温柔 (Eri Uesugi), video, 4K 60 fps; plays a local 1080p copy | `3314492008` |
+| DP-1 (main, middle) | Ayanami Rei, "effects": video, 30 fps, a local copy of Workshop `3407977762` (also the login video) | `ayanami-rei-effects` |
 | HDMI-A-1 (right) | [4K]CITRUS - go to class | `2704773569` |
 | DP-2 (left) | Rain 雨 [4K] | `2511663284` |
 
-Tested on 2026-10-07 with build r627:
+Other local copies: `ayanami-rei-minimal` (the calmer "Beneath Blue Light"
+video) and `3314492008` (世界很温柔, the previous main one).
+
+Tested on 2026-10-07 and 2026-10-12 with build r627:
 
 | Works | Problems |
 |---|---|
-| Elaina (prompt box off, see below; too blue as the main one), Citrus (some character animations don't move: "Unsupported puppet model header MDLV0013"), Rain 雨 [4K], Your name, Kayn (video), Futari Dake No Hanabi (video), 世界很温柔 (video), Nami Dark Background, Frieren - Pagoda of flowers | Dream View. and Dream View. 3: stars render as lines. Nico Robin 4k: crashes on load (`json type_error.302`) |
+| Ayanami Rei 『night』 (scene, `3258032485`; lighter than a video: 5.6% CPU and 310 MiB against 7.4% and 438 MiB), Elaina (prompt box off, see below; too blue as the main one), Citrus (some character animations don't move: "Unsupported puppet model header MDLV0013"), Rain 雨 [4K], Your name, Kayn (video), Futari Dake No Hanabi (video), 世界很温柔 (video), Nami Dark Background, Frieren - Pagoda of flowers | Dream View. and Dream View. 3: stars render as lines. Nico Robin 4k: crashes on load (`json type_error.302`). Ayanami Rei 『Starry』 (`3571376089`): shader compile errors, broken. Ayanami Rei 綾波レイ・丽 (`3299982340`): partly broken |
 
 **Video** wallpapers are plain `.mp4`/`.webm` files and play exactly as on
 Windows. **Scene** wallpapers are re-implemented, so some effects are missing
@@ -69,9 +73,12 @@ growth on Hyprland with NVIDIA.
 ## Memory
 
 The monitors are 1080p, so 4K wallpapers only cost memory. A 1080p copy of a
-video wallpaper goes in `~/.local/share/live-wallpapers/<id>-1080p/`, outside
-Steam's folder so Workshop updates don't overwrite it; `live-wallpaper` uses
-it instead of the Workshop original when it exists. Made with NVENC, 60 fps
+video wallpaper goes in `~/.local/share/live-wallpapers/<name>-1080p/`, outside
+Steam's folder so Workshop updates or unsubscribing don't touch it;
+`live-wallpaper` uses it instead of the Workshop original when it exists. The
+4K original goes next to it in `<name>-4k/`, for a future 4K monitor. A copy
+needs only the video and a `project.json` with `"type" : "video"` and its
+`"file"`, so videos from outside the Workshop work the same way. Made with NVENC, 60 fps
 kept so the same file suits mpvpaper too:
 
 ```bash
