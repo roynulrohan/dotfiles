@@ -24,7 +24,8 @@
     "suppressWhenFocused": true,
     "customSoundId": "system",
     "customSoundPath": null,
-    "customSoundVolume": 100
+    "customSoundVolume": 100,
+    "mutedNotificationSourceIds": []
   },
   "defaultTuiAgent": "claude",
   "tabAutoGenerateTitle": true,

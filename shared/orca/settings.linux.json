@@ -1,6 +1,6 @@
 {
   "terminalFontFamily": "JetBrainsMono NFM",
-  "windowBackgroundBlur": false,
+  "windowBackgroundBlur": true,
   "terminalColorOverrides": {
     "foreground": "dcdfe4"
   }
