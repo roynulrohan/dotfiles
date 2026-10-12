@@ -9,10 +9,12 @@ if command -q eza
 end
 
 # The matrix rain on the terminal's own see-through background (-D) in the
-# theme's colours (16-colour mode). cmatrix always paints a black background.
-# Arch's neo-matrix package names the program neo-matrix, not neo.
+# theme's colours (16-colour mode); neo-matrix has no settings file, so the
+# alias carries the options. cmatrix always paints a black background, so its
+# name runs neo-matrix too. Arch's package names the program neo-matrix, not neo.
 if command -q neo-matrix
-    alias cmatrix 'neo-matrix -D --colormode=16'
+    alias neo-matrix 'command neo-matrix -D --colormode=16'
+    alias cmatrix neo-matrix
 end
 
 # Short ls forms, from caelestia's config.fish. Linux only: on macOS `la` stays
