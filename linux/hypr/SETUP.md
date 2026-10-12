@@ -2,8 +2,8 @@
 
 `~/.config/hypr`, owned by this repo since the switch from caelestia's shell to
 Noctalia (2026-10-08). It started as caelestia's tree at revision `1ee7a98`;
-the untouched original is in `linux/caelestia/hypr-reference`, with notes on
-what needed caelestia. caelestia is no longer installed (`linux/caelestia`).
+the untouched original is in `history/caelestia/hypr-reference`, with notes on
+what needed caelestia. caelestia is no longer installed (`history/caelestia`).
 
 ## Files
 

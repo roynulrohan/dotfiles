@@ -2,7 +2,7 @@
 
 What this desktop runs on top of a CachyOS install. `pacman -S` unless marked AUR
 (`paru -S`). Until 2026-10-09 caelestia's installer set up part of this
-desktop (`caelestia/`); what it brought that this setup still uses is listed
+desktop (`history/caelestia`); what it brought that this setup still uses is listed
 here too.
 
 | Package | Why |

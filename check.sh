@@ -118,7 +118,7 @@ for n, line in enumerate(open("manifest.tsv", encoding="utf-8"), 1):
 for f in files:
     base = os.path.basename(f)
     if ("/" not in f or f.endswith(".md") or base.startswith("LICENSE")
-            or base == ".gitkeep" or f.startswith(("history/", "linux/caelestia/"))):
+            or base == ".gitkeep" or f.startswith("history/")):
         continue
     if not any(f == repo or (mode in ("dir", "manual") and f.startswith(repo + "/"))
                for mode, repo in rows):

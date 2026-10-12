@@ -54,7 +54,7 @@ docs each line points to.
 
 - **Hyprland with the Noctalia shell** (`linux/hypr`, `linux/noctalia`).
   Noctalia is the top bar, launcher, lock, idle and notifications. The desktop
-  ran on caelestia before; that history is in `linux/caelestia/README.md`.
+  ran on caelestia before; that history is in `history/caelestia/README.md`.
 - **HyprMod first.** Binds and rules go through HyprMod (`linux/hyprmod`) where
   it can express them. The rest goes in `hypr-user.lua` (`linux/hypr/SETUP.md`).
 - **HyDE-style keybinds on top of caelestia's.** Unbind caelestia's original
@@ -92,7 +92,7 @@ docs each line points to.
 
 The user ranked the desktop's keys by role. The role matters, not the app or
 the exact key. Copied from the Preferences in
-`linux/caelestia/hypr-reference/README.md`, which recorded them against
+`history/caelestia/hypr-reference/README.md`, which recorded them against
 caelestia's keys.
 
 - **Must:** Super+T terminal, Super+E file manager, Super+B browser; Super+M
@@ -118,12 +118,13 @@ caelestia's keys.
 | Directory | Applies to | Packages |
 |---|---|---|
 | `shared/` | both | `fish`, `starship`, `fastfetch`, `kitty`, `ghostty`, `git`, `agents`, `claude`, `ccstatusline`, `nvim`, `vscode`, `cursor`, `orca` |
-| `linux/` | CachyOS desktop | `fish` (entry point), `hypr` (Hyprland), `noctalia` (shell), `hyprmod`, `sddm` (login screen), `wallpaper` (live wallpapers), `mpv`, `pipewire` (headset EQ), `hyprsunset` (night light), `btop`, `equibop` (Discord), `uwsm` (session environment), `ssh` (key unlock), `snapshots`, `caelestia` (history and reference copy), `packages.md` |
+| `linux/` | CachyOS desktop | `fish` (entry point), `hypr` (Hyprland), `noctalia` (shell), `hyprmod`, `sddm` (login screen), `wallpaper` (live wallpapers), `mpv`, `pipewire` (headset EQ), `hyprsunset` (night light), `btop`, `equibop` (Discord), `uwsm` (session environment), `ssh` (key unlock), `snapshots`, `packages.md` |
 | `mac/` | Mac | `fish` (entry point), `kitty` (colours), `wm` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
+| `history/` | nothing; reference only | `caelestia` (the previous desktop base and a copy of its Hyprland config) |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
-gotchas, how to verify. `linux/caelestia` is history, not a package, and has a
-`README.md` instead.
+gotchas, how to verify. `history/` holds what the setup no longer uses; its
+folders are not packages and have a `README.md` instead.
 
 ## Order
 
@@ -243,9 +244,10 @@ These rules apply to every edit, by any agent.
 3. **Own what you adopt; never mix in a framework's live tree.**
    `~/.config/hypr` started as caelestia's and is now ours (`linux/hypr`);
    caelestia's original stays as a reference copy in
-   `linux/caelestia/hypr-reference`. `~/.config/fish` is ours too: `conf.d`
+   `history/caelestia/hypr-reference`. `~/.config/fish` is ours too: `conf.d`
    (`shared/fish`) and `config.fish` (`linux/fish`, `mac/fish`). Other files a
    framework or tool drops in there stay out of `manifest.tsv`.
+   When you copy someone else's work into the repo, credit it in `CREDITS.md`.
 4. **Keep shared configs portable.** No hardcoded home paths. Guard OS-specific
    bits so the other OS skips them. Document OS differences in the package's
    `SETUP.md`.

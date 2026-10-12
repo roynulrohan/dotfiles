@@ -23,8 +23,9 @@ Mac). Or do it by hand from the `SETUP.md` files.
 
 ```
 shared/   fish  starship  fastfetch  kitty  ghostty  git  agents  claude  ccstatusline  nvim  vscode  cursor  orca
-linux/    fish  hypr  noctalia  hyprmod  sddm  wallpaper  mpv  pipewire  hyprsunset  btop  equibop  uwsm  ssh  snapshots  caelestia (history)  packages.md
+linux/    fish  hypr  noctalia  hyprmod  sddm  wallpaper  mpv  pipewire  hyprsunset  btop  equibop  uwsm  ssh  snapshots  packages.md
 mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewfile
+history/  caelestia (the desktop's base until 2026-10-09, and a copy of its Hyprland config)
 ```
 
 ## Keeping it current
@@ -32,6 +33,10 @@ mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewf
 Edit the live file, check with `./status.sh --diff`, copy into the repo, run
 `./check.sh`, commit.
 Or tell the agent "sync my kitty config into dotfiles".
+
+## Credits
+
+Inspirations, and the work included from others, are in `CREDITS.md`.
 
 ## Not in here
 

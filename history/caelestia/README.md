@@ -1,5 +1,7 @@
 # caelestia (history and reference)
 
+This folder was `linux/caelestia` until 2026-10-12.
+
 Until 2026-10-08 the CachyOS desktop ran on
 [caelestia dots](https://github.com/caelestia-dots/caelestia): caelestia's
 shell (bar, launcher, lock screen, notifications, idle), its CLI for
@@ -39,4 +41,5 @@ caelestia's `shell.json` (bar, idle, launcher actions) is retired; Noctalia's
 keys and tools needed caelestia, and the user's key preferences, so the
 Hyprland setup can be rebuilt from scratch. It is a snapshot from 2026-10-08:
 where it says `linux/caelestia/SETUP.md` or `~/.config/caelestia`, read
-`linux/hypr/SETUP.md` and `~/.config/hypr`.
+`linux/hypr/SETUP.md` and `~/.config/hypr`. Files it places in
+`linux/caelestia` now live in `linux/hypr` or were retired.
