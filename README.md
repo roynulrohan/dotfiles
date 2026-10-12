@@ -37,7 +37,7 @@ On the gaming PC:
 | Files and media | Dolphin, mpv | |
 | Font | JetBrains Mono Nerd Font | JetBrains Mono Nerd Font |
 
-The hardware is in `machines.md`.
+The hardware is in [`machines.md`](machines.md).
 
 ## Install
 
@@ -49,7 +49,7 @@ gh auth login
 gh repo clone roynulrohan/dotfiles ~/Coding/setup/dotfiles
 ```
 
-Then follow `INSTALL.md`.
+Then follow [`INSTALL.md`](INSTALL.md).
 
 ## How it works
 
@@ -77,10 +77,10 @@ history/  caelestia (the desktop's base until 2026-10-09, and a copy of its Hypr
 
 | File | What |
 |---|---|
-| `INSTALL.md` | setting up a machine |
-| `machines.md` | the hardware and the desk |
-| `CREDITS.md` | inspirations, and the work included from others |
-| `AGENTS.md` | instructions for coding agents |
+| [`INSTALL.md`](INSTALL.md) | setting up a machine |
+| [`machines.md`](machines.md) | the hardware and the desk |
+| [`CREDITS.md`](CREDITS.md) | inspirations, and the work included from others |
+| [`AGENTS.md`](AGENTS.md) | instructions for coding agents |
 | `manifest.tsv`, `status.sh`, `check.sh` | the file map and its two checks |
 
 ## Not in here
