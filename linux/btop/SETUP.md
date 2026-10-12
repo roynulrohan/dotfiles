@@ -30,3 +30,11 @@ transparent background.
 - `save_config_on_exit = true`: btop rewrites `btop.conf` whole when it exits,
   so settings changed in its menu reach the live file, and comments added by
   hand are lost. Copy the file back when `./status.sh` shows it differs.
+
+## Verify
+
+```bash
+./status.sh | grep btop                       # ok
+grep '^color_theme' ~/.config/btop/btop.conf  # color_theme = "noctalia"
+ls ~/.config/btop/themes/noctalia.theme       # the file exists: Noctalia's template wrote it
+```

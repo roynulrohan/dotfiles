@@ -27,3 +27,12 @@ snapper -c home undochange N..0 [path]            # revert home (or one path) to
 Unbootable system: pick a snapshot in the Limine menu, log in, run
 `limine-snapper-restore`, reboot. Snapshots live on the same disk: they are not
 backups.
+
+## Verify
+
+```bash
+snapper list-configs                               # home and root
+snapper -c home list | tail -3                     # recent timeline snapshots, without sudo
+grep '^TIMELINE_LIMIT' /etc/snapper/configs/root   # HOURLY 5, DAILY 7, the rest 0
+systemctl is-enabled snapper-timeline.timer        # enabled
+```

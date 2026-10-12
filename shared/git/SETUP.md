@@ -26,3 +26,12 @@
 `gitconfig` is deliberately plain: rebase on pull, auto upstream on first push,
 prune on fetch, rerere, histogram diffs, micro as editor. Signing uses the SSH
 key, no GPG. Never copy private keys between machines.
+
+## Verify
+
+```bash
+./status.sh | grep gitconfig                           # ok
+ssh -T git@github.com                                  # "You've successfully authenticated"
+gh ssh-key list | cut -f5                              # authentication and signing
+git cat-file -p HEAD | grep -c 'BEGIN SSH SIGNATURE'   # 1, in a repo: the last commit is signed
+```

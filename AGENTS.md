@@ -85,7 +85,10 @@ docs each line points to.
 - **AeroSpace + SketchyBar** (`mac/wm`).
 - **Super is the key second from the spacebar**, as on Linux. Karabiner sends
   Ctrl+Option for it, so every Cmd shortcut stays native.
-- **The Mac binds are a minimal subset of the Hyprland ones.** Never change
+- **The Mac binds are a smaller copy of the Hyprland ones.** One pair differs
+  because Super on the Mac already includes Ctrl: Super+Shift+arrows moves a
+  window (Ctrl+Super+Shift+arrows on Linux), and Super+Minus and Super+Equal
+  resize (Super+Shift+arrows on Linux) (`mac/wm/SETUP.md`, Binds). Never change
   Hyprland to match the Mac.
 
 ### Key roles (CachyOS)

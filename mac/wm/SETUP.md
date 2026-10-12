@@ -69,7 +69,9 @@ product ids. Add them to the AULA rule's `identifiers` for a PC-layout board, or
 to the built-in rule for a Mac-layout one.
 
 Super already contains Ctrl, so the Linux chord Ctrl+Super+Shift+arrows lands on
-the same bind as Super+Shift+arrows.
+the same bind as Super+Shift+arrows. That chord moves windows here, as
+Ctrl+Super+Shift+arrows does on Linux, so resizing moved to Super+Minus and
+Super+Equal (Linux resizes with Super+Shift+arrows).
 
 ## Binds
 

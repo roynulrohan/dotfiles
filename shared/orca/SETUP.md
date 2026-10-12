@@ -87,3 +87,12 @@ account by hand.
   Orca's `*Migrated` and `*DefaultedFor*` flags.
 - Orca writes its own agent hooks into `~/.orca/agent-hooks`. They are not in
   this repo.
+
+## Verify
+
+```bash
+./orca-settings.sh diff   # in sync
+```
+
+A `+` line with no `-` line is a nested key that a newer Orca added. It is not
+drift. Orca opens without the "two saved copies that don't match" question.

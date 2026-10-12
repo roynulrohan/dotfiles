@@ -229,3 +229,12 @@ the CachyOS desktop.
 - `singleWindowGapsOut` in `hypr-vars.lua` must track HyprMod's outer gap by hand.
 - Super+R opens the todo pop-up workspace and starts Todoist in it
   (`todoist-appimage`, AUR; see `linux/packages.md`).
+
+## Verify
+
+```bash
+./status.sh | grep -E 'config/hypr/|window-mute'   # ok on every line
+hyprctl configerrors                                # blank lines only: no config errors
+git -C ~/.local/share/hypr-plugins/split-monitor-workspaces rev-parse --short HEAD   # f26d624
+hyprctl workspaces -j | jq -r '.[] | select(.id > 0) | .monitor' | sort | uniq -c   # 10 per monitor
+```

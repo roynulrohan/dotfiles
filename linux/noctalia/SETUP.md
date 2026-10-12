@@ -347,3 +347,13 @@ systemctl --user mask --now arch-update.timer
 The package stays installed; `arch-update` in a terminal still runs its
 interactive update (Arch news, `.pacnew` files, orphans, cache cleanup).
 
+## Verify
+
+```bash
+./status.sh | grep -E '/noctalia/|google-sans|arch-update'   # ok on every line
+noctalia config validate                        # ✓ Config is valid
+noctalia msg plugins list | grep -w enabled     # roynul/workspace-apps, workspace-pills, arch-updater, k4n4t4/hypr-submap
+systemctl --user is-enabled arch-update.timer   # masked
+```
+
+The bar shows at the top of the screen, with the islands listed in "Bar".

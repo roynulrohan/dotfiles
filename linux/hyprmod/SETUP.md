@@ -88,3 +88,15 @@ diff linux/hyprmod/hyprland-gui.lua ~/.config/hypr/hyprland-gui.lua
 cp linux/hyprmod/hyprland-gui.lua ~/.config/hypr/
 ~/.local/bin/live-wallpaper
 ```
+
+## Verify
+
+```bash
+./status.sh | grep hyprland-gui                          # ok
+grep -A1 'HyprMod managed' ~/.config/hypr/hyprland.lua  # the two lines in Gotcha
+python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home()/".config/hypr/hyprland.lua")'
+hyprctl monitors -j | jq -r 'sort_by(.x)[].name'         # DP-2, DP-1, HDMI-A-1: left to right
+```
+
+The `python3` line reads the config the way HyprMod does. It prints nothing
+when HyprMod can read the whole config.

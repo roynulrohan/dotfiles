@@ -15,3 +15,13 @@ Equibop's on purpose.
 
 **After an Equibop update** that changes its launcher entry, refresh the copy:
 `sed 's/^Icon=equibop$/Icon=discord/' /usr/share/applications/equibop.desktop > ~/.local/share/applications/equibop.desktop`.
+
+## Verify
+
+```bash
+./status.sh | grep equibop   # ok
+sed 's/^Icon=equibop$/Icon=discord/' /usr/share/applications/equibop.desktop |
+    diff - ~/.local/share/applications/equibop.desktop   # no output: the copy is current
+```
+
+The launcher and the bar show Discord's logo for Equibop.

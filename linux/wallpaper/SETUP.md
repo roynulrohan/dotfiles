@@ -141,3 +141,13 @@ so a red wallpaper gives pink accents whatever the scheme variant.
   is fullscreen.
 - **Preview** a wallpaper in a window: `linux-wallpaperengine --silent <id>`.
 - **Login screen:** the SDDM theme can loop a video too; see `linux/sddm`.
+
+## Verify
+
+```bash
+./status.sh | grep live-wallpaper   # ok on all four lines
+systemctl --user is-active live-wallpaper.service live-wallpaper-watchdog.timer   # active, twice
+pgrep -af '^\./linux-wallpaperengine' | grep -o -- '--screen-root [^ ]*'          # one line per connected monitor
+```
+
+Every connected monitor plays its wallpaper from "Picks".

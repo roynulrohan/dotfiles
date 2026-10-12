@@ -22,3 +22,14 @@ though on the CachyOS desktop kitty is the terminal Super+T launches.
 - `font-codepoint-map` sends the Nerd Font icon ranges to the non-Mono variant, so
   icons draw at two cells instead of being squeezed into one; text stays NFM.
   Remove the two lines to go back.
+
+## Verify
+
+```bash
+./status.sh | grep ghostty   # config: ok; auto/theme.ghostty: ok or seeded
+ghostty +validate-config     # no output: the config is valid
+```
+
+Run the `ghostty` line in a Ghostty window: Ghostty adds its own command to
+`PATH` there. The Homebrew cask does not link it. A new window shows the
+fastfetch greeting with its image logo.

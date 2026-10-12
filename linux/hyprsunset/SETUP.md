@@ -49,3 +49,14 @@ The tint is not captured in screenshots, recordings or screen sharing.
 colour accuracy; it's left at 1.0.
 
 Source: [hyprsunset on the Hyprland wiki](https://wiki.hypr.land/Hypr-Ecosystem/hyprsunset/).
+
+## Verify
+
+```bash
+./status.sh | grep hyprsunset                   # ok
+systemctl --user is-active hyprsunset.service   # active
+hyprctl hyprsunset temperature                  # 5800
+```
+
+The screen has a light warm tint. Screenshots don't show it, so look at the
+screen itself.
