@@ -1,8 +1,7 @@
 # kitty colours (macOS)
 
-Catppuccin Frappé theme, the same one the Mac had before fish. On Linux this
-file holds caelestia's last scheme instead, as a fallback; see
-`shared/kitty/SETUP.md`.
+Catppuccin Frappé theme, the same one the Mac had before fish. Linux doesn't
+use this file: its colours come from Noctalia (see `shared/kitty/SETUP.md`).
 
 | Repo | Destination |
 |---|---|

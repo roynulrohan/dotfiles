@@ -28,7 +28,7 @@ Hyprland preset. Copy `config.toml`, then set the wallpaper the colours come
 from:
 
 ```bash
-noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
+noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/ayanami-rei.jpg
 ```
 
 Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`), in its own

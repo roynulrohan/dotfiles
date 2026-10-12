@@ -1,7 +1,9 @@
 # claude
 
-Claude Code's own settings, hooks, and skills. The global instructions it reads
-live in `shared/agents` and are copied to `~/.claude/CLAUDE.md`.
+Claude Code's own settings (`settings.json` only; hooks are entries in it, and
+skills and plugins are installed per machine, see below). The global
+instructions it reads live in `shared/agents` and are copied to
+`~/.claude/CLAUDE.md`.
 
 ## Files
 
@@ -18,29 +20,21 @@ about it is stored here beyond the one line in `settings.json`.
 
 ## Dependencies
 
-| Tool | Needed for | macOS | Debian/Ubuntu | If missing |
+| Tool | Needed for | CachyOS | macOS | If missing |
 |---|---|---|---|---|
 | `bun` | installing ccstatusline | `curl -fsSL https://bun.sh/install \| bash` | same | statusline doesn't render |
 | `ccstatusline` | statusline, ccstatusline hooks | `bun add -g ccstatusline` | same | statusline doesn't render |
-| `rtk` | the `rtk hook claude` entry in `settings.json` | `brew install rtk` | `cargo install rtk` | the hook command fails on every tool call |
-| `gh` | `git-pr` statusline segment | `brew install gh` | [cli.github.com](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) | segment stays blank |
+| `rtk` | the `rtk hook claude` entry in `settings.json` | `paru -S rtk-bin` | `brew install rtk` | the hook command fails on every tool call |
+| `gh` | `git-pr` statusline segment | `pacman -S github-cli` | `brew install gh` | segment stays blank |
 
 `bun` matters most. The rtk hook is a native binary command, so it needs neither
 bash nor jq, but it does need `rtk` on PATH: without it, every tool call hits a
 failing hook. On a machine without rtk, run `rtk init -g --uninstall` or drop the
 `rtk hook claude` entry from `settings.json`.
 
-On CachyOS (Arch), install rtk from the AUR: `paru -S rtk-bin`.
-
-**On WSL and Debian/Ubuntu, `rtk` has no package** — it needs a Rust toolchain
-(`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`, then
-`cargo install rtk`). That's a big dependency for a token optimiser, so skipping
-it is reasonable. If you skip it, remove the hook entry as well, and say you did
-both.
-
-Claude Code itself installs on WSL with the same native installer as Linux:
+Claude Code itself installs with its native installer on both machines:
 `curl -fsSL https://claude.ai/install.sh | bash`. It lands in `~/.local/bin`,
-which `shell/zshrc` already adds to PATH.
+which `shared/fish` puts on PATH (`conf.d/00-roynul-env.fish`).
 
 ## Platform notes
 

@@ -16,9 +16,9 @@
 1. `ssh-keygen -t ed25519 -C roynulrohan@gmail.com` with a passphrase
 2. `gh auth login` — GitHub.com, SSH, upload the key
 3. Verified commits: `gh auth refresh -s admin:ssh_signing_key`, then
-   `gh ssh-key add ~/.ssh/id_ed25519.pub --type signing`, then set
-   `commit.gpgsign` and `tag.gpgsign` to `true` in gitconfig. Left `false` in the
-   committed file so an unregistered key doesn't produce "Unverified" badges.
+   `gh ssh-key add ~/.ssh/id_ed25519.pub --type signing`. The committed
+   gitconfig already sets `commit.gpgsign` and `tag.gpgsign` to `true`, so
+   register the key before the first commit, or GitHub shows "Unverified".
 
 ## Notes
 

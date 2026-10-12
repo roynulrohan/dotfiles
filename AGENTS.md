@@ -66,8 +66,8 @@ decision the repo doesn't cover.
   changes on the Mac**: nothing in this repo overrides its terminal palette.
 - **Claude Code is the primary agent.** `shared/agents` holds the global
   instructions every agent reads, copied to `~/.claude/CLAUDE.md` and
-  `~/.codex/AGENTS.md`; `shared/claude` holds Claude Code's own settings, hooks
-  and skills. Both matter; get them right.
+  `~/.codex/AGENTS.md`; `shared/claude` holds Claude Code's own `settings.json`
+  (plugins and skills are installed per machine). Both matter; get them right.
 
 ## Layout
 

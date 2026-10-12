@@ -69,6 +69,8 @@ sudo ln -sfn /var/lib/sddm-assets/colours.conf /usr/share/sddm/themes/noctalia-c
 sudo install -m 755 Xsetup /etc/sddm/Xsetup
 sudo install -m 644 x11.conf noctalia-card.conf /etc/sddm.conf.d/
 # 5. As you, no sudo: Noctalia's side (linux/noctalia), then the first sync.
+# These overwrite live files: on a machine that already has them, run
+# ../../status.sh first and copy back anything newer before continuing.
 # Atomic: Noctalia watches config.toml and could read a half-copied file.
 cp ../noctalia/config.toml ~/.config/noctalia/config.toml.new && mv ~/.config/noctalia/config.toml.new ~/.config/noctalia/config.toml
 cp ../noctalia/templates/sddm-theme.conf ~/.config/noctalia/templates/

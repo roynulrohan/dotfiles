@@ -27,6 +27,7 @@ here too.
 | `equibop-bin` (AUR) | Equibop, the default Discord app; a Noctalia template writes its theme (see `noctalia/`). The official `discord` stays installed alongside |
 | `linux-wallpaperengine-git` (AUR) | live wallpapers from Wallpaper Engine (installed through Steam/Proton); see `wallpaper/` |
 | `jellyfin-desktop-git` (AUR) | Jellyfin client; replaced the repo's `jellyfin-desktop`; kept opaque by a HyprMod rule |
+| `todoist-appimage` (AUR) | Todoist, started in the todo pop-up workspace (Super+R) |
 | `visual-studio-code-bin` (AUR) | VS Code, Microsoft's build; replaced the `code` (Code - OSS) that caelestia's installer added. See `shared/vscode` |
 | `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
 | `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see `shared/claude`) |

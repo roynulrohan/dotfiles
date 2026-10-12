@@ -28,8 +28,8 @@ Extensions are not captured for Cursor. The `Brewfile`'s `vscode` lines are VS
 Code's list — Cursor uses a different marketplace and `cursor --install-extension`
 won't necessarily resolve the same identifiers. Reinstall by hand.
 
-Same caveat as VS Code: skim `settings.json` after copying for hardcoded
-`/Users/roynulrohan` paths.
+Skim `settings.json` after copying for hardcoded home paths such as
+`/Users/roynulrohan`; the shared file must not contain any.
 
 ## Verify
 

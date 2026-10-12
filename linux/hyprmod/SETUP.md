@@ -82,8 +82,9 @@ so restore it, then restart the live wallpapers, which only cover monitors that
 were connected when they started:
 
 ```bash
-cp linux/hyprmod/hyprland-gui.lua ~/.config/hypr/   # from the repo root
+# From the repo root. Look at the diff first: if HyprMod changed anything else
+# since the last commit, copy that back into the repo instead of overwriting it.
+diff linux/hyprmod/hyprland-gui.lua ~/.config/hypr/hyprland-gui.lua
+cp linux/hyprmod/hyprland-gui.lua ~/.config/hypr/
 ~/.local/bin/live-wallpaper
 ```
-
-Check `diff` first if HyprMod changed anything else since the last commit.

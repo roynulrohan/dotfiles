@@ -227,5 +227,5 @@ the CachyOS desktop.
 ## Things to know
 
 - `singleWindowGapsOut` in `hypr-vars.lua` must track HyprMod's outer gap by hand.
-- Super+R (the todo pop-up workspace) starts Todoist, which isn't installed,
-  so it opens an empty scratchpad.
+- Super+R opens the todo pop-up workspace and starts Todoist in it
+  (`todoist-appimage`, AUR; see `linux/packages.md`).

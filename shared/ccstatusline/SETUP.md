@@ -16,7 +16,7 @@ Same path on both platforms. Copy it into place.
 
 A global install: `bun add -g ccstatusline`. The statusline runs as
 `ccstatusline` from PATH (bun installs it to `~/.bun/bin`), wired up in
-`claude/settings.json` under `statusLine` and as `--hook` entries on
+`shared/claude/settings.json` under `statusLine` and as `--hook` entries on
 `UserPromptSubmit` and `PreToolUse:Skill`. It stays on the installed version
 until you run `bun add -g ccstatusline@latest`.
 
@@ -29,7 +29,7 @@ ccstatusline records the install in an `installation` block in the live
 ## Platform notes
 
 Fully portable — it's a layout description, no paths inside. Needs a Nerd Font
-for the segment glyphs (see `shell/SETUP.md`) and a terminal with truecolor;
+for the segment glyphs (JetBrainsMono Nerd Font, see `AGENTS.md`) and a terminal with truecolor;
 `colorLevel: 3` means 24-bit. Ghostty and kitty both qualify.
 
 `powerline.enabled` is `false`, so no powerline separator glyphs are required
@@ -38,11 +38,11 @@ beyond the Nerd Font already needed for the prompt.
 ## Gotcha
 
 Re-running the ccstatusline installer **appends** its hooks to
-`claude/settings.json` without checking whether they're already there. Running it
+`~/.claude/settings.json` without checking whether they're already there. Running it
 three times gets you three copies on each event and three ccstatusline processes per
 keystroke. The config in this repo is deduplicated — if you install ccstatusline
 via its own installer rather than by copying this file, check
-`claude/settings.json` afterwards and remove the duplicates.
+`~/.claude/settings.json` afterwards and remove the duplicates.
 
 ## Verify
 

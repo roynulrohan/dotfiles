@@ -20,12 +20,12 @@ the lockfile — copy it back when you want the new pins on the other machine.
 
 ## Install
 
+- CachyOS: `pacman -S neovim`
 - macOS: `brew install neovim`
-- Debian/Ubuntu: `apt install neovim` is usually too old for LazyVim (needs
-  ≥0.9). Prefer the official appimage or `snap install nvim --classic`.
 
 Recommended extras LazyVim uses if present: `ripgrep` and `fd` (both already in
-`shell/SETUP.md`), plus a C compiler and `git` for treesitter builds.
+`linux/packages.md` and `mac/Brewfile`), plus a C compiler and `git` for
+treesitter builds.
 
 ## Terminal background
 

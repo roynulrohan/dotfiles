@@ -115,7 +115,7 @@ linux-wallpaperengine draws. Give it a still frame of the main wallpaper; the
 stills live in `~/Pictures/Wallpapers/live/` (not in this repo):
 
 ```bash
-noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/eri-uesugi.png
+noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/ayanami-rei.jpg
 ```
 
 Ways to get a still:

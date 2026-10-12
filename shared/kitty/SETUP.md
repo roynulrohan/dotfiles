@@ -11,7 +11,7 @@ On the Mac, AeroSpace's Super+T opens new windows through kitty's remote control
 | Repo | Destination | Note |
 |---|---|---|
 | `kitty.conf` | `~/.config/kitty/kitty.conf` | shared |
-| `../../mac/kitty/colors.conf` | `~/.config/kitty/colors.conf` | **macOS**; on Linux generate it (below) |
+| `../../mac/kitty/colors.conf` | `~/.config/kitty/colors.conf` | **macOS** only; on Linux colours come from Noctalia (below) |
 | `../../mac/kitty/macos.conf` | `~/.config/kitty/macos.conf` | **macOS**; socket path for remote control |
 | — | `~/.config/kitty/local.conf` | per-machine overrides, e.g. `font_size 18`; create empty if absent |
 
@@ -38,9 +38,11 @@ which has no such file, loads nothing. The template is a copy of Noctalia's
 built-in kitty template; the built-in one also appends an `include` line to
 `kitty.conf`, which would reach the Mac. Nothing prints colour escape codes at
 shell start any more (caelestia's fish config did; `linux/fish` replaced it).
-`colors.conf` is only the fallback: caelestia's last scheme, generated from
-its scheme file before caelestia was uninstalled (2026-10-09). That file is
-gone, so `colors.conf` can't be regenerated; it stays as it is.
+On Linux `colors.conf` is optional: Noctalia's file loads after it and sets
+every colour, and kitty skips a missing `include` without an error. This
+machine still has an old one (caelestia's last scheme, from before caelestia
+was uninstalled on 2026-10-09) as a fallback; it isn't in the repo, and a fresh
+Linux machine doesn't need one.
 
 Hyprland treats kitty as opaque (rule in `linux/hyprmod`) because kitty handles
 its own transparency and Hyprland blurs behind it. Hyprland's focus fading

@@ -1,7 +1,8 @@
 # ghostty
 
-Primary terminal on macOS. Supports the kitty graphics protocol, so the fastfetch
-greeting's image logo works here too.
+Second terminal on macOS; kitty is the primary one on both machines (see
+`AGENTS.md`). Supports the kitty graphics protocol, so the fastfetch greeting's
+image logo works here too.
 
 ## Files
 
