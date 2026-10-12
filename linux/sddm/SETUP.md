@@ -1,15 +1,15 @@
 # sddm
 
 The login screen on CachyOS: SDDM with our own theme, `noctalia-card`
-(`themes/noctalia-card`), modelled on our Noctalia lock screen. It is a fork of
+([`themes/noctalia-card`](themes/noctalia-card/README.md)), modelled on our Noctalia lock screen. It is a fork of
 the caelestia "locklike" theme
 ([ItsABigIgloo/caelestia-sddm](https://github.com/ItsABigIgloo/caelestia-sddm));
-see its `README.md`. SDDM replaces KDE's Plasma Login Manager, which came with
+see its [`README.md`](../../README.md). SDDM replaces KDE's Plasma Login Manager, which came with
 the Plasma install profile.
 
 | Repo | Destination |
 |---|---|
-| `themes/noctalia-card/` | `/usr/share/sddm/themes/noctalia-card/` (root), plus the `theme.conf.user` link below |
+| [`themes/noctalia-card/`](themes/noctalia-card/README.md) | `/usr/share/sddm/themes/noctalia-card/` (root), plus the `theme.conf.user` link below |
 | `noctalia-card.conf` | `/etc/sddm.conf.d/noctalia-card.conf` (root) |
 | `x11.conf` | `/etc/sddm.conf.d/x11.conf` (root) |
 | `Xsetup` | `/etc/sddm/Xsetup` (root, executable) |
@@ -30,7 +30,7 @@ own, readable by everyone. The theme reads it through `assetsDir` in its
 
 | File | What | Kept fresh by |
 |---|---|---|
-| `colours.conf` | Noctalia's palette, in the theme's key names | Noctalia's `sddm` colour template (`linux/noctalia`), at every palette change |
+| `colours.conf` | Noctalia's palette, in the theme's key names | Noctalia's `sddm` colour template ([`linux/noctalia`](../noctalia/SETUP.md)), at every palette change |
 | `background` | the wallpaper the palette comes from | the same template's `post_hook` |
 | `current.gif` | the lock screen's GIF card | `reroll.py` after every unlock, so the login shows the GIF the next lock would |
 | `background.mp4` | `~/Pictures/Wallpapers/live/login.mp4` | `sddm-sync`, by hand |
@@ -51,7 +51,7 @@ change the login screen's pictures. On this single-user PC that is acceptable.
 
 ## Install
 
-Needs the packages in the theme's `README.md` (Requirements) and `linux/noctalia`
+Needs the packages in the theme's [`README.md`](../../README.md) (Requirements) and [`linux/noctalia`](../noctalia/SETUP.md)
 set up first (its lock screen makes `current.gif`). Run these once, from this
 folder, in your own terminal; the commands work in fish and bash:
 
@@ -196,7 +196,7 @@ sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service
   with `uwsm stop`, which the Hyprland wiki recommends for uwsm sessions: it
   brings the graphical session down in order and lets SDDM's helper exit
   normally. Noctalia's own log out exits Hyprland directly, so its session menu
-  runs `uwsm stop` instead (`linux/noctalia/config.toml`). Verified on
+  runs `uwsm stop` instead ([`linux/noctalia/config.toml`](../noctalia/config.toml)). Verified on
   2026-10-08: log out returned to the login screen and the next login was clean. If it freezes anyway, Ctrl+Alt+Delete reboots (systemd treats
   it as a reboot request); Ctrl+Alt+F2, the terminal SDDM's login screen runs
   on, may bring it back.

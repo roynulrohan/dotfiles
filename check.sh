@@ -5,6 +5,8 @@
 #   - manifest.tsv: valid rows, repo paths exist, copy-x files executable in git
 #   - coverage: every file is covered by a manifest row, unless it is a
 #     top-level file, documentation (*.md), a licence, a .gitkeep or history
+#   - links: every relative link in the Markdown docs points to a file that
+#     exists (history/ is a snapshot and is left out)
 #   - secrets: gitleaks on staged and unstaged changes, if it is installed
 # Luau (the Noctalia plugins) has no checker here. Prints only problems and
 # skipped checks; exit status 1 when anything fails.
@@ -77,6 +79,20 @@ for f in files:
                 ast.parse(fh.read(), f)
     except Exception as e:
         bad(f"{f}: {e}")
+
+# Relative links in Markdown docs
+link = re.compile(r"\]\(([^)\s]+)\)")
+for f in files:
+    if not f.endswith(".md") or f.startswith("history/"):
+        continue
+    with open(f, encoding="utf-8") as fh:
+        for n, line in enumerate(fh, 1):
+            for target in link.findall(line):
+                if target.startswith(("http://", "https://", "mailto:", "#")):
+                    continue
+                path = os.path.normpath(os.path.join(os.path.dirname(f), target.split("#")[0]))
+                if not os.path.exists(path):
+                    bad(f"{f}:{n}: link to {target}, which does not exist")
 
 # manifest.tsv rows
 modes = {"copy", "copy-x", "dir", "seed", "manual", "gone"}

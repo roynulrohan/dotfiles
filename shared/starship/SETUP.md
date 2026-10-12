@@ -23,14 +23,14 @@ clock. A blank line separates prompts.
 |---|---|
 | `starship.toml` | `~/.config/starship/starship.toml` |
 
-`shared/fish/conf.d/00-roynul-env.fish` sets `STARSHIP_CONFIG` to that path.
+[`shared/fish/conf.d/00-roynul-env.fish`](../fish/conf.d/00-roynul-env.fish) sets `STARSHIP_CONFIG` to that path.
 The `~/.config/starship.toml` that caelestia's installer used to write on Linux
 is unused; delete it if it exists.
 
 ## Notes
 
 - Colours are ANSI names (`blue`, `purple`), never hex or 256-colour numbers, so
-  the prompt follows the terminal palette: Noctalia's wallpaper palette on Linux (`shared/kitty`),
+  the prompt follows the terminal palette: Noctalia's wallpaper palette on Linux ([`shared/kitty`](../kitty/SETUP.md)),
   the Ghostty theme on macOS. Badge icons are coloured to their brand with the
   nearest name. Keep it that way when editing.
 - Icons are literal Nerd Font glyphs. The badge symbols and their formats come

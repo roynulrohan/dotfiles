@@ -1,7 +1,7 @@
 # Machines
 
 The machines this repo sets up, and the desk they share. The tags are the ones
-commit subjects end with (`AGENTS.md`, rule 5).
+commit subjects end with ([`AGENTS.md`](AGENTS.md), rule 5).
 
 ## Desk setup
 

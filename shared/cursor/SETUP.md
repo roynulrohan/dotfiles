@@ -1,7 +1,7 @@
 # cursor
 
 Cursor editor settings and keybindings. Separate install and separate config
-directory from VS Code, see `../vscode/`. Cursor's agent config (`mcp.json`,
+directory from VS Code, see [`../vscode/`](../vscode/SETUP.md). Cursor's agent config (`mcp.json`,
 `hooks.json`) is written by Cursor and not tracked here.
 
 ## Files
@@ -21,7 +21,7 @@ directory from VS Code, see `../vscode/`. Cursor's agent config (`mcp.json`,
 ## Notes
 
 Cursor is a VS Code fork, so the settings schema is the same and most of
-`../vscode/settings.json` would apply here too. They're kept as separate files
+[`../vscode/settings.json`](../vscode/settings.json) would apply here too. They're kept as separate files
 because they've drifted; don't try to merge them into one.
 
 Extensions are not captured for Cursor. The `Brewfile`'s `vscode` lines are VS

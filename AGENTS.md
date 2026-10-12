@@ -3,12 +3,12 @@
 This repo holds real config files plus per-package instructions. There is no
 install script. Each package's `SETUP.md` says where its files go, and
 `manifest.tsv` lists the same mapping. `./status.sh` shows which live files
-differ from the repo. The setup steps for each machine are in `INSTALL.md`.
+differ from the repo. The setup steps for each machine are in [`INSTALL.md`](INSTALL.md).
 Read "Editing this repo" before you change anything here.
 
 ## Before you start
 
-1. **Ask what the machine is** (`INSTALL.md`, Before you start).
+1. **Ask what the machine is** ([`INSTALL.md`](INSTALL.md), Before you start).
 2. **Detect the platform** with `uname -s`. Packages are written for
    CachyOS/pacman and macOS/Homebrew. Other distros: translate the package names.
 3. **Never clobber silently.** If a destination exists and differs, show the
@@ -37,64 +37,64 @@ docs each line points to.
   lockfile and scripts, use what that repo uses.
 - **The prompt and greeting follow the terminal palette.** They use named ANSI
   colours, never hex. On Linux a Noctalia template writes kitty's theme from
-  the wallpaper palette (`shared/kitty/SETUP.md`).
+  the wallpaper palette ([`shared/kitty/SETUP.md`](shared/kitty/SETUP.md)).
 - **No new theming on the Mac.** It keeps the palettes this repo ships for it:
-  Catppuccin Frappé for kitty (`mac/kitty/colors.conf`) and Raycast Dark for
-  Ghostty (`shared/ghostty/auto/theme.ghostty`). Don't add a palette
+  Catppuccin Frappé for kitty ([`mac/kitty/colors.conf`](mac/kitty/colors.conf)) and Raycast Dark for
+  Ghostty ([`shared/ghostty/auto/theme.ghostty`](shared/ghostty/auto/theme.ghostty)). Don't add a palette
   generator or recolour them.
-- **Claude Code is the primary agent.** `shared/agents` holds the global
-  instructions every agent reads; `shared/claude` holds Claude Code's own
+- **Claude Code is the primary agent.** [`shared/agents`](shared/agents/SETUP.md) holds the global
+  instructions every agent reads; [`shared/claude`](shared/claude/SETUP.md) holds Claude Code's own
   `settings.json`. Plugins and skills are installed per machine. Setup is right
   when `rtk init --show` reports everything as configured, and `./status.sh`
   shows no difference for these files except the expected ones in step 5 of
-  `INSTALL.md`.
+  [`INSTALL.md`](INSTALL.md).
 
 ### CachyOS desktop
 
-- **Hyprland with the Noctalia shell** (`linux/hypr`, `linux/noctalia`).
+- **Hyprland with the Noctalia shell** ([`linux/hypr`](linux/hypr/SETUP.md), [`linux/noctalia`](linux/noctalia/SETUP.md)).
   Noctalia is the top bar, launcher, lock, idle and notifications. The desktop
-  ran on caelestia before; that history is in `history/caelestia/README.md`.
-- **HyprMod first.** Binds and rules go through HyprMod (`linux/hyprmod`) where
-  it can express them. The rest goes in `hypr-user.lua` (`linux/hypr/SETUP.md`).
+  ran on caelestia before; that history is in [`history/caelestia/README.md`](history/caelestia/README.md).
+- **HyprMod first.** Binds and rules go through HyprMod ([`linux/hyprmod`](linux/hyprmod/SETUP.md)) where
+  it can express them. The rest goes in `hypr-user.lua` ([`linux/hypr/SETUP.md`](linux/hypr/SETUP.md)).
 - **HyDE-style keybinds on top of caelestia's.** Unbind caelestia's original
-  before you replace it, or both fire (`linux/hyprmod/SETUP.md`).
+  before you replace it, or both fire ([`linux/hyprmod/SETUP.md`](linux/hyprmod/SETUP.md)).
 - **One convention for window and image-viewer controls**: arrows move, Shift
-  resizes, Alt makes the step fine (`linux/hypr/SETUP.md`, Window mode;
-  `linux/mpv`). New binds of that kind follow it.
+  resizes, Alt makes the step fine ([`linux/hypr/SETUP.md`](linux/hypr/SETUP.md), Window mode;
+  [`linux/mpv`](linux/mpv/SETUP.md)). New binds of that kind follow it.
 - **Workspace and monitor keys keep caelestia's meanings**: Shift takes the
-  window along, Alt sends it without following (`linux/hypr/SETUP.md`).
+  window along, Alt sends it without following ([`linux/hypr/SETUP.md`](linux/hypr/SETUP.md)).
 - **Each monitor has its own workspaces 1–10**, shown as numbers in the bar
-  (`linux/hypr/SETUP.md`, Per-monitor workspaces).
+  ([`linux/hypr/SETUP.md`](linux/hypr/SETUP.md), Per-monitor workspaces).
 - **Terminal, browser (Zen) and Discord are opaque.** Other windows keep the
-  default transparency (`linux/hyprmod/SETUP.md`).
+  default transparency ([`linux/hyprmod/SETUP.md`](linux/hyprmod/SETUP.md)).
 - **Default apps**: Zen for web pages and PDFs, Dolphin for folders, mpv for
-  images and videos, Gwenview for SVG and editing (`linux/packages.md`).
+  images and videos, Gwenview for SVG and editing ([`linux/packages.md`](linux/packages.md)).
 - **Equibop is the Discord app** (Super+D, `discord://` links). The official
-  `discord` package stays installed (`linux/packages.md`, `linux/equibop`).
+  `discord` package stays installed ([`linux/packages.md`](linux/packages.md), [`linux/equibop`](linux/equibop/SETUP.md)).
 - **Live wallpapers on every monitor**, from Wallpaper Engine. Noctalia gets a
-  still of the main one only for its colours (`linux/wallpaper/SETUP.md`).
+  still of the main one only for its colours ([`linux/wallpaper/SETUP.md`](linux/wallpaper/SETUP.md)).
 - **Login screen: SDDM** with our `noctalia-card` theme, which follows
-  Noctalia's colours (`linux/sddm`).
+  Noctalia's colours ([`linux/sddm`](linux/sddm/SETUP.md)).
 - **No EasyEffects.** PipeWire's own filter-chain runs the G432 headset's EQ
-  (`linux/pipewire`).
-- **Night light always on**, through hyprsunset (`linux/hyprsunset`).
+  ([`linux/pipewire`](linux/pipewire/SETUP.md)).
+- **Night light always on**, through hyprsunset ([`linux/hyprsunset`](linux/hyprsunset/SETUP.md)).
 
 ### Mac desktop
 
-- **AeroSpace + SketchyBar** (`mac/wm`).
+- **AeroSpace + SketchyBar** ([`mac/wm`](mac/wm/SETUP.md)).
 - **Super is the key second from the spacebar**, as on Linux. Karabiner sends
   Ctrl+Option for it, so every Cmd shortcut stays native.
 - **The Mac binds are a smaller copy of the Hyprland ones.** One pair differs
   because Super on the Mac already includes Ctrl: Super+Shift+arrows moves a
   window (Ctrl+Super+Shift+arrows on Linux), and Super+Minus and Super+Equal
-  resize (Super+Shift+arrows on Linux) (`mac/wm/SETUP.md`, Binds). Never change
+  resize (Super+Shift+arrows on Linux) ([`mac/wm/SETUP.md`](mac/wm/SETUP.md), Binds). Never change
   Hyprland to match the Mac.
 
 ### Key roles (CachyOS)
 
 The user ranked the desktop's keys by role. The role matters, not the app or
 the exact key. Copied from the Preferences in
-`history/caelestia/hypr-reference/README.md`, which recorded them against
+[`history/caelestia/hypr-reference/README.md`](history/caelestia/hypr-reference/README.md), which recorded them against
 caelestia's keys.
 
 - **Must:** Super+T terminal, Super+E file manager, Super+B browser; Super+M
@@ -126,11 +126,11 @@ caelestia's keys.
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
 gotchas, how to verify. `history/` holds what the setup no longer uses; its
-folders are not packages and have a `README.md` instead.
+folders are not packages and have a [`README.md`](README.md) instead.
 
 ## Setting up a machine
 
-Follow `INSTALL.md` step by step, and check each step before the next. When
+Follow [`INSTALL.md`](INSTALL.md) step by step, and check each step before the next. When
 you're done, give the user the manual steps still open as a checklist.
 
 ## Editing this repo
@@ -146,12 +146,12 @@ These rules apply to every edit, by any agent.
    `needs` column for an app a machine may not have, `manual` for a file that
    is run or applied in place, and a `gone` row when you retire a destination.
 3. **Own what you adopt; never mix in a framework's live tree.**
-   `~/.config/hypr` started as caelestia's and is now ours (`linux/hypr`);
+   `~/.config/hypr` started as caelestia's and is now ours ([`linux/hypr`](linux/hypr/SETUP.md));
    caelestia's original stays as a reference copy in
-   `history/caelestia/hypr-reference`. `~/.config/fish` is ours too: `conf.d`
-   (`shared/fish`) and `config.fish` (`linux/fish`, `mac/fish`). Other files a
+   [`history/caelestia/hypr-reference`](history/caelestia/hypr-reference/README.md). `~/.config/fish` is ours too: `conf.d`
+   ([`shared/fish`](shared/fish/SETUP.md)) and `config.fish` ([`linux/fish`](linux/fish/SETUP.md), [`mac/fish`](mac/fish/SETUP.md)). Other files a
    framework or tool drops in there stay out of `manifest.tsv`.
-   When you copy someone else's work into the repo, credit it in `CREDITS.md`.
+   When you copy someone else's work into the repo, credit it in [`CREDITS.md`](CREDITS.md).
 4. **Keep shared configs portable.** No hardcoded home paths. Guard OS-specific
    bits so the other OS skips them. Document OS differences in the package's
    `SETUP.md`.
@@ -169,7 +169,7 @@ Example subject:
 | `macbook-pro` | the Mac | TODO: ask the user |
 
 A new machine picks a short kebab-case tag and adds a row to this table, and a
-section to `machines.md`, in its first commit. Commits before 2026-10-07 have no tag.
+section to [`machines.md`](machines.md), in its first commit. Commits before 2026-10-07 have no tag.
 
 6. **Read the diff before you copy a live file back.** Copy back only the lines
    that belong in the repo. Lines for one machine only, such as an installer's

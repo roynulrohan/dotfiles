@@ -8,10 +8,10 @@ Linux.** The binds are a minimal, Mac-only subset of the Hyprland binds in
 
 | Repo | Destination |
 |---|---|
-| `aerospace/aerospace.toml` | `~/.config/aerospace/aerospace.toml` |
+| [`aerospace/aerospace.toml`](aerospace/aerospace.toml) | `~/.config/aerospace/aerospace.toml` |
 | `sketchybar/` | `~/.config/sketchybar/`, the whole tree |
-| `karabiner/karabiner.json` | `~/.config/karabiner/karabiner.json` |
-| `linearmouse/linearmouse.json` | `~/.config/linearmouse/linearmouse.json` |
+| [`karabiner/karabiner.json`](karabiner/karabiner.json) | `~/.config/karabiner/karabiner.json` |
+| [`linearmouse/linearmouse.json`](linearmouse/linearmouse.json) | `~/.config/linearmouse/linearmouse.json` |
 | `macos-settings.sh` | not copied; run it once |
 
 Copy the SketchyBar tree whole: `sketchybarrc` sources `colors.sh`, `icons.sh`,
@@ -37,7 +37,7 @@ the FelixKratz formula, run `brew trust felixkratz/formulae` first.
 
 Then, in order:
 
-1. `mac/wm/macos-settings.sh`, then log out and back in.
+1. [`mac/wm/macos-settings.sh`](macos-settings.sh), then log out and back in.
 2. Open AeroSpace once and grant it Accessibility. It starts at login after that
    (`start-at-login = true`).
 3. Open Karabiner-Elements and allow its driver and Input Monitoring when its
@@ -109,7 +109,7 @@ disabled: hidden apps' windows drop out of tiling (AeroSpace goodies).
   focused. App icons come from `aerospace list-windows`, because SketchyBar's own
   window tracking misses kitty and Ghostty on macOS 26.
 - **Super+T needs kitty's remote control** (`allow_remote_control` and
-  `listen_on` in `shared/kitty/kitty.conf`). Without a running kitty it launches one.
+  `listen_on` in [`shared/kitty/kitty.conf`](../../shared/kitty/kitty.conf)). Without a running kitty it launches one.
 - **The macOS menu bar is hidden, not gone.** Wifi, volume and battery are in it at
   the top edge. macOS's volume overlay stays on, since the bar has no volume item.
 - **Keep "Displays have separate Spaces" on.** SketchyBar needs it.

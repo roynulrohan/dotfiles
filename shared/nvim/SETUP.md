@@ -24,7 +24,7 @@ the lockfile — copy it back when you want the new pins on the other machine.
 - macOS: `brew install neovim`
 
 Recommended extras LazyVim uses if present: `ripgrep` and `fd` (both already in
-`linux/packages.md` and `mac/Brewfile`), plus a C compiler and `git` for
+[`linux/packages.md`](../../linux/packages.md) and [`mac/Brewfile`](../../mac/Brewfile)), plus a C compiler and `git` for
 treesitter builds.
 
 ## Terminal background
@@ -40,7 +40,7 @@ Two halves fix it:
 - **Colour** — `bg.nvim` hands the terminal Neovim's background and cursor over
   escape sequences and restores them on exit, so the padding and the rounded
   corner take Neovim's colour. Standard escapes, so it works in Ghostty too.
-- **Opacity** — an autocmd in `lua/config/autocmds.lua` makes the window opaque
+- **Opacity** — an autocmd in [`lua/config/autocmds.lua`](lua/config/autocmds.lua) makes the window opaque
   while Neovim runs, then gives the terminal its own opacity back. It reads that
   value from the running kitty over remote control instead of hardcoding it, so
   the Mac (glass) and the Linux box each get their own. The whole block is
@@ -54,7 +54,7 @@ one, so the opacity half has no off-the-shelf equivalent.
 Fully portable. Plugins are fetched by lazy.nvim on first launch — expect a
 minute of downloading and treesitter compilation.
 
-`.neoconf.json` and `stylua.toml` are LazyVim scaffolding; `README.md` and
+`.neoconf.json` and `stylua.toml` are LazyVim scaffolding; [`README.md`](../../README.md) and
 `LICENSE` come from the starter template and can be ignored.
 
 ## Verify

@@ -8,9 +8,9 @@ installed for editing and for SVG.
 | `mpv.conf` | `~/.config/mpv/mpv.conf` |
 | `input.conf` | `~/.config/mpv/input.conf` |
 | `mpv-image.desktop` | `~/.local/share/applications/mpv-image.desktop` |
-| `scripts/dolphin-sort.lua` | `~/.config/mpv/scripts/dolphin-sort.lua` |
-| `script-opts/uosc.conf` | `~/.config/mpv/script-opts/uosc.conf` |
-| `script-opts/thumbfast.conf` | `~/.config/mpv/script-opts/thumbfast.conf` |
+| [`scripts/dolphin-sort.lua`](scripts/dolphin-sort.lua) | `~/.config/mpv/scripts/dolphin-sort.lua` |
+| [`script-opts/uosc.conf`](script-opts/uosc.conf) | `~/.config/mpv/script-opts/uosc.conf` |
+| [`script-opts/thumbfast.conf`](script-opts/thumbfast.conf) | `~/.config/mpv/script-opts/thumbfast.conf` |
 
 `mpv.conf`: start at 30% volume, cap at 100, resume where you stopped, loop
 single files, decode video on the GPU (`hwdec=auto`; a playing video dropped from
@@ -30,7 +30,7 @@ bindings off again, so videos keep mpv's defaults.
 ## Next / previous in Dolphin's order
 
 `autocreate-playlist` sorts the folder by name only, so ← / → jumped around
-when Dolphin showed the folder sorted another way. `scripts/dolphin-sort.lua`
+when Dolphin showed the folder sorted another way. [`scripts/dolphin-sort.lua`](scripts/dolphin-sort.lua)
 reorders that playlist the way Dolphin sorts the folder: name (natural),
 modified, created, accessed, size or type, ascending or descending.
 
@@ -52,7 +52,7 @@ mpv is open takes effect on the next image you open from Dolphin. It needs
 
 ## Image bindings
 
-Same convention as the Hyprland window keys (`linux/hypr`, Window mode):
+Same convention as the Hyprland window keys ([`linux/hypr`](../hypr/SETUP.md), Window mode):
 arrows move, Alt makes the step fine. `video-zoom` is a power of 2, so 0.1
 is about 7% and ten presses double the size. Alt+arrows and Alt+-/= replace
 mpv's own Alt pan and zoom (steps of 0.1) while an image is open.

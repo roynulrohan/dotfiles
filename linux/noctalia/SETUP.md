@@ -9,12 +9,12 @@ Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 |---|---|
 | `config.toml` | `~/.config/noctalia/config.toml` |
 | `templates/` | `~/.config/noctalia/templates/` (colour templates, below) |
-| `plugins/workspace-apps/` | `~/.local/share/noctalia/plugins/workspace-apps/` (bar plugin, below) |
-| `plugins/workspace-pills/` | `~/.local/share/noctalia/plugins/workspace-pills/` (bar plugin, below) |
-| `plugins/arch-updater/` | `~/.local/share/noctalia/plugins/arch-updater/` (update widget, below) |
-| `lock/scripts/` | `~/.local/share/noctalia/lock/scripts/` (lock screen, below) |
-| `lock/avatar-clamshell.png` | `~/.local/share/noctalia/lock/` |
-| `fonts/google-sans-flex/` | `~/.local/share/fonts/google-sans-flex/` |
+| [`plugins/workspace-apps/`](plugins/workspace-apps) | `~/.local/share/noctalia/plugins/workspace-apps/` (bar plugin, below) |
+| [`plugins/workspace-pills/`](plugins/workspace-pills) | `~/.local/share/noctalia/plugins/workspace-pills/` (bar plugin, below) |
+| [`plugins/arch-updater/`](plugins/arch-updater/README.md) | `~/.local/share/noctalia/plugins/arch-updater/` (update widget, below) |
+| [`lock/scripts/`](lock/scripts) | `~/.local/share/noctalia/lock/scripts/` (lock screen, below) |
+| [`lock/avatar-clamshell.png`](lock/avatar-clamshell.png) | `~/.local/share/noctalia/lock/` |
+| [`fonts/google-sans-flex/`](fonts/google-sans-flex) | `~/.local/share/fonts/google-sans-flex/` |
 
 ## Install
 
@@ -31,7 +31,7 @@ from:
 noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/ayanami-rei.jpg
 ```
 
-Hyprland starts it at login (`linux/hypr`, `hyprland/execs.lua`), in its own
+Hyprland starts it at login ([`linux/hypr`](../hypr/SETUP.md), `hyprland/execs.lua`), in its own
 uwsm scope; verified across a log out and log in on 2026-10-08. Enable the plugins once:
 `noctalia msg plugins enable roynul/workspace-apps`,
 `noctalia msg plugins enable roynul/workspace-pills` and
@@ -46,7 +46,7 @@ them. Changes made in its settings window go to
 `noctalia config validate`; apply with `noctalia msg config-reload`. Log:
 `~/.cache/noctalia/noctalia.log`.
 
-- **Wallpaper drawing off**: the live wallpapers (`linux/wallpaper`) would be
+- **Wallpaper drawing off**: the live wallpapers ([`linux/wallpaper`](../wallpaper/SETUP.md)) would be
   covered otherwise. The wallpaper path is still set, for the colours.
 - **Colours** from the wallpaper: one palette for the whole shell, and every
   template (kitty, Hyprland, GTK, Qt, btop, Spotify, the login screen) follows
@@ -80,7 +80,7 @@ them. Changes made in its settings window go to
 
 HyDE-style islands: the bar itself is invisible (`background_opacity = 0`) and
 each widget or group is a rounded pill at 80% opacity, blurred by Hyprland's
-layer rule (`linux/hypr`, `ignore_alpha` keeps the empty bar unblurred). Left
+layer rule ([`linux/hypr`](../hypr/SETUP.md), `ignore_alpha` keeps the empty bar unblurred). Left
 holds information, the middle the current workspace's apps, the right
 controls:
 
@@ -91,7 +91,7 @@ disturb) · power
 
 Workspaces show only occupied ones as bare numbers; the active one is a wider
 filled pill (inactive pills are transparent). Spacing follows the window grid
-(see "Look" in `linux/hypr/SETUP.md`): the bar is 24 px tall and the
+(see "Look" in [`linux/hypr/SETUP.md`](../hypr/SETUP.md)): the bar is 24 px tall and the
 islands fill it, 4 px from the screen top and 4 px above the windows, flush
 with the window edges; 16 px between islands, 8 px inside one, 8 px end
 padding (groups default to 6, so it is set per group). Text ≈ 10.5 px bold
@@ -101,7 +101,7 @@ padding (groups default to 6, so it is set per group). Text ≈ 10.5 px bold
 
 `k4n4t4/hypr-submap` 1.0.0 (MIT): shows the active Hyprland submap, so a small
 island reading "window" appears while window mode (Super+A,
-`linux/hypr`) is on; hidden otherwise, and clicking it leaves the mode. It
+[`linux/hypr`](../hypr/SETUP.md)) is on; hidden otherwise, and clicking it leaves the mode. It
 listens to Hyprland's event socket with `socat` and runs only `hyprctl submap`
 and `hyprctl dispatch 'hl.dsp.submap("reset")'`; the code was read before
 installing. Noctalia keeps it under
@@ -110,7 +110,7 @@ from here.
 
 ## Plugin: workspace apps
 
-`plugins/workspace-apps` (Luau, v0.4): the app icons of the windows on *this*
+[`plugins/workspace-apps`](plugins/workspace-apps) (Luau, v0.4): the app icons of the windows on *this*
 monitor's current workspace, in screen order; each monitor's own last-focused
 window bright, the others dimmed; click to focus; hidden when the workspace is
 empty. It replaces the built-in `taskbar` with `only_active_workspace`, which
@@ -143,7 +143,7 @@ Noctalia to re-read it.
 
 ## Plugin: workspace pills
 
-`plugins/workspace-pills` (Luau, v0.1): the workspaces widget again, animated
+[`plugins/workspace-pills`](plugins/workspace-pills) (Luau, v0.1): the workspaces widget again, animated
 like HyDE's waybar. It is on the bar in place of the built-in `workspaces`
 (`"roynul/workspace-pills:pills"` in `[bar.default]` `start`; a bar can name a
 plugin entry directly, no `[widget]` block needed). To go back, put
@@ -174,7 +174,7 @@ animation snapshot when a workspace gains its first window or loses its last
 
 ## Lock screen
 
-Modelled on caelestia's, and laid out like the login screen (`linux/sddm`):
+Modelled on caelestia's, and laid out like the login screen ([`linux/sddm`](../sddm/SETUP.md)):
 one 1500x840 surface card on the blurred wallpaper of the main monitor (DP-1),
 never a snapshot of the desktop. The card is 90% opaque (`card_alpha`), so the
 blurred wallpaper shows through, as on the login. Left: weather with a
@@ -187,7 +187,7 @@ session card, and Suspend, Reboot and Shut down buttons (Noctalia `button`
 widgets running `noctalia msg session <action>`). The side monitors show the
 clock group only. No lock or unlock animation.
 
-The config is generated, not edited: `lock/scripts/gen.py` turns
+The config is generated, not edited: [`lock/scripts/gen.py`](lock/scripts/gen.py) turns
 `params.json` (sizes and opacities) into `~/.config/noctalia/lock.toml`, the
 whole `[lockscreen]` and `[lockscreen_widgets]` sections plus the
 `[hooks] session_unlocked` line. `lock.toml` holds absolute paths, so it is not
@@ -207,9 +207,9 @@ renders it once to the card's size with ffmpeg into
 `~/.local/share/noctalia/lock/cards/`, and points `current.gif` at it. The lock
 screen reads `current.gif` again at every lock, so no reload is needed.
 `apply.sh` rerolls too. When `/var/lib/sddm-assets` exists, `reroll.py` also
-copies the new card there for the login screen (`linux/sddm`).
+copies the new card there for the login screen ([`linux/sddm`](../sddm/SETUP.md)).
 
-Needs `python3`, `ffmpeg`, the two fonts in `fonts/google-sans-flex` (SIL Open
+Needs `python3`, `ffmpeg`, the two fonts in [`fonts/google-sans-flex`](fonts/google-sans-flex) (SIL Open
 Font License 1.1, `LICENSE` included; "GSF Lock Clock" is a renamed instance of
 Google Sans Flex at width 30, weight 500, which the licence permits). Run
 `fc-cache -f` after copying the fonts.
@@ -243,10 +243,10 @@ Things to know:
 
 ## Colour templates
 
-- `templates/kitty.conf`: Noctalia's built-in kitty template, copied, writing
-  `~/.config/kitty/themes/noctalia.conf` (see `shared/kitty`). The built-in one
+- [`templates/kitty.conf`](templates/kitty.conf): Noctalia's built-in kitty template, copied, writing
+  `~/.config/kitty/themes/noctalia.conf` (see [`shared/kitty`](../../shared/kitty/SETUP.md)). The built-in one
   also edits `kitty.conf`, which the Mac shares.
-- `templates/hypr-scheme.lua`: rewrites `~/.config/hypr/scheme/current.lua`, the
+- [`templates/hypr-scheme.lua`](templates/hypr-scheme.lua): rewrites `~/.config/hypr/scheme/current.lua`, the
   colour file the Hyprland config reads (window borders, group bars,
   background), in the key names of caelestia's old scheme file, then runs
   `hyprctl reload`. Noctalia's own Hyprland template only gives solid borders.
@@ -263,15 +263,15 @@ one merges into `kdeglobals`.
 | `gtk.css` | `gtk-3.0/gtk.css` and `gtk-4.0/gtk.css` | caelestia's layout with Noctalia colours; keeps `@import "thunar.css"` and kde-gtk-config's `@import 'colors.css'`. Open GTK apps pick it up on restart |
 | `thunar.css` | `gtk-3.0/thunar.css` and `gtk-4.0/thunar.css` | |
 | `qtengine.colors` | `~/.config/qtengine/noctalia.colors` | Noctalia's KDE colour-scheme template; `qtengine/config.json`'s `colorScheme` points at this file, `kdeglobals` is left alone |
-| `btop.theme` | `~/.config/btop/themes/noctalia.theme` | the theme `btop.conf` selects (`linux/btop`); hook `pkill -USR2 -x btop` makes a running btop reload |
-| `sddm-theme.conf` | `/var/lib/sddm-assets/colours.conf` | the login screen's colours (`linux/sddm`, How it stays in sync), in the theme's key names with the lock screen's roles; hook: `chmod 644` (the greeter runs as user `sddm`) and copy `{{ image }}`, the wallpaper the palette came from, as the login still. Until that folder exists, the log says "failed to open template output" and the hook is skipped |
+| `btop.theme` | `~/.config/btop/themes/noctalia.theme` | the theme `btop.conf` selects ([`linux/btop`](../btop/SETUP.md)); hook `pkill -USR2 -x btop` makes a running btop reload |
+| `sddm-theme.conf` | `/var/lib/sddm-assets/colours.conf` | the login screen's colours ([`linux/sddm`](../sddm/SETUP.md), How it stays in sync), in the theme's key names with the lock screen's roles; hook: `chmod 644` (the greeter runs as user `sddm`) and copy `{{ image }}`, the wallpaper the palette came from, as the login still. Until that folder exists, the log says "failed to open template output" and the hook is skipped |
 | `equibop.theme.css` | `~/.config/equibop/themes/noctalia.theme.css` | Noctalia's community "Midnight" Discord theme, a new file; switch it on in Equibop → Settings → Themes. It loads its base CSS from `refact0r.github.io`, as caelestia's did |
 
 VS Code is not themed: it keeps One Dark Pro Night Flat.
 
 ## Keys
 
-In `linux/hypr/hyprland/keybinds.lua`, most through `noctalia msg`:
+In [`linux/hypr/hyprland/keybinds.lua`](../hypr/hyprland/keybinds.lua), most through `noctalia msg`:
 
 | Key | Command |
 |---|---|
@@ -293,7 +293,7 @@ Volume keys stay on `wpctl`.
 ## Things to know
 
 - **Log out with `uwsm stop`.** Noctalia's built-in log out exits Hyprland
-  directly, which once froze the login screen (`linux/sddm`); the session menu
+  directly, which once froze the login screen ([`linux/sddm`](../sddm/SETUP.md)); the session menu
   is set to run `uwsm stop` instead.
 - **Media island** (`[widget.media]`): "Title - Artist", 20 px album art, no
   minimum width so it hugs short titles, at most 240 px with long titles
@@ -302,9 +302,9 @@ Volume keys stay on `wpctl`.
   Tried and dropped: the media-island plugin.
 - **Control centre** sidebar shows icons and names (`[control_center]`).
 - **Night Light** in the control centre is Noctalia's own and off; the night
-  light that runs is hyprsunset (`linux/hyprsunset`). Use the `/cmd` actions.
+  light that runs is hyprsunset ([`linux/hyprsunset`](../hyprsunset/SETUP.md)). Use the `/cmd` actions.
 - Bluetooth shows nothing: the BlueZ service isn't running on this PC.
-- The login screen is SDDM with our `noctalia-card` theme (`linux/sddm`),
+- The login screen is SDDM with our `noctalia-card` theme ([`linux/sddm`](../sddm/SETUP.md)),
   which follows Noctalia's palette, wallpaper and lock GIF. Noctalia has its
   own greeter, for greetd instead of SDDM; not tried yet.
 - **Qt apps turn light after a Qt update.** Qt apps (Dolphin and others) get

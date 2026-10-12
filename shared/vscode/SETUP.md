@@ -1,6 +1,6 @@
 # vscode
 
-VS Code user settings and keybindings. See `../cursor/` for the Cursor
+VS Code user settings and keybindings. See [`../cursor/`](../cursor/SETUP.md) for the Cursor
 equivalent — they're separate installs with separate config directories.
 
 ## Files
@@ -24,7 +24,7 @@ equivalent — they're separate installs with separate config directories.
 
 Fifteen, for TypeScript full-stack work; pruned on 2026-10-07 from over a
 hundred collected on Windows and the Mac. On the Mac they're the `vscode` lines
-in `mac/Brewfile`.
+in [`mac/Brewfile`](../../mac/Brewfile).
 
 | Extension | Why |
 |---|---|
@@ -65,7 +65,7 @@ copy these files in after signing in.
 
 - Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at weight
   500. VS Code is left see-through at the default window transparency
-  (`windowOpacity` in `linux/hypr/hypr-vars.lua`) on purpose.
+  (`windowOpacity` in [`linux/hypr/hypr-vars.lua`](../../linux/hypr/hypr-vars.lua)) on purpose.
 - Discord presence (`vscord`) shows the project and file only: no line numbers,
   error counts or "View Repository" button, and it disconnects after 5 minutes
   idle. On CachyOS it reaches Discord through Equibop's built-in arRPC bridge

@@ -5,8 +5,8 @@ one per monitor, played by
 [linux-wallpaperengine](https://github.com/Almamu/linux-wallpaperengine).
 A still frame of the main wallpaper is the shell's wallpaper: Noctalia takes
 its colours and lock screen background from it, with its own wallpaper drawing
-switched off (`linux/noctalia`). The login screen gets the same still from
-Noctalia whenever it changes (`linux/sddm`).
+switched off ([`linux/noctalia`](../noctalia/SETUP.md)). The login screen gets the same still from
+Noctalia whenever it changes ([`linux/sddm`](../sddm/SETUP.md)).
 
 | Repo | Destination |
 |---|---|
@@ -20,7 +20,7 @@ exits: right after login Hyprland sometimes closes the wallpaper's layer
 surface while outputs and workspaces settle ("Compositor closed our LS" in the
 log), and the wallpapers used to stay gone until restarted by hand. Plain
 `live-wallpaper` restarts the service by hand. linux-wallpaperengine only
-draws on the outputs it saw at start, so `linux/hypr/hypr-user.lua`
+draws on the outputs it saw at start, so [`linux/hypr/hypr-user.lua`](../hypr/hypr-user.lua)
 restarts the service on Hyprland's `monitor.added` event (`try-restart`, so not
 at login): a replugged monitor, or the DisplayPort VG248, which reconnects as a
 new output when the screens wake from DPMS (seen on 2026-10-08: the left
@@ -140,7 +140,7 @@ so a red wallpaper gives pink accents whatever the scheme variant.
   1.1 GB of GPU memory on the RTX 5070. It runs at 30 fps and pauses while an app
   is fullscreen.
 - **Preview** a wallpaper in a window: `linux-wallpaperengine --silent <id>`.
-- **Login screen:** the SDDM theme can loop a video too; see `linux/sddm`.
+- **Login screen:** the SDDM theme can loop a video too; see [`linux/sddm`](../sddm/SETUP.md).
 
 ## Verify
 

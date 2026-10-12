@@ -3,7 +3,7 @@
 Environment variables for the Hyprland session. uwsm starts Hyprland here and
 exports these files to the session's systemd user environment. Apps that
 systemd or D-Bus start read the variables from there, not from Hyprland's
-`hyprland/env.lua` (`linux/hypr`).
+`hyprland/env.lua` ([`linux/hypr`](../hypr/SETUP.md)).
 
 | Repo | Destination |
 |---|---|
@@ -15,8 +15,8 @@ uwsm sources `env` for every compositor, then `env-hyprland` for Hyprland only
 
 - `env`: the Qt theme (`qtengine`) and Qt window settings, and the cursor
   theme and size. The cursor values must match the Hyprland config:
-  `cursorTheme` in `linux/hypr/hypr-vars.lua` and `cursorSize` in
-  `linux/hypr/variables.lua`.
+  `cursorTheme` in [`linux/hypr/hypr-vars.lua`](../hypr/hypr-vars.lua) and `cursorSize` in
+  [`linux/hypr/variables.lua`](../hypr/variables.lua).
 - `env-hyprland`: the toolkit backends (Wayland first, X11 as fallback) and
   the XDG session variables.
 
@@ -30,7 +30,7 @@ sudo pacman -S uwsm
 ```
 
 Copy both files. They take effect at the next log in. The login screen picks
-the uwsm session (`linux/sddm/SETUP.md`).
+the uwsm session ([`linux/sddm/SETUP.md`](../sddm/SETUP.md)).
 
 ## Verify
 

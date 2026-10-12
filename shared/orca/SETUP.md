@@ -77,7 +77,7 @@ account by hand.
   glass look on 1.4.206 goes away when it updates. `terminalBackgroundOpacity` 0
   only lets Orca's own window background show through the terminal.
 - **Text colour (Linux):** Hyprland's window transparency (`windowOpacity` in
-  `linux/hypr/hypr-vars.lua`, 95% when this was set) applies to the text too, so One
+  [`linux/hypr/hypr-vars.lua`](../../linux/hypr/hypr-vars.lua), 95% when this was set) applies to the text too, so One
   Dark's grey text (`abb2bf`) looked dim. `settings.linux.json` brightens it with
   `terminalColorOverrides.foreground` `dcdfe4` (Settings → Color Overrides). The
   Mac keeps plain One Dark.

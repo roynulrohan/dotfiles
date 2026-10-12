@@ -2,7 +2,7 @@
 
 [HyprMod](https://github.com/bluemancz/hyprmod) is a GUI for Hyprland binds,
 monitors, workspace and window rules. It owns `~/.config/hypr/hyprland-gui.lua`,
-which `linux/hypr/hyprland.lua` loads last, so everything in it wins.
+which [`linux/hypr/hyprland.lua`](../hypr/hyprland.lua) loads last, so everything in it wins.
 
 ## Files
 
@@ -21,11 +21,11 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 
 - **Monitors**: DP-2 left, DP-1 middle 280 Hz, HDMI-A-1 right.
   Machine-specific; redo on different hardware. No workspace rules: each
-  monitor has its own workspaces, set up in `linux/hypr/hypr-user.lua`
-  (see "Per-monitor workspaces" in `linux/hypr/SETUP.md`). Don't add
+  monitor has its own workspaces, set up in [`linux/hypr/hypr-user.lua`](../hypr/hypr-user.lua)
+  (see "Per-monitor workspaces" in [`linux/hypr/SETUP.md`](../hypr/SETUP.md)). Don't add
   workspace keys or rules in HyprMod: its file loads last and would override them.
 - **HyDE-style keybinds on caelestia**: Super+Shift+arrows resize (in
-  `linux/hypr/hypr-user.lua`: they share window mode's Lua resize
+  [`linux/hypr/hypr-user.lua`](../hypr/hypr-user.lua): they share window mode's Lua resize
   function, which HyprMod can't express), Ctrl+Super+Shift+arrows move
   window, Super+W float,
   Super+G group, Super+J toggle split, Super+Shift+J swap split, Super+Shift+P colour
@@ -34,22 +34,22 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   2026-10-08: the keyboard has its own media keys and knob, and the binds took
   F11 (fullscreen) and F12 (developer tools) from apps.
 - **Unbinds** of the caelestia binds those replace (in
-  `linux/hypr/hyprland/keybinds.lua`). The `unbind` text must match that
+  [`linux/hypr/hyprland/keybinds.lua`](../hypr/hyprland/keybinds.lua)). The `unbind` text must match that
   file's spelling exactly, including modifier order and key capitalisation
   (`CTRL + SUPER + SHIFT + Left`), or both binds stay live.
 - **Window rules**: forced opaque so the default window transparency
-  (`windowOpacity` in `linux/hypr/hypr-vars.lua`) doesn't apply: kitty, the browsers Zen (`zen`), Opera GX (`Opera GX`), Firefox
+  (`windowOpacity` in [`linux/hypr/hypr-vars.lua`](../hypr/hypr-vars.lua)) doesn't apply: kitty, the browsers Zen (`zen`), Opera GX (`Opera GX`), Firefox
   (`firefox`) and Brave (`brave-browser`), Discord (`discord`), Jellyfin
   (`org.jellyfin.JellyfinDesktop`), the file explorers Dolphin
   (`org.kde.dolphin`) and Thunar (`[Tt]hunar`), and the viewers Gwenview
   (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`). The rules from caelestia in
-  `linux/hypr/hyprland/rules.lua` already keep `imv` and `feh` opaque. Orca
+  [`linux/hypr/hyprland/rules.lua`](../hypr/hyprland/rules.lua) already keep `imv` and `feh` opaque. Orca
   (`orca`) is left at the default transparency on purpose:
   its own window is never transparent, so that's the only see-through it gets.
 - **Settings**: dwindle, flat mouse accel, rounding 12, border 2 px, gaps 1 / 4
   (4 px at the screen edges and under the bar, 2 px between windows; see
-  "Look" in `linux/hypr/SETUP.md`). Tearing is allowed: `allow_tearing` is only Hyprland's master
-  switch; the `immediate` rule from caelestia (`linux/hypr/hyprland/rules.lua`) limits it to games (Steam, Lutris,
+  "Look" in [`linux/hypr/SETUP.md`](../hypr/SETUP.md)). Tearing is allowed: `allow_tearing` is only Hyprland's master
+  switch; the `immediate` rule from caelestia ([`linux/hypr/hyprland/rules.lua`](../hypr/hyprland/rules.lua)) limits it to games (Steam, Lutris,
   gamescope), and only while one is fullscreen and alone on its monitor.
   `resize_on_border`: drag a window edge to resize (a side edge changes one
   dimension only). `snap:enabled`: floating windows dragged with the mouse snap
@@ -60,7 +60,7 @@ closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 ## Gotcha
 
 HyprMod loads its file through two lines it appended to
-`~/.config/hypr/hyprland.lua` (now in `linux/hypr`):
+`~/.config/hypr/hyprland.lua` (now in [`linux/hypr`](../hypr/SETUP.md)):
 
 ```lua
 -- HyprMod managed settings

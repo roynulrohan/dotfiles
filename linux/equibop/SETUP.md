@@ -1,6 +1,6 @@
 # Equibop
 
-Equibop (`equibop-bin`, AUR) is the Discord app here; see `linux/packages.md`.
+Equibop (`equibop-bin`, AUR) is the Discord app here; see [`linux/packages.md`](../packages.md).
 
 | File | Destination | Why |
 |---|---|---|

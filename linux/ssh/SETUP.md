@@ -10,7 +10,7 @@ Unlock the SSH key at login from KDE Wallet, so git can sign commits without
 ## How it fits together
 
 - **Agent:** openssh's own `ssh-agent.socket` (user unit, enabled), socket
-  `$XDG_RUNTIME_DIR/ssh-agent.socket`; `shared/fish` points `SSH_AUTH_SOCK` at it.
+  `$XDG_RUNTIME_DIR/ssh-agent.socket`; [`shared/fish`](../../shared/fish/SETUP.md) points `SSH_AUTH_SOCK` at it.
 - **Passphrase:** `ksshaskpass`, KDE's askpass helper, looks it up in KDE Wallet,
   which PAM unlocks with the login password. The first time it asks and offers
   to remember it ("Remember password").

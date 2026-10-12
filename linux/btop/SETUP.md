@@ -17,12 +17,12 @@ sudo pacman -S btop
 
 ## Colours
 
-Noctalia's btop template (`linux/noctalia/templates/btop.theme`) writes the
+Noctalia's btop template ([`linux/noctalia/templates/btop.theme`](../noctalia/templates/btop.theme)) writes the
 wallpaper palette to `~/.config/btop/themes/noctalia.theme` and signals a
 running btop to reload it. `btop.conf` selects it (`color_theme = "noctalia"`;
 it was `"caelestia"` until 2026-10-09). Renaming it means changing
 `color_theme` here and the template's `output_path` in
-`linux/noctalia/config.toml` together. `theme_background = false` keeps kitty's
+[`linux/noctalia/config.toml`](../noctalia/config.toml) together. `theme_background = false` keeps kitty's
 transparent background.
 
 ## Notes

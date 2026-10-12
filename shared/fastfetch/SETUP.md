@@ -47,7 +47,7 @@ aspect ratio. Without it every logo is drawn 40 columns wide.
   run both sets, so a Mac on Homebrew's stale 2.36.1 showed `free`/`hyprctl` errors
   until `brew upgrade fastfetch`.
 - Accent colours are plain ANSI blue, magenta and cyan, so the greeting follows
-  whatever the terminal theme defines: Noctalia's wallpaper palette on Linux (`shared/kitty`), the
+  whatever the terminal theme defines: Noctalia's wallpaper palette on Linux ([`shared/kitty`](../kitty/SETUP.md)), the
   Ghostty or kitty theme on macOS. Nothing in this repo overrides the palette.
 - **Animated GIFs** work in kitty. fastfetch's own icat mode shows one frame, so
   the wrapper follows the recipe from fastfetch issue #1423: `kitten icat -n

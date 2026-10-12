@@ -1,6 +1,6 @@
 # agents
 
-`AGENTS.md` is my global instructions for any AI agent. Copy it wherever the
+[`AGENTS.md`](../../AGENTS.md) is my global instructions for any AI agent. Copy it wherever the
 agent reads global instructions, usually `~/.claude/CLAUDE.md` or
 `~/.codex/AGENTS.md`.
 

@@ -2,7 +2,7 @@
 
 Claude Code's own settings (`settings.json` only; hooks are entries in it, and
 skills and plugins are installed per machine, see below). The global
-instructions it reads live in `shared/agents` and are copied to
+instructions it reads live in [`shared/agents`](../agents/SETUP.md) and are copied to
 `~/.claude/CLAUDE.md`.
 
 ## Files
@@ -34,7 +34,7 @@ failing hook. On a machine without rtk, run `rtk init -g --uninstall` or drop th
 
 Claude Code itself installs with its native installer on both machines:
 `curl -fsSL https://claude.ai/install.sh | bash`. It lands in `~/.local/bin`,
-which `shared/fish` puts on PATH (`conf.d/00-roynul-env.fish`).
+which [`shared/fish`](../fish/SETUP.md) puts on PATH (`conf.d/00-roynul-env.fish`).
 
 ## Platform notes
 

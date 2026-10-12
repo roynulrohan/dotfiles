@@ -7,7 +7,7 @@ blue-light filter; caelestia had none, and CachyOS's Hyprland setup has none.
 |---|---|
 | `hyprsunset.conf` | `~/.config/hypr/hyprsunset.conf` |
 
-`~/.config/hypr` is our Hyprland config (`linux/hypr`), but this file isn't part of it (like
+`~/.config/hypr` is our Hyprland config ([`linux/hypr`](../hypr/SETUP.md)), but this file isn't part of it (like
 HyprMod's `hyprland-gui.lua`). It sits there because that's the path the stock
 service reads.
 

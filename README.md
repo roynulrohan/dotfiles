@@ -68,12 +68,12 @@ copy it into the repo, run `./check.sh`, and commit.
 
 ## Layout
 
-```
-shared/   fish  starship  fastfetch  kitty  ghostty  git  agents  claude  ccstatusline  nvim  vscode  cursor  orca
-linux/    fish  hypr  noctalia  hyprmod  sddm  wallpaper  mpv  pipewire  hyprsunset  btop  equibop  uwsm  ssh  snapshots  packages.md
-mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewfile
-history/  caelestia (the desktop's base until 2026-10-09, and a copy of its Hyprland config)
-```
+| Folder | For | Packages |
+|---|---|---|
+| `shared/` | both machines | [fish](shared/fish/SETUP.md) · [starship](shared/starship/SETUP.md) · [fastfetch](shared/fastfetch/SETUP.md) · [kitty](shared/kitty/SETUP.md) · [ghostty](shared/ghostty/SETUP.md) · [git](shared/git/SETUP.md) · [agents](shared/agents/SETUP.md) · [claude](shared/claude/SETUP.md) · [ccstatusline](shared/ccstatusline/SETUP.md) · [nvim](shared/nvim/SETUP.md) · [vscode](shared/vscode/SETUP.md) · [cursor](shared/cursor/SETUP.md) · [orca](shared/orca/SETUP.md) |
+| `linux/` | the gaming PC | [fish](linux/fish/SETUP.md) · [hypr](linux/hypr/SETUP.md) · [noctalia](linux/noctalia/SETUP.md) · [hyprmod](linux/hyprmod/SETUP.md) · [sddm](linux/sddm/SETUP.md) · [wallpaper](linux/wallpaper/SETUP.md) · [mpv](linux/mpv/SETUP.md) · [pipewire](linux/pipewire/SETUP.md) · [hyprsunset](linux/hyprsunset/SETUP.md) · [btop](linux/btop/SETUP.md) · [equibop](linux/equibop/SETUP.md) · [uwsm](linux/uwsm/SETUP.md) · [ssh](linux/ssh/SETUP.md) · [snapshots](linux/snapshots/SETUP.md) · [packages.md](linux/packages.md) |
+| `mac/` | the MacBook | [fish](mac/fish/SETUP.md) · [kitty](mac/kitty/SETUP.md) · [wm](mac/wm/SETUP.md) (AeroSpace, SketchyBar, Karabiner, LinearMouse) · [Brewfile](mac/Brewfile) |
+| `history/` | reference only | [caelestia](history/caelestia/README.md): the desktop's base until 2026-10-09, and a copy of its Hyprland config |
 
 | File | What |
 |---|---|
@@ -81,7 +81,7 @@ history/  caelestia (the desktop's base until 2026-10-09, and a copy of its Hypr
 | [`machines.md`](machines.md) | the hardware and the desk |
 | [`CREDITS.md`](CREDITS.md) | inspirations, and the work included from others |
 | [`AGENTS.md`](AGENTS.md) | instructions for coding agents |
-| `manifest.tsv`, `status.sh`, `check.sh` | the file map and its two checks |
+| [`manifest.tsv`](manifest.tsv), [`status.sh`](status.sh), [`check.sh`](check.sh) | the file map and its two checks |
 
 ## Not in here
 

@@ -1,7 +1,7 @@
 # fish (Linux entry point)
 
-See `shared/fish/SETUP.md`. This `config.fish` only keeps two PATH lines and
-sources `local.fish` (machine-only lines, not in the repo); `shared/fish/conf.d`
+See [`shared/fish/SETUP.md`](../../shared/fish/SETUP.md). This `config.fish` only keeps two PATH lines and
+sources `local.fish` (machine-only lines, not in the repo); [`shared/fish/conf.d`](../../shared/fish/conf.d)
 does the rest. It replaced caelestia's `config.fish` on
 2026-10-08, which also printed caelestia's frozen terminal colours
 (`~/.local/state/caelestia/sequences.txt`) into every new shell.

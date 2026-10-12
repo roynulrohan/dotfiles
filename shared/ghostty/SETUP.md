@@ -1,7 +1,7 @@
 # ghostty
 
 Second terminal on macOS; kitty is the primary one on both machines (see
-`AGENTS.md`). Supports the kitty graphics protocol, so the fastfetch greeting's
+[`AGENTS.md`](../../AGENTS.md)). Supports the kitty graphics protocol, so the fastfetch greeting's
 image logo works here too.
 
 ## Files
@@ -9,7 +9,7 @@ image logo works here too.
 | Repo | Destination |
 |---|---|
 | `config` | macOS: `~/Library/Application Support/com.mitchellh.ghostty/config`; Linux: `~/.config/ghostty/config` |
-| `auto/theme.ghostty` | same directory, `auto/` subfolder; **copy, don't rely on it** — Ghostty regenerates it |
+| [`auto/theme.ghostty`](auto/theme.ghostty) | same directory, `auto/` subfolder; **copy, don't rely on it** — Ghostty regenerates it |
 
 ## Install
 

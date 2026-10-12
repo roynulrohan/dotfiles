@@ -8,8 +8,8 @@ built in, so there are no plugins to install. Starship draws the prompt.
 | Repo | Destination | Note |
 |---|---|---|
 | `conf.d/*.fish` | `~/.config/fish/conf.d/` | fish sources these automatically, on both OSes |
-| `../../mac/fish/config.fish` | `~/.config/fish/config.fish` | **macOS only** |
-| `../../linux/fish/config.fish` | `~/.config/fish/config.fish` | **Linux only**; replaced caelestia's |
+| [`../../mac/fish/config.fish`](../../mac/fish/config.fish) | `~/.config/fish/config.fish` | **macOS only** |
+| [`../../linux/fish/config.fish`](../../linux/fish/config.fish) | `~/.config/fish/config.fish` | **Linux only**; replaced caelestia's |
 | — | `~/.config/fish/local.fish` | machine-only lines, not in the repo; both `config.fish` files source it last if it exists |
 
 The `conf.d` files do the work: `00` environment, `05` starship, zoxide (as
