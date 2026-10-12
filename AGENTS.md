@@ -46,8 +46,7 @@ docs each line points to.
   instructions every agent reads; [`shared/claude`](shared/claude/SETUP.md) holds Claude Code's own
   `settings.json`. Plugins and skills are installed per machine. Setup is right
   when `rtk init --show` reports everything as configured, and `./status.sh`
-  shows no difference for these files except the expected ones in step 5 of
-  [`INSTALL.md`](INSTALL.md).
+  shows these files as `ok` or `seeded`.
 
 ### CachyOS desktop
 
