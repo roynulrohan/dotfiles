@@ -12,16 +12,16 @@ On the gaming PC:
 
 - **Colours follow the wallpaper.** Noctalia builds a palette from the main
   wallpaper and writes it to kitty, Hyprland's borders, GTK and Qt apps,
-  Thunar, btop, Spotify, Discord (Equibop) and the login screen.
+  Thunar, btop, Spotify, Discord and the login screen.
 - **Live wallpapers** from Wallpaper Engine on all three monitors. The main one
   also plays behind the login screen.
-- **Own login theme**, `noctalia-card`: a welcome page, then a login card that
-  matches the lock screen.
+- **Custom login screen**: a welcome page, then a login card that matches the
+  lock screen.
 - **Workspaces per monitor**, 1 to 10 on each, shown as animated pills on the
   bar.
-- **One set of keys for moving things**: arrows move, Shift resizes, Alt makes
-  the step fine. Window mode and mpv's image viewer both follow it.
-- **Headset EQ** in PipeWire's own filter chain, without EasyEffects.
+- **Window mode** (Super+A): arrows move the window, Shift resizes it, Alt makes
+  the step finer. mpv's image viewer uses the same keys.
+- **Headset EQ** in PipeWire for the Logitech G432.
 
 ## What's in it
 
@@ -30,7 +30,7 @@ On the gaming PC:
 | OS | CachyOS | macOS |
 | Window manager | Hyprland | AeroSpace |
 | Bar and launcher | Noctalia | SketchyBar, Raycast |
-| Login screen | SDDM with `noctalia-card` | |
+| Login screen | SDDM, custom theme | |
 | Terminal | kitty | kitty, Ghostty |
 | Shell | fish, starship, fastfetch | fish, starship, fastfetch |
 | Editors | VS Code, Neovim (LazyVim) | VS Code, Neovim (LazyVim) |
@@ -73,7 +73,7 @@ copy it into the repo, run `./check.sh`, and commit.
 | `shared/` | both machines | [fish](shared/fish/SETUP.md) · [starship](shared/starship/SETUP.md) · [fastfetch](shared/fastfetch/SETUP.md) · [kitty](shared/kitty/SETUP.md) · [ghostty](shared/ghostty/SETUP.md) · [git](shared/git/SETUP.md) · [agents](shared/agents/SETUP.md) · [claude](shared/claude/SETUP.md) · [ccstatusline](shared/ccstatusline/SETUP.md) · [nvim](shared/nvim/SETUP.md) · [vscode](shared/vscode/SETUP.md) · [cursor](shared/cursor/SETUP.md) · [orca](shared/orca/SETUP.md) |
 | `linux/` | the gaming PC | [fish](linux/fish/SETUP.md) · [hypr](linux/hypr/SETUP.md) · [noctalia](linux/noctalia/SETUP.md) · [hyprmod](linux/hyprmod/SETUP.md) · [sddm](linux/sddm/SETUP.md) · [wallpaper](linux/wallpaper/SETUP.md) · [mpv](linux/mpv/SETUP.md) · [pipewire](linux/pipewire/SETUP.md) · [hyprsunset](linux/hyprsunset/SETUP.md) · [btop](linux/btop/SETUP.md) · [equibop](linux/equibop/SETUP.md) · [uwsm](linux/uwsm/SETUP.md) · [ssh](linux/ssh/SETUP.md) · [snapshots](linux/snapshots/SETUP.md) · [packages.md](linux/packages.md) |
 | `mac/` | the MacBook | [fish](mac/fish/SETUP.md) · [kitty](mac/kitty/SETUP.md) · [wm](mac/wm/SETUP.md) (AeroSpace, SketchyBar, Karabiner, LinearMouse) · [Brewfile](mac/Brewfile) |
-| `history/` | reference only | [caelestia](history/caelestia/README.md): the desktop's base until 2026-10-09, and a copy of its Hyprland config |
+| `history/` | old setups | [caelestia](history/caelestia/README.md): the desktop's previous base |
 
 | File | What |
 |---|---|
@@ -86,4 +86,3 @@ copy it into the repo, run `./check.sh`, and commit.
 ## Not in here
 
 Credentials, shell history, caches, and personal media such as wallpapers.
-`.gitignore` blocks the obvious filenames as a backstop.
