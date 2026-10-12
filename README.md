@@ -1,24 +1,70 @@
 # dotfiles
 
-Config for a CachyOS + Hyprland desktop (Noctalia, HyprMod) and a Mac
-(AeroSpace, SketchyBar, kitty), sharing fish, starship, a fastfetch greeting,
-kitty, git and Claude Code config between them. The machines and the desk
-setup are in `machines.md`.
+My desktop setup: a CachyOS gaming PC running Hyprland with the Noctalia shell,
+and a MacBook Pro running AeroSpace and SketchyBar. Both share fish, starship,
+kitty, git and editor config.
 
-No install script, no symlinks. Files get copied to where the app expects them
-and copied back when they change. Every package has a `SETUP.md` saying where its
-files go and how to install its dependencies; `manifest.tsv` lists the same
-mapping for scripts; `./status.sh` shows which live files differ from the repo.
+<!-- Screenshots go here. -->
 
-## Fresh machine
+## Highlights
+
+On the gaming PC:
+
+- **Colours follow the wallpaper.** Noctalia builds a palette from the main
+  wallpaper and writes it to kitty, Hyprland's borders, GTK and Qt apps,
+  Thunar, btop, Spotify, Discord (Equibop) and the login screen.
+- **Live wallpapers** from Wallpaper Engine on all three monitors. The main one
+  also plays behind the login screen.
+- **Own login theme**, `noctalia-card`: a welcome page, then a login card that
+  matches the lock screen.
+- **Workspaces per monitor**, 1 to 10 on each, shown as animated pills on the
+  bar.
+- **One set of keys for moving things**: arrows move, Shift resizes, Alt makes
+  the step fine. Window mode and mpv's image viewer both follow it.
+- **Headset EQ** in PipeWire's own filter chain, without EasyEffects.
+
+## What's in it
+
+| | Gaming PC | MacBook Pro |
+|---|---|---|
+| OS | CachyOS | macOS |
+| Window manager | Hyprland | AeroSpace |
+| Bar and launcher | Noctalia | SketchyBar, Raycast |
+| Login screen | SDDM with `noctalia-card` | |
+| Terminal | kitty | kitty, Ghostty |
+| Shell | fish, starship, fastfetch | fish, starship, fastfetch |
+| Editors | VS Code, Neovim (LazyVim) | VS Code, Neovim (LazyVim) |
+| Files and media | Dolphin, mpv | |
+| Font | JetBrains Mono Nerd Font | JetBrains Mono Nerd Font |
+
+The hardware is in `machines.md`.
+
+## Install
+
+Install `gh` (`sudo pacman -S github-cli` on CachyOS, `brew install gh` on the
+Mac), then clone:
 
 ```bash
-gh auth login && gh repo clone roynulrohan/dotfiles ~/dotfiles
-cd ~/dotfiles && claude
+gh auth login
+gh repo clone roynulrohan/dotfiles ~/Coding/setup/dotfiles
 ```
 
-Then: "Read AGENTS.md and set up this machine. It's the CachyOS desktop" (or the
-Mac). Or do it by hand from the `SETUP.md` files.
+Then follow `INSTALL.md`.
+
+## How it works
+
+- Each folder in `shared/`, `linux/` and `mac/` is a package with a
+  `SETUP.md`: where its files go, what to install, the gotchas, and how to
+  verify it.
+- Files are copied to where each app expects them, not symlinked.
+  `manifest.tsv` maps every repo file to its live destination.
+- `./status.sh` compares the live files with the repo. `./check.sh` checks the
+  syntax, the manifest and secrets before a commit.
+- Lines for one machine only go in local files that stay out of the repo:
+  `~/.config/fish/local.fish`, `~/.gitconfig.local` and kitty's `local.conf`.
+
+To keep it current: edit the live file, check it with `./status.sh --diff`,
+copy it into the repo, run `./check.sh`, and commit.
 
 ## Layout
 
@@ -29,17 +75,15 @@ mac/      fish  kitty  wm (aerospace, sketchybar, karabiner, linearmouse)  Brewf
 history/  caelestia (the desktop's base until 2026-10-09, and a copy of its Hyprland config)
 ```
 
-## Keeping it current
-
-Edit the live file, check with `./status.sh --diff`, copy into the repo, run
-`./check.sh`, commit.
-Or tell the agent "sync my kitty config into dotfiles".
-
-## Credits
-
-Inspirations, and the work included from others, are in `CREDITS.md`.
+| File | What |
+|---|---|
+| `INSTALL.md` | setting up a machine |
+| `machines.md` | the hardware and the desk |
+| `CREDITS.md` | inspirations, and the work included from others |
+| `AGENTS.md` | instructions for coding agents |
+| `manifest.tsv`, `status.sh`, `check.sh` | the file map and its two checks |
 
 ## Not in here
 
-Credentials, shell history, caches, and the greeting's logo images. `.gitignore`
-blocks the obvious filenames as a backstop.
+Credentials, shell history, caches, and personal media such as wallpapers.
+`.gitignore` blocks the obvious filenames as a backstop.
