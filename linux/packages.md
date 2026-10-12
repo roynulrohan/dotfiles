@@ -9,17 +9,23 @@ here too.
 |---|---|
 | `paru` | AUR helper for the packages marked AUR below; in CachyOS's own repo |
 | `noctalia` | desktop shell since 2026-10-08: bar, launcher, lock, idle, notifications; see `noctalia/` |
+| `socat` | follows Hyprland's event socket for the `workspace-apps` and `workspace-pills` bar plugins (see `noctalia/`) |
+| `pacman-contrib` | `checkupdates`, which the Arch Updater bar plugin runs (see `noctalia/`) |
 | `hyprland` `xdg-desktop-portal-hyprland` `xdg-desktop-portal-gtk` | compositor |
 | `sddm` `qt6-5compat` `qt6-multimedia` `ttf-material-symbols-variable` | login screen with our `noctalia-card` theme; see `sddm/` |
 | `hyprmod` (AUR) | GUI for binds, monitors, workspace and window rules; owns `hyprland-gui.lua` |
+| `hyprpicker` | colour picker on Super+Shift+P (see `hyprmod/`) |
 | `kitty` | terminal (replaced foot, caelestia's default, for image logos and tabs) |
 | `fish` `starship` | shell and prompt |
 | `fastfetch` `imagemagick` | greeting and its logo sizing |
+| `ffmpeg` | renders the lock screen's GIF card (see `noctalia/`), and makes the login video and the local live-wallpaper copies (see `sddm/`, `wallpaper/`) |
 | `btop` | system monitor, coloured by Noctalia; see `btop/` |
 | `neo-matrix` (AUR) | matrix rain; the `cmatrix` alias runs it on kitty's see-through background (cmatrix paints black) |
 | `ttf-jetbrains-mono-nerd` | the font everything assumes |
 | `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
 | `lazygit` `github-cli` `micro` | git UI, gh, editor |
+| `jq` `sqlite` | `live-wallpaper` reads the monitor list with `jq`; `shared/orca/orca-settings.sh` needs both |
+| `neovim` | installed for learning; `VISUAL` points at it when it exists (`shared/fish`). Its config, `shared/nvim`, isn't set up on this machine yet |
 | `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
 | `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
 | `mpv-uosc` (AUR) `mpv-thumbfast-git` (AUR) | mpv's on-screen controls and timeline thumbnails for videos; see `mpv/` |

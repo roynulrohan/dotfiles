@@ -168,9 +168,7 @@ A headless box does steps 2 and 5 only.
 
 1. **Homebrew packages.** Install Homebrew, then run
    `brew bundle --file mac/Brewfile` in a real terminal: the Brewfile includes
-   Karabiner-Elements, which asks for your password. kitty, Raycast,
-   LinearMouse, SF Symbols and SketchyBar's app font are not in the Brewfile;
-   install them from `mac/wm/SETUP.md`, Install. Check:
+   Karabiner-Elements, which asks for your password. Check:
    `brew bundle check --file mac/Brewfile` reports the dependencies as
    satisfied.
 2. **Shell and git.** Copy `shared/fish`, `mac/fish` and `shared/git`. Check:

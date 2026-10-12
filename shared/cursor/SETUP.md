@@ -28,6 +28,10 @@ Extensions are not captured for Cursor. The `Brewfile`'s `vscode` lines are VS
 Code's list — Cursor uses a different marketplace and `cursor --install-extension`
 won't necessarily resolve the same identifiers. Reinstall by hand.
 
+`keybindings.json` is written for the Mac. Its two `cmd+` binds carry `isMac`
+in their `when` clause, because on Linux `cmd` means Super, which Hyprland
+takes first. The `-` entries remove macOS defaults and do nothing on Linux.
+
 Skim `settings.json` after copying for hardcoded home paths such as
 `/Users/roynulrohan`; the shared file must not contain any.
 

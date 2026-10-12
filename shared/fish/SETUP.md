@@ -27,7 +27,7 @@ OS's `config.fish` only adds what must come later.
 ## Notes
 
 - Fish is not POSIX. Paste bash one-liners as `bash -c '...'`.
-- `nvm` does not work in fish; use `n` or bun (both in the Brewfile).
+- `nvm` does not work in fish; use `n` (in the Brewfile) or bun.
 - `ll` is eza's long listing and `gl` a short graph log on both OSes. The
   short `l`, `la` and `lla` abbreviations are Linux only, so the Mac keeps
   fish's own `la` (`ls -lAh`).

@@ -62,12 +62,10 @@ brew "n"
 brew "nano"
 # Improved Nano Syntax Highlighting Files
 brew "nanorc"
-# Fast, highly customisable system info script
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node@18"
-# Manage multiple Node.js versions
 # Development kit for the Java programming language
 brew "openjdk@11"
 # Python version management
@@ -92,10 +90,6 @@ brew "watchman"
 brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Real-time type-ahead completion for Zsh
-# Fish-like fast/unobtrusive autosuggestions for zsh
-# Fish shell like syntax highlighting for zsh
-# ZSH plugin that reminds you to use existing aliases for commands you just typed
 cask "arbor"
 # Window peeking utility app
 cask "dockdoor"
@@ -104,7 +98,8 @@ cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Terminal emulator as alternative to Apple's Terminal app
+# The primary terminal (shared/kitty)
+cask "kitty"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Standalone app for debugging React Native apps
@@ -146,3 +141,7 @@ brew "micro"
 brew "felixkratz/formulae/sketchybar"
 cask "nikitabobko/tap/aerospace"
 cask "karabiner-elements"
+cask "font-sketchybar-app-font"
+cask "sf-symbols"
+cask "raycast"
+cask "linearmouse"

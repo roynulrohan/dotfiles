@@ -13,8 +13,8 @@
 -- reduced to their name (the part before ">>") before anything looks at them.
 --
 -- Setting `hidden_tags`: windows carrying any of these Hyprland tags are left
--- out. Tag changes raise no socket2 event, so whoever retags a window and
--- wants the bars updated at once sends the `refresh` IPC below.
+-- out. Tag changes raise no socket2 event, so after changing a window's tags,
+-- send the `refresh` IPC below to update the bars at once.
 
 local POLL_MS = 5000     -- fallback when events are flowing
 local NO_STREAM_MS = 1000 -- no event stream available: plain polling

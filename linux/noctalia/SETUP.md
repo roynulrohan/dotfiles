@@ -128,8 +128,8 @@ It never uses window titles.
   `[plugin_settings."roynul/workspace-apps"]` or in Settings → Plugins):
   windows with any of these Hyprland tags get no icon.
   Tags from window rules match without their trailing `*`. A tag change raises
-  no Hyprland event, so whatever retags a window sends `refresh` to update the
-  bars at once (otherwise the 5 s poll catches it). The service applies a
+  no Hyprland event, so after changing a window's tags, send `refresh` to
+  update the bars at once (otherwise the 5 s poll catches it). The service applies a
   changed setting in place (`onConfigChanged`). Labels are in
   `translations/en.json`.
 - `icons.luau`, the bar widget: renders its monitor's list from

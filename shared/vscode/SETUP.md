@@ -72,6 +72,8 @@ copy these files in after signing in.
   (`arRPC: true` in `~/.config/equibop/settings.json`, socket
   `$XDG_RUNTIME_DIR/discord-ipc-0`). `vscord.app.privacyMode.enable` hides the
   project and file too; `vscord.ignore.workspaces` hides chosen projects.
+- The `cmd+` entries in `keybindings.json` remove macOS defaults. Linux has no
+  such defaults (there `cmd` means Super), so they do nothing on CachyOS.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports
   (`editor.codeActionsOnSave`, `explicit`); auto save after a delay doesn't, so
   nothing reshuffles while typing.
