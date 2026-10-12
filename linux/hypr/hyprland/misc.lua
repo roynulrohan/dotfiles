@@ -6,6 +6,7 @@ hl.config({
         animate_mouse_windowdragging = false,
 
         disable_hyprland_logo        = true,
+        disable_splash_rendering     = true,   -- no splash line ("Now available on Fedora!") when nothing covers the background
         force_default_wallpaper      = 0,
 
         on_focus_under_fullscreen    = 2,
