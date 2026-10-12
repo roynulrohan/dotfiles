@@ -41,12 +41,8 @@ The hardware is in [`machines.md`](machines.md).
 
 ## Install
 
-Install `gh` (`sudo pacman -S github-cli` on CachyOS, `brew install gh` on the
-Mac), then clone:
-
 ```bash
-gh auth login
-gh repo clone roynulrohan/dotfiles ~/Coding/setup/dotfiles
+git clone https://github.com/roynulrohan/dotfiles.git
 ```
 
 Then follow [`INSTALL.md`](INSTALL.md).
