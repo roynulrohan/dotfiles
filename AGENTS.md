@@ -1,15 +1,15 @@
 # Setting up a machine for Roynul
 
 This repo holds real config files plus per-package instructions. There is no
-install script and nothing is symlinked: you **copy** files to the destinations
-in each package's `SETUP.md` (also listed in `manifest.tsv`), and copy them back
-when they change on a machine. `./status.sh` shows what differs.
+install script. Each package's `SETUP.md` says where its files go, and
+`manifest.tsv` lists the same mapping. `./status.sh` shows which live files
+differ from the repo. Read "Editing this repo" before you change anything here.
 
 ## Before you start
 
 1. **Ask what the machine is.** The CachyOS desktop wants everything in
    `linux/` plus `shared/`. The Mac wants `mac/` plus `shared/`. A headless box
-   wants `shared/fish`, `shared/git`, `shared/claude` and nothing visual.
+   wants only the shell, git and Claude steps of "Order", and nothing visual.
 2. **Detect the platform** with `uname -s`. Packages are written for
    CachyOS/pacman and macOS/Homebrew. Other distros: translate the package names.
 3. **Never clobber silently.** If a destination exists and differs, show the
@@ -18,96 +18,247 @@ when they change on a machine. `./status.sh` shows what differs.
 ## Preferences
 
 These explain why the configs look the way they do. Honour them when you hit a
-decision the repo doesn't cover.
+decision the repo doesn't cover. Dates, history and details are in the package
+docs each line points to.
+
+### Both machines
 
 - **CachyOS is the reference machine.** The Mac adapts the shared configs, not
-  the other way round. When the Mac needs a different value, put it behind an OS
-  guard (`CLAUDE.md` rule 4), so CachyOS behaves the same as before.
+  the other way round. When the Mac needs a different value, put it behind an
+  OS guard (rule 4 in "Editing this repo"), so CachyOS behaves the same as
+  before.
 - **fish + starship**, everywhere. Not zsh, not powerlevel10k.
-- **Terminal**: kitty on both machines; Ghostty stays configured on the Mac as a
-  second terminal. Both speak the kitty graphics protocol, which the greeting's
-  image logo needs.
+- **kitty is the terminal** on both machines. Ghostty stays configured on the
+  Mac as a second terminal. Both speak the kitty graphics protocol, which the
+  greeting's image logo needs.
 - **JetBrainsMono Nerd Font**, or the prompt, greeting and eza icons break.
 - **Modern CLI replacements**: eza, bat, fd, ripgrep, fzf, zoxide. Aliases only
   activate when the tool exists, so install them.
-- **bun over npm/npx**. `bunx`, not `npx`.
-- **Desktop (Linux)**: Hyprland with the Noctalia shell (`linux/noctalia`,
-  since 2026-10-08; top bar, launcher, lock, idle, notifications). The Hyprland
-  config started as caelestia's and is now ours (`linux/hypr`). Until
-  2026-10-08 the desktop ran on caelestia; it was uninstalled on 2026-10-09.
-  `linux/caelestia` records that history and keeps a reference copy of its
-  original Hyprland config (`hypr-reference`, with the user's key
-  preferences). Binds and rules go through HyprMod (`linux/hyprmod`) where it
-  can express them; HyDE-style keybinds layered on caelestia's, with
-  caelestia's originals unbound first. Terminal, browser (Zen) and Discord are
-  opaque; each monitor has its own workspaces 1–10, shown as
-  numbers in the bar. Default apps: Zen for web
-  pages and PDFs, Dolphin for folders, mpv for images and videos (Gwenview for
-  SVG and editing); see `linux/packages.md`. Login screen: SDDM with our
-  own `noctalia-card` theme, which follows Noctalia (`linux/sddm`). Discord:
-  Equibop is the default (Super+D, `discord://` links); the official app
-  stays installed.
-  Live wallpapers: Wallpaper Engine wallpapers per monitor through
-  linux-wallpaperengine (`linux/wallpaper`); Noctalia's wallpaper is a still
-  of the main one, for the colours (its drawing is off). Audio: PipeWire's own filter-chain runs the
-  G432 headset's EQ (`linux/pipewire`); no EasyEffects. Night light:
-  hyprsunset, always on (`linux/hyprsunset`). Window and image-viewer
-  controls follow one convention: arrows move, Shift resizes, Alt makes the
-  step fine (`linux/hypr/SETUP.md`, Window mode; `linux/mpv`). New binds
-  of that kind follow it; workspace and monitor keys keep caelestia's meanings.
-- **Desktop (Mac)**: AeroSpace + SketchyBar (`mac/wm`). Super is the key second
-  from the spacebar, as on Linux; Karabiner sends Ctrl+Option for it, so every
-  Cmd shortcut stays native. The Mac binds are a minimal subset of the Hyprland
-  ones. Never change Hyprland to match the Mac.
-- **Theming follows the terminal.** The prompt and greeting use named ANSI
-  colours, never hex, so they follow whatever sets the palette: on Linux,
-  Noctalia's wallpaper palette (a Noctalia template writes kitty's theme), the
-  Ghostty/kitty theme on the Mac. **No theming
-  changes on the Mac**: nothing in this repo overrides its terminal palette.
+- **bun over npm/npx**: `bunx`, not `npx`. Exception: in a repo with its own
+  lockfile and scripts, use what that repo uses.
+- **The prompt and greeting follow the terminal palette.** They use named ANSI
+  colours, never hex. On Linux a Noctalia template writes kitty's theme from
+  the wallpaper palette (`shared/kitty/SETUP.md`).
+- **No new theming on the Mac.** It keeps the palettes this repo ships for it:
+  Catppuccin Frappé for kitty (`mac/kitty/colors.conf`) and Raycast Dark for
+  Ghostty (`shared/ghostty/auto/theme.ghostty`). Don't add a palette
+  generator or recolour them.
 - **Claude Code is the primary agent.** `shared/agents` holds the global
-  instructions every agent reads, copied to `~/.claude/CLAUDE.md` and
-  `~/.codex/AGENTS.md`; `shared/claude` holds Claude Code's own `settings.json`
-  (plugins and skills are installed per machine). Both matter; get them right.
+  instructions every agent reads; `shared/claude` holds Claude Code's own
+  `settings.json`. Plugins and skills are installed per machine. Setup is right
+  when `rtk init --show` reports everything as configured, and `./status.sh`
+  shows no difference for these files except the expected ones in step 5 of
+  "Order".
+
+### CachyOS desktop
+
+- **Hyprland with the Noctalia shell** (`linux/hypr`, `linux/noctalia`).
+  Noctalia is the top bar, launcher, lock, idle and notifications. The desktop
+  ran on caelestia before; that history is in `linux/caelestia/README.md`.
+- **HyprMod first.** Binds and rules go through HyprMod (`linux/hyprmod`) where
+  it can express them. The rest goes in `hypr-user.lua` (`linux/hypr/SETUP.md`).
+- **HyDE-style keybinds on top of caelestia's.** Unbind caelestia's original
+  before you replace it, or both fire (`linux/hyprmod/SETUP.md`).
+- **One convention for window and image-viewer controls**: arrows move, Shift
+  resizes, Alt makes the step fine (`linux/hypr/SETUP.md`, Window mode;
+  `linux/mpv`). New binds of that kind follow it.
+- **Workspace and monitor keys keep caelestia's meanings**: Shift takes the
+  window along, Alt sends it without following (`linux/hypr/SETUP.md`).
+- **Each monitor has its own workspaces 1–10**, shown as numbers in the bar
+  (`linux/hypr/SETUP.md`, Per-monitor workspaces).
+- **Terminal, browser (Zen) and Discord are opaque.** Other windows keep the
+  default transparency (`linux/hyprmod/SETUP.md`).
+- **Default apps**: Zen for web pages and PDFs, Dolphin for folders, mpv for
+  images and videos, Gwenview for SVG and editing (`linux/packages.md`).
+- **Equibop is the Discord app** (Super+D, `discord://` links). The official
+  `discord` package stays installed (`linux/packages.md`, `linux/equibop`).
+- **Live wallpapers on every monitor**, from Wallpaper Engine. Noctalia gets a
+  still of the main one only for its colours (`linux/wallpaper/SETUP.md`).
+- **Login screen: SDDM** with our `noctalia-card` theme, which follows
+  Noctalia's colours (`linux/sddm`).
+- **No EasyEffects.** PipeWire's own filter-chain runs the G432 headset's EQ
+  (`linux/pipewire`).
+- **Night light always on**, through hyprsunset (`linux/hyprsunset`).
+
+### Mac desktop
+
+- **AeroSpace + SketchyBar** (`mac/wm`).
+- **Super is the key second from the spacebar**, as on Linux. Karabiner sends
+  Ctrl+Option for it, so every Cmd shortcut stays native.
+- **The Mac binds are a minimal subset of the Hyprland ones.** Never change
+  Hyprland to match the Mac.
+
+### Key roles (CachyOS)
+
+The user ranked the desktop's keys by role. The role matters, not the app or
+the exact key. Copied from the Preferences in
+`linux/caelestia/hypr-reference/README.md`, which recorded them against
+caelestia's keys.
+
+- **Must:** Super+T terminal, Super+E file manager, Super+B browser; Super+M
+  music, Super+D chat and Super+S scratch (pop-up workspaces), and Super+Alt+S
+  to send a window to scratch.
+- **Use:** the launcher; lock; clipboard history; the keyboard's own media
+  keys (through Fn), volume knob and mute; Super+Shift+S region screenshot on
+  a frozen screen; colour picker; restarting the shell (Ctrl+Super+Alt+R).
+- **Nice to have:** session menu, emoji picker, editor on Super+C, system
+  monitor pop-up (Ctrl+Shift+Esc).
+- **Not used, or didn't come up:** Print and Super+P screenshots; todo pop-up
+  (Super+R, "don't care"); F10–F12 volume (the keyboard has its own keys, and
+  these take F11 fullscreen and F12 developer tools away from apps).
+- **Didn't know about, open to whatever the shell offers:** sidebar, all
+  panels, clear notifications, restart and lock, recording, deleting
+  clipboard entries, Ctrl+Super+Space media keys, audio mixer.
+- **Pop-up workspaces** other than music, chat and scratch are "messy and
+  unused". Windows come back with the workspace number keys. Open to
+  rethinking them.
 
 ## Layout
 
-| Directory | Applies to | Contents |
+| Directory | Applies to | Packages |
 |---|---|---|
-| `shared/` | both | fish, starship, fastfetch, kitty, ghostty, git, agents, claude, ccstatusline, nvim, vscode, cursor, orca |
-| `linux/` | CachyOS desktop | fish entry point, Hyprland config (`hypr`), Noctalia shell (`noctalia`), caelestia history and reference copy, HyprMod file, snapshots setup, btop, mpv, PipeWire headset EQ, hyprsunset night light, SSH key unlock, `packages.md` |
-| `mac/` | Mac | fish entry point, kitty colours, `wm/` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
+| `shared/` | both | `fish`, `starship`, `fastfetch`, `kitty`, `ghostty`, `git`, `agents`, `claude`, `ccstatusline`, `nvim`, `vscode`, `cursor`, `orca` |
+| `linux/` | CachyOS desktop | `fish` (entry point), `hypr` (Hyprland), `noctalia` (shell), `hyprmod`, `sddm` (login screen), `wallpaper` (live wallpapers), `mpv`, `pipewire` (headset EQ), `hyprsunset` (night light), `btop`, `equibop` (Discord), `uwsm` (session environment), `ssh` (key unlock), `snapshots`, `caelestia` (history and reference copy), `packages.md` |
+| `mac/` | Mac | `fish` (entry point), `kitty` (colours), `wm` (AeroSpace, SketchyBar, Karabiner, LinearMouse, macOS settings script), `Brewfile` |
 
 Each package has a `SETUP.md`: files and destinations, install commands per OS,
-gotchas, how to verify.
+gotchas, how to verify. `linux/caelestia` is history, not a package, and has a
+`README.md` instead.
 
 ## Order
 
-`shared/fish` and `shared/git` first, then the terminal, then `shared/starship`
-and `shared/fastfetch`, then Claude, then the platform packages. On Linux,
-install `linux/packages.md` first. Start a new shell before verifying anything
-shell-dependent.
+Do the steps for the machine in order, and check each step before the next.
+`./status.sh` prints `ok`, `differs` or `missing` for every destination in
+`manifest.tsv`. A copy step is done when its destinations print `ok`. Start a
+new shell before you check anything that depends on the shell.
+
+### CachyOS
+
+1. **Packages.** Install everything in `linux/packages.md`. Check:
+   `pacman -Q` with the table's package names prints a version for each.
+2. **Shell and git.** Copy `shared/fish`, `linux/fish` and `shared/git`.
+   Check: `./status.sh`.
+3. **Terminal.** Copy `shared/kitty`. Linux skips `mac/kitty/colors.conf`;
+   Noctalia writes kitty's colours in step 6. Check: `./status.sh`.
+4. **Prompt and greeting.** Copy `shared/starship` and `shared/fastfetch`, then
+   open a new kitty window. Check: it shows the starship prompt and the
+   greeting.
+5. **Claude.** `rtk` must be on PATH first (`shared/claude/SETUP.md`,
+   Dependencies). Copy `shared/agents` (to `~/.claude/CLAUDE.md` and
+   `~/.codex/AGENTS.md`), `shared/claude` and `shared/ccstatusline`. Then run
+   `rtk init -g`: it adds an `@RTK.md` line to the end of `~/.claude/CLAUDE.md`.
+   Check: `rtk init --show` reports the hook, `RTK.md` and `@RTK.md` as
+   configured. Expected drift: `./status.sh` reports `~/.claude/CLAUDE.md` as
+   `differs` because of that line, and `~/.claude/settings.json` as `differs`
+   once you enable plugins.
+6. **Desktop**, in this order: `linux/hypr` with `linux/uwsm` and the
+   split-monitor-workspaces clone, `linux/hyprmod`, `linux/noctalia`,
+   `linux/sddm`, `linux/wallpaper`. Check: `./status.sh`, then log out and back
+   in. The login screen shows the `noctalia-card` theme, Noctalia's bar
+   appears, and every monitor plays its wallpaper.
+7. **The rest:** `linux/hyprsunset`, `linux/pipewire`, `linux/mpv`,
+   `linux/btop`, `linux/equibop`, `linux/ssh`, `linux/snapshots`, then
+   `shared/nvim`, `shared/vscode`, `shared/cursor`, `shared/orca`, and
+   `shared/ghostty` if wanted. Check: `./status.sh`, and the Verify section of
+   each package's `SETUP.md` where it has one.
+
+A headless box does steps 2 and 5 only.
+
+### Mac
+
+1. **Homebrew packages.** Install Homebrew, then run
+   `brew bundle --file mac/Brewfile` in a real terminal: the Brewfile includes
+   Karabiner-Elements, which asks for your password. kitty, Raycast,
+   LinearMouse, SF Symbols and SketchyBar's app font are not in the Brewfile;
+   install them from `mac/wm/SETUP.md`, Install. Check:
+   `brew bundle check --file mac/Brewfile` reports the dependencies as
+   satisfied.
+2. **Shell and git.** Copy `shared/fish`, `mac/fish` and `shared/git`. Check:
+   `./status.sh`.
+3. **Terminal.** Copy `shared/kitty` with `mac/kitty`, and `shared/ghostty`.
+   Check: `./status.sh`.
+4. **Prompt and greeting.** Copy `shared/starship` and `shared/fastfetch`, then
+   open a new kitty window. Check: it shows the starship prompt and the
+   greeting.
+5. **Claude.** The same as CachyOS step 5.
+6. **Desktop:** `mac/wm`, following its numbered steps. Check: the Verify
+   section of `mac/wm/SETUP.md`.
+7. **The rest:** `shared/nvim`, `shared/vscode`, `shared/cursor`,
+   `shared/orca`. Check: `./status.sh`.
+
+## Manual steps
+
+These are not plain copies: they need a person, a password, files this repo
+doesn't hold, or a command outside `manifest.tsv`. After setup, give the user
+the ones still open as a checklist.
+
+Both machines:
+
+- New SSH key with a passphrase, then `gh auth login` (`shared/git/SETUP.md`).
+- Register that key for commit signing before the first commit (`shared/git/SETUP.md`).
+- Claude Code sign-in: run `claude` (`shared/claude/SETUP.md`, Auth).
+- Orca sign-in to its cloud account (`shared/orca/SETUP.md`, Install).
+- Greeting logo images into `~/.config/fastfetch/logo/` (`shared/fastfetch/SETUP.md`).
+
+CachyOS:
+
+- Wallpaper stills into `~/Pictures/Wallpapers` (`linux/hypr/SETUP.md`, Install).
+- The main wallpaper's still and `login.mp4` into `~/Pictures/Wallpapers/live` (`linux/wallpaper/SETUP.md`, `linux/sddm/SETUP.md`, Login video).
+- Lock-screen GIFs into `~/Pictures/lock-gifs` (`linux/noctalia/SETUP.md`, Lock screen).
+- Profile picture at `~/.face`, then run `sddm-sync` (`linux/sddm/SETUP.md`).
+- Wallpaper Engine through Steam, with the Workshop wallpapers subscribed (`linux/wallpaper/SETUP.md`, Install).
+- Local live-wallpaper copies in `~/.local/share/live-wallpapers` (`linux/wallpaper/SETUP.md`, Memory).
+- Clone split-monitor-workspaces at the pinned commit (`linux/hypr/SETUP.md`, Per-monitor workspaces).
+- Make Spotify writable and run `spicetify backup apply`, again after every Spotify update (`linux/hypr/SETUP.md`, Install).
+- Enable the Noctalia plugins once with `noctalia msg plugins enable` (`linux/noctalia/SETUP.md`, Install and Update widget).
+- Write `~/.config/code-flags.conf` for VS Code (`shared/vscode/SETUP.md`).
+- Answer the SSH key's passphrase dialog once and tick "Remember password" (`linux/ssh/SETUP.md`).
+- Set Equibop's tray and splash icons in its User Assets settings (`linux/equibop/SETUP.md`).
+
+Mac:
+
+- Run `mac/wm/macos-settings.sh`, then log out and back in (`mac/wm/SETUP.md`).
+- Grant AeroSpace Accessibility on its first start (`mac/wm/SETUP.md`).
+- Allow Karabiner-Elements' driver and Input Monitoring, and pick ANSI if asked (`mac/wm/SETUP.md`).
 
 ## Not in this repo
 
-Agent tools, plugins and skills: see `shared/agents`.
-Credentials (SSH keys, `~/.claude.json`, tool auth files), shell history,
-caches, and the fastfetch logo images. After setup these need doing by hand, so surface
-them as a checklist: `gh auth login`, Claude Code sign-in, new SSH key, images
-into `~/.config/fastfetch/logo/`.
+Agent tools, plugins and skills: see `shared/agents`. Credentials (SSH keys,
+`~/.claude.json`, tool auth files), shell history, caches, and personal media:
+the fastfetch logo images, wallpapers, lock-screen GIFs and `~/.face`.
 
-## Commits
+## Editing this repo
 
-Every commit subject ends with the device it was made on, in parentheses. Then
-`git log --oneline` shows which machine each change came from:
+These rules apply to every edit, by any agent.
+
+1. **Never commit a credential.** Some configs are committed *because* their
+   key fields are empty. If a machine fills one in, don't copy that key back.
+2. **Copy, don't symlink.** Machines keep normal files in normal places. This
+   repo is the source to copy from and the place to copy changes back to.
+   `manifest.tsv` maps repo paths to destinations; `./status.sh` shows drift.
+3. **Own what you adopt; never mix in a framework's live tree.**
+   `~/.config/hypr` started as caelestia's and is now ours (`linux/hypr`);
+   caelestia's original stays as a reference copy in
+   `linux/caelestia/hypr-reference`. `~/.config/fish` is ours too: `conf.d`
+   (`shared/fish`) and `config.fish` (`linux/fish`, `mac/fish`). Other files a
+   framework or tool drops in there stay out of `manifest.tsv`.
+4. **Keep shared configs portable.** No hardcoded home paths. Guard OS-specific
+   bits so the other OS skips them. Document OS differences in the package's
+   `SETUP.md`.
+5. **Tag every commit with its device.** End the subject with the device tag in
+   parentheses, so `git log --oneline` shows which machine each change came
+   from. The tags are below.
+
+Example subject:
 
     kitty: abstract socket on Linux, path socket only on macOS (cachy-os)
 
-| Tag | Device |
-|---|---|
-| `cachy-os` | CachyOS desktop (hostname `cachyos`) |
-| `macbook-pro` | the Mac |
+| Tag | Device | Hostname |
+|---|---|---|
+| `cachy-os` | CachyOS desktop | `cachyos` |
+| `macbook-pro` | the Mac | TODO: ask the user |
 
-A new machine picks a short kebab-case tag and adds it to this table in its
+A new machine picks a short kebab-case tag and adds a row to this table in its
 first commit. Commits before 2026-10-07 have no tag.
 
 ## When you're done
