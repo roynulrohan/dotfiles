@@ -69,6 +69,14 @@ After copying:
 - The logo is 18 rows tall on Linux and 17 on macOS, whose layout has one row
   fewer (no `display`). So the image ends on the colour-dots row and the blank
   line above the prompt survives. `FASTFETCH_LOGO_ROWS` overrides either.
+- **Narrow windows.** The boxes need 35 columns (`TEXT_COLS` in the wrapper,
+  the widest row of `greeting.jsonc`) beside the logo. The wrapper reads the
+  window's width when the greeting starts. An image that doesn't fit shrinks;
+  under 6 rows it is dropped. A text logo that doesn't fit is dropped. Either
+  way, a narrow window gets clean boxes instead of wrapped lines. Change
+  `TEXT_COLS` when the layout gets wider. `FASTFETCH_COLS` overrides the
+  measured width. A window resized afterwards keeps the old layout until
+  `fastfetch` runs again.
 - Square images work best. Pad a portrait to a transparent square with
   `magick in.png -background none -gravity center -extent '%[fx:max(w,h)]x%[fx:max(w,h)]' out.png`.
 

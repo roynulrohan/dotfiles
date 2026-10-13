@@ -59,9 +59,28 @@ if [ -n "$larp" ]; then
          /"type": "title"/ && /host-name/ { print ENVIRON["LARP_HOST"]; next }
          { print }' "$cfg" > "$larpcfg" && cfg=$larpcfg
 fi
+# Fit the window. The boxes need TEXT_COLS columns (the widest row of
+# greeting.jsonc) beside the logo, plus the logo's right padding (3). A logo
+# that doesn't fit is shrunk (images) or dropped (text logos), so a narrow
+# window still gets clean boxes. FASTFETCH_COLS overrides the measured width.
+TEXT_COLS=35
+term_cols=${FASTFETCH_COLS-}
+[ -n "$term_cols" ] || term_cols=$(stty size </dev/tty 2>/dev/null | awk '{ print $2 }')
+esc=$(printf '\033')
+# text_logo [--logo NAME]: fastfetch's text logo, or none when it doesn't fit.
+text_logo() {
+    if [ -n "$term_cols" ]; then
+        w=$("$real" -c "$cfg" --logo-type builtin "$@" --structure break 2>/dev/null \
+            | sed "s/${esc}\[[0-9;?]*[a-zA-Z]//g" \
+            | awk '{ if (length($0) > m) m = length($0) } END { print m + 0 }')
+        [ "$term_cols" -gt $(( w + 3 + TEXT_COLS )) ] || exec "$real" -c "$cfg" --logo none
+    fi
+    exec "$real" -c "$cfg" --logo-type builtin "$@"
+}
+
 if [ -n "$oslogo" ]; then
-    [ -n "$larp" ] && exec "$real" -c "$cfg" --logo-type builtin --logo arch
-    exec "$real" -c "$cfg" --logo-type builtin
+    [ -n "$larp" ] && text_logo --logo arch
+    text_logo
 fi
 
 # What can this terminal draw? Decided from the environment, so it costs
@@ -77,8 +96,8 @@ if [ -t 1 ] && [ -z "${TMUX-}" ] && [ -z "${STY-}" ]; then
     fi
 fi
 if [ "$type" = builtin ]; then
-    [ -n "$larp" ] && exec "$real" -c "$cfg" --logo-type builtin --logo arch
-    exec "$real" -c "$cfg" --logo-type builtin
+    [ -n "$larp" ] && text_logo --logo arch
+    text_logo
 fi
 
 # Random logo. (No `case` inside $(...): bash 3.2, macOS's /bin/sh, can't parse it.)
@@ -133,6 +152,18 @@ if command -v magick >/dev/null 2>&1; then
         cols=$(awk -v w="$1" -v h="$2" -v r="$rows" -v a="$aspect" \
             'BEGIN { c = int(w / h * r * a + 0.5); if (c > 44) c = 44; if (c < 8) c = 8; print c }')
     fi
+fi
+
+# An image shrinks to the room left beside the boxes (2 columns of padding on
+# its left, 3 on its right, 1 spare). Under 6 rows it shows too little, so the
+# greeting goes without it.
+if [ -n "$term_cols" ]; then
+    room=$(( term_cols - 2 - 3 - TEXT_COLS - 1 ))
+    if [ "$cols" -gt "$room" ]; then
+        if [ "$room" -gt 0 ]; then rows=$(( rows * room / cols )); else rows=0; fi
+        cols=$room
+    fi
+    [ "$rows" -ge 6 ] || exec "$real" -c "$cfg" --logo none
 fi
 
 # Animated GIFs: fastfetch's own kitty mode shows one frame. The recipe from
