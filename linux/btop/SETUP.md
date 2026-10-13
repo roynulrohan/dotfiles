@@ -1,35 +1,47 @@
 # btop
 
-System monitor in the terminal. `btop.conf` is caelestia's (revision
-`1ee7a98`), adopted unchanged on 2026-10-08 so the setup no longer needs
-caelestia's installer for it. It holds no machine-specific values: disks,
-network interface, sensors and GPUs are all left on auto.
+System monitor in the terminal, coloured with the wallpaper palette by
+Noctalia. `btop.conf` started from caelestia's. It
+holds no machine-specific values: disks, network interface, sensors and GPUs
+are all left on auto.
+
+## Files
 
 | Repo | Destination |
 |---|---|
-| `btop.conf` | `~/.config/btop/btop.conf` |
+| [`btop.conf`](btop.conf) | `~/.config/btop/btop.conf` |
+
+Outside the repo: `~/.config/btop/themes/noctalia.theme`, which Noctalia
+writes (Notes, "Colours").
 
 ## Install
+
+On CachyOS/Arch:
 
 ```bash
 sudo pacman -S btop
 ```
 
-## Colours
-
-Noctalia's btop template ([`linux/noctalia/templates/btop.theme`](../noctalia/templates/btop.theme)) writes the
-wallpaper palette to `~/.config/btop/themes/noctalia.theme` and signals a
-running btop to reload it. `btop.conf` selects it (`color_theme = "noctalia"`;
-it was `"caelestia"` until 2026-10-09). Renaming it means changing
-`color_theme` here and the template's `output_path` in
-[`linux/noctalia/config.toml`](../noctalia/config.toml) together. `theme_background = false` keeps kitty's
-transparent background.
+The colours need [`linux/noctalia`](../noctalia/SETUP.md) and its btop
+template.
 
 ## Notes
 
-- `save_config_on_exit = true`: btop rewrites `btop.conf` whole when it exits,
-  so settings changed in its menu reach the live file, and comments added by
-  hand are lost. Copy the file back when `./status.sh` shows it differs.
+### Colours
+
+Noctalia's btop template ([`linux/noctalia/templates/btop.theme`](../noctalia/templates/btop.theme))
+writes the wallpaper palette to `~/.config/btop/themes/noctalia.theme` and
+signals a running btop to reload it. `btop.conf` selects it
+(`color_theme = "noctalia"`). Renaming it means changing `color_theme` here
+and the template's `output_path` in
+[`linux/noctalia/config.toml`](../noctalia/config.toml) together.
+`theme_background = false` keeps kitty's transparent background.
+
+### Saved on exit
+
+`save_config_on_exit = true`: btop rewrites `btop.conf` whole when it exits,
+so settings changed in its menu reach the live file, and comments added by
+hand are lost. Copy the file back when `./status.sh` shows it differs.
 
 ## Verify
 

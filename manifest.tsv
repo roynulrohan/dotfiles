@@ -49,6 +49,7 @@ linux	linux/noctalia/lock/scripts/strip.py	~/.local/share/noctalia/lock/scripts/
 linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
 linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
 linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
+linux	linux/noctalia/spicetify-user.css	~/.config/spicetify/Themes/noctalia/user.css	copy
 linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
 linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
@@ -90,6 +91,7 @@ all	shared/git/gitconfig	~/.gitconfig	copy
 all	shared/kitty/kitty.conf	~/.config/kitty/kitty.conf	copy
 all	shared/nvim	~/.config/nvim	dir
 all	shared/starship/starship.toml	~/.config/starship/starship.toml	copy
+linux	shared/vscode/code-flags.conf	~/.config/code-flags.conf	copy	code
 linux	shared/vscode/keybindings.json	~/.config/Code/User/keybindings.json	copy
 mac	shared/vscode/keybindings.json	~/Library/Application Support/Code/User/keybindings.json	copy
 linux	shared/vscode/settings.json	~/.config/Code/User/settings.json	copy

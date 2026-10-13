@@ -1,31 +1,38 @@
-# git and ssh
+# git
+
+Git's user config: identity, commits and tags signed with the SSH key, and
+`gh` as the credential helper for GitHub. The SSH key and its GitHub sign-in
+are set up by hand on each machine (Install).
 
 ## Files
 
 | Repo | Destination |
 |---|---|
-| `gitconfig` | `~/.gitconfig` |
-| — | `~/.gitconfig.local`: machine-only settings, not in the repo. `gitconfig` includes it last, and git ignores it if it doesn't exist |
+| [`gitconfig`](gitconfig) | `~/.gitconfig` |
+| not in the repo | `~/.gitconfig.local`: settings for one machine only. `gitconfig` includes it last, and git ignores it if it doesn't exist |
 
 ## Install
 
-- CachyOS: `pacman -S git github-cli openssh lazygit`, `systemctl --user enable --now ssh-agent.socket`
-- macOS: `brew install git gh lazygit` (ssh-agent is built in)
+- CachyOS/Arch: `sudo pacman -S git github-cli openssh lazygit micro`, then
+  `systemctl --user enable --now ssh-agent.socket`. To unlock the key at login,
+  see [`linux/ssh`](../../linux/ssh/SETUP.md).
+- macOS: `brew install git gh lazygit micro`. macOS has its own ssh-agent.
 
-## Manual, every new machine
+After copying, on every new machine:
 
-1. `ssh-keygen -t ed25519 -C roynulrohan@gmail.com` with a passphrase
-2. `gh auth login` — GitHub.com, SSH, upload the key
+1. `ssh-keygen -t ed25519 -C roynulrohan@gmail.com`, with a passphrase.
+2. `gh auth login`: GitHub.com, SSH, upload the key.
 3. Verified commits: `gh auth refresh -s admin:ssh_signing_key`, then
-   `gh ssh-key add ~/.ssh/id_ed25519.pub --type signing`. The committed
-   gitconfig already sets `commit.gpgsign` and `tag.gpgsign` to `true`, so
-   register the key before the first commit, or GitHub shows "Unverified".
+   `gh ssh-key add ~/.ssh/id_ed25519.pub --type signing`. `gitconfig` sets
+   `commit.gpgsign` and `tag.gpgsign` to `true`, so register the key before
+   the first commit, or GitHub shows "Unverified".
 
 ## Notes
 
-`gitconfig` is deliberately plain: rebase on pull, auto upstream on first push,
-prune on fetch, rerere, histogram diffs, micro as editor. Signing uses the SSH
-key, no GPG. Never copy private keys between machines.
+- `gitconfig` is deliberately plain: rebase on pull, auto upstream on first
+  push, prune on fetch, rerere, histogram diffs, micro as the editor.
+- Signing uses the SSH key, no GPG.
+- Never copy private keys between machines.
 
 ## Verify
 

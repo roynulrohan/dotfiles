@@ -16,16 +16,21 @@ the package that does it today, so a new tool can take over the same job.
   dotfiles becomes a copy in this repo. Nothing depends on their live tree.
 - **Keep config for hardware that isn't connected right now.** Don't remove it
   because a device is missing today.
+- **Review and pin third-party code.** A plugin or package that runs code is
+  read first, then pinned to the reviewed commit or version. Today:
+  split-monitor-workspaces and the Noctalia plugins.
+- **12-hour time** everywhere a clock shows.
 
 ## Look
 
 - **Colours come from the wallpaper** and reach every app that can take them.
   Linux has no fixed palette. Today:
-  [`linux/noctalia`](../linux/noctalia/SETUP.md), Colour templates.
+  [`linux/noctalia`](../linux/noctalia/SETUP.md), Colour templates. VS Code is
+  the exception: it keeps One Dark Pro.
 - **The Mac keeps fixed palettes** and gets no palette generator. Today:
   [`mac/kitty`](../mac/kitty/SETUP.md), [`shared/ghostty`](../shared/ghostty/SETUP.md).
 - **Windows are translucent by default.** The terminal, the browser and
-  Discord are opaque. VS Code stays translucent. Today:
+  Discord are opaque. VS Code and Orca stay translucent. Today:
   [`linux/hyprmod`](../linux/hyprmod/SETUP.md).
 - **One spacing grid** for gaps, the bar and borders. Today: 4 px,
   [`linux/hypr`](../linux/hypr/SETUP.md), Look.
@@ -93,9 +98,12 @@ The role matters, not the app or the exact key.
 - **bun over npm and npx,** except in a project with its own lockfile.
 - **Default apps:** Zen for web pages and PDFs, Dolphin for folders, mpv for
   images and videos, Gwenview for SVG and editing. Equibop is the Discord app.
+- **Folders sort by date modified, newest first,** and each folder remembers
+  its own view.
 - **Hyprland binds and rules go through HyprMod** where it can express them.
   Today: [`linux/hyprmod`](../linux/hyprmod/SETUP.md).
-- **Claude Code is the main coding agent.**
+- **Claude Code is the main coding agent.** Agents ask before they install a
+  tool for themselves, such as rtk or a skills manager.
 
 ## Hard no's
 

@@ -1,46 +1,70 @@
 # fish
 
-Shell on every machine. Fish has autosuggestions, highlighting and completions
-built in, so there are no plugins to install. Starship draws the prompt.
+The shell on Linux and macOS. fish has autosuggestions, syntax highlighting and
+completions built in, so there are no plugins to install. Starship draws the
+prompt.
 
 ## Files
 
 | Repo | Destination | Note |
 |---|---|---|
-| `conf.d/*.fish` | `~/.config/fish/conf.d/` | fish sources these automatically, on both OSes |
-| [`../../mac/fish/config.fish`](../../mac/fish/config.fish) | `~/.config/fish/config.fish` | **macOS only** |
-| [`../../linux/fish/config.fish`](../../linux/fish/config.fish) | `~/.config/fish/config.fish` | **Linux only**; replaced caelestia's |
-| — | `~/.config/fish/local.fish` | machine-only lines, not in the repo; both `config.fish` files source it last if it exists |
-
-The `conf.d` files do the work: `00` environment, `05` starship, zoxide (as
-`cd`) and direnv (Linux; the Mac's `config.fish` does these itself, after its
-conda hook), `10` aliases and abbreviations, `20` the fastfetch greeting, `30`
-syntax colours (macOS only). fish sources `conf.d` before `config.fish`, so each
-OS's `config.fish` only adds what must come later.
-
-When an installer appends to `config.fish` (a PATH line, say), move those lines
-into `local.fish`, so `config.fish` matches the repo again.
+| [`conf.d/`](conf.d) | `~/.config/fish/conf.d/` | both OSes; fish sources these files automatically |
+| [`mac/fish/config.fish`](../../mac/fish/config.fish) | `~/.config/fish/config.fish` | **macOS only** |
+| [`linux/fish/config.fish`](../../linux/fish/config.fish) | `~/.config/fish/config.fish` | **Linux only** |
+| not in the repo | `~/.config/fish/local.fish` | lines for one machine only; both `config.fish` files source it last if it exists |
 
 ## Install
 
-- CachyOS: `pacman -S fish starship eza bat zoxide direnv`
-- macOS: `brew install fish starship eza bat zoxide direnv`, then
-  `echo $(brew --prefix)/bin/fish | sudo tee -a /etc/shells` and
-  `chsh -s $(brew --prefix)/bin/fish`
+CachyOS/Arch:
+
+```bash
+sudo pacman -S fish starship eza bat zoxide direnv
+chsh -s /usr/bin/fish    # only if fish is not your login shell yet
+```
+
+macOS:
+
+```bash
+brew install fish starship eza bat zoxide direnv fzf fd
+echo "$(brew --prefix)/bin/fish" | sudo tee -a /etc/shells
+chsh -s "$(brew --prefix)/bin/fish"
+```
+
+The config also uses these tools when they exist, and skips them quietly when
+they don't:
+
+- `lazygit` for the `lg` abbreviation, `micro` for `EDITOR`, and `neovim` for
+  `VISUAL` ([`shared/nvim`](../nvim/SETUP.md)). Arch: `sudo pacman -S lazygit
+  micro neovim`. macOS: `brew install lazygit micro neovim`.
+- `fastfetch` for the greeting ([`shared/fastfetch`](../fastfetch/SETUP.md)).
+- bun for the `dev`, `build` and `npx` abbreviations. Its installer is in
+  [`shared/claude`](../claude/SETUP.md).
+- Linux: `neo-matrix` (AUR, `paru -S neo-matrix`) for the `neo-matrix` and
+  `cmatrix` aliases.
+
+After copying: when an installer appends to `config.fish` (a PATH line, for
+example), move those lines into `local.fish`, so `config.fish` matches the repo
+again.
 
 ## Notes
 
-- Fish is not POSIX. Paste bash one-liners as `bash -c '...'`.
-- `nvm` does not work in fish; use `n` (in the Brewfile) or bun.
-- `ll` is eza's long listing and `gl` a short graph log on both OSes. The
-  short `l`, `la` and `lla` abbreviations are Linux only, so the Mac keeps
-  fish's own `la` (`ls -lAh`).
-- The SSH agent line only applies when the systemd user socket exists (Linux).
+- The `conf.d` files do the work: `00` environment, `05` starship, zoxide (as
+  `cd`) and direnv, `10` aliases and abbreviations, `20` the fastfetch
+  greeting, `30` syntax colours. fish sources `conf.d` before `config.fish`, so
+  each OS's `config.fish` only adds what must come later.
+- `05` exits on macOS. The Mac's `config.fish` starts starship, zoxide and
+  direnv itself, after its conda hook ([`mac/fish`](../../mac/fish/SETUP.md)).
+- fish is not POSIX. Paste bash one-liners as `bash -c '...'`.
+- `nvm` does not work in fish. Use `n` (in the Brewfile) or bun.
+- `ll` is eza's long listing and `gl` a short graph log on both OSes. The short
+  `l`, `la` and `lla` abbreviations are Linux only, so the Mac keeps fish's own
+  `la` (`ls -lAh`).
+- The SSH agent line applies only when the systemd user socket exists (Linux).
 - `conf.d/30` names ANSI colours only, never hex, so the terminal's own palette
   still decides the shade. It sets the one fish default that does not survive a
-  transparent background; everything else is left to the theme. It runs on macOS
-  only: on CachyOS, the wallpaper palette maps `brblack` to a mid grey that
-  already reads, so the file exits at its OS guard.
+  transparent background, and leaves everything else to the theme. It runs on
+  macOS only. On Linux, Noctalia's wallpaper palette maps `brblack` to a mid
+  grey that already reads, so the file exits at its OS guard.
 
 ## Verify
 

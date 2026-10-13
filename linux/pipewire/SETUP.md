@@ -1,28 +1,37 @@
 # PipeWire
 
-A system-wide EQ for the Logitech G432 headset, built into PipeWire. No
-EasyEffects, no other app: PipeWire's own `filter-chain` runs it. Plus a fixed
-buffer size (below).
+A system-wide EQ for the Logitech G432 headset, built into PipeWire: its own
+`filter-chain` runs it, so no other app is needed. Plus a fixed buffer size,
+so apps can't make music stutter by changing it.
+
+## Files
 
 | Repo | Destination |
 |---|---|
-| `g432-eq.conf` | `~/.config/pipewire/filter-chain.conf.d/g432-eq.conf` |
-| `quantum.conf` | `~/.config/pipewire/pipewire.conf.d/quantum.conf` |
+| [`g432-eq.conf`](g432-eq.conf) | `~/.config/pipewire/filter-chain.conf.d/g432-eq.conf` |
+| [`quantum.conf`](quantum.conf) | `~/.config/pipewire/pipewire.conf.d/quantum.conf` |
 
 ## Install
 
-PipeWire and WirePlumber come with CachyOS. Copy the file, then start the
-filter-chain daemon, which PipeWire ships as a user service:
+CachyOS preinstalls `pipewire` and `wireplumber`. On plain Arch:
+
+```bash
+sudo pacman -S pipewire wireplumber
+```
+
+Copy the files, then start the filter-chain daemon, which PipeWire ships as a
+user service:
 
 ```bash
 systemctl --user enable --now filter-chain.service
 ```
 
-Turn the EQ off with `systemctl --user disable --now filter-chain.service`.
-After editing the file, `systemctl --user restart filter-chain.service`; apps
-keep playing through the second of silence.
+`quantum.conf` takes effect at the next login, or at once with
+`pw-metadata -n settings 0 clock.force-quantum 1024` (until logout).
 
-## Why it exists
+## Notes
+
+### The EQ
 
 On Windows, G HUB applies its EQ on the PC (the G432 has no onboard EQ;
 HeadsetControl only supports sidetone for it). On Linux the headset plays
@@ -33,37 +42,35 @@ preset: +12 +10 +8 −3 −2 +4 +4 +5 +8 +12 dB at 32 Hz…16 kHz.
   Neighbouring bands add up, so the gains are fitted to make the summed curve
   hit the slider values at each frequency, peaking at +12.0 dB. G HUB's own
   filter shapes aren't published, so this is an approximation.
-- **Preamp −6 dB.** A boost pushes loud music past digital full scale, and the
-  G432 takes 16-bit audio only, so the overflow is clipped. That's the harsh,
-  painfully loud result from EasyEffects. −12.1 dB removes clipping completely;
-  0 dB crackled on heavy bass; −6 dB sounded right. The volume slider sits
-  higher to make up for it. A high shelf at 0 Hz is PipeWire's flat gain
-  (`biquad.c`).
+- **Preamp −6 dB.** A boost pushes loud music past digital full scale. The
+  G432 takes 16-bit audio only, so the overflow clips and sounds harsh and
+  painfully loud. −12.1 dB removes clipping completely; 0 dB crackles on heavy
+  bass; −6 dB sounds right. The volume slider sits higher to make up for it. A
+  high shelf at 0 Hz is PipeWire's flat gain (`biquad.c`).
 - **Smart filter.** WirePlumber puts it in front of the G432 only
   (`filter.smart.target` is the headset's `node.name`). The headset stays the
   default output; HDMI and other outputs are untouched. A different headset
   needs its own `node.name` from `wpctl inspect @DEFAULT_AUDIO_SINK@`.
 
-Tried and dropped: EasyEffects (removed), AutoEq's measured G432 correction
-(Rtings data; sounded worse), and HeSuVi's DTS Headphone:X virtual surround.
+Turn the EQ off with `systemctl --user disable --now filter-chain.service`.
+After editing the file, run `systemctl --user restart filter-chain.service`;
+apps keep playing through the second of silence.
 
-## Fixed buffer size
+### Fixed buffer size
 
 `quantum.conf` sets PipeWire's quantum (the number of samples processed per
 cycle) to 1024 and stops apps from changing it: default, minimum and maximum
-are all 1024. Each change interrupts playback for a moment. caelestia's
-dashboard (the shell until 2026-10-08) recorded the audio for its beat tracker
-(the dancing cat) and the Media tab's visualiser and asked for 512 while it
-did; everything else ran at
-2048. So opening the dashboard, or moving to the Performance or Weather tab
-and back, made music stutter. PipeWire's error counters (`pw-top`, ERR) stayed
-at 0: these were quantum switches, not dropouts.
+are all 1024. Each change interrupts playback for a moment, so an app that
+asks for its own quantum, such as an audio visualiser, makes music stutter.
+These are quantum switches, not dropouts: PipeWire's error counters
+(`pw-top`, ERR) stay at 0.
 
-1024 at 48 kHz is about 21 ms of delay. 512 (about 11 ms) also played without
-stutter and suited caelestia better: it read at most 512 samples per buffer,
-so at 1024 its cat and visualiser missed part of the audio. It takes effect at
-the next login, or at once with
-`pw-metadata -n settings 0 clock.force-quantum 1024` (until logout).
+1024 at 48 kHz is about 21 ms of delay. 512 (about 11 ms) also plays without
+stutter.
+
+Sources: [PipeWire filter-chain](https://docs.pipewire.org/page_module_filter_chain.html),
+[WirePlumber smart filters](https://pipewire.pages.freedesktop.org/wireplumber/policies/smart_filters.html),
+and the Arch Wiki's PipeWire page, "Systemwide parametric equalization".
 
 ## Verify
 
@@ -73,7 +80,3 @@ wpctl status                                       # "Filters" lists effect_inpu
 pw-link -l | grep -A1 effect_output.g432_eq        # -> the G432 playback ports
 pw-config -n pipewire.conf merge context.properties | grep clock   # 1024 three times
 ```
-
-Sources: [PipeWire filter-chain](https://docs.pipewire.org/page_module_filter_chain.html),
-[WirePlumber smart filters](https://pipewire.pages.freedesktop.org/wireplumber/policies/smart_filters.html),
-and the Arch Wiki's PipeWire page, "Systemwide parametric equalization".

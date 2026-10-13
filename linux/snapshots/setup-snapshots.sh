@@ -13,7 +13,7 @@ snapper -c home set-config \
     TIMELINE_LIMIT_HOURLY=12 TIMELINE_LIMIT_DAILY=14 \
     TIMELINE_LIMIT_WEEKLY=2 TIMELINE_LIMIT_MONTHLY=1 TIMELINE_LIMIT_YEARLY=0 \
     NUMBER_LIMIT=20 NUMBER_LIMIT_IMPORTANT=15 \
-    ALLOW_USERS=roynul SYNC_ACL=yes
+    ALLOW_USERS="${SUDO_USER:?run this with sudo from your own account}" SYNC_ACL=yes
 chmod a+rx /home/.snapshots
 
 echo "== timers"

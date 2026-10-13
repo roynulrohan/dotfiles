@@ -43,7 +43,7 @@ for d in $HOME/.amplify/bin $HOME/.console-ninja/.bin $HOME/.antigravity/antigra
     test -d $d; and fish_add_path -g $d
 end
 
-# kitty.app is not a Homebrew cask here, so kitty and kitten are not on PATH;
+# Without Homebrew's kitty cask, kitty and kitten are not on PATH;
 # the fastfetch wrapper in shared/fish needs kitten for animated GIF logos.
 test -d /Applications/kitty.app/Contents/MacOS; and fish_add_path -g --append /Applications/kitty.app/Contents/MacOS
 

@@ -57,3 +57,5 @@ Not on this machine: Cursor and Ghostty.
 - Windows 11 lives on the Samsung NVMe. Never write to it.
 - The 2 TB HDD is shared with Windows and mounted at `/mnt/storage`. Steam's
   game library lives there.
+- Spare live wallpapers, kept as local copies next to the ones in use:
+  `ayanami-rei-minimal` and `3314492008`.

@@ -20,5 +20,7 @@
   of yuuto's plugin for Noctalia (MIT).
 - The animation presets in [`linux/hypr/animations`](linux/hypr/animations) are HyDE's (GPL-3.0), and
   [`linux/hypr/window-mute`](linux/hypr/window-mute) is a port of HyDE's `window.mute.py`.
+- The Spotify theme's CSS ([`linux/noctalia/spicetify-user.css`](linux/noctalia/spicetify-user.css))
+  comes from caelestia's Spotify theme (GPL-3.0).
 - Google Sans Flex by Google (OFL-1.1), in [`linux/noctalia/fonts`](linux/noctalia/fonts) and the login
   theme.

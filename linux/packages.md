@@ -1,67 +1,48 @@
-# CachyOS packages
+# Linux packages
 
-What this desktop runs on top of a CachyOS install. `pacman -S` unless marked AUR
-(`paru -S`).
+The base for the Linux desktop, and the apps that have no package of their own
+here. Every package folder names the rest in its `SETUP.md`, under Install.
+
+`pacman -S` unless marked. "AUR" means `paru -S` on CachyOS and Arch. "CachyOS
+repo" means the package is in CachyOS's own repository; on plain Arch it comes
+from the AUR. "CachyOS only" has no Arch equivalent.
+
+## Base
 
 | Package | Why |
 |---|---|
-| `paru` | AUR helper for the packages marked AUR below; in CachyOS's own repo |
-| `noctalia` | desktop shell since 2026-10-08: bar, launcher, lock, idle, notifications; see `noctalia/` |
-| `socat` | follows Hyprland's event socket for the `workspace-apps` and `workspace-pills` bar plugins (see `noctalia/`) |
-| `pacman-contrib` | `checkupdates`, which the Arch Updater bar plugin runs (see `noctalia/`) |
-| `hyprland` `xdg-desktop-portal-hyprland` `xdg-desktop-portal-gtk` | compositor |
-| `sddm` `qt6-5compat` `qt6-multimedia` `ttf-material-symbols-variable` | login screen with our `noctalia-card` theme; see `sddm/` |
-| `hyprmod` (AUR) | GUI for binds, monitors, workspace and window rules; owns `hyprland-gui.lua` |
-| `hyprpicker` | colour picker on Super+Shift+P (see `hyprmod/`) |
-| `kitty` | terminal (replaced foot, caelestia's default, for image logos and tabs) |
-| `fish` `starship` | shell and prompt |
-| `fastfetch` `imagemagick` | greeting and its logo sizing |
-| `ffmpeg` | renders the lock screen's GIF card (see `noctalia/`), and makes the login video and the local live-wallpaper copies (see `sddm/`, `wallpaper/`) |
-| `btop` | system monitor, coloured by Noctalia; see `btop/` |
-| `neo-matrix` (AUR) | matrix rain; the `cmatrix` alias runs it on kitty's see-through background (cmatrix paints black) |
-| `ttf-jetbrains-mono-nerd` | the font everything assumes |
-| `eza` `bat` `fd` `ripgrep` `fzf` `zoxide` `direnv` | modern CLI replacements |
-| `lazygit` `github-cli` `micro` | git UI, gh, editor |
-| `gitleaks` | the secret scan in `check.sh`, run before every commit |
-| `jq` `sqlite` | `live-wallpaper` reads the monitor list with `jq`; [`shared/orca/orca-settings.sh`](../shared/orca/orca-settings.sh) needs both |
-| `neovim` | installed for learning; `VISUAL` points at it when it exists ([`shared/fish`](../shared/fish/SETUP.md)). Config in [`shared/nvim`](../shared/nvim/SETUP.md) |
-| `snapper` `snap-pac` `limine-snapper-sync` `btrfs-assistant` | snapshots, preinstalled by CachyOS; see `snapshots/` |
-| `dolphin` `mpv` `gwenview` | file manager (Super+E via `hypr-vars.lua`); video player and default image viewer (see `mpv/`); image editing and SVG |
-| `mpv-uosc` (AUR) `mpv-thumbfast-git` (AUR) | mpv's on-screen controls and timeline thumbnails for videos; see `mpv/` |
-| `zen-browser-bin` (AUR) `opera-gx` (AUR) `discord` | apps referenced by window rules |
-| `equibop-bin` (AUR) | Equibop, the default Discord app; a Noctalia template writes its theme (see `noctalia/`). The official `discord` stays installed alongside |
-| `linux-wallpaperengine-git` (AUR) | live wallpapers from Wallpaper Engine (installed through Steam/Proton); see `wallpaper/` |
-| `jellyfin-desktop-git` (AUR) | Jellyfin client; replaced the repo's `jellyfin-desktop`; kept opaque by a HyprMod rule |
-| `todoist-appimage` (AUR) | Todoist, started in the todo pop-up workspace (Super+R) |
-| `visual-studio-code-bin` (AUR) | VS Code, Microsoft's build; replaced the `code` (Code - OSS) that caelestia's installer added. See [`shared/vscode`](../shared/vscode/SETUP.md) |
-| `chatgpt-desktop-bin` | ChatGPT desktop app; also opens `codex://` links |
-| `rtk-bin` (AUR) | rtk, the command proxy behind Claude Code's hook (see [`shared/claude`](../shared/claude/SETUP.md)) |
-| `pipewire` `wireplumber` | audio, preinstalled by CachyOS; the headset EQ runs in PipeWire's `filter-chain.service` (see `pipewire/`). Not EasyEffects |
-| `spotify` (AUR) `spicetify-cli` (AUR) | music; a Noctalia template themes it through Spicetify, which needs applying once (see `hypr/`, Install) |
-| `qtengine` (AUR) `darkly-bin` (AUR) `papirus-icon-theme` | Qt apps' theme engine, style and icons; `qtengine` reads the colours a Noctalia template writes (see `noctalia/`) |
-| `polkit-gnome` `trash-cli` | started by the Hyprland autostart ([`hypr/hyprland/execs.lua`](hypr/hyprland/execs.lua)): the polkit agent, and emptying trash older than 30 days |
-| `ksshaskpass` | unlocks the SSH key at login from KDE Wallet (see `ssh/`) |
-| `hyprsunset` | night light, always on (see `hyprsunset/`) |
-| `thunar` | second file manager; its look comes from the `gtk.css` and `thunar.css` Noctalia templates (see `noctalia/`) |
-| `gvfs-smb` | SMB shares (the NAS) in GTK apps such as Thunar; Dolphin and Gwenview use KDE's own SMB support |
-| `tumbler` `ffmpegthumbnailer` | image and video thumbnails in GTK file managers such as Thunar |
-| `appimagelauncher` (AUR) | adds downloaded AppImages to the app menu; enable its user service: `systemctl --user enable --now appimagelauncherd` |
-| `profile-sync-daemon` | keeps the Firefox profile in RAM (it has no Zen definition); enable its user service: `systemctl --user enable --now psd` |
-| `cachyos-gaming-meta` `cachyos-gaming-applications` | CachyOS's gaming bundle (Steam, Lutris and the rest), installed as a set rather than listed one by one |
+| `paru` (CachyOS repo) | installs the AUR packages |
+| `ttf-jetbrains-mono-nerd` | the font every package assumes |
+| `python` `lua` `gitleaks` | [`check.sh`](../check.sh): Python, `luac` and the secret scan |
 
-Reproduce the list from a live machine with `pacman -Qqe`. Removed with
-caelestia on 2026-10-09, so no longer installed: `quickshell-git`, `fuzzel`,
-`swappy`, `slurp`, `gpu-screen-recorder`, `libcava`, `brightnessctl`,
-`inotify-tools`, `ttf-rubik-vf`, `python-materialyoucolor`.
+## Apps without their own package
+
+| Package | Why |
+|---|---|
+| `dolphin` `gwenview` | file manager on Super+E; image editing and SVG |
+| `zen-browser-bin` (CachyOS repo) | browser on Super+B |
+| `thunar` `gvfs-smb` `tumbler` `ffmpegthumbnailer` | second file manager, with SMB shares and thumbnails in GTK apps |
+| `opera-gx` (AUR) | second browser |
+| `jellyfin-desktop-git` (AUR) | Jellyfin client |
+| `chatgpt-desktop-bin` (CachyOS only) | ChatGPT desktop app; also opens `codex://` links |
+| `appimagelauncher` (AUR) | adds downloaded AppImages to the app menu. Enable its service: `systemctl --user enable --now appimagelauncherd` |
+| `profile-sync-daemon` | keeps the Firefox profile in RAM. Enable its service: `systemctl --user enable --now psd` |
+| `cachyos-gaming-meta` `cachyos-gaming-applications` (CachyOS only) | Steam, Lutris and the rest of CachyOS's gaming bundle |
 
 ## Default apps
 
-Zen for web pages and PDFs, Dolphin for folders, Equibop for `discord://`
-links. mpv's image and video defaults are set in [`mpv/SETUP.md`](mpv/SETUP.md).
+Zen for web pages and PDFs, Dolphin for folders. mpv and Equibop set their own
+defaults in [`mpv`](mpv/SETUP.md) and [`equibop`](equibop/SETUP.md).
 
 ```bash
 xdg-settings set default-web-browser zen.desktop
 xdg-mime default zen.desktop application/pdf
 xdg-mime default org.kde.dolphin.desktop inode/directory
-xdg-mime default equibop.desktop x-scheme-handler/discord
+```
+
+## Verify
+
+```bash
+pacman -Q paru ttf-jetbrains-mono-nerd python lua gitleaks   # a version for each
+xdg-settings get default-web-browser                          # zen.desktop
 ```

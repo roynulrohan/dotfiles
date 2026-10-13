@@ -1,25 +1,49 @@
 # agents
 
-[`AGENTS.md`](../../AGENTS.md) is my global instructions for any AI agent. Copy it wherever the
-agent reads global instructions, usually `~/.claude/CLAUDE.md` or
-`~/.codex/AGENTS.md`.
+One file of global instructions for AI coding agents. Claude Code and Codex
+each read it from their own config folder.
 
-After copying it to `~/.claude/CLAUDE.md`, run `rtk init -g`. rtk adds an
-`@RTK.md` line to the end of that file, so `./status.sh` then reports
-`~/.claude/CLAUDE.md` as `seeded` (its manifest mode). That difference is
-expected.
+## Files
 
-## Tools I like
+| Repo | Destination | Mode |
+|---|---|---|
+| [`AGENTS.md`](AGENTS.md) | `~/.claude/CLAUDE.md` | `seed` |
+| [`AGENTS.md`](AGENTS.md) | `~/.codex/AGENTS.md` | `copy` |
 
-Ask me before installing any of these, or install them when I tell you to.
-Once installed they manage themselves; their files don't belong in here.
+Another agent can take the same file: copy it wherever that agent reads global
+instructions.
 
-- **Install:** [rtk](https://github.com/rtk-ai/rtk), a CLI proxy that cuts token
-  use. Its init wires up the rest.
-- **Skills:** [mattpocock/skills](https://github.com/mattpocock/skills).
-- **More skills:** the [skills CLI](https://skills.sh), which also keeps them
-  updated.
+## Install
 
-Codex settings worth setting by hand in `~/.codex/config.toml`: `model`,
-`model_reasoning_effort = "high"`, `personality = "pragmatic"`. The rest of that
-file is state Codex writes itself.
+Claude Code itself: see [`shared/claude`](../claude/SETUP.md).
+
+rtk, a CLI proxy that cuts token use:
+
+- CachyOS/Arch: `paru -S rtk-bin` (AUR)
+- macOS: `brew install rtk`
+
+After copying `AGENTS.md` to `~/.claude/CLAUDE.md`, run `rtk init -g`. It adds
+an `@RTK.md` line to the end of that file and wires up the rest.
+
+## Notes
+
+- Because rtk adds that line, `./status.sh` reports `~/.claude/CLAUDE.md` as
+  `seeded` (its manifest mode). That difference is expected.
+- Optional skills, not tracked here:
+  [mattpocock/skills](https://github.com/mattpocock/skills), and the
+  [skills CLI](https://skills.sh), which also keeps installed skills updated.
+  Once installed, they manage themselves, and their files stay out of this
+  repo.
+- `~/.codex/config.toml` is not in the repo, because Codex writes most of it
+  as state. Set these keys by hand: `model`,
+  `model_reasoning_effort = "high"`, `personality = "pragmatic"`.
+
+## Verify
+
+Run from the repo root:
+
+```bash
+diff shared/agents/AGENTS.md ~/.codex/AGENTS.md    # no output
+diff shared/agents/AGENTS.md ~/.claude/CLAUDE.md   # only the blank line and @RTK.md that rtk adds
+rtk init --show                                    # Global (~/.claude/CLAUDE.md): @RTK.md reference [ok]
+```

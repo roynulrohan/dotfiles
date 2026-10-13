@@ -1,30 +1,46 @@
 # vscode
 
-VS Code user settings and keybindings. See [`../cursor/`](../cursor/SETUP.md) for the Cursor
-equivalent — they're separate installs with separate config directories.
+VS Code user settings and keybindings, set up for TypeScript full-stack work.
+Cursor is a separate install with its own config folder; see
+[`shared/cursor`](../cursor/SETUP.md).
 
 ## Files
 
 | Repo | macOS | Linux |
 |---|---|---|
-| `settings.json` | `~/Library/Application Support/Code/User/settings.json` | `~/.config/Code/User/settings.json` |
-| `keybindings.json` | `~/Library/Application Support/Code/User/keybindings.json` | `~/.config/Code/User/keybindings.json` |
-
-**Different path per OS**, same as Ghostty. Copy both.
+| [`settings.json`](settings.json) | `~/Library/Application Support/Code/User/settings.json` | `~/.config/Code/User/settings.json` |
+| [`keybindings.json`](keybindings.json) | `~/Library/Application Support/Code/User/keybindings.json` | `~/.config/Code/User/keybindings.json` |
+| [`code-flags.conf`](code-flags.conf) | | `~/.config/code-flags.conf` (Linux only; see Notes) |
 
 ## Install
 
-- macOS: `brew install --cask visual-studio-code`
-- CachyOS: `paru -S visual-studio-code-bin` (AUR, Microsoft's build). It replaced
-  Arch's `code` (Code - OSS), which caelestia's installer added: Code - OSS uses the
-  Open VSX store (no Microsoft-only extensions), has no Microsoft Settings Sync,
-  and reads `~/.config/Code - OSS/` instead of `~/.config/Code/`.
+- CachyOS/Arch: `paru -S visual-studio-code-bin` (AUR), Microsoft's build. Not
+  Arch's `code` (Code - OSS): it uses the Open VSX store (no Microsoft-only
+  extensions), has no Microsoft Settings Sync, and reads
+  `~/.config/Code - OSS/` instead of `~/.config/Code/`.
+- macOS: `brew install --cask visual-studio-code`.
+- The font: `ttf-jetbrains-mono-nerd` on Arch, the
+  `font-jetbrains-mono-nerd-font` cask on macOS.
 
-## Extensions
+Extensions: on macOS, the `vscode` lines in [`mac/Brewfile`](../../mac/Brewfile)
+install them. Anywhere:
 
-Fifteen, for TypeScript full-stack work; pruned on 2026-10-07 from over a
-hundred collected on Windows and the Mac. On the Mac they're the `vscode` lines
-in [`mac/Brewfile`](../../mac/Brewfile).
+```bash
+for e in esbenp.prettier-vscode dbaeumer.vscode-eslint oxc.oxc-vscode biomejs.biome editorconfig.editorconfig \
+    bradlc.vscode-tailwindcss \
+    usernamehw.errorlens yoavbls.pretty-ts-errors eamodio.gitlens github.vscode-pull-request-github \
+    github.vscode-github-actions redhat.vscode-yaml zhuangtongfa.material-theme \
+    pkief.material-icon-theme leonardssh.vscord; do code --install-extension "$e"; done
+```
+
+With Settings Sync: sign in first, then copy these files in. Sync pulls the
+cloud copy on first sign-in and would overwrite them.
+
+## Notes
+
+### Extensions
+
+Fifteen in total.
 
 | Extension | Why |
 |---|---|
@@ -38,55 +54,45 @@ in [`mac/Brewfile`](../../mac/Brewfile).
 | `zhuangtongfa.material-theme`, `pkief.material-icon-theme` | One Dark Pro (Night Flat, vivid), icons |
 | `leonardssh.vscord` | Discord presence (iCrawl's is archived) |
 
-```bash
-for e in esbenp.prettier-vscode dbaeumer.vscode-eslint oxc.oxc-vscode biomejs.biome editorconfig.editorconfig \
-    bradlc.vscode-tailwindcss \
-    usernamehw.errorlens yoavbls.pretty-ts-errors eamodio.gitlens github.vscode-pull-request-github \
-    github.vscode-github-actions redhat.vscode-yaml zhuangtongfa.material-theme \
-    pkief.material-icon-theme leonardssh.vscord; do code --install-extension "$e"; done
-```
+VS Code has these built in, so they need no extension: auto close and rename
+tag, auto import, and removing unused imports (`source.removeUnusedImports`,
+also on Alt+Shift+U).
 
-Not used any more: Claude Code (the CLI and Orca instead), Container Tools,
-Remote-SSH/WSL, Live Server, and the Java, C/C++, PHP, Python, Flutter and
-GraphQL stacks. Built into VS Code now: auto close/rename tag, auto import,
-removing unused imports (`source.removeUnusedImports`, also on Alt+Shift+U).
+### Settings Sync
 
-## Settings Sync
+Settings Sync carries settings, keybindings and the extension list between
+machines. This repo is the reference copy: edit here, copy into place, and Sync
+spreads it. Every machine gets the same `settings.json`, so it holds per-OS
+keys (`terminal.integrated.defaultProfile.linux`, `.osx`, `.windows`).
+Keybindings sync per platform.
 
-Settings Sync is on (signed in with GitHub/Microsoft) and carries settings,
-keybindings and the extension list between Windows, the Mac and CachyOS. This
-repo is the reference copy: edit here, copy into place, and Sync spreads it.
-`settings.json` holds per-OS keys (`terminal.integrated.defaultProfile.linux`,
-`.osx`, `.windows`) because every machine gets the same file. Keybindings sync
-per platform. On a new machine Sync pulls the cloud copy on first sign-in, so
-copy these files in after signing in.
+### Other notes
 
-## Notes
-
-- Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at weight
-  500. VS Code is left see-through at the default window transparency
-  (`windowOpacity` in [`linux/hypr/hypr-vars.lua`](../../linux/hypr/hypr-vars.lua)) on purpose.
+- Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at
+  weight 500.
 - Discord presence (`vscord`) shows the project and file only: no line numbers,
   error counts or "View Repository" button, and it disconnects after 5 minutes
-  idle. On CachyOS it reaches Discord through Equibop's built-in arRPC bridge
-  (`arRPC: true` in `~/.config/equibop/settings.json`, socket
-  `$XDG_RUNTIME_DIR/discord-ipc-0`). `vscord.app.privacyMode.enable` hides the
-  project and file too; `vscord.ignore.workspaces` hides chosen projects.
+  idle. `vscord.app.privacyMode.enable` hides the project and file too, and
+  `vscord.ignore.workspaces` hides chosen projects. On Linux with Equibop, it
+  reaches Discord through Equibop's built-in arRPC bridge (`arRPC: true` in
+  `~/.config/equibop/settings.json`, socket `$XDG_RUNTIME_DIR/discord-ipc-0`).
 - The `cmd+` entries in `keybindings.json` remove macOS defaults. Linux has no
-  such defaults (there `cmd` means Super), so they do nothing on CachyOS.
+  such defaults (there `cmd` means Super), so they do nothing on Linux.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports
-  (`editor.codeActionsOnSave`, `explicit`); auto save after a delay doesn't, so
-  nothing reshuffles while typing.
-- CachyOS: `~/.config/code-flags.conf` (read by `visual-studio-code-bin`)
-  turns on native Wayland, GTK 4, Wayland IME, and
-  `--password-store=gnome-libsecret`, which KDE Wallet answers through its
-  Secret Service API (`org.freedesktop.secrets`), so GitHub logins stay in the
-  wallet. caelestia's `vscode` component wrote it; it isn't in this repo, so a
-  new machine needs it written by hand. caelestia also installed its own VS
-  Code settings and keybindings; these files replaced them.
+  (`editor.codeActionsOnSave`, `explicit`). Auto save after a delay doesn't, so
+  nothing reshuffles while you type.
+- `code-flags.conf` holds the launch flags that `visual-studio-code-bin` reads
+  on Linux: native Wayland with GTK 4 and the Wayland input method, GPU
+  acceleration even where Chromium's blocklist would turn it off, touchpad
+  swipe for back and forward, and colours kept in sRGB (Wayland colour
+  management off). Copy it after you sign in to Settings Sync.
+- `--password-store=gnome-libsecret` in `code-flags.conf` sends logins to the
+  Secret Service API (`org.freedesktop.secrets`). KDE Wallet answers it, so
+  GitHub logins stay in the wallet.
 
 ## Verify
 
 ```bash
-code --list-extensions | wc -l
+code --list-extensions 2>/dev/null | wc -l   # 15
+./status.sh | grep Code/User                 # settings.json and keybindings.json: ok
 ```

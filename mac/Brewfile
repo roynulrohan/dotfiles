@@ -30,6 +30,8 @@ brew "fb303"
 brew "edencommon"
 # Modern, maintained replacement for ls
 brew "eza"
+# Loads per-project environment variables from .envrc (shared/fish)
+brew "direnv"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
@@ -100,6 +102,8 @@ cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# The editor (shared/vscode)
+cask "visual-studio-code"
 # The primary terminal (shared/kitty)
 cask "kitty"
 # Reverse proxy, secure introspectable tunnels to localhost

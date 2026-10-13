@@ -1,38 +1,56 @@
 # ssh
 
-Unlock the SSH key at login from KDE Wallet, so git can sign commits without
-`ssh-add` after every reboot.
+Unlocks the SSH key at login from KDE Wallet, so git can sign commits
+([`shared/git`](../../shared/git/SETUP.md)) without `ssh-add` after every
+reboot.
+
+## Files
 
 | Repo | Destination |
 |---|---|
-| `ssh-add.service` | `~/.config/systemd/user/ssh-add.service` |
+| [`ssh-add.service`](ssh-add.service) | `~/.config/systemd/user/ssh-add.service` |
 
-## How it fits together
-
-- **Agent:** openssh's own `ssh-agent.socket` (user unit, enabled), socket
-  `$XDG_RUNTIME_DIR/ssh-agent.socket`; [`shared/fish`](../../shared/fish/SETUP.md) points `SSH_AUTH_SOCK` at it.
-- **Passphrase:** `ksshaskpass`, KDE's askpass helper, looks it up in KDE Wallet,
-  which PAM unlocks with the login password. The first time it asks and offers
-  to remember it ("Remember password").
-- **Login:** `ssh-add.service` runs `ssh-add` once with the graphical session,
-  with `SSH_ASKPASS=ksshaskpass` and `SSH_ASKPASS_REQUIRE=force`.
-
-Source: the Arch Wiki's KDE Wallet page, "Using the KDE Wallet to store ssh key
-passphrases".
+Outside the repo: the key itself, `~/.ssh/id_ed25519`.
 
 ## Install
 
+On CachyOS/Arch:
+
 ```bash
-sudo pacman -S ksshaskpass
+sudo pacman -S openssh ksshaskpass kwallet kwallet-pam
+```
+
+`ksshaskpass` reads the passphrase from KDE Wallet. `kwallet-pam` unlocks the
+wallet with the login password; SDDM's PAM file (`/etc/pam.d/sddm`) already
+calls it.
+
+```bash
 systemctl --user enable --now ssh-agent.socket
 cp ssh-add.service ~/.config/systemd/user/
 systemctl --user daemon-reload && systemctl --user enable --now ssh-add.service
 ```
 
-Answer the dialog once (tick "Remember password").
+Answer the passphrase dialog once and tick "Remember password".
+
+## Notes
+
+- **Agent:** openssh's own `ssh-agent.socket` (user unit, enabled), socket
+  `$XDG_RUNTIME_DIR/ssh-agent.socket`. [`shared/fish`](../../shared/fish/SETUP.md)
+  points `SSH_AUTH_SOCK` at it.
+- **Passphrase:** `ksshaskpass`, KDE's askpass helper, looks it up in KDE
+  Wallet, which PAM unlocks with the login password. The first time it asks
+  and offers to remember it ("Remember password").
+- **Login:** `ssh-add.service` runs `ssh-add` once with the graphical session,
+  with `SSH_ASKPASS=ksshaskpass` and `SSH_ASKPASS_REQUIRE=force`. It loads
+  `~/.ssh/id_ed25519`; a key with another name needs its own path in
+  `ExecStart`.
+
+Source: the Arch Wiki's KDE Wallet page, "Using the KDE Wallet to store ssh key
+passphrases".
 
 ## Verify
 
 ```bash
-ssh-add -l    # lists the key after login, without typing anything
+systemctl --user is-active ssh-agent.socket   # active
+ssh-add -l                                    # lists the key after login, without typing anything
 ```

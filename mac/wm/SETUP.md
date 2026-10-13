@@ -1,26 +1,23 @@
 # mac/wm: AeroSpace, SketchyBar, Karabiner, LinearMouse
 
 Tiling, the bar and the Super key on the Mac. **macOS only; skip this package on
-Linux.** The binds are a minimal, Mac-only subset of the Hyprland binds in
-`linux/`. Hyprland is never changed to match the Mac.
+Linux.** AeroSpace tiles windows, SketchyBar draws the bar, Karabiner makes the
+Super key, and LinearMouse sets pointer and scroll speed per device. The binds
+are a smaller, Mac-only subset of the Hyprland binds in
+[`linux/hypr`](../../linux/hypr/SETUP.md).
 
 ## Files
 
 | Repo | Destination |
 |---|---|
 | [`aerospace/aerospace.toml`](aerospace/aerospace.toml) | `~/.config/aerospace/aerospace.toml` |
-| `sketchybar/` | `~/.config/sketchybar/`, the whole tree |
+| [`sketchybar/`](sketchybar) | `~/.config/sketchybar/`, the whole tree |
 | [`karabiner/karabiner.json`](karabiner/karabiner.json) | `~/.config/karabiner/karabiner.json` |
 | [`linearmouse/linearmouse.json`](linearmouse/linearmouse.json) | `~/.config/linearmouse/linearmouse.json` |
-| `macos-settings.sh` | not copied; run it once |
+| [`macos-settings.sh`](macos-settings.sh) | not copied; run it once |
 
 Copy the SketchyBar tree whole: `sketchybarrc` sources `colors.sh`, `icons.sh`,
-`items/` and `plugins/` by path. Execute bits don't survive a plain `cp`:
-
-```bash
-chmod +x ~/.config/sketchybar/sketchybarrc
-find ~/.config/sketchybar -name '*.sh' -exec chmod +x {} +
-```
+`items/` and `plugins/` by path.
 
 ## Install
 
@@ -31,25 +28,34 @@ brew install --cask font-sketchybar-app-font sf-symbols kitty raycast linearmous
 brew install --cask karabiner-elements
 ```
 
-Run the Karabiner line in a real terminal: it installs a system package and asks
-for your password, which a non-interactive shell can't do. If Homebrew refuses
-the FelixKratz formula, run `brew trust felixkratz/formulae` first.
+Run the Karabiner line in a real terminal: it installs a system package and
+asks for your password, which a non-interactive shell can't do. If Homebrew
+refuses the FelixKratz formula, run `brew trust felixkratz/formulae` first.
+
+After copying, execute bits don't survive a plain `cp`:
+
+```bash
+chmod +x ~/.config/sketchybar/sketchybarrc
+find ~/.config/sketchybar -name '*.sh' -exec chmod +x {} +
+```
 
 Then, in order:
 
-1. [`mac/wm/macos-settings.sh`](macos-settings.sh), then log out and back in.
-2. Open AeroSpace once and grant it Accessibility. It starts at login after that
-   (`start-at-login = true`).
+1. Run [`macos-settings.sh`](macos-settings.sh), then log out and back in.
+2. Open AeroSpace once and grant it Accessibility. It starts at login after
+   that (`start-at-login = true`).
 3. Open Karabiner-Elements and allow its driver and Input Monitoring when its
    setup window asks. If macOS asks for the keyboard type, pick ANSI.
 4. `brew services start sketchybar`.
 
-## The Super key
+## Notes
+
+### The Super key
 
 AeroSpace can't tell left from right modifiers
 ([nikitabobko/AeroSpace#28](https://github.com/nikitabobko/AeroSpace/issues/28)),
-and every Cmd+key combo already belongs to macOS. So Super is a key Karabiner
-turns into Ctrl+Option, and every AeroSpace bind is `ctrl-alt-...`.
+and every Cmd+key combo already belongs to macOS. So Super is a key that
+Karabiner turns into Ctrl+Option, and every AeroSpace bind is `ctrl-alt-...`.
 
 | Keyboard | Super, held | Super, tapped alone | Also |
 |---|---|---|---|
@@ -59,21 +65,21 @@ turns into Ctrl+Option, and every AeroSpace bind is `ctrl-alt-...`.
 That puts Super second from the spacebar on every keyboard, where Super sits on
 Linux, and Command next to the spacebar, where it sits on any Mac.
 
-The AULA stays in **Windows mode** (Fn+W) because it is also wired to the
-Windows/CachyOS PC. Karabiner does the Mac-side swap in software, for that device
-only. Mac mode (Fn+E) would swap Win and Alt in hardware instead; hold Fn to see
-which mode key is lit.
+Keep the AULA in **Windows mode** (Fn+W) when it is also connected to a PC.
+Karabiner then does the Mac-side swap in software, for that device only. Mac
+mode (Fn+E) would swap Win and Alt in hardware instead. Hold Fn to see which
+mode key is lit.
 
-Adding another keyboard: Karabiner-EventViewer, Devices tab, gives its vendor and
-product ids. Add them to the AULA rule's `identifiers` for a PC-layout board, or
-to the built-in rule for a Mac-layout one.
+To add another keyboard, get its vendor and product ids from the Devices tab of
+Karabiner-EventViewer. Add them to the AULA rule's `identifiers` for a
+PC-layout board, or to the built-in rule for a Mac-layout one.
 
-Super already contains Ctrl, so the Linux chord Ctrl+Super+Shift+arrows lands on
-the same bind as Super+Shift+arrows. That chord moves windows here, as
-Ctrl+Super+Shift+arrows does on Linux, so resizing moved to Super+Minus and
+Super already contains Ctrl, so the Linux chord Ctrl+Super+Shift+arrows lands
+on the same bind as Super+Shift+arrows. That chord moves windows here, as
+Ctrl+Super+Shift+arrows does on Linux, so resizing is on Super+Minus and
 Super+Equal (Linux resizes with Super+Shift+arrows).
 
-## Binds
+### Binds
 
 | Keys | Action |
 |---|---|
@@ -91,30 +97,35 @@ Super+Equal (Linux resizes with Super+Shift+arrows).
 | Super+Shift+Cmd+S | snip to the Desktop, open it in Preview |
 | tap Super | Raycast |
 
-Full-screen screenshots stay macOS's own Cmd+Shift+3. Cmd+H and Cmd+Option+H are
-disabled: hidden apps' windows drop out of tiling (AeroSpace goodies).
+Full-screen screenshots stay on macOS's own Cmd+Shift+3. Cmd+H and
+Cmd+Option+H are disabled, because hidden apps' windows drop out of tiling
+(AeroSpace goodies).
 
-## Things to know
+### Things to know
 
 - **Gaps and the bar are coupled.** `gaps.outer.top` is the bar's `y_offset` 4 +
-  `height` 36 + the 4 px gap = 44, and 12 on the built-in panel, whose usable area
-  already starts 32 px down. Change the bar and the gap together.
-- **New windows open in a row, not a spiral.** AeroSpace inserts i3-style, next to
-  the focused window; upstream has no Hyprland-style dwindle layout. Super+J
+  `height` 36 + the 4 px gap = 44. On the built-in panel it is 12, because
+  the usable area already starts 32 px down. Change the bar and the gap
+  together.
+- **New windows open in a row, not a spiral.** AeroSpace inserts i3-style, next
+  to the focused window; upstream has no Hyprland-style dwindle layout. Super+J
   flips a row into a column.
-- **The bar follows AeroSpace, not macOS Spaces.** `exec-on-workspace-change` and
-  `on-focus-changed` fire `aerospace_workspace_change` and
+- **The bar follows AeroSpace, not macOS Spaces.** `exec-on-workspace-change`
+  and `on-focus-changed` fire `aerospace_workspace_change` and
   `aerospace_focus_change`. `plugins/spaces.sh` repaints every workspace in one
   call, 80 ms after the last event, and hides workspaces with no windows unless
-  focused. App icons come from `aerospace list-windows`, because SketchyBar's own
-  window tracking misses kitty and Ghostty on macOS 26.
+  focused. App icons come from `aerospace list-windows`, because SketchyBar's
+  own window tracking misses kitty and Ghostty on macOS 26.
 - **Super+T needs kitty's remote control** (`allow_remote_control` and
-  `listen_on` in [`shared/kitty/kitty.conf`](../../shared/kitty/kitty.conf)). Without a running kitty it launches one.
-- **The macOS menu bar is hidden, not gone.** Wifi, volume and battery are in it at
-  the top edge. macOS's volume overlay stays on, since the bar has no volume item.
+  `listen_on` in [`shared/kitty/kitty.conf`](../../shared/kitty/kitty.conf),
+  the socket path in [`mac/kitty`](../kitty/SETUP.md)). Without a running kitty
+  it launches one.
+- **The macOS menu bar is hidden, not gone.** Wifi, volume and battery are in
+  it at the top edge. macOS's volume overlay stays on, because the bar has no
+  volume item.
 - **Keep "Displays have separate Spaces" on.** SketchyBar needs it.
-- **Karabiner rewrites `karabiner.json`** when you change anything in its window,
-  so `./status.sh` may report drift. Copy it back.
+- **Karabiner rewrites `karabiner.json`** when you change anything in its
+  window, so `./status.sh` may report drift. Copy it back.
 - `plugins/icon_map.sh` is generated from `sketchybar-app-font`. Regenerate it
   from upstream if the font version changes; don't hand-edit it.
 
@@ -128,4 +139,4 @@ brew services list | grep sketchybar       # started
 ```
 
 By hand: hold Super and press T for a kitty window, tap Super for Raycast, and
-Cmd+F in a browser should still find.
+check that Cmd+F in a browser still finds text.
