@@ -1,127 +1,126 @@
 # Install
 
-Setup is done by hand, one package at a time. Each package's `SETUP.md` says
-where its files go, what to install first, and how to check the result.
+These are my dotfiles, set up for my machines. You can take the whole setup or
+only the parts you like. Nothing installs itself: you copy files into place,
+package by package. Read what you copy, and back up any file it replaces. Use
+it at your own risk.
 
-## Before you start
+## Common shapes
 
-- **Pick the machine.** The gaming PC (CachyOS) takes `linux/` and `shared/`.
-  The Mac takes `mac/` and `shared/`.
-- **Package names** are for CachyOS (pacman) and macOS (Homebrew). On another
-  distro, translate them.
-- **Read the diff before you overwrite.** If a file already exists and differs,
-  compare it or back it up before you copy over it.
-- **The repo is private for now.** Sign in with `gh auth login` before you
-  clone it.
+- **The whole Linux desktop:** [Base: Linux](#base-linux),
+  [Shell and terminal](#shell-and-terminal), [Linux desktop](#linux-desktop),
+  then any of the [apps](#apps).
+- **The whole Mac setup:** [Base: macOS](#base-macos),
+  [Shell and terminal](#shell-and-terminal), [Mac desktop](#mac-desktop), then
+  any of the [apps](#apps).
+- **Only the terminal:** [Shell and terminal](#shell-and-terminal), on either
+  system.
+- **One app's config:** go straight to its package below.
 
-## Checking progress
+## How it works
 
-Do the steps in order, and check each one before the next. Open a new shell
-before you check anything that depends on the shell.
+```bash
+git clone https://github.com/roynulrohan/dotfiles.git
+cd dotfiles
+```
 
-[`./status.sh`](status.sh) prints one line for each file the repo installs:
+Each package is a folder with a `SETUP.md`: what it is, the files and where
+they go, what to install, notes, and a Verify section. Copy the files to the
+destinations it lists. [`manifest.tsv`](manifest.tsv) lists every file and
+its destination, and [`./status.sh`](status.sh) shows what you have copied so
+far:
 
 | Label | Meaning |
 |---|---|
-| `ok` | the live file matches the repo |
-| `differs` | the live file differs from the repo |
+| `ok` | your file matches the repo |
+| `differs` | your file differs from the repo |
 | `missing` | not copied yet |
 | `seeded` | differs, but the app rewrites this file itself |
 | `skipped` | the app isn't installed |
 | `leftover` | an old file still exists; remove it |
 
-A step is done when its files print `ok` or `seeded`.
+`status.sh` checks every package for your system, so expect `missing` lines
+for the parts you skip.
 
-## CachyOS
+Settings for one machine only go in local files that stay out of the repo:
+`~/.config/fish/local.fish`, `~/.gitconfig.local` and kitty's `local.conf`.
 
-1. **Packages.** Install everything in [`linux/packages.md`](linux/packages.md).
-   Check: `pacman -Q` with the table's package names prints a version for each.
-2. **Shell and git.** Copy [`shared/fish`](shared/fish/SETUP.md),
-   [`linux/fish`](linux/fish/SETUP.md) and [`shared/git`](shared/git/SETUP.md).
-   Check: `./status.sh`.
-3. **Terminal.** Copy [`shared/kitty`](shared/kitty/SETUP.md). Noctalia writes
-   its colours in step 6. Check: `./status.sh`.
-4. **Prompt and greeting.** Copy [`shared/starship`](shared/starship/SETUP.md)
-   and [`shared/fastfetch`](shared/fastfetch/SETUP.md), then open a new kitty
-   window. Check: it shows the starship prompt and the greeting.
-5. **Claude Code.** Copy [`shared/agents`](shared/agents/SETUP.md),
-   [`shared/claude`](shared/claude/SETUP.md) and
-   [`shared/ccstatusline`](shared/ccstatusline/SETUP.md). Check:
-   `rtk init --show` reports everything as configured.
-6. **Desktop**, in this order: [`linux/hypr`](linux/hypr/SETUP.md) with
-   [`linux/uwsm`](linux/uwsm/SETUP.md) and the split-monitor-workspaces clone,
-   [`linux/hyprmod`](linux/hyprmod/SETUP.md),
-   [`linux/noctalia`](linux/noctalia/SETUP.md), [`linux/sddm`](linux/sddm/SETUP.md)
-   and [`linux/wallpaper`](linux/wallpaper/SETUP.md). Check: `./status.sh`, then
-   log out and back in. The custom login screen shows, Noctalia's bar appears,
-   and every monitor plays its wallpaper.
-7. **The rest:** [`linux/hyprsunset`](linux/hyprsunset/SETUP.md),
-   [`linux/pipewire`](linux/pipewire/SETUP.md), [`linux/mpv`](linux/mpv/SETUP.md),
-   [`linux/btop`](linux/btop/SETUP.md), [`linux/equibop`](linux/equibop/SETUP.md),
-   [`linux/ssh`](linux/ssh/SETUP.md), [`linux/snapshots`](linux/snapshots/SETUP.md),
-   then [`shared/nvim`](shared/nvim/SETUP.md),
-   [`shared/vscode`](shared/vscode/SETUP.md),
-   [`shared/cursor`](shared/cursor/SETUP.md) and
-   [`shared/orca`](shared/orca/SETUP.md). Check: the Verify section of each.
+## Base: Linux
 
-## Mac
+I use [CachyOS](https://cachyos.org). Plain Arch works too; the few
+CachyOS-only packages are marked.
 
-1. **Packages.** Install Homebrew, then run `brew bundle --file mac/Brewfile`
-   ([`mac/Brewfile`](mac/Brewfile)). Karabiner-Elements asks for your password.
-   Check: `brew bundle check --file mac/Brewfile` reports everything as
-   satisfied.
-2. **Shell and git.** Copy [`shared/fish`](shared/fish/SETUP.md),
-   [`mac/fish`](mac/fish/SETUP.md) and [`shared/git`](shared/git/SETUP.md).
-   Check: `./status.sh`.
-3. **Terminal.** Copy [`shared/kitty`](shared/kitty/SETUP.md) with
-   [`mac/kitty`](mac/kitty/SETUP.md), and
-   [`shared/ghostty`](shared/ghostty/SETUP.md). Check: `./status.sh`.
-4. **Prompt and greeting.** Copy [`shared/starship`](shared/starship/SETUP.md)
-   and [`shared/fastfetch`](shared/fastfetch/SETUP.md), then open a new kitty
-   window. Check: it shows the starship prompt and the greeting.
-5. **Claude Code.** The same as CachyOS step 5.
-6. **Desktop:** [`mac/wm`](mac/wm/SETUP.md), following its numbered steps.
-   Check: its Verify section.
-7. **The rest:** [`shared/nvim`](shared/nvim/SETUP.md),
-   [`shared/vscode`](shared/vscode/SETUP.md),
-   [`shared/cursor`](shared/cursor/SETUP.md) and
-   [`shared/orca`](shared/orca/SETUP.md). Check: `./status.sh`.
+1. Install the packages in [`linux/packages.md`](linux/packages.md).
+2. Install the packages each component below names in its `SETUP.md`.
 
-## Manual steps
+## Base: macOS
 
-These need a password, a sign-in, or files the repo doesn't hold. Tick them off
-after the steps above.
+1. Install [Homebrew](https://brew.sh).
+2. Read [`mac/Brewfile`](mac/Brewfile) and remove the apps you don't want. It
+   holds my whole Mac, not only what these dotfiles need.
+3. Run `brew bundle --file mac/Brewfile`. Karabiner-Elements asks for your
+   password.
 
-Both machines:
+## Shell and terminal
 
-- [ ] A new SSH key with a passphrase, then `gh auth login` ([`shared/git`](shared/git/SETUP.md)).
-- [ ] Register that key for commit signing before the first commit ([`shared/git`](shared/git/SETUP.md)).
-- [ ] Sign in to Claude Code: run `claude` ([`shared/claude`](shared/claude/SETUP.md)).
-- [ ] Sign in to Orca ([`shared/orca`](shared/orca/SETUP.md)).
-- [ ] Greeting logo images into `~/.config/fastfetch/logo/` ([`shared/fastfetch`](shared/fastfetch/SETUP.md)).
+Both systems.
 
-CachyOS:
+1. fish: [`shared/fish`](shared/fish/SETUP.md), plus
+   [`linux/fish`](linux/fish/SETUP.md) or [`mac/fish`](mac/fish/SETUP.md).
+2. Prompt and greeting: [`shared/starship`](shared/starship/SETUP.md) and
+   [`shared/fastfetch`](shared/fastfetch/SETUP.md). The greeting's logo images
+   aren't in the repo; bring your own.
+3. Terminal: [`shared/kitty`](shared/kitty/SETUP.md), plus
+   [`mac/kitty`](mac/kitty/SETUP.md) on macOS.
+   [`shared/ghostty`](shared/ghostty/SETUP.md) is optional.
+4. Git: [`shared/git`](shared/git/SETUP.md). It carries my name, email and
+   signing key. Put your own `[user]` section in `~/.gitconfig.local`, which
+   overrides them.
 
-- [ ] Wallpaper stills into `~/Pictures/Wallpapers` ([`linux/hypr`](linux/hypr/SETUP.md)).
-- [ ] The main wallpaper's still and `login.mp4` into `~/Pictures/Wallpapers/live` ([`linux/wallpaper`](linux/wallpaper/SETUP.md), [`linux/sddm`](linux/sddm/SETUP.md)).
-- [ ] Lock-screen GIFs into `~/Pictures/lock-gifs` ([`linux/noctalia`](linux/noctalia/SETUP.md)).
-- [ ] A profile picture at `~/.face`, then run `sddm-sync` ([`linux/sddm`](linux/sddm/SETUP.md)).
-- [ ] Wallpaper Engine through Steam, with the Workshop wallpapers subscribed ([`linux/wallpaper`](linux/wallpaper/SETUP.md)).
-- [ ] Local copies of the live wallpapers in `~/.local/share/live-wallpapers` ([`linux/wallpaper`](linux/wallpaper/SETUP.md)).
-- [ ] Clone split-monitor-workspaces at the pinned commit ([`linux/hypr`](linux/hypr/SETUP.md)).
-- [ ] Make Spotify writable and run `spicetify backup apply`, again after every Spotify update ([`linux/hypr`](linux/hypr/SETUP.md)).
-- [ ] Enable the Noctalia plugins once with `noctalia msg plugins enable` ([`linux/noctalia`](linux/noctalia/SETUP.md)).
-- [ ] Write `~/.config/code-flags.conf` for VS Code ([`shared/vscode`](shared/vscode/SETUP.md)).
-- [ ] Answer the SSH key's passphrase dialog once and tick "Remember password" ([`linux/ssh`](linux/ssh/SETUP.md)).
-- [ ] Set Equibop's tray and splash icons in its User Assets settings ([`linux/equibop`](linux/equibop/SETUP.md)).
+## Linux desktop
 
-Mac:
+Hyprland with the Noctalia shell. Do these in order, then log out and back in.
 
-- [ ] Run [`mac/wm/macos-settings.sh`](mac/wm/macos-settings.sh), then log out and back in ([`mac/wm`](mac/wm/SETUP.md)).
-- [ ] Grant AeroSpace Accessibility on its first start ([`mac/wm`](mac/wm/SETUP.md)).
-- [ ] Allow Karabiner-Elements' driver and Input Monitoring, and pick ANSI if asked ([`mac/wm`](mac/wm/SETUP.md)).
+1. Hyprland: [`linux/hypr`](linux/hypr/SETUP.md) with
+   [`linux/uwsm`](linux/uwsm/SETUP.md).
+2. Binds and rules: [`linux/hyprmod`](linux/hyprmod/SETUP.md).
+3. Shell (bar, launcher, lock screen, notifications):
+   [`linux/noctalia`](linux/noctalia/SETUP.md).
+4. Login screen: [`linux/sddm`](linux/sddm/SETUP.md).
+5. Live wallpapers: [`linux/wallpaper`](linux/wallpaper/SETUP.md). They need
+   Wallpaper Engine from Steam.
+
+Bring your own wallpapers, lock-screen GIFs and profile picture; each
+`SETUP.md` says where they go.
+
+## Mac desktop
+
+AeroSpace, SketchyBar and Karabiner: [`mac/wm`](mac/wm/SETUP.md), following its
+numbered steps.
+
+## Apps
+
+Take any of these on their own.
+
+| App | Package | System |
+|---|---|---|
+| Night light | [`linux/hyprsunset`](linux/hyprsunset/SETUP.md) | Linux |
+| Headset EQ (Logitech G432) | [`linux/pipewire`](linux/pipewire/SETUP.md) | Linux |
+| mpv as video player and image viewer | [`linux/mpv`](linux/mpv/SETUP.md) | Linux |
+| btop | [`linux/btop`](linux/btop/SETUP.md) | Linux |
+| Equibop (Discord) | [`linux/equibop`](linux/equibop/SETUP.md) | Linux |
+| SSH key unlocked at login | [`linux/ssh`](linux/ssh/SETUP.md) | Linux |
+| Btrfs snapshots | [`linux/snapshots`](linux/snapshots/SETUP.md) | Linux |
+| Neovim (LazyVim) | [`shared/nvim`](shared/nvim/SETUP.md) | both |
+| VS Code | [`shared/vscode`](shared/vscode/SETUP.md) | both |
+| Cursor | [`shared/cursor`](shared/cursor/SETUP.md) | both |
+| Orca | [`shared/orca`](shared/orca/SETUP.md) | both |
+| Claude Code | [`shared/claude`](shared/claude/SETUP.md), [`shared/ccstatusline`](shared/ccstatusline/SETUP.md) | both |
+| Instructions for coding agents | [`shared/agents`](shared/agents/SETUP.md) | both |
+
+The agent instructions are mine. Read them and write your own.
 
 ## Not in this repo
 
-Credentials, shell history, caches, and personal media: the greeting's logo
-images, wallpapers, lock-screen GIFs and `~/.face`.
+Credentials, shell history, caches, and personal media: wallpapers, GIFs,
+logo images and profile pictures.

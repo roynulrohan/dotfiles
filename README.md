@@ -1,10 +1,28 @@
 # dotfiles
 
-My desktop setup: a CachyOS gaming PC running Hyprland with the Noctalia shell,
-and a MacBook Pro running AeroSpace and SketchyBar. Both share fish, starship,
-kitty, git and editor config.
+My dotfiles: a CachyOS gaming PC running Hyprland with the Noctalia shell, and
+a MacBook Pro running AeroSpace and SketchyBar. This repo is how I set up and
+look after both. If you want to try my setup or take parts of it, start with
+[`INSTALL.md`](INSTALL.md).
 
 <!-- Screenshots go here. -->
+
+## What's in it
+
+| | Gaming PC | MacBook Pro |
+|---|---|---|
+| OS | CachyOS | macOS |
+| Window manager | Hyprland | AeroSpace |
+| Bar and launcher | Noctalia | SketchyBar, Raycast |
+| Login screen | SDDM, custom theme | |
+| Terminal | kitty | kitty, Ghostty |
+| Shell | fish, starship, fastfetch | fish, starship, fastfetch |
+| Editors | VS Code, Neovim (LazyVim) | VS Code, Neovim (LazyVim) |
+| Files and media | Dolphin, mpv | |
+| Font | JetBrains Mono Nerd Font | JetBrains Mono Nerd Font |
+
+Hardware: [gaming PC](personal/machines/gaming-pc.md),
+[MacBook Pro](personal/machines/macbook-pro.md), [desk](personal/machines/desk.md).
 
 ## Highlights
 
@@ -23,62 +41,30 @@ On the gaming PC:
   the step finer. mpv's image viewer uses the same keys.
 - **Headset EQ** in PipeWire for the Logitech G432.
 
-## What's in it
+## How I work on it
 
-| | Gaming PC | MacBook Pro |
-|---|---|---|
-| OS | CachyOS | macOS |
-| Window manager | Hyprland | AeroSpace |
-| Bar and launcher | Noctalia | SketchyBar, Raycast |
-| Login screen | SDDM, custom theme | |
-| Terminal | kitty | kitty, Ghostty |
-| Shell | fish, starship, fastfetch | fish, starship, fastfetch |
-| Editors | VS Code, Neovim (LazyVim) | VS Code, Neovim (LazyVim) |
-| Files and media | Dolphin, mpv | |
-| Font | JetBrains Mono Nerd Font | JetBrains Mono Nerd Font |
+The configs are plain files in package folders, copied to where each app
+expects them. Each package has a `SETUP.md`. [`manifest.tsv`](manifest.tsv)
+maps every file to its place on the machine, [`status.sh`](status.sh) shows
+what differs, and [`check.sh`](check.sh) checks syntax, links and secrets
+before each commit.
 
-The hardware is in [`machines.md`](machines.md).
-
-## Install
-
-```bash
-git clone https://github.com/roynulrohan/dotfiles.git
-```
-
-Then follow [`INSTALL.md`](INSTALL.md).
-
-## How it works
-
-- Each folder in `shared/`, `linux/` and `mac/` is a package with a
-  `SETUP.md`: where its files go, what to install, the gotchas, and how to
-  verify it.
-- Files are copied to where each app expects them, not symlinked.
-  `manifest.tsv` maps every repo file to its live destination.
-- `./status.sh` compares the live files with the repo. `./check.sh` checks the
-  syntax, the manifest and secrets before a commit.
-- Lines for one machine only go in local files that stay out of the repo:
-  `~/.config/fish/local.fish`, `~/.gitconfig.local` and kitty's `local.conf`.
-
-To keep it current: edit the live file, check it with `./status.sh --diff`,
-copy it into the repo, run `./check.sh`, and commit.
+I make most changes with coding agents, mainly Claude Code. They follow the
+rules in [`AGENTS.md`](AGENTS.md) and read my
+[`preferences`](personal/preferences.md) before they change how something
+works. The commit history tells the story of each change.
 
 ## Layout
 
-| Folder | For | Packages |
+| Folder | What | Packages |
 |---|---|---|
 | `shared/` | both machines | [fish](shared/fish/SETUP.md) · [starship](shared/starship/SETUP.md) · [fastfetch](shared/fastfetch/SETUP.md) · [kitty](shared/kitty/SETUP.md) · [ghostty](shared/ghostty/SETUP.md) · [git](shared/git/SETUP.md) · [agents](shared/agents/SETUP.md) · [claude](shared/claude/SETUP.md) · [ccstatusline](shared/ccstatusline/SETUP.md) · [nvim](shared/nvim/SETUP.md) · [vscode](shared/vscode/SETUP.md) · [cursor](shared/cursor/SETUP.md) · [orca](shared/orca/SETUP.md) |
 | `linux/` | the gaming PC | [fish](linux/fish/SETUP.md) · [hypr](linux/hypr/SETUP.md) · [noctalia](linux/noctalia/SETUP.md) · [hyprmod](linux/hyprmod/SETUP.md) · [sddm](linux/sddm/SETUP.md) · [wallpaper](linux/wallpaper/SETUP.md) · [mpv](linux/mpv/SETUP.md) · [pipewire](linux/pipewire/SETUP.md) · [hyprsunset](linux/hyprsunset/SETUP.md) · [btop](linux/btop/SETUP.md) · [equibop](linux/equibop/SETUP.md) · [uwsm](linux/uwsm/SETUP.md) · [ssh](linux/ssh/SETUP.md) · [snapshots](linux/snapshots/SETUP.md) · [packages.md](linux/packages.md) |
 | `mac/` | the MacBook | [fish](mac/fish/SETUP.md) · [kitty](mac/kitty/SETUP.md) · [wm](mac/wm/SETUP.md) (AeroSpace, SketchyBar, Karabiner, LinearMouse) · [Brewfile](mac/Brewfile) |
-| `history/` | old setups | [caelestia](history/caelestia/README.md): the desktop's previous base |
+| `personal/` | me and my agents | [preferences](personal/preferences.md) · machines: [gaming PC](personal/machines/gaming-pc.md), [MacBook Pro](personal/machines/macbook-pro.md), [desk](personal/machines/desk.md) |
 
-| File | What |
-|---|---|
-| [`INSTALL.md`](INSTALL.md) | setting up a machine |
-| [`machines.md`](machines.md) | the hardware and the desk |
-| [`CREDITS.md`](CREDITS.md) | inspirations, and the work included from others |
-| [`AGENTS.md`](AGENTS.md) | instructions for coding agents |
-| [`manifest.tsv`](manifest.tsv), [`status.sh`](status.sh), [`check.sh`](check.sh) | the file map and its two checks |
+## Credits and licence
 
-## Not in here
-
-Credentials, shell history, caches, and personal media such as wallpapers.
+Inspirations, and the work included from others, are in
+[`CREDITS.md`](CREDITS.md). My own files are under the MIT licence
+([`LICENSE`](LICENSE)); included work keeps its own licence.

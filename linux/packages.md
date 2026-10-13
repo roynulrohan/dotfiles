@@ -1,9 +1,7 @@
 # CachyOS packages
 
 What this desktop runs on top of a CachyOS install. `pacman -S` unless marked AUR
-(`paru -S`). Until 2026-10-09 caelestia's installer set up part of this
-desktop ([`history/caelestia`](../history/caelestia/README.md)); what it brought that this setup still uses is listed
-here too.
+(`paru -S`).
 
 | Package | Why |
 |---|---|

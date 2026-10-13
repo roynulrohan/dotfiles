@@ -4,9 +4,9 @@
 #     files), TOML, Python, Lua, shell and fish
 #   - manifest.tsv: valid rows, repo paths exist, copy-x files executable in git
 #   - coverage: every file is covered by a manifest row, unless it is a
-#     top-level file, documentation (*.md), a licence, a .gitkeep or history
+#     top-level file, documentation (*.md), a licence or a .gitkeep
 #   - links: every relative link in the Markdown docs points to a file that
-#     exists (history/ is a snapshot and is left out)
+#     exists
 #   - secrets: gitleaks on staged and unstaged changes, if it is installed
 # Luau (the Noctalia plugins) has no checker here. Prints only problems and
 # skipped checks; exit status 1 when anything fails.
@@ -83,7 +83,7 @@ for f in files:
 # Relative links in Markdown docs
 link = re.compile(r"\]\(([^)\s]+)\)")
 for f in files:
-    if not f.endswith(".md") or f.startswith("history/"):
+    if not f.endswith(".md"):
         continue
     with open(f, encoding="utf-8") as fh:
         for n, line in enumerate(fh, 1):
@@ -134,7 +134,7 @@ for n, line in enumerate(open("manifest.tsv", encoding="utf-8"), 1):
 for f in files:
     base = os.path.basename(f)
     if ("/" not in f or f.endswith(".md") or base.startswith("LICENSE")
-            or base == ".gitkeep" or f.startswith("history/")):
+            or base == ".gitkeep"):
         continue
     if not any(f == repo or (mode in ("dir", "manual") and f.startswith(repo + "/"))
                for mode, repo in rows):
