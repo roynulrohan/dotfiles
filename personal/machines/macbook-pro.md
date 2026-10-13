@@ -1,8 +1,7 @@
 # MacBook Pro
 
 Commit tag `macbook-pro`. It connects to the [desk](desk.md) through the dock.
-The Mac setup follows [`preferences.md`](../preferences.md) and adapts the
-shared configs; it never changes the Linux side.
+The Mac setup follows [`preferences.md`](../preferences.md).
 
 ## Hardware
 

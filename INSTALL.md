@@ -84,7 +84,7 @@ Hyprland with the Noctalia shell. Do these in order, then log out and back in.
 1. Hyprland: [`linux/hypr`](linux/hypr/SETUP.md) with
    [`linux/uwsm`](linux/uwsm/SETUP.md).
 2. Binds and rules: [`linux/hyprmod`](linux/hyprmod/SETUP.md).
-3. Shell (bar, launcher, lock screen, notifications):
+3. Desktop shell (bar, launcher, lock screen, notifications):
    [`linux/noctalia`](linux/noctalia/SETUP.md).
 4. Login screen: [`linux/sddm`](linux/sddm/SETUP.md).
 5. Live wallpapers: [`linux/wallpaper`](linux/wallpaper/SETUP.md). They need
@@ -95,8 +95,8 @@ Bring your own wallpapers, lock-screen GIFs and profile picture; each
 
 ## Mac desktop
 
-AeroSpace, SketchyBar and Karabiner: [`mac/wm`](mac/wm/SETUP.md), following its
-numbered steps.
+AeroSpace, SketchyBar, Karabiner and LinearMouse: [`mac/wm`](mac/wm/SETUP.md),
+following its numbered steps.
 
 ## Apps
 

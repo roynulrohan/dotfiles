@@ -1,4 +1,4 @@
-# claude
+# Claude Code
 
 Claude Code's own settings: its hooks, the statusline, and the model and
 permission defaults. The global instructions it reads come from

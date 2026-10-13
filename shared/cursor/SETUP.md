@@ -1,4 +1,4 @@
-# cursor
+# Cursor
 
 Cursor editor settings and keybindings. Cursor is a separate install with its
 own config folder from VS Code ([`shared/vscode`](../vscode/SETUP.md)).

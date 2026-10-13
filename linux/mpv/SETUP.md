@@ -45,10 +45,10 @@ kbuildsycoca6                                           # Dolphin sees the chang
 Run `xdg-mime default` once per type. Given several types at once, it writes
 them all into one broken line of `~/.config/mimeapps.list`.
 
-For Dolphin's sort order (Notes, "Next / previous in Dolphin's order"), turn
-on Dolphin → Configure → View → General → **Remember display style for each
-folder**, and set the global default sort to **Modified, newest first** from
-Dolphin's View menu.
+`dolphin-sort.lua` follows Dolphin's sort order (Notes, "Next / previous in
+Dolphin's order"): a folder's own view settings when Dolphin remembers them
+per folder (Configure → View → General → **Remember display style for each
+folder**), otherwise Dolphin's global default.
 
 ## Notes
 

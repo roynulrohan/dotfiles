@@ -9,8 +9,7 @@ prompt.
 | Repo | Destination | Note |
 |---|---|---|
 | [`conf.d/`](conf.d) | `~/.config/fish/conf.d/` | both OSes; fish sources these files automatically |
-| [`mac/fish/config.fish`](../../mac/fish/config.fish) | `~/.config/fish/config.fish` | **macOS only** |
-| [`linux/fish/config.fish`](../../linux/fish/config.fish) | `~/.config/fish/config.fish` | **Linux only** |
+| `config.fish` | `~/.config/fish/config.fish` | the entry point for each OS, in its own package: [`linux/fish`](../../linux/fish/SETUP.md), [`mac/fish`](../../mac/fish/SETUP.md) |
 | not in the repo | `~/.config/fish/local.fish` | lines for one machine only; both `config.fish` files source it last if it exists |
 
 ## Install

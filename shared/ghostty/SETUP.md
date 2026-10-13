@@ -1,4 +1,4 @@
-# ghostty
+# Ghostty
 
 Ghostty, a second terminal on macOS. It supports the kitty graphics protocol,
 so the fastfetch greeting's image logo works in it too.

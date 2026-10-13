@@ -20,7 +20,7 @@ are set up by hand on each machine (Install).
 
 After copying, on every new machine:
 
-1. `ssh-keygen -t ed25519 -C roynulrohan@gmail.com`, with a passphrase.
+1. `ssh-keygen -t ed25519 -C "<your email>"`, with a passphrase.
 2. `gh auth login`: GitHub.com, SSH, upload the key.
 3. Verified commits: `gh auth refresh -s admin:ssh_signing_key`, then
    `gh ssh-key add ~/.ssh/id_ed25519.pub --type signing`. `gitconfig` sets
@@ -29,7 +29,7 @@ After copying, on every new machine:
 
 ## Notes
 
-- `gitconfig` is deliberately plain: rebase on pull, auto upstream on first
+- `gitconfig` is plain: rebase on pull, auto upstream on first
   push, prune on fetch, rerere, histogram diffs, micro as the editor.
 - Signing uses the SSH key, no GPG.
 - Never copy private keys between machines.

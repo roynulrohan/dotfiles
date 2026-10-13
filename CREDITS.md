@@ -22,5 +22,7 @@
   [`linux/hypr/window-mute`](linux/hypr/window-mute) is a port of HyDE's `window.mute.py`.
 - The Spotify theme's CSS ([`linux/noctalia/spicetify-user.css`](linux/noctalia/spicetify-user.css))
   comes from caelestia's Spotify theme (GPL-3.0).
+- The Discord theme template ([`linux/noctalia/templates/equibop.theme.css`](linux/noctalia/templates/equibop.theme.css))
+  is a fork of refact0r's [Midnight](https://github.com/refact0r/midnight-discord) (MIT).
 - Google Sans Flex by Google (OFL-1.1), in [`linux/noctalia/fonts`](linux/noctalia/fonts) and the login
   theme.

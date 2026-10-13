@@ -46,8 +46,10 @@ sudo pacman -S hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk uwsm
 # What the autostart and binds run: polkit agent, trash cleanup, terminal,
 # file manager, cursor theme
 sudo pacman -S polkit-gnome trash-cli kitty dolphin breeze-cursors
-# AUR: the editor (Super+C), music (Super+M) and todo (Super+R) apps
-paru -S visual-studio-code-bin spotify spicetify-cli todoist-appimage
+# AUR: the editor (Super+C) and music (Super+M) apps
+paru -S visual-studio-code-bin spotify spicetify-cli
+# AUR, optional: the todo pop-up (Super+R)
+paru -S todoist-appimage
 ```
 
 The autostart also starts Noctalia ([`linux/noctalia`](../noctalia/SETUP.md)),
@@ -231,7 +233,7 @@ the window per press. Those keys are free.
 
 ### Per-monitor workspaces
 
-Each monitor has its own workspaces 1–10 on Super+1…0, like awesome/dwm.
+Each monitor has its own workspaces 1 to 10 on Super+1…0, like awesome/dwm.
 [split-monitor-workspaces](https://github.com/zjeffer/split-monitor-workspaces)
 does it. It is a Lua package for Hyprland 0.55 or newer. Its alternative,
 hyprsplit, doesn't work with Lua configs. It isn't copied into this repo (see
@@ -248,14 +250,15 @@ and parsing stdout, and those lines stop HyprMod from opening. So
 `hypr-user.lua` sends them to stderr during setup.
 
 `monitor_priority` in `hypr-user.lua` sets the ranges: DP-1 (main) gets
-Hyprland ids 1–10, HDMI-A-1 (right) 11–20, and DP-2 (left) 21–30. With other
+Hyprland ids 1 to 10, HDMI-A-1 (right) 11 to 20, and DP-2 (left) 21 to 30. With other
 monitor names, change that list. A bar that
-labels workspaces by id shows 11–20 and 21–30 on the side monitors. All 30
+labels workspaces by id shows 11 to 20 and 21 to 30 on the side monitors. All 30
 workspaces are persistent (the package's default), so Hyprland's own workspace
-rules pin each one to its monitor. Don't turn persistence off: then every config
-reload makes the package create a missing workspace on the focused monitor and
-then move it, Hyprland gives the robbed monitor a fallback workspace, and
-workspaces and their windows end up on the wrong monitor.
+rules pin each one to its monitor. Don't turn persistence off. Without it,
+every config reload makes the package create a missing workspace on the
+focused monitor and then move it. Hyprland then gives the robbed monitor a
+fallback workspace, and workspaces and their windows end up on the wrong
+monitor.
 
 | Key | Does |
 |---|---|
@@ -294,6 +297,9 @@ git -C ~/.local/share/hypr-plugins/split-monitor-workspaces rev-parse --short HE
 hyprctl workspaces -j | jq -r '.[] | select(.id > 0) | .monitor' | sort | uniq -c   # 10 per monitor
 python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home() / ".config/hypr/hyprland.lua")'   # prints nothing: HyprMod can read the config
 ```
+
+The `python3` line runs `hyprland.lua`, which creates `hypr-vars.lua`,
+`hypr-user.lua` and `scheme/current.lua` if they are missing.
 
 With Noctalia's hypr-submap plugin ([`linux/noctalia`](../noctalia/SETUP.md)),
 Super+A shows a "window" island on the bar until you leave window mode.

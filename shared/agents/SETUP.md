@@ -1,4 +1,4 @@
-# agents
+# Agent instructions
 
 One file of global instructions for AI coding agents. Claude Code and Codex
 each read it from their own config folder.

@@ -1,7 +1,7 @@
-# sddm
+# SDDM
 
-The login screen on CachyOS: SDDM with our own theme, `noctalia-card`, made to
-look like our Noctalia lock screen. The theme is a fork of the "locklike"
+The login screen on CachyOS: SDDM with this repo's theme, `noctalia-card`, made
+to look like the Noctalia lock screen. The theme is a fork of the "locklike"
 theme from
 [ItsABigIgloo/caelestia-sddm](https://github.com/ItsABigIgloo/caelestia-sddm);
 its [`README.md`](themes/noctalia-card/README.md) lists the changes and the
@@ -212,7 +212,7 @@ sudo systemctl restart sddm
 
 The `cp` lines restore the backup from Install, step 1. With no backup,
 delete `/etc/sddm/Xsetup` and `/etc/sddm.conf.d/x11.conf` instead, which
-leaves CachyOS's own SDDM settings in charge. To drop our config completely,
+leaves CachyOS's own SDDM settings in charge. To drop this repo's config completely,
 delete
 `/etc/sddm.conf.d/noctalia-card.conf` instead of the `sed` line: CachyOS's
 defaults then apply alone, Breeze included, with Qt's on-screen keyboard back

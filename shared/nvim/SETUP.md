@@ -1,4 +1,4 @@
-# nvim
+# Neovim
 
 Neovim, from the LazyVim starter config. On top of LazyVim's defaults: One
 Dark Pro (vivid) as the colorscheme, rounded float borders and statusline caps,
@@ -15,8 +15,8 @@ Same path on both OSes. `manifest.tsv` copies the folder, and `./status.sh`
 skips `SETUP.md` inside it.
 
 `lazy-lock.json` drifts. lazy.nvim rewrites it on every `:Lazy update`, so
-`./status.sh` then reports the folder as `differs`. That is the point of
-committing the lockfile: copy it back when you want the new pins on the other
+`./status.sh` then reports the folder as `differs`. The lockfile is committed
+so the pins travel: copy it back when you want the new pins on the other
 machine.
 
 ## Install
@@ -61,7 +61,7 @@ one, so the opacity part has no off-the-shelf equivalent.
 
 ### Other files
 
-- The config is fully portable: no paths and no OS checks.
+- The config is portable: no paths and no OS checks.
 - `.neoconf.json`, `stylua.toml` and
   [`lua/plugins/example.lua`](lua/plugins/example.lua) come from the LazyVim
   starter. `example.lua` returns an empty spec, so it loads nothing.

@@ -1,4 +1,4 @@
-# vscode
+# VS Code
 
 VS Code user settings and keybindings, set up for TypeScript full-stack work.
 Cursor is a separate install with its own config folder; see

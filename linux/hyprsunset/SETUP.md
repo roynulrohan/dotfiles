@@ -9,7 +9,7 @@ blue-light filter; CachyOS's Hyprland setup has none.
 |---|---|
 | [`hyprsunset.conf`](hyprsunset.conf) | `~/.config/hypr/hyprsunset.conf` |
 
-`~/.config/hypr` is our Hyprland config ([`linux/hypr`](../hypr/SETUP.md)),
+`~/.config/hypr` is this repo's Hyprland config ([`linux/hypr`](../hypr/SETUP.md)),
 but this file isn't part of it (like HyprMod's `hyprland-gui.lua`). It sits
 there because that's the path the stock service reads.
 

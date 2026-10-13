@@ -19,7 +19,7 @@ look after both. If you want to try my setup or take parts of it, start with
 | Shell | fish, starship, fastfetch | fish, starship, fastfetch |
 | Editors | VS Code, Neovim (LazyVim) | VS Code, Neovim (LazyVim) |
 | Files and media | Dolphin, mpv | |
-| Font | JetBrains Mono Nerd Font | JetBrains Mono Nerd Font |
+| Font | JetBrainsMono Nerd Font | JetBrainsMono Nerd Font |
 
 Hardware: [gaming PC](personal/machines/gaming-pc.md),
 [MacBook Pro](personal/machines/macbook-pro.md), [desk](personal/machines/desk.md).

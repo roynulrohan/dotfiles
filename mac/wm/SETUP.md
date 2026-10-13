@@ -1,4 +1,4 @@
-# mac/wm: AeroSpace, SketchyBar, Karabiner, LinearMouse
+# Mac desktop: AeroSpace, SketchyBar, Karabiner, LinearMouse
 
 Tiling, the bar and the Super key on the Mac. **macOS only; skip this package on
 Linux.** AeroSpace tiles windows, SketchyBar draws the bar, Karabiner makes the
@@ -91,7 +91,7 @@ Super+Equal (Linux resizes with Super+Shift+arrows).
 | Super+arrows | focus |
 | Super+Shift+arrows | move window |
 | Super+Minus, Super+Equal | resize |
-| Super+1…0 | workspace 1-10 |
+| Super+1…0 | workspace 1 to 10 |
 | Super+Shift+1…0 | send the window there and follow it |
 | Super+Shift+S | snip to the clipboard |
 | Super+Shift+Cmd+S | snip to the Desktop, open it in Preview |
@@ -120,8 +120,8 @@ Cmd+Option+H are disabled, because hidden apps' windows drop out of tiling
   `listen_on` in [`shared/kitty/kitty.conf`](../../shared/kitty/kitty.conf),
   the socket path in [`mac/kitty`](../kitty/SETUP.md)). Without a running kitty
   it launches one.
-- **The macOS menu bar is hidden, not gone.** Wifi, volume and battery are in
-  it at the top edge. macOS's volume overlay stays on, because the bar has no
+- **The macOS menu bar is hidden.** Its wifi, volume and battery items still
+  show at the top edge. macOS's volume overlay stays on, because the bar has no
   volume item.
 - **Keep "Displays have separate Spaces" on.** SketchyBar needs it.
 - **Karabiner rewrites `karabiner.json`** when you change anything in its

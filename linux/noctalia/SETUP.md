@@ -61,7 +61,7 @@ Copy the files, then run these once:
 ```bash
 fc-cache -f   # the lock screen fonts
 # The wallpaper the colours come from (see linux/wallpaper)
-noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/ayanami-rei.jpg
+noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/<your-still>.jpg
 noctalia msg plugins enable roynul/workspace-apps
 noctalia msg plugins enable roynul/workspace-pills
 noctalia msg plugins enable roynul/arch-updater
@@ -103,9 +103,9 @@ config with `noctalia config validate`. Apply it with
 - **Idle**: lock after 1 h, screens off after 1.5 h, lock and suspend after
   4 h. Noctalia pauses for idle inhibitors (browsers and mpv during video).
   Audio playing on its own doesn't pause it.
-- **Location** `Ottawa, Ontario, Canada`, for weather. Plain "Ottawa" also
-  matches US towns. Coordinates work, but the UI then shows the numbers as the
-  place name.
+- **Location**, for weather: `[location] address` takes a full
+  `city, region, country` string, because a bare city name can match another
+  town. Coordinates work, but the UI then shows the numbers as the place name.
 - **12-hour time** everywhere: `[shell] time_format` / `date_format` (control
   centre, calendar, lock screen) and the bar clock (`Thu Oct 8 · 3:42 PM`, full
   date on hover). Font: JetBrainsMono Nerd Font.
@@ -332,7 +332,7 @@ It needs `python3`, `ffmpeg`, and the two fonts in
 at width 30, weight 500, which the licence permits. Run `fc-cache -f` after you
 copy the fonts.
 
-Gotchas:
+Things to know:
 
 - **`settings.toml` wins.** Noctalia rewrites
   `~/.local/state/noctalia/settings.toml` whole, and a `[lockscreen_widgets]`

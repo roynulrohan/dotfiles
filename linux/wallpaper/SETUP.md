@@ -1,4 +1,4 @@
-# wallpaper
+# Live wallpapers
 
 Live wallpapers on CachyOS: Wallpaper Engine wallpapers from the Steam
 Workshop, one per monitor, played by
@@ -75,7 +75,7 @@ linux-wallpaperengine draws. Give it a still frame of the main wallpaper. The
 stills live in `~/Pictures/Wallpapers/live/` (not in this repo):
 
 ```bash
-noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/ayanami-rei.jpg
+noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/<your-still>.jpg
 ```
 
 Ways to get a still:
@@ -85,7 +85,7 @@ Ways to get a still:
   running afterwards, so wrap it in `timeout 25`.
 - **Video:** `ffmpeg -ss 1.5 -i <video> -frames:v 1 out.png`.
 - **What the monitor shows:** switch it to an empty workspace, `grim -o DP-1`,
-  then crop off the bar and the rounded corners. Use this for Elaina, which
+  then crop off the bar and the rounded corners. Use this for a wallpaper that
   crashes in window mode.
 
 ## Notes
@@ -115,13 +115,7 @@ Change a pick there, then rerun it.
 | HDMI-A-1 (right) | [4K]CITRUS - go to class | `2704773569` |
 | DP-2 (left) | Rain 雨 [4K] | `2511663284` |
 
-### What works
-
-Tested with build r627:
-
-| Works | Problems |
-|---|---|
-| Ayanami Rei 『night』 (scene, `3258032485`; lighter than a video: 5.6% CPU and 310 MiB against 7.4% and 438 MiB), Elaina (prompt box off, see "Wallpaper settings"), Citrus (some character animations don't move: "Unsupported puppet model header MDLV0013"), Rain 雨 [4K], Your name, Kayn (video), Futari Dake No Hanabi (video), 世界很温柔 (video), Nami Dark Background, Frieren - Pagoda of flowers | Dream View. and Dream View. 3: stars render as lines. Nico Robin 4k: crashes on load (`json type_error.302`). Ayanami Rei 『Starry』 (`3571376089`): shader compile errors, broken. Ayanami Rei 綾波レイ・丽 (`3299982340`): partly broken |
+### Video and scene wallpapers
 
 **Video** wallpapers are plain `.mp4`/`.webm` files and play exactly as on
 Windows. **Scene** wallpapers are re-implemented, so some effects are missing
@@ -162,7 +156,7 @@ run, so
 - **Accents:** in dark mode the accents are always a light tone of the
   wallpaper's main hue, so a red wallpaper gives pink accents whatever the
   scheme variant.
-- **Performance** with two screens on an NVIDIA RTX 5070: about 6% of one CPU
+- **Performance**, measured with two monitors on an NVIDIA RTX 5070: about 6% of one CPU
   core, 0.7 GB RAM and 1.1 GB of GPU memory. It runs at 30 fps and pauses while
   an app is fullscreen.
 - **Preview** a wallpaper in a window: `linux-wallpaperengine --silent <id>`.

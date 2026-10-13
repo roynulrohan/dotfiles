@@ -10,8 +10,7 @@ and the `listen_on` path in [`mac/kitty/macos.conf`](../../mac/kitty/macos.conf)
 | Repo | Destination | Note |
 |---|---|---|
 | [`kitty.conf`](kitty.conf) | `~/.config/kitty/kitty.conf` | both OSes |
-| [`mac/kitty/colors.conf`](../../mac/kitty/colors.conf) | `~/.config/kitty/colors.conf` | **macOS only**; on Linux the colours come from Noctalia (see Notes) |
-| [`mac/kitty/macos.conf`](../../mac/kitty/macos.conf) | `~/.config/kitty/macos.conf` | **macOS only**; the socket path for remote control |
+| `colors.conf`, `macos.conf` | `~/.config/kitty/` | macOS only, in their own package: [`mac/kitty`](../../mac/kitty/SETUP.md). On Linux the colours come from Noctalia (see Notes) |
 | not in the repo | `~/.config/kitty/local.conf` | overrides for one machine, such as `font_size 18` |
 
 ## Install

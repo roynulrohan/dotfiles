@@ -117,7 +117,7 @@ cp linux/hyprmod/hyprland-gui.lua ~/.config/hypr/
 ```bash
 ./status.sh | grep hyprland-gui                          # ok
 grep -A1 'HyprMod managed' ~/.config/hypr/hyprland.lua  # the two load lines (Notes)
-python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home()/".config/hypr/hyprland.lua")'
+python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home()/".config/hypr/hyprland.lua")'   # prints nothing; creates missing override files, see linux/hypr
 hyprctl monitors -j | jq -r 'sort_by(.x)[].name'         # DP-2, DP-1, HDMI-A-1: left to right
 ```
 

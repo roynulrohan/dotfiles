@@ -26,7 +26,7 @@ from the AUR. "CachyOS only" has no Arch equivalent.
 | `jellyfin-desktop-git` (AUR) | Jellyfin client |
 | `chatgpt-desktop-bin` (CachyOS only) | ChatGPT desktop app; also opens `codex://` links |
 | `appimagelauncher` (AUR) | adds downloaded AppImages to the app menu. Enable its service: `systemctl --user enable --now appimagelauncherd` |
-| `profile-sync-daemon` | keeps the Firefox profile in RAM. Enable its service: `systemctl --user enable --now psd` |
+| `profile-sync-daemon` | keeps browser profiles in RAM for the browsers it knows (Firefox, Chromium, Opera and more; not Zen). Enable its service: `systemctl --user enable --now psd` |
 | `cachyos-gaming-meta` `cachyos-gaming-applications` (CachyOS only) | Steam, Lutris and the rest of CachyOS's gaming bundle |
 
 ## Default apps

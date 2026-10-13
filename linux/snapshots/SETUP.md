@@ -1,4 +1,4 @@
-# snapshots (btrfs + snapper)
+# Snapshots (Btrfs and snapper)
 
 Btrfs snapshots with snapper: a timeline for root and for home, a snapshot
 before and after every pacman transaction, and a boot menu entry for every

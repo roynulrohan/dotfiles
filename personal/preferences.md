@@ -7,13 +7,8 @@ the package that does it today, so a new tool can take over the same job.
 
 ## General
 
-- **CachyOS is the reference machine.** The Mac adapts the shared configs.
-  Never change the Linux side to match the Mac; put Mac differences behind an
-  OS guard.
 - **Built-in features and established packages first.** Small custom pieces
   for edge cases are fine. Large custom scripts are not.
-- **Own what I adopt.** Config taken from a framework or another person's
-  dotfiles becomes a copy in this repo. Nothing depends on their live tree.
 - **Keep config for hardware that isn't connected right now.** Don't remove it
   because a device is missing today.
 - **Review and pin third-party code.** A plugin or package that runs code is
@@ -29,8 +24,9 @@ the package that does it today, so a new tool can take over the same job.
   the exception: it keeps One Dark Pro.
 - **The Mac keeps fixed palettes** and gets no palette generator. Today:
   [`mac/kitty`](../mac/kitty/SETUP.md), [`shared/ghostty`](../shared/ghostty/SETUP.md).
-- **Windows are translucent by default.** The terminal, the browser and
-  Discord are opaque. VS Code and Orca stay translucent. Today:
+- **Windows are translucent by default.** Apps that show content edge to edge
+  are opaque: terminals, browsers, Discord, file managers, image and video
+  players. VS Code and Orca stay translucent. Today:
   [`linux/hyprmod`](../linux/hyprmod/SETUP.md).
 - **One spacing grid** for gaps, the bar and borders. Today: 4 px,
   [`linux/hypr`](../linux/hypr/SETUP.md), Look.
@@ -57,8 +53,8 @@ The Mac's SketchyBar is a smaller version ([`mac/wm`](../mac/wm/SETUP.md)).
 
 ## Keys
 
-- **Super is the main modifier,** on the key next to the spacebar on every
-  keyboard. Today on the Mac: Karabiner ([`mac/wm`](../mac/wm/SETUP.md)).
+- **Super is the main modifier,** on the second key left of the spacebar (Win
+  on a PC keyboard), on every keyboard. Today on the Mac: Karabiner ([`mac/wm`](../mac/wm/SETUP.md)).
 - **Arrows move, Shift resizes, Alt makes the step finer.** This applies to
   windows and to anything else that moves or resizes, such as the image
   viewer. Today: [`linux/hypr`](../linux/hypr/SETUP.md), Window mode;
@@ -80,7 +76,7 @@ The role matters, not the app or the exact key.
   screen; colour picker; restarting the shell (Ctrl+Super+Alt+R).
 - **Nice to have:** session menu, emoji picker, editor on Super+C, system
   monitor pop-up (Ctrl+Shift+Esc).
-- **Not used:** Print and Super+P screenshots; a todo pop-up; F10 to F12 for
+- **Not used, so don't build around them:** Print and Super+P screenshots; a todo pop-up; F10 to F12 for
   volume (the keyboard has its own keys, and those keys belong to apps:
   fullscreen and developer tools).
 - **Open to whatever the shell offers:** sidebars and panels, clearing

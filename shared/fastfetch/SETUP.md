@@ -3,7 +3,7 @@
 The terminal greeting: HyDE's two-box layout with right-aligned values,
 coloured from the terminal palette, and a random image logo on the left. A
 wrapper script named `fastfetch` applies this config, so typing `fastfetch` in
-any shell shows the same greeting. fish's greeting just calls it.
+any shell shows the same greeting. fish's greeting calls it.
 
 ## Files
 
@@ -11,7 +11,7 @@ any shell shows the same greeting. fish's greeting just calls it.
 |---|---|---|
 | [`greeting.jsonc`](greeting.jsonc) | `~/.config/fastfetch/greeting.jsonc` | the wrapper loads it; it is not fastfetch's default config |
 | [`fastfetch`](fastfetch) | `~/.local/bin/fastfetch` | the wrapper script, executable |
-| [`logo/`](logo) | `~/.config/fastfetch/logo/` | **images are not committed**; add your own (png, jpg, webp, `.icon`, gif) |
+| [`logo/`](logo) (empty) | `~/.config/fastfetch/logo/` | not in `manifest.tsv`; add your own images (png, jpg, webp, `.icon`, gif) |
 
 Keep the filename `greeting.jsonc`. `config.jsonc` is fastfetch's own default
 config. Nothing here uses it, so delete `~/.config/fastfetch/config.jsonc` if
@@ -61,7 +61,7 @@ After copying:
 - GIFs from video converters often contain 1x1 "no change" frames that make
   icat fail with a shared-memory error. Rebuild them with
   `magick in.gif -coalesce -layers RemoveDups -resize 400x500 +repage -fuzz 3% -colors 128 -layers Optimize out.gif`
-  (this also shrinks them a lot).
+  (this also makes the files smaller).
 - Logo width comes from the image's aspect ratio and the terminal's real cell
   shape (pixel size via TIOCGWINSZ, through `kitten` or python3). kitty
   stretches the image to fill the requested box exactly, so a guessed cell

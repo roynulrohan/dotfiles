@@ -1,7 +1,7 @@
 # btop
 
 System monitor in the terminal, coloured with the wallpaper palette by
-Noctalia. `btop.conf` started from caelestia's. It
+Noctalia. It
 holds no machine-specific values: disks, network interface, sensors and GPUs
 are all left on auto.
 

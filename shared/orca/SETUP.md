@@ -1,4 +1,4 @@
-# orca
+# Orca
 
 [Orca](https://github.com/stablyai/orca), the desktop app that runs coding
 agents in git worktrees. The repo holds only the settings changed from Orca's

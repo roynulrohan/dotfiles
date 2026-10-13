@@ -1,4 +1,4 @@
-# ssh
+# SSH key at login
 
 Unlocks the SSH key at login from KDE Wallet, so git can sign commits
 ([`shared/git`](../../shared/git/SETUP.md)) without `ssh-add` after every
