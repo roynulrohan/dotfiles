@@ -34,12 +34,4 @@ return {
     kbWindowIncreaseWidth  = {},
     kbWindowDecreaseHeight = {},
     kbWindowIncreaseHeight = {},
-    -- Pop-up workspace apps, merged over the defaults in utils/functions.lua
-    -- (caelestia kept these in cli.json): Super+D starts Equibop, not Discord.
-    toggles = {
-        communication = {
-            discord = { enable = false },
-            equibop = { enable = true, match = { { class = "equibop" } }, command = { "equibop" }, move = true },
-        },
-    },
 }
