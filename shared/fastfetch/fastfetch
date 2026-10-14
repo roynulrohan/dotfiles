@@ -67,19 +67,42 @@ TEXT_COLS=35
 term_cols=${FASTFETCH_COLS-}
 [ -n "$term_cols" ] || term_cols=$(stty size </dev/tty 2>/dev/null | awk '{ print $2 }')
 esc=$(printf '\033')
-# text_logo [--logo NAME]: fastfetch's text logo, or none when it doesn't fit.
+# This OS's name in fastfetch's logo list: its os-release ID on Linux.
+if [ -r /etc/os-release ]; then osid=$(. /etc/os-release && echo "$ID"); else osid=macos; fi
+# centred: no logo. The boxes sit in the middle of the window instead, pushed
+# in by a logo made of spaces (fastfetch ignores padding without a logo).
+centred() {
+    pad=0
+    [ -n "$term_cols" ] && [ "$term_cols" -gt "$TEXT_COLS" ] && pad=$(( (term_cols - TEXT_COLS) / 2 ))
+    [ "$pad" -gt 0 ] || exec "$real" -c "$cfg" --logo none
+    exec "$real" -c "$cfg" --logo-type data --logo "$(printf "%${pad}s" "")" \
+        --logo-padding-left 0 --logo-padding-right 0 --logo-padding-top 0
+}
+# Text logos sit closer to the edge than images (1 column left, 2 right), so
+# the full logo still fits a half-screen window (95 columns at font size 12).
+TEXT_PAD_L=1 TEXT_PAD_R=2
+# logo_width NAME: columns a text logo takes, padding excluded.
+logo_width() {
+    "$real" -c "$cfg" --logo-type builtin --logo "$1" --logo-padding-left 0 --logo-padding-right 0 \
+        --structure break 2>/dev/null \
+        | sed "s/${esc}\[[0-9;?]*[a-zA-Z]//g" \
+        | awk '{ if (length($0) > m) m = length($0) } END { print m + 0 }'
+}
+# text_logo [NAME]: the first of NAME (default: this OS), its _small version,
+# or no logo, that fits beside the boxes.
 text_logo() {
-    if [ -n "$term_cols" ]; then
-        w=$("$real" -c "$cfg" --logo-type builtin "$@" --structure break 2>/dev/null \
-            | sed "s/${esc}\[[0-9;?]*[a-zA-Z]//g" \
-            | awk '{ if (length($0) > m) m = length($0) } END { print m + 0 }')
-        [ "$term_cols" -gt $(( w + 3 + TEXT_COLS )) ] || exec "$real" -c "$cfg" --logo none
-    fi
-    exec "$real" -c "$cfg" --logo-type builtin "$@"
+    name=${1:-$osid}
+    for l in "$name" "${name}_small"; do
+        if [ -z "$term_cols" ] || [ "$term_cols" -ge $(( $(logo_width "$l") + TEXT_PAD_L + TEXT_PAD_R + TEXT_COLS )) ]; then
+            exec "$real" -c "$cfg" --logo-type builtin --logo "$l" \
+                --logo-padding-left "$TEXT_PAD_L" --logo-padding-right "$TEXT_PAD_R"
+        fi
+    done
+    centred
 }
 
 if [ -n "$oslogo" ]; then
-    [ -n "$larp" ] && text_logo --logo arch
+    [ -n "$larp" ] && text_logo arch
     text_logo
 fi
 
@@ -96,7 +119,7 @@ if [ -t 1 ] && [ -z "${TMUX-}" ] && [ -z "${STY-}" ]; then
     fi
 fi
 if [ "$type" = builtin ]; then
-    [ -n "$larp" ] && text_logo --logo arch
+    [ -n "$larp" ] && text_logo arch
     text_logo
 fi
 
@@ -163,7 +186,7 @@ if [ -n "$term_cols" ]; then
         if [ "$room" -gt 0 ]; then rows=$(( rows * room / cols )); else rows=0; fi
         cols=$room
     fi
-    [ "$rows" -ge 6 ] || exec "$real" -c "$cfg" --logo none
+    [ "$rows" -ge 6 ] || centred
 fi
 
 # Animated GIFs: fastfetch's own kitty mode shows one frame. The recipe from

@@ -13,7 +13,6 @@
     // width computed from aspect ratio). "kitty" works in kitty and Ghostty.
     "logo": {
         "type": "kitty",
-        "width": 40,
         "height": 18,
         "padding": { "top": 1, "left": 2, "right": 3 }
     },

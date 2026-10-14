@@ -71,10 +71,15 @@ After copying:
   line above the prompt survives. `FASTFETCH_LOGO_ROWS` overrides either.
 - **Narrow windows.** The boxes need 35 columns (`TEXT_COLS` in the wrapper,
   the widest row of `greeting.jsonc`) beside the logo. The wrapper reads the
-  window's width when the greeting starts. An image that doesn't fit shrinks;
-  under 6 rows it is dropped. A text logo that doesn't fit is dropped. Either
-  way, a narrow window gets clean boxes instead of wrapped lines. Change
-  `TEXT_COLS` when the layout gets wider. `FASTFETCH_COLS` overrides the
+  window's width when the greeting starts:
+  - An image shrinks to the room beside the boxes; under 6 rows it is dropped.
+  - A text logo tries the OS's full logo, then its `_small` version (names
+    from `/etc/os-release`, `macos` on the Mac). Text logos get 1 column of
+    padding on the left and 2 on the right, so the full CachyOS logo fits a
+    half-screen window (95 columns at font size 12).
+  - Without a logo, the boxes are centred in the window.
+
+  Change `TEXT_COLS` when the layout gets wider. `FASTFETCH_COLS` overrides the
   measured width. A window resized afterwards keeps the old layout until
   `fastfetch` runs again.
 - Square images work best. Pad a portrait to a transparent square with
