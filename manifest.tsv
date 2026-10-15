@@ -51,6 +51,11 @@ linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/work
 linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
 linux	linux/noctalia/spicetify-user.css	~/.config/spicetify/Themes/noctalia/user.css	copy
 linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
+linux	linux/openlinkhub/openlinkhub-reenable.hook	/etc/pacman.d/hooks/openlinkhub-reenable.hook	copy	openlinkhub
+linux	linux/openlinkhub/openlinkhub.desktop	~/.local/share/applications/openlinkhub.desktop	copy	openlinkhub
+linux	linux/openlinkhub/temperatures/CpuCurve.json	/var/lib/openlinkhub/database/temperatures/CpuCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/temperatures/GpuCurve.json	/var/lib/openlinkhub/database/temperatures/GpuCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/temperatures/SystemCurve.json	/var/lib/openlinkhub/database/temperatures/SystemCurve.json	seed	openlinkhub
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
 linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
 linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x

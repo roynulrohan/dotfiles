@@ -11,6 +11,9 @@ and Windows 11.
 | GPU | NVIDIA GeForce RTX 5070, 12 GB |
 | RAM | 32 GB DDR4 |
 | Motherboard | MSI MPG B550 Gaming Plus |
+| CPU cooler | Thermalright Peerless Assassin |
+| Case | NZXT H6 Flow |
+| Fan hub | Corsair iCUE Commander Core XT, with a third-party temperature probe |
 | Storage | Crucial P1 500 GB NVMe (CachyOS), Samsung 970 EVO Plus 1 TB NVMe (Windows 11), Seagate 2 TB HDD (shared by both) |
 
 ## Packages
@@ -32,7 +35,8 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
    [`linux/noctalia`](../../linux/noctalia/SETUP.md), [`linux/sddm`](../../linux/sddm/SETUP.md),
    [`linux/wallpaper`](../../linux/wallpaper/SETUP.md). Then log out and back in.
 7. The rest: [`linux/hyprsunset`](../../linux/hyprsunset/SETUP.md),
-   [`linux/pipewire`](../../linux/pipewire/SETUP.md), [`linux/mpv`](../../linux/mpv/SETUP.md),
+   [`linux/pipewire`](../../linux/pipewire/SETUP.md),
+   [`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md), [`linux/mpv`](../../linux/mpv/SETUP.md),
    [`linux/btop`](../../linux/btop/SETUP.md), [`linux/equibop`](../../linux/equibop/SETUP.md),
    [`linux/ssh`](../../linux/ssh/SETUP.md), [`linux/snapshots`](../../linux/snapshots/SETUP.md),
    [`shared/nvim`](../../shared/nvim/SETUP.md), [`shared/vscode`](../../shared/vscode/SETUP.md),
@@ -51,11 +55,27 @@ Not on this machine: Cursor and Ghostty.
 - [ ] Subscribe to my Workshop wallpapers in Wallpaper Engine, then make the
       local copies ([`linux/wallpaper`](../../linux/wallpaper/SETUP.md)).
 - [ ] Answer the SSH key's passphrase dialog once and tick "Remember password".
+- [ ] Set the power profile to balanced: `powerprofilesctl set balanced`. It
+      keeps the same speed under full load as `performance` and runs about
+      6 °C cooler at light desktop load.
 
 ## Things to know
 
 - Windows 11 lives on the Samsung NVMe. Never write to it.
 - The 2 TB HDD is shared with Windows and mounted at `/mnt/storage`. Steam's
   game library lives there.
+- Fans on the Commander Core XT, with their curves from
+  [`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md):
+
+  | Channel | Fans | Curve |
+  |---|---|---|
+  | 0 (Fan 1) | rear exhaust, behind the CPU cooler | `CpuCurve` |
+  | 1, 2 (Fans 2, 3) | two 140 mm bottom intakes, blowing onto the GPU | `GpuCurve` |
+  | 3 (Fan 4) | three front intakes, daisy-chained; it reports one RPM | `SystemCurve` |
+
+  The temperature probe sits in the CPU cooler's exhaust. Only the hub's own
+  curve from iCUE uses it, when OpenLinkHub isn't running. The CPU cooler's
+  fans and the three top exhausts are on motherboard headers, under the BIOS
+  fan curves.
 - Spare live wallpapers, kept as local copies next to the ones in use:
   `ayanami-rei-minimal` and `3314492008`.

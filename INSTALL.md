@@ -106,6 +106,7 @@ Take any of these on their own.
 |---|---|---|
 | Night light | [`linux/hyprsunset`](linux/hyprsunset/SETUP.md) | Linux |
 | Headset EQ (Logitech G432) | [`linux/pipewire`](linux/pipewire/SETUP.md) | Linux |
+| Corsair fan hub: fans follow CPU and GPU temperatures | [`linux/openlinkhub`](linux/openlinkhub/SETUP.md) | Linux |
 | mpv as video player and image viewer | [`linux/mpv`](linux/mpv/SETUP.md) | Linux |
 | btop | [`linux/btop`](linux/btop/SETUP.md) | Linux |
 | Equibop (Discord) | [`linux/equibop`](linux/equibop/SETUP.md) | Linux |

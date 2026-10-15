@@ -1,0 +1,11 @@
+# The openlinkhub package disables its service before every upgrade and
+# never re-enables it, which leaves the fans on the controller's saved profile.
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = openlinkhub
+
+[Action]
+Description = Re-enabling OpenLinkHub after upgrade...
+When = PostTransaction
+Exec = /usr/bin/systemctl enable --now openlinkhub.service
