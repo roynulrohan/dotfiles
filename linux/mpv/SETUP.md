@@ -120,6 +120,7 @@ adds Ctrl because plain Left/Right seek.
 
 | Input (videos) | Action |
 |---|---|
+| `n` / `p`, PgDn / PgUp | Next / previous file in the folder, as on images (replaces `p` pause and PgUp/PgDn chapter seek; Space still pauses) |
 | `=` / `-` | Zoom 0.1 |
 | Alt+= / Alt+- | Zoom 0.01 |
 | Ctrl+arrows / Ctrl+Alt+arrows | Pan 10% / 1% of the window (replaces mpv's subtitle seek on Ctrl+Left/Right) |
@@ -135,7 +136,7 @@ Images:
 | Wheel | Zoom towards the cursor, 0.05 per notch |
 | Left-drag | Pan |
 | Middle button (hold) | Sweep across the whole image |
-| `n` / `p`, PgDn / PgUp | Next / previous image in the folder (hold to flip through) |
+| `n` / `p`, PgDn / PgUp | Next / previous file in the folder (hold to flip through); the same in videos, so an animated GIF or WebP, which plays as a video, doesn't stop you |
 | Arrows / Alt+arrows | Pan 10% / 1% of the window |
 | `=` / `-` | Zoom 0.1 |
 | Alt+= / Alt+- | Zoom 0.01 |
