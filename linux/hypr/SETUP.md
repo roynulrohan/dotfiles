@@ -46,16 +46,15 @@ sudo pacman -S hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk uwsm
 # What the autostart and binds run: polkit agent, trash cleanup, terminal,
 # file manager, cursor theme
 sudo pacman -S polkit-gnome trash-cli kitty dolphin breeze-cursors
-# The communication pop-up app (Super+D)
-sudo pacman -S discord
 # AUR: the editor (Super+C) and music (Super+M) apps
 paru -S visual-studio-code-bin spotify spicetify-cli
 # AUR, optional: the todo pop-up (Super+R)
 paru -S todoist-appimage
 ```
 
-The autostart also starts Noctalia ([`linux/noctalia`](../noctalia/SETUP.md)).
-The Verify checks use `jq`.
+The autostart also starts Noctalia ([`linux/noctalia`](../noctalia/SETUP.md)),
+and Super+D starts Equibop ([`linux/equibop`](../equibop/SETUP.md)). The Verify
+checks use `jq`.
 
 Install split-monitor-workspaces (see Per-monitor workspaces), pinned to the
 reviewed commit:
@@ -109,6 +108,9 @@ The later file wins. But a duplicate bind fires twice: to override a bind from
 - The look: window transparency, gradient borders, no shadows, blur behind
   pop-up workspaces (see Look).
 - The resize keys from `keybinds.lua` are switched off (see Window mode).
+- `toggles`: Super+D (the communication pop-up workspace) starts and gathers
+  Equibop, not the official Discord app. The defaults are in
+  [`utils/functions.lua`](utils/functions.lua).
 
 [`hypr-user.lua`](hypr-user.lua) holds Hyprland config that HyprMod can't
 express:
