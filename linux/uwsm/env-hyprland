@@ -12,3 +12,10 @@ export XDG_SESSION_DESKTOP=Hyprland
 
 # ############# Others #############
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+# ###### NVIDIA video decoding #####
+# Only with the NVIDIA driver: on other GPUs these break VA-API.
+if [ -e /proc/driver/nvidia/version ]; then
+    export LIBVA_DRIVER_NAME=nvidia
+    export MOZ_DISABLE_RDD_SANDBOX=1
+fi

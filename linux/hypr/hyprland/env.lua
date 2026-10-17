@@ -21,3 +21,12 @@ hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 
 -- Others
 hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
+
+-- NVIDIA video decoding. Only with the NVIDIA driver: on other GPUs these
+-- break VA-API.
+local nvidia = io.open("/proc/driver/nvidia/version")
+if nvidia then
+    nvidia:close()
+    hl.env("LIBVA_DRIVER_NAME", "nvidia")
+    hl.env("MOZ_DISABLE_RDD_SANDBOX", "1")
+end

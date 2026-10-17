@@ -34,8 +34,35 @@ uwsm sources `env` for every compositor, then `env-hyprland` for Hyprland only
   theme and size. The cursor values must match the Hyprland config:
   `cursorTheme` in [`linux/hypr/hypr-vars.lua`](../hypr/hypr-vars.lua) and
   `cursorSize` in [`linux/hypr/variables.lua`](../hypr/variables.lua).
-- `env-hyprland`: the toolkit backends (Wayland first, X11 as fallback) and
-  the XDG session variables.
+- `env-hyprland`: the toolkit backends (Wayland first, X11 as fallback), the
+  XDG session variables, and the NVIDIA video decoding variables.
+
+### NVIDIA video decoding
+
+With the NVIDIA driver loaded (`/proc/driver/nvidia/version` exists),
+`env-hyprland` and Hyprland's `env.lua` set two variables from the
+NVIDIA VA-API driver's
+[Firefox instructions](https://github.com/elFarto/nvidia-vaapi-driver#firefox):
+
+- `LIBVA_DRIVER_NAME=nvidia` makes VA-API load the NVIDIA driver
+  (`libva-nvidia-driver`).
+- `MOZ_DISABLE_RDD_SANDBOX=1` turns off the sandbox of Firefox's media
+  decoding process, which the driver can't run in. Firefox's other sandboxes
+  stay on.
+
+On other GPUs both lines are skipped, because `LIBVA_DRIVER_NAME=nvidia`
+breaks VA-API there.
+
+Firefox also needs one setting. Put it in a `user.js` file in the Firefox
+profile folder (the profile name is random, so it is not in the manifest):
+
+```js
+user_pref("media.hardware-video-decoding.force-enabled", true);
+```
+
+Without these, Firefox decodes video on the CPU. With them, a 1080p60 Twitch
+stream's decoding process drops from about 17% of a CPU core to 1%. mpv and
+Jellyfin decode on the GPU without them.
 
 Apps that systemd or D-Bus start read the variables from uwsm, not from
 Hyprland's `hyprland/env.lua` ([`linux/hypr`](../hypr/SETUP.md)).
@@ -54,4 +81,9 @@ After you log out and back in:
 systemctl --user show-environment | grep -E '^(QT_QPA_PLATFORMTHEME|XCURSOR_THEME|XDG_CURRENT_DESKTOP)='
 ```
 
-It prints `qtengine`, `breeze_cursors` and `Hyprland`.
+It prints `qtengine`, `breeze_cursors` and `Hyprland`. With a video playing in
+Firefox on an NVIDIA GPU:
+
+```bash
+grep -c nvidia_drv_video /proc/$(pgrep -f 'firefox.*contentproc.*rdd')/maps   # 1 or more
+```

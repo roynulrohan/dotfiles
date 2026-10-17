@@ -61,6 +61,9 @@ Not on this machine: Cursor and Ghostty.
 - [ ] Set the power profile to performance: `powerprofilesctl set performance`.
       `balanced` runs about 6 °C cooler at light desktop load at the same
       full-load speed; I prefer performance anyway.
+- [ ] Firefox: add `user.js` with the hardware video decoding setting to the
+      profile folder ([`linux/uwsm`](../../linux/uwsm/SETUP.md), "NVIDIA video
+      decoding").
 - [ ] BIOS: A-XMP on (RAM at 3600), PBO Curve Optimizer all cores −20, CPU fan
       curve 30% to 40 °C, 45% at 60, 70% at 70, 100% at 80, boot order Limine
       first. A CMOS clear or a BIOS update resets all of it.
