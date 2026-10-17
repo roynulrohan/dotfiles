@@ -10,7 +10,9 @@ probe.
 | Repo | Destination |
 |---|---|
 | [`temperatures/CpuCurve.json`](temperatures/CpuCurve.json) | `/var/lib/openlinkhub/database/temperatures/CpuCurve.json` |
+| [`temperatures/ExhaustCurve.json`](temperatures/ExhaustCurve.json) | `/var/lib/openlinkhub/database/temperatures/ExhaustCurve.json` |
 | [`temperatures/GpuCurve.json`](temperatures/GpuCurve.json) | `/var/lib/openlinkhub/database/temperatures/GpuCurve.json` |
+| [`temperatures/IntakeCurve.json`](temperatures/IntakeCurve.json) | `/var/lib/openlinkhub/database/temperatures/IntakeCurve.json` |
 | [`temperatures/SystemCurve.json`](temperatures/SystemCurve.json) | `/var/lib/openlinkhub/database/temperatures/SystemCurve.json` |
 | [`openlinkhub-reenable.hook`](openlinkhub-reenable.hook) | `/etc/pacman.d/hooks/openlinkhub-reenable.hook` |
 | [`openlinkhub.desktop`](openlinkhub.desktop) | `~/.local/share/applications/openlinkhub.desktop` |
@@ -65,16 +67,36 @@ between them. OpenLinkHub reads the sensors every 3 seconds.
 
 | Curve | Sensor | Points |
 |---|---|---|
-| `CpuCurve` | CPU (`k10temp` Tctl) | 30% to 60 °C: 35%, 66: 50, 72: 70, 78: 90, 82: 100 |
-| `GpuCurve` | GPU (NVIDIA, through `nvidia-smi`) | 30% to 50 °C, 60: 45, 66: 60, 72: 85, 76: 100 |
-| `SystemCurve` | CPU + GPU, the higher of the two | 30% to 60 °C: 35%, 66: 50, 72: 65, 78: 85, 82: 100 |
+| `CpuCurve` | CPU (`k10temp` Tctl) | 35% at 0 °C, 60: 45, 66: 60, 72: 80, 77: 100 |
+| `IntakeCurve` | CPU + GPU, the higher of the two | 50% at 0 °C, 60: 55, 66: 65, 72: 85, 76: 100 |
+| `SystemCurve` | CPU + GPU, the higher of the two | 35% at 0 °C, 60: 40, 66: 55, 72: 70, 78: 90, 81: 100 |
+| `ExhaustCurve` | CPU + GPU, the higher of the two | 25% at 0 °C, 60: 28, 66: 36, 72: 45, 78: 58, 81: 65; never above 65% |
+| `GpuCurve` | GPU (NVIDIA, through `nvidia-smi`) | 35% to 50 °C, 60: 50, 66: 65, 72: 90, 75: 100 |
 
-- `CpuCurve` is for the exhaust fan behind the CPU cooler.
-- `GpuCurve` is for fans that blow onto the graphics card.
-- `SystemCurve` is for the intakes, which feed both.
+- `CpuCurve` is for the exhaust fan right behind the CPU cooler.
+- `IntakeCurve` is for strong intakes, such as 140 mm fans under the
+  graphics card.
+- `SystemCurve` is for the other intakes.
+- `ExhaustCurve` is for strong exhausts, such as a row of top fans.
+- `GpuCurve` is for fans that should follow the graphics card only.
 
 A Ryzen 5000 CPU's Tctl jumps by several degrees at light desktop load. The
 flat part up to 60 °C keeps the fans from following those jumps.
+
+### Positive pressure
+
+The curves keep more air coming in than going out, so the case stays at
+positive pressure. Air then leaves through every unfiltered gap instead of
+pulling dust in, and all incoming air passes the intake filters. Two rules
+do this:
+
+- **Intakes run high.** `IntakeCurve` never drops below 50%.
+- **Strong exhausts are capped.** `ExhaustCurve` stops at 65%.
+
+Airflow scales roughly with fan speed, so the balance can be estimated from
+each fan's rated airflow and its speed as a share of its maximum. To check
+it, hold a tissue near a gap in the case, such as the slot covers: it must
+blow outwards.
 
 ### Why not the temperature probe
 
@@ -85,6 +107,11 @@ CPU load, a probe in the CPU cooler's exhaust rose 1 °C while the CPU rose
 27 °C. So a probe curve can't react to load.
 
 When the OpenLinkHub service stops, the hub goes back to its stored curves.
+They also run in the BIOS and during boot. OpenLinkHub can switch between
+the stored curves and its own, but it can't write the stored curves. Only
+iCUE's device memory mode can, on Windows. Store a calm curve there,
+because a probe curve that ramps near the probe's idle temperature makes
+the fans loud whenever OpenLinkHub isn't running.
 
 ### Upgrade hook
 
@@ -103,6 +130,13 @@ files.
 Fans on the motherboard's headers are not part of this package. They stay on
 the BIOS fan curves.
 
+### Assignments lost after a BIOS update
+
+On the first boot after a BIOS update, OpenLinkHub can start with every fan
+on its built-in Normal curve and save that over the assignments, without an
+error in its log. The curves themselves stay. Check the fans after a BIOS
+update (Verify) and repeat Install, step 4 if needed.
+
 Source: [OpenLinkHub](https://github.com/jurkovic-nikola/OpenLinkHub).
 
 ## Verify
@@ -111,5 +145,6 @@ Source: [OpenLinkHub](https://github.com/jurkovic-nikola/OpenLinkHub).
 systemctl is-active openlinkhub                                                      # active
 ls -l /dev/hidraw* | grep openlinkhub                                                # the hub's nodes, owner openlinkhub
 curl -sL 127.0.0.1:27003/api/devices/ | grep -o '"Product":"[^"]*"' | sort -u        # the hub's name
-curl -sL 127.0.0.1:27003/api/temperatures/ | grep -o '"[A-Za-z]*Curve"' | sort -u    # CpuCurve, GpuCurve, SystemCurve
+curl -sL 127.0.0.1:27003/api/temperatures/ | grep -o '"[A-Za-z]*Curve"' | sort -u    # CpuCurve, ExhaustCurve, GpuCurve, IntakeCurve, SystemCurve
+curl -sL 127.0.0.1:27003/api/devices/<serial> | grep -o '"profile":"[^"]*"'         # each fan's curve, not "Normal"
 ```
