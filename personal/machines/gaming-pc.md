@@ -53,7 +53,8 @@ Not on this machine: Cursor and Ghostty.
       signing, then Claude Code and Orca.
 - [ ] Restore my media from backup: wallpaper stills to `~/Pictures/Wallpapers`,
       the main wallpaper's still and `login.mp4` to `~/Pictures/Wallpapers/live`,
-      lock-screen GIFs to `~/Pictures/lock-gifs`, `~/.face`, and the greeting's
+      lock-screen GIFs to `~/Pictures/lock-gifs`, the lock-screen avatar to
+      `~/Pictures/lock-avatar.png`, `~/.face`, and the greeting's
       logo images to `~/.config/fastfetch/logo/`.
 - [ ] Subscribe to my Workshop wallpapers in Wallpaper Engine, then make the
       local copies ([`linux/wallpaper`](../../linux/wallpaper/SETUP.md)).

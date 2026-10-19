@@ -16,7 +16,6 @@ and screenshots. Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | [`arch-update-tray.desktop`](arch-update-tray.desktop) | `~/.config/autostart/arch-update-tray.desktop` (see Update widget) |
 | [`spicetify-user.css`](spicetify-user.css) | `~/.config/spicetify/Themes/noctalia/user.css` (the Spotify theme's CSS; the `spicetify.ini` template writes its colours) |
 | [`lock/scripts/`](lock/scripts) | `~/.local/share/noctalia/lock/scripts/` (see Lock screen; `apply.sh` is executable) |
-| [`lock/avatar-clamshell.png`](lock/avatar-clamshell.png) | `~/.local/share/noctalia/lock/avatar-clamshell.png` |
 | [`fonts/google-sans-flex/`](fonts/google-sans-flex) | `~/.local/share/fonts/google-sans-flex/` |
 
 Files that are not in the repo:
@@ -26,6 +25,8 @@ Files that are not in the repo:
 - `~/.config/noctalia/lock.toml`: the lock screen config. `gen.py` generates
   it, and it holds absolute paths.
 - `~/Pictures/lock-gifs`: the GIFs for the lock screen's GIF card.
+- `~/Pictures/lock-avatar.png`: the lock screen's avatar, a transparent PNG
+  already cut to shape. The sticker draws it at 315x215.
 - The community plugin hypr-submap, which Noctalia keeps under
   `~/.local/state/noctalia/plugins/materialized/community/`.
 - The wallpapers ([`linux/wallpaper`](../wallpaper/SETUP.md)).
@@ -297,8 +298,8 @@ never a snapshot of the desktop. The card is 90% opaque (`card_alpha`), so the
 blurred wallpaper shows through, as on the login screen.
 
 - Left: weather with a 3-day forecast, and a month calendar without events.
-- Centre: hours, minutes and AM/PM in "GSF Lock Clock", the date, the avatar
-  cut to Material's ClamShell shape with an audio ring that fades when idle,
+- Centre: hours, minutes and AM/PM in "GSF Lock Clock", the date, your avatar
+  (`~/Pictures/lock-avatar.png`) with an audio ring that fades when idle,
   the login name under it (read from the account when `gen.py` runs), and the
   password field.
 - Right, in the login screen's places: a GIF card, CPU, RAM and GPU gauges

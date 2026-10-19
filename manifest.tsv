@@ -40,7 +40,7 @@ linux	linux/mpv/scripts/dolphin-sort.lua	~/.config/mpv/scripts/dolphin-sort.lua	
 linux	linux/noctalia/arch-update-tray.desktop	~/.config/autostart/arch-update-tray.desktop	copy
 linux	linux/noctalia/config.toml	~/.config/noctalia/config.toml	copy
 linux	linux/noctalia/fonts/google-sans-flex	~/.local/share/fonts/google-sans-flex	dir
-linux	linux/noctalia/lock/avatar-clamshell.png	~/.local/share/noctalia/lock/avatar-clamshell.png	copy
+linux	-	~/.local/share/noctalia/lock/avatar-clamshell.png	gone
 linux	linux/noctalia/lock/scripts/apply.sh	~/.local/share/noctalia/lock/scripts/apply.sh	copy-x
 linux	linux/noctalia/lock/scripts/gen.py	~/.local/share/noctalia/lock/scripts/gen.py	copy
 linux	linux/noctalia/lock/scripts/params.json	~/.local/share/noctalia/lock/scripts/params.json	copy
