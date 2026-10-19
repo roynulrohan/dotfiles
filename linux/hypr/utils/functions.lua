@@ -159,7 +159,8 @@ local function deep_match(actual, expected)
     end
 end
 
--- "if the client is running" etc function
+-- Find the clients that match an app's rules, and whether each one is on the
+-- app's special workspace.
 local function get_clients(clients, app_config, target_special)
     local matched_clients = {}
     if app_config and app_config.match then
@@ -187,7 +188,7 @@ local function get_clients(clients, app_config, target_special)
     return false, matched_clients
 end
 
-local function shell_join(argv) -- uhh praise danny for this
+local function shell_join(argv) -- single-quote each argument for the shell
     local quoted = {}
     for i, arg in ipairs(argv) do
         quoted[i] = "'" .. tostring(arg):gsub("'", [['"'"']]) .. "'"

@@ -2,18 +2,7 @@
 -- Only things HyprMod cannot represent go here.
 
 -- Window mode (Super+A): move, resize and place the active window from the
--- keyboard. Inside the mode:
---   arrows        move 40 px (tiled windows: move within the layout)
---   Alt+arrows    move 5 px
---   Shift+arrows  move the right / bottom edge, or the left / top one when the
---                 window sits against the right / bottom side (tiled: resize)
---   Alt+Shift+arrows  the same, 5 px
---   Ctrl+arrows   snap to the left / right / top / bottom half (floating only)
---   f             fill the height, keeping width and horizontal position
---   c             centre
---   Esc, Enter or Super+A leave the mode. Other keys do nothing inside it.
--- Floating windows never move or grow past the usable screen area: a step that
--- would cross an edge stops at it.
+-- keyboard. The keys are in linux/hypr/SETUP.md, "Window mode".
 local STEP  = 40    -- px per arrow press
 local FINE  = 5     -- px per Alt+arrow and Alt+Shift+arrow press
 local EDGE  = 30    -- px per Shift+arrow press
@@ -110,8 +99,8 @@ local function fill_height()
 end
 
 -- Super+Shift+arrows resizes outside window mode too, the same way as
--- Shift+arrows inside it. caelestia's binds in hyprland/keybinds.lua use these
--- keys for "move window"; unbind first or both fire.
+-- Shift+arrows inside it. hyprland/keybinds.lua binds these keys to "move
+-- window", so unbind them first, or both binds fire.
 for _, dir in ipairs({ "Left", "Right", "Up", "Down" }) do
     hl.unbind("SUPER + SHIFT + " .. dir)
 end
@@ -152,8 +141,8 @@ end)
 
 -- Live wallpapers run as a systemd user service (linux/wallpaper), not from here.
 -- linux-wallpaperengine only draws on the outputs it saw at start. A monitor
--- that comes back (replugged, or the DisplayPort VG248 reconnecting when the
--- screens wake from DPMS) gets no wallpaper, so restart the service then;
+-- that comes back (replugged, or a DisplayPort monitor that reconnects when the
+-- screens wake from DPMS) gets no wallpaper, so restart the service then.
 -- try-restart does nothing before the service has started at login.
 hl.on("monitor.added", function()
     hl.exec_cmd("systemctl --user try-restart live-wallpaper.service")
@@ -161,19 +150,18 @@ end)
 
 -- Per-monitor workspaces: each monitor has its own 1-10 on Super+1..0, from
 -- split-monitor-workspaces (a Lua package, pinned clone in
--- ~/.local/share/hypr-plugins; see linux/hypr/SETUP.md). Hyprland ids:
--- main DP-1 1-10, right HDMI-A-1 11-20, left DP-2 21-30.
--- Required by its full name: its modules are called globals/helpers/monitors,
--- and this config's own modules are required by bare names too.
+-- ~/.local/share/hypr-plugins; see linux/hypr/SETUP.md).
+-- Require it by its full name: its modules are called globals, helpers and
+-- monitors, and this config requires its own modules by bare names too.
 local smw_dir = os.getenv("HOME") .. "/.local/share/hypr-plugins"
 package.path = package.path .. ";" .. smw_dir .. "/?.lua;" .. smw_dir .. "/?/init.lua"
 local smw_ok, smw = pcall(require, "split-monitor-workspaces")
 if not smw_ok then
     print("hypr-user: split-monitor-workspaces not loaded: " .. tostring(smw))
 else
-    -- HyprMod reads this config by running it and parsing stdout line by line,
-    -- and the package print()s at setup, which broke HyprMod. Send those lines
-    -- to stderr instead (Hyprland logs both).
+    -- HyprMod reads this config by running it and parsing stdout line by line.
+    -- The package print()s at setup, and those lines stop HyprMod from opening.
+    -- Send them to stderr instead (Hyprland logs both).
     local stdout_print = print
     print = function(...)
         local parts = {}
@@ -185,14 +173,13 @@ else
         monitor_priority = { "DP-1", "HDMI-A-1", "DP-2" },
         -- Workspaces stay persistent (the package's default): Hyprland's own
         -- workspace rules then pin each one to its monitor. Without them, a
-        -- reload makes the package create missing workspaces on whichever
-        -- monitor has focus and then move them, which left workspaces on the
-        -- wrong monitor.
+        -- reload makes the package create missing workspaces on the focused
+        -- monitor and then move them, so workspaces end up on the wrong monitor.
     })
     print = stdout_print
 
-    -- Replace caelestia's global Super(+Alt)+N and its "groups of 10"
-    -- (Ctrl+Super(+Alt)+N). Super+Shift+N used to live in HyprMod's file.
+    -- Replace the global Super(+Alt)+N binds and the "groups of 10" binds
+    -- (Ctrl+Super(+Alt)+N) of hyprland/keybinds.lua.
     for i = 1, 10 do
         local key, n = tostring(i % 10), tostring(i)
         for _, mods in ipairs({ "SUPER", "SUPER + ALT", "CTRL + SUPER", "CTRL + SUPER + ALT" }) do
@@ -237,10 +224,9 @@ else
     hl.bind("SUPER + SHIFT + bracketright", send_to_monitor("r"))
 end
 
--- HyDE's defaults (Configs/.local/share/hypr/lua/defaults.lua) where they differ
--- from caelestia's: dim the workspace behind a pop-up workspace, don't let apps
--- pull focus, middle-click pastes, Num Lock on at login. Key repeat stays
--- caelestia's fast 250 ms / 35 per second.
+-- Dim the workspace behind a pop-up workspace, don't let apps pull focus, paste
+-- with the middle button, and turn Num Lock on at login. The last three
+-- override hyprland/misc.lua and hyprland/input.lua.
 hl.config({
     decoration = { dim_special = 0.3 },
     misc = { focus_on_activate = false, middle_click_paste = true },
@@ -265,10 +251,9 @@ hl.bind("SUPER + CTRL + M", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/wi
 -- this window. Press again to undo. Normal fullscreen is unchanged.
 hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen_state({ action = "toggle", internal = 0, client = 2 }))
 
--- Hyprland 0.56 eye candy: an inner glow on the focused window in the
--- palette's primary-to-tertiary gradient (like the border, at half strength;
--- none on unfocused windows). Motion blur (0.56) stays off: windows flashed
--- while moving on this NVIDIA setup.
+-- An inner glow on the focused window (Hyprland 0.56 or newer), in the
+-- border's primary-to-tertiary gradient at half strength. Unfocused windows get
+-- none. Motion blur stays off: with an NVIDIA GPU, windows flash while they move.
 do
     local scheme = require("scheme.current")
     hl.config({

@@ -54,21 +54,17 @@ is closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
   those replace. The `unbind` text must match that file's spelling exactly,
   including modifier order and key capitalisation (`CTRL + SUPER + SHIFT + Left`),
   or both binds stay live.
-- **Window rules**: these windows are forced opaque, so the default window
+- **Window rules** force these windows opaque, so the default window
   transparency (`windowOpacity` in
-  [`linux/hypr/hypr-vars.lua`](../hypr/hypr-vars.lua)) doesn't apply: kitty, the
-  browsers Zen (`zen`), Opera GX (`Opera GX`), Firefox (`firefox`) and Brave
-  (`brave-browser`), Discord (`discord`), Jellyfin
-  (`org.jellyfin.JellyfinDesktop`), the file explorers Dolphin
-  (`org.kde.dolphin`) and Thunar (`[Tt]hunar`), and the viewers Gwenview
-  (`org.kde.gwenview`), Haruna (`org.kde.haruna`) and mpv (`mpv`). The rules in
-  [`linux/hypr/hyprland/rules.lua`](../hypr/hyprland/rules.lua) already keep
-  `imv` and `feh` opaque. Orca (`orca`) stays at the default transparency on
-  purpose: its own window is never transparent, so that is the only see-through
-  it gets.
-- **Settings**: dwindle, flat mouse acceleration, rounding 12, border 2 px, gaps
-  1 / 4 (4 px at the screen edges and under the bar, 2 px between windows; see
-  "Look" in [`linux/hypr/SETUP.md`](../hypr/SETUP.md)).
+  [`linux/hypr/hypr-vars.lua`](../hypr/hypr-vars.lua)) doesn't apply: kitty,
+  the browsers (Zen, Opera GX, Firefox, Brave), Discord, Jellyfin, the file
+  explorers (Dolphin, Thunar) and the viewers (Gwenview, Haruna, mpv). The
+  rules in [`linux/hypr/hyprland/rules.lua`](../hypr/hyprland/rules.lua)
+  already keep `imv` and `feh` opaque. Orca's own window is never
+  transparent, so it keeps the default transparency on purpose.
+- **Settings**: dwindle, flat mouse acceleration, rounding 12, border 2 px,
+  `gaps_in 1` and `gaps_out 4` (see "Look" in
+  [`linux/hypr/SETUP.md`](../hypr/SETUP.md)).
   - Tearing is allowed. `allow_tearing` is only Hyprland's master switch: the
     `immediate` rule in
     [`linux/hypr/hyprland/rules.lua`](../hypr/hyprland/rules.lua) limits it to

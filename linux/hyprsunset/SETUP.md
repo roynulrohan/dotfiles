@@ -1,7 +1,7 @@
 # hyprsunset
 
 Night light: a warmer screen, always on. hyprsunset is the Hyprland project's
-blue-light filter; CachyOS's Hyprland setup has none.
+blue-light filter.
 
 ## Files
 
@@ -9,13 +9,10 @@ blue-light filter; CachyOS's Hyprland setup has none.
 |---|---|
 | [`hyprsunset.conf`](hyprsunset.conf) | `~/.config/hypr/hyprsunset.conf` |
 
-`~/.config/hypr` is this repo's Hyprland config ([`linux/hypr`](../hypr/SETUP.md)),
-but this file isn't part of it (like HyprMod's `hyprland-gui.lua`). It sits
-there because that's the path the stock service reads.
+The file is in `~/.config/hypr` because the stock service reads it there. It
+isn't part of the Hyprland config ([`linux/hypr`](../hypr/SETUP.md)).
 
 ## Install
-
-On CachyOS/Arch:
 
 ```bash
 sudo pacman -S hyprsunset
@@ -32,12 +29,9 @@ One profile at `00:00` with `temperature = 5800`. A single profile keeps it on
 all day: hyprsunset re-applies it at midnight, and no other profile switches it
 off.
 
-hyprsunset keeps red at 100% and scales green and blue with Tanner Helland's
-blackbody formula (`matrixForKelvin` in `src/Hyprsunset.cpp`). The screen is
-unchanged at about 6600 K, not at the 6000 K default. 5800 K keeps 95% green
-and 91% blue: a light, just-visible tint. For comparison, 4500 K keeps 85% /
-74% and looks clearly yellow; 6250 K keeps 98% / 95% and is hard to see. Valid
-range: 1000 K (deep orange, no blue) to 20000 K (bluish).
+Lower is warmer. The screen is unchanged at about 6600 K, not at hyprsunset's
+6000 K default, so 5800 K gives a light tint. The valid range is 1000 K to
+20000 K.
 
 Try other values live, then write the one you like into the file and restart
 the service:
@@ -47,10 +41,6 @@ hyprctl hyprsunset temperature 4000   # warmer
 hyprctl hyprsunset identity           # off until the next profile change
 hyprctl hyprsunset reset              # back to the config's value
 ```
-
-The tint is not captured in screenshots, recordings or screen sharing.
-`gamma` can also dim below the monitor's minimum, but the wiki warns it costs
-colour accuracy; it stays at 1.0.
 
 Source: [hyprsunset on the Hyprland wiki](https://wiki.hypr.land/Hypr-Ecosystem/hyprsunset/).
 
@@ -62,5 +52,5 @@ systemctl --user is-active hyprsunset.service   # active
 hyprctl hyprsunset temperature                  # 5800
 ```
 
-The screen has a light warm tint. Screenshots don't show it, so look at the
-screen itself.
+The screen has a light warm tint. Screenshots, recordings and screen sharing
+don't show it, so look at the screen itself.

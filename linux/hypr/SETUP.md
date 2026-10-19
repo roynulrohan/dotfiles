@@ -97,13 +97,12 @@ The later file wins. But a duplicate bind fires twice: to override a bind from
 [`hypr-vars.lua`](hypr-vars.lua) changes values from `variables.lua`:
 
 - kitty is the terminal, Dolphin the file manager.
-- `editor = "code"`: Super+C opens VS Code. The default is `codium`.
+- `editor = "code"`: Super+C opens VS Code.
 - `sleepGestureCmd`: Super+Shift+L runs `systemctl suspend`. The default,
   `suspend-then-hibernate`, can't work with zram swap only: logind then reports
   `CanSuspendThenHibernate=na`.
-- The cursor theme is `breeze_cursors` (package `breeze-cursors`). The default
-  is `sweet-cursors`. Keep it equal to `XCURSOR_THEME` in
-  [`linux/uwsm`](../uwsm/SETUP.md).
+- The cursor theme is `breeze_cursors` (package `breeze-cursors`). Keep it
+  equal to `XCURSOR_THEME` in [`linux/uwsm`](../uwsm/SETUP.md).
 - Volume keys step 1%.
 - `singleWindowGapsOut = 4`: a lone tiled window gets the same outer gap as
   HyprMod's `gaps_out`. Change both together by hand.
@@ -119,7 +118,7 @@ express:
 
 - Window mode and the Super+Shift+arrow resize binds (see Window mode).
 - Per-monitor workspaces (see below).
-- HyDE's behaviour defaults, the pop-up dimming and the glow (see Look).
+- The behaviour settings, the pop-up dimming and the glow (see Look).
 - Alt+Tab opens Noctalia's window switcher: hold Alt and press Tab to move,
   release Alt to switch. Shift+Tab moves back inside the switcher, so
   Hyprland's Shift+Alt+Tab is unbound.
@@ -169,34 +168,31 @@ which the picker sets to 1.
 
 Each rule below names the file it lives in.
 
-- **One spacing unit, 4 px**: the screen edges, under the bar and above the
-  windows are all 4 px. Windows have 2 px between them (half the outer gap,
-  Hyprland's own 1:2 ratio). HyprMod sets `gaps_in 1` and `gaps_out 4`.
-  `singleWindowGapsOut 4` in `hypr-vars.lua` and window mode's `INSET = 4 + 2`
-  in `hypr-user.lua` follow it. The Noctalia bar uses the same unit
-  ([`linux/noctalia`](../noctalia/SETUP.md), Bar).
-- **Shapes**: window rounding 12 (HyprMod). The bar's islands are full pills
-  (24 px tall, radius 12). Border 2 px.
-- **Borders** (`hypr-vars.lua`): HyDE-style two-colour 45° gradients. Focused
-  windows go from `primary` to `tertiary`. Unfocused windows go from
-  `onSurfaceVariant` to `outlineVariant` at 80%, so they keep a visible border.
-  In Lua a gradient is a table, `{ colors = { … }, angle = 45 }`, not the text
-  form of a `hyprland.conf`. The colours come from `scheme/current.lua`, which a
-  Noctalia template keeps in step with the wallpaper
-  ([`linux/noctalia`](../noctalia/SETUP.md)).
+- **One spacing unit, 4 px**: the screen edges, the space under the bar and
+  the space above the windows are all 4 px. HyprMod sets `gaps_out 4` and
+  `gaps_in 1`. Hyprland puts `gaps_in` on each side of a window, so windows
+  have 2 px between them. `singleWindowGapsOut 4` in `hypr-vars.lua` and window
+  mode's `INSET = 4 + 2` in `hypr-user.lua` follow the unit. The Noctalia bar
+  uses the same unit ([`linux/noctalia`](../noctalia/SETUP.md), Bar).
+- **Shapes**: window rounding 12 and border 2 px (HyprMod).
+- **Borders** (`hypr-vars.lua`): HyDE-style two-colour 45° gradients from
+  `scheme/current.lua`. Focused windows go from `primary` to `tertiary`.
+  Unfocused windows go from `onSurfaceVariant` to `outlineVariant` at 80%, so
+  they keep a visible border.
 - **Transparency** (`hypr-vars.lua`, `windowOpacity`): HyDE's 90% focused and
   75% unfocused, for every window that is not on HyprMod's opaque list.
-- **No shadows**, as in HyDE. **Blur**: size 8, 2 passes (`variables.lua`).
+- **No shadows** (`hypr-vars.lua`). **Blur**: size 8, 2 passes
+  (`variables.lua`).
 - **Glow** (`hypr-user.lua`, Hyprland 0.56 or newer): an inner glow on the
   focused window, in the border's gradient at half strength. Unfocused windows
   get none. Motion blur stays off: with an NVIDIA GPU, windows flash while they
   move.
 - **Pop-up workspaces** (Super+M, D, S): the workspace behind is dimmed 30% and
   blurred (`dim_special` in `hypr-user.lua`, `blurSpecialWs` in
-  `hypr-vars.lua`), as in HyDE.
-- **Behaviour** (`hypr-user.lua`, from HyDE's `defaults.lua`): apps can't pull
-  focus (`focus_on_activate = false`), middle-click pastes, and Num Lock is on
-  at login. Key repeat ([`hyprland/input.lua`](hyprland/input.lua)) is 250 ms
+  `hypr-vars.lua`).
+- **Behaviour** (`hypr-user.lua`): apps can't pull focus
+  (`focus_on_activate = false`), middle-click pastes, and Num Lock is on at
+  login. Key repeat ([`hyprland/input.lua`](hyprland/input.lua)) is 250 ms
   and 35 per second, faster than Hyprland's default 600 / 25.
 - **Animations**: the caelestia preset (see Animations).
 
@@ -213,7 +209,7 @@ inside it.
 | Alt+arrows | Move 5 px | Move within the layout |
 | Shift+arrows | Move an edge 30 px | Resize |
 | Alt+Shift+arrows | Move an edge 5 px | Resize |
-| Ctrl+arrows | Snap to the left / right / top / bottom half | Nothing |
+| Ctrl+arrows | Snap to the half in the arrow's direction | Nothing |
 | `f` | Fill the height | Nothing |
 | `c` | Centre | Centre |
 
@@ -230,47 +226,39 @@ centre, so the edge keys move it by half the change to keep the other edge in
 place.
 
 `hypr-vars.lua` switches off the resize keys from `keybinds.lua` with empty key
-lists: Super+-/=, Super+Shift+-/= and Super+Alt+arrows, which resize by 10% of
-the window per press. Those keys are free.
+lists: Super+-/=, Super+Shift+-/= and Super+Alt+arrows. Those keys are free.
 
 ### Per-monitor workspaces
 
-Each monitor has its own workspaces 1 to 10 on Super+1…0, like awesome/dwm.
-[split-monitor-workspaces](https://github.com/zjeffer/split-monitor-workspaces)
+Each monitor has its own workspaces 1 to 10 on Super+1…0, as in awesome and
+dwm. [split-monitor-workspaces](https://github.com/zjeffer/split-monitor-workspaces)
 does it. It is a Lua package for Hyprland 0.55 or newer. Its alternative,
 hyprsplit, doesn't work with Lua configs. It isn't copied into this repo (see
 Install).
 
-`hypr-user.lua` requires it by its full name: its modules are called
-`globals`, `helpers` and `monitors`, and this config requires its own modules
-by bare names too. If the package is missing, the global workspace keys in
+If the package is missing, the global workspace keys in
 [`hyprland/keybinds.lua`](hyprland/keybinds.lua) stay and Super+Shift+N does
 nothing.
 
-The package prints lines at setup. HyprMod reads the whole config by running it
-and parsing stdout, and those lines stop HyprMod from opening. So
-`hypr-user.lua` sends them to stderr during setup.
-
 `monitor_priority` in `hypr-user.lua` sets the ranges: DP-1 (main) gets
-Hyprland ids 1 to 10, HDMI-A-1 (right) 11 to 20, and DP-2 (left) 21 to 30. With other
-monitor names, change that list. A bar that
-labels workspaces by id shows 11 to 20 and 21 to 30 on the side monitors. All 30
-workspaces are persistent (the package's default), so Hyprland's own workspace
-rules pin each one to its monitor. Don't turn persistence off. Without it,
-every config reload makes the package create a missing workspace on the
-focused monitor and then move it. Hyprland then gives the robbed monitor a
-fallback workspace, and workspaces and their windows end up on the wrong
+Hyprland ids 1 to 10, HDMI-A-1 (right) 11 to 20, and DP-2 (left) 21 to 30.
+With other monitor names, change that list. A bar that labels workspaces by id
+shows 11 to 20 and 21 to 30 on the side monitors.
+
+All 30 workspaces are persistent (the package's default), so Hyprland's own
+workspace rules pin each one to its monitor. Don't turn persistence off.
+Without it, each config reload moves workspaces and their windows to the wrong
 monitor.
 
 | Key | Does |
 |---|---|
 | Super+1…0 | go to workspace N on the focused monitor |
-| Super+Shift+1…0 / Super+Alt+1…0 | move the window there and follow / stay |
+| Super+Shift+1…0, Super+Alt+1…0 | move the window there and follow it, or stay |
 | Super+scroll, Super+PgUp/PgDn, Ctrl+Super+←/→ | cycle workspaces on this monitor |
-| Super+Alt+scroll, Super+Alt+PgUp/PgDn, Super+Ctrl+Alt+←/→ | move the window to the next/previous workspace on this monitor |
+| Super+Alt+scroll, Super+Alt+PgUp/PgDn, Super+Ctrl+Alt+←/→ | move the window to the next or previous workspace on this monitor |
 | Super+Ctrl+↓ | first empty workspace on this monitor |
-| Super+[ / Super+] | focus the left / right monitor |
-| Super+Shift+[ / Super+Shift+] | send the window to the left / right monitor |
+| Super+[, Super+] | focus the monitor on the left or right |
+| Super+Shift+[, Super+Shift+] | send the window to the monitor on the left or right |
 
 The "groups of 10" keys from `keybinds.lua` (Ctrl+Super+N, Ctrl+Super+scroll,
 Ctrl+Super+Alt+N) are unbound. Ctrl+Super+Shift+arrows (move in a direction)
@@ -281,14 +269,10 @@ slides to its own monitor's edge (Hyprland's floating layout,
 ### window-mute
 
 Super+Ctrl+M mutes or unmutes only the focused window's sound.
-[`window-mute`](window-mute) is a port of HyDE's `window.mute.py`. It matches
-audio streams to the window in this order: the window's own process, the app's
-name, any child process (browsers play audio from a helper), then any process
-whose parent chain has the app's name. If every matched stream is muted, it
-unmutes them; otherwise it mutes them. The notification names the app, not the
-window title, because titles can hold file or page names and notifications stay
-in the history. It needs `python`, `pactl` (package `libpulse`) and
-`notify-send` (package `libnotify`).
+[`window-mute`](window-mute) is a port of HyDE's `window.mute.py`. Its header
+explains how it matches audio streams to the window. The notification names
+the app, not the window title. It needs `python`, `pactl` (package `libpulse`)
+and `notify-send` (package `libnotify`).
 
 ## Verify
 

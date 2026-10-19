@@ -28,7 +28,9 @@ the uwsm session ([`linux/sddm`](../sddm/SETUP.md)).
 ## Notes
 
 uwsm sources `env` for every compositor, then `env-hyprland` for Hyprland only
-(`man uwsm`, Files). Both are shell files of `export` lines.
+(`man uwsm`, Files). Both are shell files of `export` lines. Hyprland's
+`hyprland/env.lua` ([`linux/hypr`](../hypr/SETUP.md)) sets the same variables
+for apps that Hyprland starts itself. Change both when a variable changes.
 
 - `env`: the Qt theme (`qtengine`) and Qt window settings, and the cursor
   theme and size. The cursor values must match the Hyprland config:
@@ -61,14 +63,8 @@ random, so the files are not in the manifest:
 user_pref("media.hardware-video-decoding.force-enabled", true);
 ```
 
-Without these, Firefox decodes video on the CPU. With them, a 1080p60 Twitch
-stream's decoding process drops from about 17% of a CPU core to 1%. mpv and
-Jellyfin decode on the GPU without them.
-
-Apps that systemd or D-Bus start read the variables from uwsm, not from
-Hyprland's `hyprland/env.lua` ([`linux/hypr`](../hypr/SETUP.md)).
-`hyprland/env.lua` sets the same variables for apps that Hyprland starts
-itself. Change both when a variable changes.
+Without these, Firefox decodes video on the CPU. mpv and Jellyfin decode on
+the GPU without them.
 
 ## Verify
 

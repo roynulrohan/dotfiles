@@ -4,7 +4,7 @@ export QT_WAYLAND_DISABLE_WINDOWDECORATION='1'
 export QT_AUTO_SCREEN_SCALE_FACTOR='1'
 
 # ############# Cursor #############
-# Same values as hypr-vars.lua: apps started by systemd or D-Bus read this
-# file, not Hyprland's env.lua.
+# Keep equal to cursorTheme (hypr-vars.lua) and cursorSize (variables.lua).
+# Apps that systemd or D-Bus start read this file, not Hyprland's env.lua.
 export XCURSOR_THEME='breeze_cursors'
 export XCURSOR_SIZE='24'

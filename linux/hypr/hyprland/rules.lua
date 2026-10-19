@@ -94,7 +94,7 @@ tagged_rule(float_tag, {
 tagged_rule(float_60_70_tag, {
     "(Select|Open)( a)? (File|Folder)(s)?", -- File dialogs
     "Save As",                              -- Save dialogs
-    "Library",                              -- * I don't remember what this matches...
+    "Library",                              -- any window titled "Library", such as Firefox's bookmarks Library
 }, "title")
 tagged_rule(float_60_70_tag, {
     { title = "(Save|Export) Image", class = "gimp" }, -- GIMP export/save
@@ -140,7 +140,7 @@ tagged_rule(music_player_tag, {
     "com.github.th-ch.youtube-music|com-maxrave-simpmusic-MainKt", -- YouTube music
 }, "class")
 tagged_rule(music_player_tag, {
-    "Spotify|Spotify Free" -- Spotify wayland, it has no class for some reason
+    "Spotify|Spotify Free" -- Spotify on Wayland, which has no class
 }, "initial_title")
 tagged_rule(communication_app_tag, {
     "discord|equibop|vesktop", -- Discord clients
@@ -175,7 +175,7 @@ tagged_rule(float_tag, {
 -------------------------
 ---- Tag definitions ----
 -------------------------
--- These have to come after all uses of window tagging. Thank you Hyprland...
+-- These have to come after all uses of window tagging.
 
 create_tag(opaque_tag, { opaque = true })
 create_tag(float_tag, { float = true })
@@ -227,8 +227,8 @@ hl.layer_rule({
     blur_popups = true,
 })
 -- Every other Noctalia surface (screenshot and annotation overlays, lock
--- widgets…) also animates itself: without this, caelestia's slide-in for
--- layers made the screenshot overlay drop in like a curtain.
+-- widgets) also animates itself. Without this rule, the animation preset's
+-- slide-in for layers makes the screenshot overlay drop in from the top.
 hl.layer_rule({
     name = "noctalia-no-anim",
     match = { namespace = "^noctalia-.*$" },

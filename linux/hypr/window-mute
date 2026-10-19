@@ -3,10 +3,11 @@
 
 A port of HyDE's window.mute.py (HyDE-Project/HyDE,
 Configs/.local/lib/hyde/window.mute.py) using only hyprctl, pactl and
-notify-send, under HyDE's licence (GPL-3.0). Streams are matched to the window the way HyDE does it, in order:
-the window's own process, then the app's name, then any child process (browsers
-play audio from a helper), then any process whose parent chain has the app's
-name. If every matched stream is muted it unmutes them, otherwise it mutes them.
+notify-send, under HyDE's licence (GPL-3.0). Streams are matched to the window
+the way HyDE does it, in order: the window's own process, then the app's name,
+then any child process (browsers play audio from a helper), then any process
+whose parent chain has the app's name. If every matched stream is muted it
+unmutes them, otherwise it mutes them.
 The notification names the app, not the window title, because titles can hold
 file or page names and notifications are kept in the history.
 """
