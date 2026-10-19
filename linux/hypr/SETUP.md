@@ -3,7 +3,9 @@
 The Hyprland config in `~/.config/hypr`: binds, rules, autostart, the look, a
 keyboard mode that places windows, and separate workspaces on each monitor. The
 modules and [`variables.lua`](variables.lua) come from caelestia's Hyprland
-config, so some names and defaults are caelestia's.
+config, so some names and defaults are caelestia's. The animation presets and
+[`window-mute`](window-mute) come from HyDE. Both projects are GPL-3.0, so this
+package is too ([`LICENSE`](LICENSE)).
 
 ## Files
 

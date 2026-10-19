@@ -1,6 +1,6 @@
 # Neovim
 
-Neovim, from the LazyVim starter config. On top of LazyVim's defaults: One
+Neovim, from the LazyVim starter config (Apache-2.0, [`LICENSE`](LICENSE)). On top of LazyVim's defaults: One
 Dark Pro (vivid) as the colorscheme, rounded float borders and statusline caps,
 five LazyVim extras, and an autocmd that makes kitty opaque while Neovim runs
 (see Notes).
@@ -9,7 +9,7 @@ five LazyVim extras, and an autocmd that makes kitty opaque while Neovim runs
 
 | Repo | Destination |
 |---|---|
-| everything in this folder except `SETUP.md` | `~/.config/nvim/` |
+| everything in this folder except `SETUP.md` and `LICENSE` | `~/.config/nvim/` |
 
 Same path on both OSes. `manifest.tsv` copies the folder, and `./status.sh`
 skips `SETUP.md` inside it.
