@@ -17,7 +17,7 @@ return {
     volumeStep = 1,
     cursorTheme = "breeze_cursors",
     -- No window shadows, as in HyDE's themes (caelestia's were large and faint).
-    -- Blur stays caelestia's (8, 2 passes).
+    -- Blur stays caelestia's (8, 2 passes); HyDE's 6 with 3 passes was also liked.
     shadowEnabled = false,
     -- HyDE's window transparency: 90% focused, 75% unfocused (caelestia: 95% for all).
     windowOpacity = "0.90 0.75",

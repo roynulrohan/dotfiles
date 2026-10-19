@@ -32,6 +32,7 @@
           "category" : "mouse",
           "productID" : "0xc08b",
           "productName" : "G502 HERO Gaming Mouse",
+          "serialNumber" : "0E73396D3731",
           "vendorID" : "0x46d"
         }
       },
@@ -107,6 +108,7 @@
           "category" : "mouse",
           "productID" : "0xb034",
           "productName" : "MX Master 3S",
+          "serialNumber" : "2E725BF8",
           "vendorID" : "0x46d"
         }
       },
