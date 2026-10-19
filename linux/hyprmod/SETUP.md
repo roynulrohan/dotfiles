@@ -18,7 +18,7 @@ The rest of `~/.config/hypr` belongs to [`linux/hypr`](../hypr/SETUP.md).
 ```bash
 paru -S hyprmod              # AUR; pulls in python-hyprland-config
 sudo pacman -S hyprpicker    # the colour picker on Super+Shift+P
-paru -S zen-browser-bin      # AUR; Super+B opens Zen
+paru -S zen-browser-bin      # CachyOS repo, AUR on Arch; Super+B opens Zen
 ```
 
 The window rules name apps from other packages (see Notes). A rule for an app

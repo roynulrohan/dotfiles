@@ -46,6 +46,9 @@ After copying:
 
 - Equibop has no setting for Discord's own icons, so the User Assets step is
   manual.
+- Discord presence from other apps, such as VS Code's `vscord`, needs
+  Equibop's arRPC bridge: `"arRPC": true` in `~/.config/equibop/settings.json`.
+  The file is not in this repo, because Equibop rewrites it.
 - **After an Equibop update** that changes its launcher entry, refresh the
   copy:
   `sed 's/^Icon=equibop$/Icon=discord/' /usr/share/applications/equibop.desktop > ~/.local/share/applications/equibop.desktop`.

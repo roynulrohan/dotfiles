@@ -69,8 +69,7 @@ Keybindings sync per platform.
 - Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at
   weight 500.
 - Discord presence (`vscord`) shows the project and file only. On Linux, it
-  reaches Discord through Equibop's built-in arRPC bridge, so Equibop needs
-  `arRPC: true` in `~/.config/equibop/settings.json`.
+  needs Equibop's arRPC bridge ([`linux/equibop`](../../linux/equibop/SETUP.md)).
 - The `cmd+` entries in `keybindings.json` remove macOS defaults. Linux has no
   such defaults (there `cmd` means Super), so they do nothing on Linux.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports
