@@ -191,7 +191,8 @@ threshold = 70
 style = "italic dimmed yellow"
 
 [git_branch]
-# Always shown, p10k style: "on  main". Long names cut at 24.
+# p10k style: "on  main". Long names cut at 24. A detached HEAD shows
+# [git_commit] instead.
 format = "on [$symbol$branch(:$remote_branch)]($style) "
 symbol = " "
 style = "bold green"

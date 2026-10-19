@@ -53,17 +53,12 @@ again.
   each OS's `config.fish` only adds what must come later.
 - `05` exits on macOS. The Mac's `config.fish` starts starship, zoxide and
   direnv itself, after its conda hook ([`mac/fish`](../../mac/fish/SETUP.md)).
-- fish is not POSIX. Paste bash one-liners as `bash -c '...'`.
 - `nvm` does not work in fish. Use `n` (in the Brewfile) or bun.
 - `ll` is eza's long listing and `gl` a short graph log on both OSes. The short
   `l`, `la` and `lla` abbreviations are Linux only, so the Mac keeps fish's own
   `la` (`ls -lAh`).
-- The SSH agent line applies only when the systemd user socket exists (Linux).
-- `conf.d/30` names ANSI colours only, never hex, so the terminal's own palette
-  still decides the shade. It sets the one fish default that does not survive a
-  transparent background, and leaves everything else to the theme. It runs on
-  macOS only. On Linux, Noctalia's wallpaper palette maps `brblack` to a mid
-  grey that already reads, so the file exits at its OS guard.
+- `conf.d/30` sets the autosuggestion colour on macOS only. Its comments give
+  the reason.
 
 ## Verify
 

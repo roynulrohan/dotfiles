@@ -10,7 +10,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # settings.json holds what both machines share; settings.<os>.json holds values
-# that differ per OS (font name, blur, opacity) and wins over it.
+# that differ per OS (font name, blur, Linux text colour) and wins over it.
 case "$(uname -s)" in
     Darwin) os=macos; userdata="$HOME/Library/Application Support/Orca" ;;
     Linux)  os=linux; userdata="${XDG_CONFIG_HOME:-$HOME/.config}/orca" ;;

@@ -35,7 +35,8 @@ rtk and gh:
 
 After copying:
 
-1. Run `rtk init -g`. rtk installs and maintains its hook itself.
+1. Copy `AGENTS.md` from [`shared/agents`](../agents/SETUP.md) too, then run
+   `rtk init -g`. rtk installs and maintains its hook itself.
 2. Run `claude` and sign in on first launch.
 
 ## Notes
@@ -49,22 +50,19 @@ After copying:
 | `rtk` | the `rtk hook claude` entry in `settings.json` | the hook command fails on every Bash call |
 | `gh` | the statusline's Git PR segment (`git-review`) | the segment stays blank |
 
-`bun` matters most. The rtk hook is a native binary command, so it needs
-neither bash nor jq, but it does need `rtk` on PATH. On a machine without rtk,
-run `rtk init -g --uninstall` or remove the `rtk hook claude` entry from
-`settings.json`.
+On a machine without rtk, run `rtk init -g --uninstall`, or remove the
+`rtk hook claude` entry from `settings.json`.
 
 ### settings.json
 
-- `settings.json` registers `rtk hook claude`, the native hook from
-  [rtk](https://github.com/rtk-ai/rtk), which rewrites shell commands to cut
-  token use. The command resolves from PATH, so there are no hardcoded paths.
-  `rtk init -g` writes the same line. Nothing else about rtk is stored here.
+- `rtk hook claude` is the hook from [rtk](https://github.com/rtk-ai/rtk),
+  which rewrites shell commands to cut token use. `rtk init -g` writes the
+  same entry.
 - **Plugins and skills are not tracked here.** The repo's `settings.json` has
   no `enabledPlugins` or `extraKnownMarketplaces`, so a fresh machine starts
   with none. Claude Code writes those keys into the live file as you enable
   plugins, so `./status.sh` reports `settings.json` as `seeded` (its manifest
-  mode). That is expected.
+  mode).
 - Orca ([`shared/orca`](../orca/SETUP.md)) adds its own hook entries to the
   live file. They are per machine too.
 - `settings.json` sets `"permissions": {"defaultMode": "auto"}`,
@@ -72,8 +70,8 @@ run `rtk init -g --uninstall` or remove the `rtk hook claude` entry from
   that you want these before you copy it to a shared or production machine.
 - **Claude Code rewrites `settings.json`** when you change things with
   `/config`. Those edits land only in the live file. `./status.sh` only says
-  `seeded`, so use the `diff` in Verify to see the drift. Copy the file back
-  into the repo when you want to keep the edits. Leave out the per-machine plugin keys and Orca's hooks when you do.
+  `seeded`, so use the `diff` in Verify to see the drift. To keep the edits,
+  copy them back into the repo. Leave out the plugin keys and Orca's hooks.
 
 ## Verify
 

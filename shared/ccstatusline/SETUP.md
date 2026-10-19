@@ -1,9 +1,12 @@
 # ccstatusline
 
-The Claude Code statusline, on four lines: speed and active skills; model,
-thinking effort and context bar; session usage, weekly usage (all models and
-Fable), the weekly reset timer and session cost; git branch, worktree, changes,
-ahead-behind, conflicts and PR.
+The Claude Code statusline, on four lines:
+
+1. Speed and active skills.
+2. Model, thinking effort and context bar.
+3. Session usage, weekly usage (all models and Fable), the weekly reset timer
+   and session cost.
+4. Git branch, worktree, changes, ahead-behind, conflicts and PR.
 
 ## Files
 
@@ -40,19 +43,18 @@ macOS) and a truecolor terminal. kitty and Ghostty both qualify.
 - ccstatusline records the install in an `installation` block in the live
   `settings.json`. That block is per machine and is not in this repo, so
   `./status.sh` reports the file as `seeded` (its manifest mode).
-- The config is a layout description with no paths inside, so it is fully
-  portable. `colorLevel: 3` means 24-bit colour.
+- The config has no paths inside, so it works on both OSes unchanged.
+  `colorLevel: 3` means 24-bit colour.
 - `powerline.enabled` is `false`, so it needs no powerline separator glyphs
   beyond the Nerd Font.
 
 ### Duplicate hooks
 
-Re-running the ccstatusline installer **appends** its hooks to
-`~/.claude/settings.json` without checking whether they are already there. Run
-it three times and you get three copies on each event, and three ccstatusline
-processes per keystroke. The config in this repo has each hook once. If you
-install ccstatusline with its own installer instead of copying these files,
-check `~/.claude/settings.json` afterwards and remove the duplicates.
+The ccstatusline installer **appends** its hooks to `~/.claude/settings.json`
+each time it runs, and does not check for copies that are already there. Each
+copy starts one more ccstatusline process on every hook event. The config in
+this repo has each hook once. If you use the installer instead of copying these
+files, check `~/.claude/settings.json` afterwards and remove the duplicates.
 
 ## Verify
 

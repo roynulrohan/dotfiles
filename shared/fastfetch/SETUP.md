@@ -46,62 +46,37 @@ After copying:
   the Arch logo wherever a built-in logo shows.
 - Any other arguments bypass the wrapper. fastfetch then loads its own default
   config, or its built-in layout if there is none.
+- Environment variables override what the wrapper measures:
+  `FASTFETCH_COLS` (the measured width of the window),
+  `FASTFETCH_LOGO_ROWS` (the logo height, 18 rows on Linux and 17 on macOS) and
+  `FASTFETCH_CELL_ASPECT` (cell height divided by cell width).
+- The boxes need 35 columns beside the logo. In a narrower window the wrapper
+  shrinks the image, or uses the `_small` text logo, or drops the logo and
+  centres the boxes. When the layout gets wider, change `TEXT_COLS` in the
+  wrapper.
+- A window resized afterwards keeps the old layout until `fastfetch` runs
+  again.
 
 ### Logo
 
-- Images need a terminal that can draw them. The wrapper picks the logo type
-  from the environment: the kitty protocol in kitty, Ghostty and WezTerm;
-  iTerm2's own inline images in iTerm2; the built-in ASCII logo everywhere else
-  (VS Code's terminal, Terminal.app, tmux, a pipe), so the two-column layout
-  survives.
-- **Animated GIFs** work in kitty. fastfetch's own icat mode shows one frame,
-  so the wrapper follows the recipe from fastfetch issue #1423:
-  `kitten icat -n --place ...` piped into `fastfetch --raw -`. Ghostty has no
-  animation support in the protocol, so expect a still frame there.
+- Images show in kitty, Ghostty, WezTerm and iTerm2. Other terminals, tmux and
+  a pipe get the built-in ASCII logo.
+- **Animated GIFs** animate only in kitty. Ghostty shows a still frame.
 - GIFs from video converters often contain 1x1 "no change" frames that make
-  icat fail with a shared-memory error. Rebuild them with
-  `magick in.gif -coalesce -layers RemoveDups -resize 400x500 +repage -fuzz 3% -colors 128 -layers Optimize out.gif`
-  (this also makes the files smaller).
-- Logo width comes from the image's aspect ratio and the terminal's real cell
-  shape (pixel size via TIOCGWINSZ, through `kitten` or python3). kitty
-  stretches the image to fill the requested box exactly, so a guessed cell
-  shape shows. `FASTFETCH_CELL_ASPECT` overrides it; 2.2 is the fallback.
-- The logo is 18 rows tall on Linux and 17 on macOS, whose layout has one row
-  fewer (no `display`). So the image ends on the colour-dots row and the blank
-  line above the prompt survives. `FASTFETCH_LOGO_ROWS` overrides either.
-- **Narrow windows.** The boxes need 35 columns (`TEXT_COLS` in the wrapper,
-  the widest row of `greeting.jsonc`) beside the logo. The wrapper reads the
-  window's width when the greeting starts:
-  - An image shrinks to the room beside the boxes; under 6 rows it is dropped.
-  - A text logo tries the OS's full logo, then its `_small` version (names
-    from `/etc/os-release`, `macos` on the Mac). Text logos get 1 column of
-    padding on the left and 2 on the right, so the full CachyOS logo fits a
-    half-screen window (95 columns at font size 12).
-  - Without a logo, the boxes are centred in the window.
-
-  Change `TEXT_COLS` when the layout gets wider. `FASTFETCH_COLS` overrides the
-  measured width. A window resized afterwards keeps the old layout until
-  `fastfetch` runs again.
+  `kitten icat` fail with a shared-memory error. Rebuild them with
+  `magick in.gif -coalesce -layers RemoveDups -resize 400x500 +repage -fuzz 3% -colors 128 -layers Optimize out.gif`.
 - Square images work best. Pad a portrait to a transparent square with
   `magick in.png -background none -gravity center -extent '%[fx:max(w,h)]x%[fx:max(w,h)]' out.png`.
 
 ### Rows and colours
 
-- Rows whose value is built from several parts (`mem`, `age`, `uptime`,
-  `display`) are shell commands gated with `"condition": {"system": ...}`. The
-  Linux set uses `free` and `hyprctl`, the macOS set `vm_stat` and `sysctl`.
-- `condition` needs fastfetch 2.48.1 or later. Older builds ignore it and run
-  both sets, so macOS shows `free` and `hyprctl` errors. Run
-  `brew upgrade fastfetch` if you see them.
-- Accent colours are plain ANSI blue, magenta and cyan, so the greeting follows
-  whatever the terminal theme defines: Noctalia's wallpaper palette on Linux
+- Some rows are shell commands, with one set for each OS. `condition` selects
+  the set, and it needs fastfetch 2.48.1 or later. Older builds run both sets,
+  so macOS shows `free` and `hyprctl` errors. Run `brew upgrade fastfetch` if
+  you see them.
+- The accent colours are plain ANSI colours, so the greeting follows the
+  terminal theme: Noctalia's wallpaper palette on Linux
   ([`shared/kitty`](../kitty/SETUP.md)), the kitty or Ghostty theme on macOS.
-  Nothing in this repo overrides the palette.
-- `age` is the time since the OS was installed, as `2y 340d` (or `340d` under a
-  year): the root filesystem's birth on Linux, the Data volume's birth on
-  macOS.
-- `wm` on macOS names the running window-manager app (yabai, Rectangle, ...) or
-  `Aqua`, because "Quartz Compositor" is always true and says nothing.
 
 ## Verify
 

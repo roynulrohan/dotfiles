@@ -32,7 +32,6 @@ file" for a missing `include` file and carries on.
 `kitty.conf` listens on `unix:@kitty`, an abstract socket. Abstract sockets
 exist only on Linux. On macOS, `macos.conf` overrides it with `unix:/tmp/kitty`
 through the `globinclude ${KITTY_OS}.conf` line. kitty appends `-PID` to both.
-Linux has no `linux.conf`, and `globinclude` skips a missing file silently.
 Copy `macos.conf` on the Mac, or kitty starts without remote control there.
 
 ### Linux colours
@@ -46,7 +45,7 @@ use the built-in one: it also appends an `include` line to `kitty.conf`, which
 would reach the Mac.
 
 On Linux, `colors.conf` is optional. Noctalia's file loads after it and sets
-every colour. A fresh Linux machine doesn't need one.
+every colour.
 
 ### Transparency
 
@@ -57,12 +56,7 @@ would fade the text and the fastfetch images too.
 
 ### Scrollbar
 
-The scrollbar needs kitty 0.43 or later. It shows only while the mouse is at
-the window's right edge (`scrollbar hovered`). The default, `scrolled`, shows
-it whenever the view isn't at the bottom, which a window resize can leave
-behind. Handle and track use the theme's `selection_background`, at 80% and
-25% (hovered), and are fully round (`scrollbar_radius 0.5`, half the hover
-width).
+The scrollbar settings need kitty 0.43 or later.
 
 ## Verify
 

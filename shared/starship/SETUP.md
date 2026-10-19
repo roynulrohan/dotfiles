@@ -32,14 +32,21 @@ separate init step.
   󰀵  portfolio-v4/apps on  main ⇡3 !1 ?2 +12 -4 ➜            ✘ 127 took 5s  24.10.0 at 08:40:12 PM
 ```
 
-Left: OS icon; `✳` only in shells spawned by Claude Code; `user@host` and the
-local IP only over SSH (or as root); the path with a folder icon, truncated to
-the repo, repo folder bold, lock when read-only; git branch always shown, cut at
-24; dirty markers with counts in p10k's alphabet (`⇡⇣ ~ * + ! ? » ✘`); dim
-`+added -deleted` line counts; hash and tag when detached; background jobs; a
-sudo indicator while the password is cached; `➜` green on success, red on
-failure, `❮` in vi mode. Right: exit code only on failure, duration only past
-3 s, a `zsh`/`bash` tag when not in fish, language and tool badges, battery,
+Left side, in order:
+
+- The OS icon, and `✳` in shells that Claude Code starts.
+- The user name as root or over SSH. `@host` and the local IP show only over
+  SSH.
+- The path, truncated to the repo root. The repo folder is bold, and a lock
+  shows when the folder is read-only.
+- The git branch, cut at 24 characters, or the hash and tag when detached.
+- Git status markers with counts, in powerlevel10k's symbols
+  (`⇡⇣ ~ * + ! ? » ✘`), then dim `+added -deleted` line counts.
+- Background jobs, and a sudo icon while the sudo password is cached.
+- `➜`, green after success and red after failure, or `❮` in vi mode.
+
+Right side: the exit code only after a failure, the duration only past 3 s, a
+`zsh` or `bash` tag outside fish, language and tool badges, the battery and the
 clock. A blank line separates prompts.
 
 ### Colours and icons

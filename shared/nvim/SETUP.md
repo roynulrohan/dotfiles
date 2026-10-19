@@ -37,27 +37,19 @@ downloading and compiling.
 
 ### Terminal background
 
-This matters on a transparent terminal. kitty applies `background_opacity` only
-to cells whose colour equals the current default background. So a colorscheme
-that paints its own background gets no transparency and no share of
-`window_padding_width`. The result is an opaque, square-cornered block inside
-the rounded translucent window, with the padding showing as a seam.
+In a transparent kitty window, a colorscheme that paints its own background
+shows as an opaque block, with the window padding as a seam around it. Two
+parts fix it:
 
-Two parts fix it:
-
-- **Colour:** `bg.nvim` hands the terminal Neovim's background and cursor
-  colours over escape sequences, and restores them on exit. So the padding and
-  the rounded corner take Neovim's colour. These are standard escapes, so this
-  part works in Ghostty too.
+- **Colour:** `bg.nvim` gives the terminal Neovim's background and cursor
+  colours while Neovim runs. This part works in Ghostty too.
 - **Opacity:** an autocmd in
-  [`lua/config/autocmds.lua`](lua/config/autocmds.lua) makes the window opaque
-  while Neovim runs, then gives the terminal its own opacity back. It reads that
-  value from the running kitty over remote control instead of hardcoding it, so
-  each machine gets its own value back. The whole block is skipped when
-  `KITTY_LISTEN_ON` is unset.
+  [`lua/config/autocmds.lua`](lua/config/autocmds.lua) makes the kitty window
+  opaque while Neovim runs, then restores the opacity that kitty reported. It
+  needs kitty's remote control ([`shared/kitty`](../kitty/SETUP.md)), and it
+  does nothing when `KITTY_LISTEN_ON` is unset.
 
-kitty has no setting that colours its padding, and upstream has declined to add
-one, so the opacity part has no off-the-shelf equivalent.
+The comments in `autocmds.lua` explain why kitty needs this.
 
 ### Other files
 

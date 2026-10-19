@@ -15,25 +15,17 @@ instructions.
 
 ## Install
 
-Claude Code itself: see [`shared/claude`](../claude/SETUP.md).
-
-rtk, a CLI proxy that cuts token use:
-
-- CachyOS/Arch: `paru -S rtk-bin` (AUR)
-- macOS: `brew install rtk`
-
-After copying `AGENTS.md` to `~/.claude/CLAUDE.md`, run `rtk init -g`. It adds
-an `@RTK.md` line to the end of that file and wires up the rest.
+Install Claude Code and rtk with [`shared/claude`](../claude/SETUP.md). Copy
+`AGENTS.md` to `~/.claude/CLAUDE.md` before you run its `rtk init -g` step.
+rtk then adds an `@RTK.md` line to the end of that file.
 
 ## Notes
 
 - Because rtk adds that line, `./status.sh` reports `~/.claude/CLAUDE.md` as
-  `seeded` (its manifest mode). That difference is expected.
+  `seeded` (its manifest mode).
 - Optional skills, not tracked here:
   [mattpocock/skills](https://github.com/mattpocock/skills), and the
   [skills CLI](https://skills.sh), which also keeps installed skills updated.
-  Once installed, they manage themselves, and their files stay out of this
-  repo.
 - `~/.codex/config.toml` is not in the repo, because Codex writes most of it
   as state. Set these keys by hand: `model`,
   `model_reasoning_effort = "high"`, `personality = "pragmatic"`.

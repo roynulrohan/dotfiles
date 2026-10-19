@@ -17,8 +17,7 @@ if command -q neo-matrix
     alias cmatrix neo-matrix
 end
 
-# Short ls forms, from caelestia's config.fish. Linux only: on macOS `la` stays
-# fish's own function (ls -lAh).
+# Short ls forms. Linux only: on macOS `la` stays fish's own function (ls -lAh).
 if test (uname) != Darwin
     abbr -a l   ls
     abbr -a la  'ls -a'

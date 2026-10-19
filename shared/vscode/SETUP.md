@@ -1,7 +1,7 @@
 # VS Code
 
 VS Code user settings and keybindings, set up for TypeScript full-stack work.
-Cursor is a separate install with its own config folder; see
+Cursor is a separate install with its own config folder. See
 [`shared/cursor`](../cursor/SETUP.md).
 
 ## Files
@@ -40,8 +40,6 @@ cloud copy on first sign-in and would overwrite them.
 
 ### Extensions
 
-Fifteen in total.
-
 | Extension | Why |
 |---|---|
 | `esbenp.prettier-vscode`, `dbaeumer.vscode-eslint`, `oxc.oxc-vscode`, `biomejs.biome` | format and lint (projects use Prettier or Biome) |
@@ -70,12 +68,9 @@ Keybindings sync per platform.
 
 - Theme One Dark Pro Night Flat with `oneDarkPro.vivid`, JetBrains Mono at
   weight 500.
-- Discord presence (`vscord`) shows the project and file only: no line numbers,
-  error counts or "View Repository" button, and it disconnects after 5 minutes
-  idle. `vscord.app.privacyMode.enable` hides the project and file too, and
-  `vscord.ignore.workspaces` hides chosen projects. On Linux with Equibop, it
-  reaches Discord through Equibop's built-in arRPC bridge (`arRPC: true` in
-  `~/.config/equibop/settings.json`, socket `$XDG_RUNTIME_DIR/discord-ipc-0`).
+- Discord presence (`vscord`) shows the project and file only. On Linux, it
+  reaches Discord through Equibop's built-in arRPC bridge, so Equibop needs
+  `arRPC: true` in `~/.config/equibop/settings.json`.
 - The `cmd+` entries in `keybindings.json` remove macOS defaults. Linux has no
   such defaults (there `cmd` means Super), so they do nothing on Linux.
 - Ctrl+S formats with Prettier, applies ESLint fixes and removes unused imports

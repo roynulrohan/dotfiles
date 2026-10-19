@@ -21,7 +21,7 @@ does not track it.
 `./status.sh` skips these rows until Cursor is installed: on macOS it looks for
 `/Applications/Cursor.app`, on Linux for a `cursor` command on PATH.
 
-Extensions are not captured for Cursor; reinstall them by hand. The
+Extensions are not captured for Cursor. Reinstall them by hand. The
 Brewfile's `vscode` lines are VS Code's list. Cursor uses a different
 marketplace, so `cursor --install-extension` may not resolve the same
 identifiers.
@@ -30,7 +30,7 @@ identifiers.
 
 - Cursor is a VS Code fork, so the settings schema is the same and most of
   [`shared/vscode/settings.json`](../vscode/settings.json) would apply here
-  too. The two files differ, so keep them separate; don't merge them into one.
+  too. The two files differ, so keep them separate. Don't merge them into one.
 - `keybindings.json` is written for the Mac. Its two `cmd+` binds carry `isMac`
   in their `when` clause, because on Linux `cmd` means Super, which Hyprland
   takes first. The `-` entries remove macOS defaults and do nothing on Linux.

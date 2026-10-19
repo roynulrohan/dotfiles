@@ -52,20 +52,15 @@ After installing, quit Orca and apply the settings:
 
 ### How the script stores settings
 
-Where Orca keeps the settings depends on its version:
+Orca 1.4.222 and later keep the profile in `profile-state.db`, a SQLite
+database. `orca-data.json` is only an export that Orca checks by hash. The
+script handles this format and the older one, where everything is in
+`orca-data.json`.
 
-- **Orca 1.4.222 and later:** `profile-state.db`, a SQLite database with one
-  row per top-level section. `orca-data.json` is only an export that Orca
-  checks by hash (the `legacy_json_acceptance` marker in the database). Don't
-  edit `orca-data.json` by hand: Orca then asks "This profile has two saved
-  copies that don't match" on every launch. "Use JSON" does not fix that.
-  Restoring the newest `orca-data.json.sqlite-export.N.json` (with `cp -p`)
-  does. The script writes the `settings` row the way Orca saves one: compact
-  JSON, its SHA-256 as `content_hash`, and the next profile `revision` on the
-  row and in the meta table. It leaves `orca-data.json` alone, which Orca reads
-  as an older accepted export.
-- **Older Orca, such as 1.4.206:** everything is in `orca-data.json`, and the
-  script edits its `settings` object.
+Don't edit `orca-data.json` by hand. Orca then asks "This profile has two saved
+copies that don't match" on every launch, and "Use JSON" does not fix that. To
+recover, restore the newest `orca-data.json.sqlite-export.N.json` over
+`orca-data.json` with `cp -p`.
 
 The profile also holds repos, worktrees, sessions and the managed Claude and
 Codex accounts, so it is never copied whole. The script deep-merges only the
@@ -73,10 +68,7 @@ tracked keys, and keeps nested keys that a newer Orca adds. `export` writes
 each key back to the file it came from.
 
 `apply` refuses to run while Orca is open, because Orca writes its in-memory
-state back, which would undo the merge. On Linux the AppImage's processes are
-named `orca-ide`. The script ignores Orca's background daemon
-(`daemon-entry.js`), which keeps terminal sessions alive after the window
-closes: it doesn't open the profile data. `apply` leaves a backup at
+state back and undoes the merge. `apply` leaves a backup at
 `profile-state.db.dotfiles-bak` or `orca-data.json.dotfiles-bak`.
 
 ### Settings
@@ -84,13 +76,10 @@ closes: it doesn't open the profile data. `apply` leaves a backup at
 - The terminal font is JetBrainsMono Nerd Font Mono (`NFM`). Its family name
   differs per OS, so it lives in the per-OS files: `JetBrainsMono NFM Regular`
   on macOS, `JetBrainsMono NFM` on Linux (`fc-list : family | grep NFM`).
-- **Window blur:** from Orca 1.4.222, `windowBackgroundBlur` only does
-  anything on Windows (acrylic). Orca removed the macOS vibrancy
-  (`createMainWindow.ts`, Orca issue #8482), Linux never had it, and Orca never
-  makes its window transparent. So it can't show the desktop behind it on
-  either OS. Older Orca, such as 1.4.206, still shows the glass look on macOS.
-  `terminalBackgroundOpacity` 0 only lets Orca's own window background show
-  through the terminal.
+- **Window blur:** from Orca 1.4.222, `windowBackgroundBlur` has an effect
+  only on Windows. Orca never makes its window transparent, so it can't show
+  the desktop behind it. `terminalBackgroundOpacity` 0 only lets Orca's own
+  window background show through the terminal.
 - **Text colour (Linux):** Hyprland's window transparency (`windowOpacity` in
   [`linux/hypr/hypr-vars.lua`](../../linux/hypr/hypr-vars.lua)) applies to the
   text too, so One Dark's grey text (`abb2bf`) looks dim. `settings.linux.json`
