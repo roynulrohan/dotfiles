@@ -2,7 +2,9 @@
 
 My dotfiles: a CachyOS gaming PC running Hyprland with the Noctalia shell, and
 a MacBook Pro running AeroSpace and SketchyBar. This repo is how I set up and
-look after both. If you want to try my setup or take parts of it, start with
+look after both. The two machines are alike where that makes sense: the same
+shell, prompt, terminal, editors and font, and Mac keys that follow the
+Hyprland ones. If you want to try my setup or take parts of it, start with
 [`INSTALL.md`](INSTALL.md).
 
 <!-- Screenshots go here. -->
@@ -23,24 +25,6 @@ look after both. If you want to try my setup or take parts of it, start with
 
 Hardware: [gaming PC](personal/machines/gaming-pc.md),
 [MacBook Pro](personal/machines/macbook-pro.md), [desk](personal/machines/desk.md).
-
-## Highlights
-
-On the gaming PC:
-
-- **Colours follow the wallpaper.** Noctalia builds a palette from the main
-  wallpaper and writes it to kitty, Hyprland's borders, GTK and Qt apps,
-  Thunar, btop, Spotify, Discord and the login screen.
-- **Live wallpapers** from Wallpaper Engine on all three monitors. The main one
-  also plays behind the login screen.
-- **Custom login screen**: a welcome page, then a login card that matches the
-  lock screen.
-- **Workspaces per monitor**, 1 to 10 on each, shown as animated pills on the
-  bar.
-- **Window mode** (Super+A): arrows move the window, Shift resizes it, Alt makes
-  the step finer. In mpv's image viewer, arrows pan and Alt makes the step
-  finer too.
-- **Headset EQ** in PipeWire for the Logitech G432.
 
 ## How I work on it
 
