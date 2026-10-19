@@ -59,7 +59,7 @@ These apply to every edit, by any agent.
    | Tag | Machine | Hostname |
    |---|---|---|
    | `cachy-os` | [gaming PC](personal/machines/gaming-pc.md) | `cachyos` |
-   | `macbook-pro` | [MacBook Pro](personal/machines/macbook-pro.md) | TODO: ask the owner |
+   | `macbook-pro` | [MacBook Pro](personal/machines/macbook-pro.md) | `scutil --get LocalHostName` on the Mac |
 
    A new machine picks a short kebab-case tag, adds a row here and a file in
    `personal/machines/` in its first commit. The oldest commits have no tag.

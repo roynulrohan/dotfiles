@@ -106,6 +106,5 @@ The role matters, not the app or the exact key.
 - **No EasyEffects.** The headset EQ runs in PipeWire.
 - **Nothing that writes to the mice.** G HUB on Windows owns their onboard
   profiles. No battery-warning scripts either.
-- **No Omarchy.**
 - **No zsh or powerlevel10k.**
 - **No hibernation.** The PC uses zram only, with no swap file on disk.

@@ -9,7 +9,7 @@ five LazyVim extras, and an autocmd that makes kitty opaque while Neovim runs
 
 | Repo | Destination |
 |---|---|
-| everything in this folder except `SETUP.md` and `LICENSE` | `~/.config/nvim/` |
+| everything in this folder except `SETUP.md` | `~/.config/nvim/` |
 
 Same path on both OSes. `manifest.tsv` copies the folder, and `./status.sh`
 skips `SETUP.md` inside it.
@@ -62,9 +62,7 @@ one, so the opacity part has no off-the-shelf equivalent.
 ### Other files
 
 - The config is portable: no paths and no OS checks.
-- `.neoconf.json`, `stylua.toml` and
-  [`lua/plugins/example.lua`](lua/plugins/example.lua) come from the LazyVim
-  starter. `example.lua` returns an empty spec, so it loads nothing.
+- `.neoconf.json` and `stylua.toml` come from the LazyVim starter.
 
 ## Verify
 

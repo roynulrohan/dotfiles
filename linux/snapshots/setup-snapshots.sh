@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Snapper setup: root timeline on (ArchWiki limits), new home config (cypheroxide
-# limits + ArchWiki user access), timeline timer, updatedb prune. Run with sudo.
+# Snapper setup: root timeline on (ArchWiki limits), new home config (12 hourly,
+# 14 daily, 2 weekly, 1 monthly; user access as in the ArchWiki), timeline timer, updatedb prune. Run with sudo.
 set -euo pipefail
 
 echo "== root: enable timeline (limits already 5 hourly / 7 daily)"

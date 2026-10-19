@@ -67,8 +67,9 @@ run `rtk init -g --uninstall` or remove the `rtk hook claude` entry from
   mode). That is expected.
 - Orca ([`shared/orca`](../orca/SETUP.md)) adds its own hook entries to the
   live file. They are per machine too.
-- `settings.json` sets `"permissions": {"defaultMode": "auto"}`. Confirm that
-  you want this before you copy it to a shared or production machine.
+- `settings.json` sets `"permissions": {"defaultMode": "auto"}`,
+  `skipDangerousModePermissionPrompt` and `remoteControlAtStartup`. Confirm
+  that you want these before you copy it to a shared or production machine.
 - **Claude Code rewrites `settings.json`** when you change things with
   `/config`. Those edits land only in the live file. `./status.sh` only says
   `seeded`, so use the `diff` in Verify to see the drift. Copy the file back

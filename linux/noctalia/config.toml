@@ -256,8 +256,7 @@ input_path = "$XDG_CONFIG_HOME/noctalia/templates/hypr-scheme.lua"
 output_path = "$XDG_CONFIG_HOME/hypr/scheme/current.lua"
 post_hook = "hyprctl reload"
 
-# App colour files from Noctalia's palette. caelestia used to write them; since
-# 2026-10-09 they carry Noctalia's name and each app selects "noctalia".
+# App colour files from Noctalia's palette. Each app selects "noctalia".
 # One owner per file: the built-in gtk/qt templates are off (builtin_ids = [])
 # because they also edit gtk.css, gsettings and kdeglobals.
 

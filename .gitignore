@@ -2,6 +2,8 @@
 .DS_Store
 *.bak
 *.orig
+*.swp
+__pycache__/
 
 # Logo images stay on each machine (see shared/fastfetch/SETUP.md)
 shared/fastfetch/logo/*

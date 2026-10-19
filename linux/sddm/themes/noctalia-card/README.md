@@ -1,6 +1,6 @@
 # noctalia-card
 
-Our SDDM login theme, installed as `/usr/share/sddm/themes/noctalia-card`. It
+My SDDM login theme, installed as `/usr/share/sddm/themes/noctalia-card`. It
 is a fork of the "locklike" theme from
 [Caelestia SDDM](https://github.com/ItsABigIgloo/caelestia-sddm) by AkhiLeith
 (ItsABigIgloo), taken at commit `dd69abb` (2026-10-01), the version the AUR
@@ -24,7 +24,7 @@ own `LICENSE`.
   `ROND` 100), with the date and time and a "press any key or click" hint, on
   one frosted card tinted with `surface`. It greets the selected user. A click
   opens page 2 too.
-- Page 2 (`components/LoginScreen.qml`) is rebuilt after our Noctalia lock screen: a 1500x840
+- Page 2 (`components/LoginScreen.qml`) is rebuilt after my Noctalia lock screen: a 1500x840
   card laid out at 1920x1080 and scaled to the screen.
   - Left: `WeatherCard.qml` (Open-Meteo, current weather and 3 days, for
     `location.json`; retries every 3 s for its first 90 s, then every 30 s, and says it is waiting until a fetch works) and
@@ -40,7 +40,7 @@ own `LICENSE`.
     keyboard layout chips), and `PowerRow.qml` (suspend, reboot, shut down;
     dimmed when SDDM says it can't) directly below it.
 - One window per screen (SDDM's way): `Main.qml` loads the login on X's
-  primary screen and `SideScreen.qml` on the others: our lock screen's side
+  primary screen and `SideScreen.qml` on the others: my lock screen's side
   monitors, 1:1. `ClockGroup.qml` uses the lock's boxes from
   `linux/noctalia/lock` and its font, "GSF Lock Clock"; `LockText.qml` sizes
   and places text the way Noctalia 5.2.1 does. The blurred still uses the

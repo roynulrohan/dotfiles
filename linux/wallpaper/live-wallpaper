@@ -21,7 +21,7 @@ DP-2       2511663284    Rain 4K
 PROPERTIES='
 fontcolorff4848bigbpromptbox=0
 '
-# fontcolorff4848bigbpromptbox: Elaina's notice box ("prompt box"). Its 5-second
+# fontcolorff4848bigbpromptbox: Elaina's (3314492008, a spare) notice box ("prompt box"). Its 5-second
 # auto-hide is a Wallpaper Engine script that doesn't run here.
 
 copies="${XDG_DATA_HOME:-$HOME/.local/share}/live-wallpapers"

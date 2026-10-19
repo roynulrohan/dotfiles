@@ -90,8 +90,21 @@ Hyprland with the Noctalia shell. Do these in order, then log out and back in.
 5. Live wallpapers: [`linux/wallpaper`](linux/wallpaper/SETUP.md). They need
    Wallpaper Engine from Steam.
 
-Bring your own wallpapers, lock-screen GIFs and profile picture; each
-`SETUP.md` says where they go.
+Bring your own wallpapers, lock-screen GIFs, lock-screen avatar and profile
+picture; each `SETUP.md` says where they go.
+
+The config names my three monitors. Change these for yours (`hyprctl monitors`
+lists the output names):
+
+- the monitor layout in [`linux/hyprmod/hyprland-gui.lua`](linux/hyprmod/hyprland-gui.lua)
+- `monitor_priority` in [`linux/hypr/hypr-user.lua`](linux/hypr/hypr-user.lua),
+  for the workspaces on each monitor
+- `M` and the side monitors in
+  [`linux/noctalia/lock/scripts/gen.py`](linux/noctalia/lock/scripts/gen.py),
+  for the lock screen
+- the wallpaper list in [`linux/wallpaper/live-wallpaper`](linux/wallpaper/live-wallpaper)
+- `MAIN_MODEL` and `ORDER` (EDID model names) in
+  [`linux/sddm/Xsetup`](linux/sddm/Xsetup), for the login screen
 
 ## Mac desktop
 
