@@ -8,15 +8,54 @@ and Windows 11.
 | Part | Model |
 |---|---|
 | CPU | AMD Ryzen 7 5800X |
-| GPU | NVIDIA GeForce RTX 5070, 12 GB |
-| RAM | 32 GB DDR4 |
+| GPU | Gigabyte GeForce RTX 5070 Aero OC, 12 GB |
+| RAM | 32 GB DDR4, 2× Corsair Vengeance RGB Pro SL |
 | Motherboard | MSI MPG B550 Gaming Plus |
 | CPU cooler | Thermalright Peerless Assassin |
 | Case | NZXT H6 Flow |
 | Fan hub | Corsair iCUE Commander Core XT, with a third-party temperature probe |
-| Case fans | rear: Corsair iCUE AR120 Digital RGB (59 CFM); bottom: 2× Corsair RS140 ARGB (95.5 CFM); front: 3× Thermalright TL-M12QRW-S, reverse (1500 RPM, 47.6 CFM); top: 3× Thermalright TL-M12QW-S (2000 RPM, 68.9 CFM) |
-| RGB | 2× Corsair Vengeance RGB Pro SL, Gigabyte RTX 5070 Aero OC, AULA F75 keyboard; a Thermalright ARGB hub |
 | Storage | Crucial P1 500 GB NVMe (CachyOS), Samsung 970 EVO Plus 1 TB NVMe (Windows 11), Seagate 2 TB HDD (shared by both) |
+
+### Fans
+
+[`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md) has the curves and
+the reason for the positive pressure.
+
+| Place | Fans | Rated | Connected to | Curve |
+|---|---|---|---|---|
+| CPU cooler | the cooler's 2 fans | | motherboard CPU header | BIOS (see [BIOS](#bios)) |
+| Rear exhaust, behind the CPU cooler | Corsair iCUE AR120 Digital RGB | 59 CFM | hub channel 0 (Fan 1) | `CpuCurve` |
+| Bottom intakes, blowing onto the GPU | 2× Corsair RS140 ARGB | 95.5 CFM | hub channels 1, 2 (Fans 2, 3) | `IntakeCurve` |
+| Front intakes | 3× Thermalright TL-M12QRW-S (reverse), daisy-chained | 1500 RPM, 47.6 CFM | hub channel 3 (Fan 4) | `SystemCurve` |
+| Top exhausts | 3× Thermalright TL-M12QW-S, daisy-chained | 2000 RPM, 68.9 CFM | hub channel 4 (Fan 5) | `ExhaustCurve` |
+
+A daisy-chained set gives one RPM reading. The temperature probe sits in the
+CPU cooler's exhaust. When OpenLinkHub is not running, the hub uses the curve
+that iCUE stored on it, which reads the probe: 30% up to 32 °C, 40% at 36 °C,
+60% at 40 °C and 100% at 45 °C.
+
+### Lighting
+
+The rear AR120 gets its colour from OpenLinkHub. The other fans get ARGB from
+the motherboard's two JRAINBOW headers: one feeds a Thermalright ARGB hub, the
+other the bottom RS140s. They are white, as stored on the board's lighting
+chip. OpenRGB can't control that chip yet
+([`linux/openrgb`](../../linux/openrgb/SETUP.md)).
+
+## BIOS
+
+A CMOS clear or a BIOS update resets these settings. Set them again after
+either.
+
+| Setting | Value |
+|---|---|
+| A-XMP | On. The RAM runs at 3600 MT/s. |
+| PBO | Auto, with no Curve Optimizer and no boost override. Tuning them gave no clear gain. |
+| CPU fan curve | 50% at 40 °C, 60% at 65 °C, 75% at 75 °C, 100% at 80 °C |
+| Boot order | "UEFI OS", then Windows |
+
+"UEFI OS" is Limine, started from the fallback path `\EFI\BOOT\BOOTX64.EFI`
+on the Crucial NVMe. The firmware has no Limine entry of its own.
 
 ## Packages
 
@@ -26,7 +65,7 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
 2. Shell and git: [`shared/fish`](../../shared/fish/SETUP.md),
    [`linux/fish`](../../linux/fish/SETUP.md), [`shared/git`](../../shared/git/SETUP.md).
 3. Terminal: [`shared/kitty`](../../shared/kitty/SETUP.md).
-4. Prompt and greeting: [`shared/starship`](../../shared/starship/SETUP.md),
+4. Prompt and the fastfetch greeting: [`shared/starship`](../../shared/starship/SETUP.md),
    [`shared/fastfetch`](../../shared/fastfetch/SETUP.md).
 5. Coding agents: [`shared/agents`](../../shared/agents/SETUP.md),
    [`shared/claude`](../../shared/claude/SETUP.md),
@@ -47,52 +86,16 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
 
 Not on this machine: Cursor and Ghostty.
 
-## My extras
+## Outside the repo
 
-- [ ] Sign in: `gh auth login` with a new SSH key, register the key for commit
-      signing, then Claude Code and Orca.
-- [ ] Restore my media from backup: wallpaper stills to `~/Pictures/Wallpapers`,
-      the main wallpaper's still and `login.mp4` to `~/Pictures/Wallpapers/live`,
-      the live-wallpaper picks to `~/.config/live-wallpaper/picks`,
-      lock-screen GIFs to `~/Pictures/lock-gifs`, the lock-screen avatar to
-      `~/Pictures/lock-avatar.png`, `~/.face`, and the greeting's
-      logo images to `~/.config/fastfetch/logo/`.
-- [ ] Subscribe to my Workshop wallpapers in Wallpaper Engine, then make the
-      local copies ([`linux/wallpaper`](../../linux/wallpaper/SETUP.md)).
-- [ ] Answer the SSH key's passphrase dialog once and tick "Remember password".
+- [ ] Sign in: `gh auth login` with a new SSH key, and register the key for
+      commit signing. Then sign in to Claude Code and Orca.
 - [ ] Set the power profile to performance: `powerprofilesctl set performance`.
-      `balanced` runs about 6 °C cooler at light desktop load at the same
-      full-load speed; I prefer performance anyway.
-- [ ] Zen and Firefox: add `user.js` with the hardware video decoding setting
-      to each profile folder ([`linux/uwsm`](../../linux/uwsm/SETUP.md), "NVIDIA video
-      decoding").
-- [ ] BIOS: A-XMP on (RAM at 3600), PBO Curve Optimizer all cores −20, CPU fan
-      curve 30% to 40 °C, 45% at 60, 70% at 70, 100% at 80, boot order Limine
-      first. A CMOS clear or a BIOS update resets all of it.
+      I prefer it to `balanced`.
+- [ ] Set the BIOS settings in [BIOS](#bios).
 
 ## Things to know
 
-- Windows 11 lives on the Samsung NVMe. Never write to it.
+- Windows 11 is on the Samsung NVMe. Never write to it.
 - The 2 TB HDD is shared with Windows and mounted at `/mnt/storage`. Steam's
-  game library lives there.
-- Fans on the Commander Core XT, with their curves from
-  [`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md):
-
-  | Channel | Fans | Curve |
-  |---|---|---|
-  | 0 (Fan 1) | rear exhaust (AR120), behind the CPU cooler | `CpuCurve` |
-  | 1, 2 (Fans 2, 3) | bottom intakes (RS140), blowing onto the GPU | `IntakeCurve` |
-  | 3 (Fan 4) | front intakes (3× TL-M12QRW-S), daisy-chained; one RPM reading | `SystemCurve` |
-  | 4 (Fan 5) | top exhausts (3× TL-M12QW-S), daisy-chained; one RPM reading | `ExhaustCurve` |
-
-  The case runs at positive pressure: about 175 CFM in against 105 out at
-  desktop load, and 330 against 195 under full CPU load (estimates from rated
-  airflow). The temperature probe sits in the CPU cooler's exhaust. The hub's
-  stored curve from iCUE uses it when OpenLinkHub isn't running: 30% to 32 °C,
-  40% at 36, 60% at 40, 100% at 45. Only the two CPU cooler fans are on a
-  motherboard header, under the BIOS fan curve.
-- RGB: the rear AR120 gets its colour from OpenLinkHub. All other fans take
-  ARGB from the motherboard: the Thermalright hub on one JRAINBOW header, the
-  bottom RS140s on the other. They are white, stored on the board's lighting
-  chip. OpenRGB can't control them: the chip runs firmware 0.2 and OpenRGB
-  needs 0.6 for this board ([`linux/openrgb`](../../linux/openrgb/SETUP.md)).
+  game library is on it.

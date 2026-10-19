@@ -32,8 +32,7 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
    [`shared/cursor`](../../shared/cursor/SETUP.md),
    [`shared/orca`](../../shared/orca/SETUP.md).
 
-## My extras
+## Outside the repo
 
-- [ ] Sign in: `gh auth login` with a new SSH key, register the key for commit
-      signing, then Claude Code and Orca.
-- [ ] Restore the greeting's logo images to `~/.config/fastfetch/logo/`.
+- [ ] Sign in: `gh auth login` with a new SSH key, and register the key for
+      commit signing. Then sign in to Claude Code and Orca.

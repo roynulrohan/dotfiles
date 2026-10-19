@@ -14,7 +14,7 @@ symlinked. Read "Rules" before you change anything.
 | [`status.sh`](status.sh) | Compares the live files with the repo. Read-only. |
 | [`check.sh`](check.sh) | Syntax, manifest, coverage, links and secrets. Run it before every commit. |
 | [`personal/preferences.md`](personal/preferences.md) | What the owner wants, independent of tools. Read it before you change how something works or replace a tool. |
-| [`personal/machines/`](personal/machines/gaming-pc.md) | One file per machine: hardware, the packages it takes in order, its own extras. `desk.md` is the shared desk. |
+| [`personal/machines/`](personal/machines/gaming-pc.md) | One file per machine: hardware, the packages it takes in order, and what the repo can't hold. `desk.md` is the shared desk. |
 | [`INSTALL.md`](INSTALL.md) | The guide for other people who want this setup. |
 | [`README.md`](README.md) | The owner's showcase. |
 | [`CREDITS.md`](CREDITS.md) | Inspirations, and work included from others. |
@@ -29,7 +29,7 @@ symlinked. Read "Rules" before you change anything.
 3. Never overwrite silently. If a destination exists and differs, show the
    diff or back the file up before you copy over it.
 4. When you're done, report what you copied, what you skipped and why, and what
-   you backed up. Give the owner the open items of "My extras" as a checklist.
+   you backed up. Give the owner the open items of "Outside the repo" as a checklist.
    If a `SETUP.md` was wrong, fix it.
 
 ## Rules
