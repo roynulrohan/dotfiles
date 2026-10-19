@@ -22,9 +22,9 @@ Install). This file also uses:
 brew install fzf fd bat eza
 ```
 
-Every other PATH entry is guarded, so a missing tool is skipped quietly: Rust,
-the python.org Python 3.12, Homebrew's openjdk, the Android SDK, nvm's default
-node, and miniconda.
+Every other PATH entry is guarded, so a missing tool is skipped quietly. Examples
+are Rust, the python.org Python 3.12, Homebrew's openjdk, the Android SDK,
+nvm's default node and miniconda.
 
 ## Notes
 

@@ -1,6 +1,6 @@
 # Mac desktop: AeroSpace, SketchyBar, Karabiner, LinearMouse
 
-Tiling, the bar and the Super key on the Mac. **macOS only; skip this package on
+Tiling, the bar and the Super key on the Mac. **macOS only. Skip this package on
 Linux.** AeroSpace tiles windows, SketchyBar draws the bar, Karabiner makes the
 Super key, and LinearMouse sets pointer and scroll speed per device. The binds
 are a smaller, Mac-only subset of the Hyprland binds in
@@ -59,7 +59,7 @@ Karabiner turns into Ctrl+Option, and every AeroSpace bind is `ctrl-alt-...`.
 
 | Keyboard | Super, held | Super, tapped alone | Also |
 |---|---|---|---|
-| AULA F75 on its 2.4G dongle (vendor 13652, product 64009) | Win key | Raycast (Cmd+Space) | its Alt key becomes Command |
+| AULA F75 on its 2.4G dongle | Win key | Raycast (Cmd+Space) | its Alt key becomes Command |
 | MacBook built-in | left Option | Raycast (Cmd+Space) | right Option stays Option |
 
 That puts Super second from the spacebar on every keyboard, where Super sits on
@@ -74,10 +74,10 @@ To add another keyboard, get its vendor and product ids from the Devices tab of
 Karabiner-EventViewer. Add them to the AULA rule's `identifiers` for a
 PC-layout board, or to the built-in rule for a Mac-layout one.
 
-Super already contains Ctrl, so the Linux chord Ctrl+Super+Shift+arrows lands
-on the same bind as Super+Shift+arrows. That chord moves windows here, as
-Ctrl+Super+Shift+arrows does on Linux, so resizing is on Super+Minus and
-Super+Equal (Linux resizes with Super+Shift+arrows).
+Super already contains Ctrl. So Ctrl+Super+Shift+arrows and
+Super+Shift+arrows are the same chord here. That chord moves the window, as
+Ctrl+Super+Shift+arrows does on Linux. Resizing is on Super+Minus and
+Super+Equal. Linux resizes with Super+Shift+arrows.
 
 ### Binds
 
@@ -108,26 +108,25 @@ Cmd+Option+H are disabled, because hidden apps' windows drop out of tiling
   the usable area already starts 32 px down. Change the bar and the gap
   together.
 - **New windows open in a row, not a spiral.** AeroSpace inserts i3-style, next
-  to the focused window; upstream has no Hyprland-style dwindle layout. Super+J
-  flips a row into a column.
+  to the focused window. It has no Hyprland-style dwindle layout. Super+J flips
+  a row into a column.
 - **The bar follows AeroSpace, not macOS Spaces.** `exec-on-workspace-change`
   and `on-focus-changed` fire `aerospace_workspace_change` and
   `aerospace_focus_change`. `plugins/spaces.sh` repaints every workspace in one
   call, 80 ms after the last event, and hides workspaces with no windows unless
   focused. App icons come from `aerospace list-windows`, because SketchyBar's
   own window tracking misses kitty and Ghostty on macOS 26.
-- **Super+T needs kitty's remote control** (`allow_remote_control` and
-  `listen_on` in [`shared/kitty/kitty.conf`](../../shared/kitty/kitty.conf),
-  the socket path in [`mac/kitty`](../kitty/SETUP.md)). Without a running kitty
-  it launches one.
+- **Super+T needs kitty's remote control** (`allow_remote_control` in
+  [`shared/kitty/kitty.conf`](../../shared/kitty/kitty.conf), the socket path in
+  [`mac/kitty`](../kitty/SETUP.md)). Without a running kitty, it launches one.
 - **The macOS menu bar is hidden.** Its wifi, volume and battery items still
   show at the top edge. macOS's volume overlay stays on, because the bar has no
   volume item.
 - **Keep "Displays have separate Spaces" on.** SketchyBar needs it.
 - **Karabiner rewrites `karabiner.json`** when you change anything in its
   window, so `./status.sh` may report drift. Copy it back.
-- `plugins/icon_map.sh` is generated from `sketchybar-app-font`. Regenerate it
-  from upstream if the font version changes; don't hand-edit it.
+- `plugins/icon_map.sh` is generated from `sketchybar-app-font`. Don't edit it
+  by hand. Regenerate it from upstream when the font version changes.
 
 ## Verify
 

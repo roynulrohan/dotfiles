@@ -1,17 +1,16 @@
 #!/bin/bash
-# plugins/brew.sh — Counts outdated Homebrew packages and sets the item label
-# + icon color based on the count. The ✓ glyph (􀆅) replaces the number when
-# everything's up to date.
+# plugins/brew.sh: counts the outdated Homebrew packages and sets the label and
+# the icon colour from the count. At 0, a check mark (􀆅) replaces the number.
 
 source "$HOME/.config/sketchybar/colors.sh"
 
-# sketchybar runs plugins with a minimal PATH — fall back to the canonical
-# Homebrew binary location on Apple Silicon.
+# SketchyBar runs plugins with a minimal PATH. Fall back to Homebrew's path on
+# Apple Silicon.
 BREW_BIN="$(command -v brew || echo /opt/homebrew/bin/brew)"
 
-# HOMEBREW_NO_AUTO_UPDATE=1 avoids the auto-update path that can trip a
-# Hardware::CPU.cores bug in certain Homebrew versions when run from a
-# non-terminal subprocess. --quiet suppresses harmless progress chatter.
+# HOMEBREW_NO_AUTO_UPDATE=1: an auto-update from a background process can fail
+# (a Hardware::CPU.cores error in some Homebrew versions). --quiet prints only
+# the package names.
 COUNT=$(HOMEBREW_NO_AUTO_UPDATE=1 "$BREW_BIN" outdated --quiet 2>/dev/null | wc -l | tr -d ' ')
 
 COLOR=$RED

@@ -20,7 +20,7 @@ settings (Install).
 
 ## Install
 
-On CachyOS/Arch:
+On CachyOS or Arch:
 
 ```bash
 paru -S equibop-bin                           # AUR
@@ -44,8 +44,8 @@ After copying:
 
 ## Notes
 
-- Equibop has no setting for Discord's own icons (upstream Vesktop issues #448
-  and #801 were declined), so the User Assets step is manual.
+- Equibop has no setting for Discord's own icons, so the User Assets step is
+  manual.
 - **After an Equibop update** that changes its launcher entry, refresh the
   copy:
   `sed 's/^Icon=equibop$/Icon=discord/' /usr/share/applications/equibop.desktop > ~/.local/share/applications/equibop.desktop`.

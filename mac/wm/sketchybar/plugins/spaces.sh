@@ -1,5 +1,5 @@
 #!/bin/bash
-# plugins/spaces.sh — One pass per event: read AeroSpace twice, then set every
+# plugins/spaces.sh: one pass per event: read AeroSpace twice, then set every
 # workspace item in ONE sketchybar call, so the pill re-lays out once instead of
 # once per item (the source of the flicker when moving windows between
 # workspaces). Written for the system bash 3.2, which has no associative arrays.

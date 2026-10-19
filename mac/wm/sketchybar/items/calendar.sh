@@ -1,7 +1,6 @@
 #!/bin/bash
-# items/calendar.sh — Day + date in icon, time in label. Updates every 30s.
-# (No zen-mode click — his dotfiles had that; we drop it since it referenced
-# items we aren't using. Add back later once those items exist.)
+# items/calendar.sh: the day and date in the icon, the time in the label.
+# Updates every 30 s. A click opens Calendar.
 
 calendar=(
   icon=cal

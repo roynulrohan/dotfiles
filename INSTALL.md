@@ -5,7 +5,7 @@ only the parts you like. Nothing installs itself: you copy files into place,
 package by package. Read what you copy, and back up any file it replaces. Use
 it at your own risk.
 
-## Common shapes
+## Ways to install
 
 - **The whole Linux desktop:** [Base: Linux](#base-linux),
   [Shell and terminal](#shell-and-terminal), [Linux desktop](#linux-desktop),
@@ -47,7 +47,7 @@ Settings for one machine only go in local files that stay out of the repo:
 
 ## Base: Linux
 
-I use [CachyOS](https://cachyos.org). Plain Arch works too; the few
+I use [CachyOS](https://cachyos.org). Plain Arch works too. The few
 CachyOS-only packages are marked.
 
 1. Install the packages in [`linux/packages.md`](linux/packages.md).
@@ -69,7 +69,7 @@ Both systems.
    [`linux/fish`](linux/fish/SETUP.md) or [`mac/fish`](mac/fish/SETUP.md).
 2. Prompt and greeting: [`shared/starship`](shared/starship/SETUP.md) and
    [`shared/fastfetch`](shared/fastfetch/SETUP.md). The greeting's logo images
-   aren't in the repo; bring your own.
+   aren't in the repo. Bring your own.
 3. Terminal: [`shared/kitty`](shared/kitty/SETUP.md), plus
    [`mac/kitty`](mac/kitty/SETUP.md) on macOS.
    [`shared/ghostty`](shared/ghostty/SETUP.md) is optional.
@@ -91,7 +91,7 @@ Hyprland with the Noctalia shell. Do these in order, then log out and back in.
    Wallpaper Engine from Steam.
 
 Bring your own wallpapers, lock-screen GIFs, lock-screen avatar and profile
-picture; each `SETUP.md` says where they go.
+picture. Each `SETUP.md` says where they go.
 
 The config names my three monitors. Change these for yours (`hyprctl monitors`
 lists the output names):
@@ -137,5 +137,5 @@ The agent instructions are mine. Read them and write your own.
 
 ## Not in this repo
 
-Credentials, shell history, caches, and personal media: wallpapers, GIFs,
-logo images and profile pictures.
+Credentials, shell history, caches and personal media. The steps above say
+where to put your own media.

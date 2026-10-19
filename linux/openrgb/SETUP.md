@@ -41,15 +41,19 @@ from OpenLinkHub.
 ### MSI Mystic Light firmware
 
 OpenRGB reads the firmware version of an MSI board's lighting chip and skips
-the board if the version is too old. The MPG B550 Gaming Plus (`1462:7c56`)
-needs version 0.6 or newer (added in OpenRGB commit `2b24d0a2`). Below that,
-its log shows `MSIMotherboard185: Controller firmware below minimum
-supported version, skipping`, and the ARGB headers on the board can't be
-controlled. Colours set earlier stay stored on the chip.
+the board if the version is too old. The MPG B550 Gaming Plus needs version
+0.6 or newer. Below that, OpenRGB can't control the ARGB headers on the board,
+and its log in `~/.config/OpenRGB/logs/` shows:
+
+```text
+[MSIMotherboard185] Controller firmware below minimum supported version, skipping
+```
+
+Colours set earlier stay stored on the chip.
 
 The lighting chip has its own firmware. A BIOS update does not change it.
-Only MSI's Windows tools update it: MSI Center, Support, Live Update,
-Advanced scan, entry "LED FW Update" ([MSI's guide](https://download-2.msi.com/archive/mnu_exe/mb/MSI-Center-Update-LED-Firmware.pdf)).
+Only MSI Center on Windows updates it
+([MSI's guide](https://download-2.msi.com/archive/mnu_exe/mb/MSI-Center-Update-LED-Firmware.pdf)).
 
 Source: [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB).
 

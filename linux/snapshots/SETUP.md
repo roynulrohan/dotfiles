@@ -17,7 +17,7 @@ The script changes system files outside the repo: it edits
 
 ## Install
 
-On CachyOS/Arch:
+On CachyOS or Arch:
 
 ```bash
 sudo pacman -S snapper snap-pac limine-snapper-sync btrfs-assistant
@@ -25,7 +25,7 @@ sudo pacman -S snapper snap-pac limine-snapper-sync btrfs-assistant
 
 CachyOS preinstalls all four, with btrfs subvolumes `@`, `@home`, `@log` and
 `@cache` and snapper's `root` config. `limine-snapper-sync` is in CachyOS's own
-repo; plain Arch has it in the AUR.
+repo. Plain Arch has it in the AUR.
 
 The script gives the user who runs it with sudo access to the home snapshots
 (`ALLOW_USERS` is set from `$SUDO_USER`). Run it once on a fresh install,
@@ -50,10 +50,8 @@ exists.
 
 ### What the script adds
 
-From the ArchWiki, SUSE's snapper manual and common community setups:
-
 - The root timeline on, with CachyOS's limits: 5 hourly, 7 daily, nothing
-  longer (the ArchWiki example).
+  longer.
 - A `home` config with its own timeline: 12 hourly, 14 daily, 2 weekly,
   1 monthly, and `NUMBER_LIMIT=20`, `NUMBER_LIMIT_IMPORTANT=15`.
   `ALLOW_USERS` and `SYNC_ACL=yes` make home snapshots usable without sudo.

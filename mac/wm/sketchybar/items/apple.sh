@@ -1,6 +1,6 @@
 #!/bin/bash
-# items/apple.sh — Apple logo on the far left. Clicking it toggles a popup
-# with Preferences / Activity Monitor / Lock Screen entries.
+# items/apple.sh: the Apple logo on the far left. A click toggles a popup with
+# System Settings, Activity Monitor and Lock Screen.
 
 POPUP_OFF="sketchybar --set apple.logo popup.drawing=off"
 POPUP_CLICK_SCRIPT="sketchybar --set \$NAME popup.drawing=toggle"

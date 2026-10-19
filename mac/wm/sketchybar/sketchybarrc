@@ -17,9 +17,6 @@ FONT="SF Pro"
 # Uniform padding used by all items (icon padding, label padding, item padding).
 PADDINGS=3
 
-# macOS's own volume/brightness overlay stays on: the bar has no volume item,
-# so the overlay is the only feedback for the volume keys.
-
 # ─── Bar appearance ──────────────────────────────────────────────────────────
 # Floating bar inside the same 4 px frame as the windows: 36 px tall, 4 px from
 # the top and sides, rounded, glass blur, sticky across spaces. Shadow off: with
@@ -79,13 +76,13 @@ source "$ITEM_DIR/front_app.sh"   # AeroSpace window-state indicator + focused a
 source "$ITEM_DIR/spotify.sh"     # Spotify player (hover on icon → popup with controls)
 
 # Right side (first sourced ends up rightmost since items push existing ones left).
-# Kept minimal: packages, then date + time. Wifi, volume and battery live in the
-# macOS menu bar, which auto-hides and slides down at the top edge.
+# Kept minimal: packages, then date and time. Wifi, volume and battery stay in the
+# hidden macOS menu bar (mac/wm/SETUP.md).
 source "$ITEM_DIR/calendar.sh"    # "Thu 18 Sep" + "23:41", click opens Calendar
 source "$ITEM_DIR/brew.sh"        # Homebrew outdated-package counter
 
 # Force all item scripts to run once so everything has correct initial state.
-# (Do NOT use `--update` outside sketchybarrc — it reruns every item.)
+# Use `--update` only here: it reruns every item.
 sketchybar --update
 
 

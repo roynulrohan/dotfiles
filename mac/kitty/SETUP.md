@@ -13,17 +13,17 @@ Noctalia (see [`shared/kitty`](../../shared/kitty/SETUP.md)).
 
 ## Install
 
-kitty and the shared `kitty.conf`: see
-[`shared/kitty`](../../shared/kitty/SETUP.md) (`brew install --cask kitty
-font-jetbrains-mono-nerd-font`). These two files need nothing else.
+Install kitty and the shared `kitty.conf` first
+([`shared/kitty`](../../shared/kitty/SETUP.md)). These two files need nothing
+else.
 
 ## Notes
 
 - `macos.conf` sets the remote-control socket to the path `unix:/tmp/kitty`,
-  because macOS has no abstract sockets. kitty appends `-PID`. `kitty.conf`
-  loads the file through its `globinclude ${KITTY_OS}.conf` line.
-- AeroSpace's Super+T ([`mac/wm`](../wm/SETUP.md)) connects to
-  `/tmp/kitty-<pid>`, so keep this path.
+  because macOS has no abstract sockets. kitty appends `-PID`. AeroSpace's
+  Super+T ([`mac/wm`](../wm/SETUP.md)) connects to `/tmp/kitty-<pid>`, so keep
+  this path. `kitty.conf` loads the file through its
+  `globinclude ${KITTY_OS}.conf` line.
 - `colors.conf` is Catppuccin's Frappé theme for kitty. Its header links the
   upstream file.
 

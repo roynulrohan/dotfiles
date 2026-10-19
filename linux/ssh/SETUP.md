@@ -14,14 +14,14 @@ Outside the repo: the key itself, `~/.ssh/id_ed25519`.
 
 ## Install
 
-On CachyOS/Arch:
+On CachyOS or Arch:
 
 ```bash
 sudo pacman -S openssh ksshaskpass kwallet kwallet-pam
 ```
 
 `ksshaskpass` reads the passphrase from KDE Wallet. `kwallet-pam` unlocks the
-wallet with the login password; SDDM's PAM file (`/etc/pam.d/sddm`) already
+wallet with the login password. SDDM's PAM file (`/etc/pam.d/sddm`) already
 calls it.
 
 ```bash
@@ -37,12 +37,9 @@ Answer the passphrase dialog once and tick "Remember password".
 - **Agent:** openssh's own `ssh-agent.socket` (user unit, enabled), socket
   `$XDG_RUNTIME_DIR/ssh-agent.socket`. [`shared/fish`](../../shared/fish/SETUP.md)
   points `SSH_AUTH_SOCK` at it.
-- **Passphrase:** `ksshaskpass`, KDE's askpass helper, looks it up in KDE
-  Wallet, which PAM unlocks with the login password. The first time it asks
-  and offers to remember it ("Remember password").
 - **Login:** `ssh-add.service` runs `ssh-add` once with the graphical session,
   with `SSH_ASKPASS=ksshaskpass` and `SSH_ASKPASS_REQUIRE=force`. It loads
-  `~/.ssh/id_ed25519`; a key with another name needs its own path in
+  `~/.ssh/id_ed25519`. A key with another name needs its own path in
   `ExecStart`.
 
 Source: the Arch Wiki's KDE Wallet page, "Using the KDE Wallet to store ssh key

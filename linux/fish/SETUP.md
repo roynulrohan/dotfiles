@@ -1,6 +1,6 @@
 # fish (Linux entry point)
 
-The Linux `config.fish`. It keeps two PATH lines and sources `local.fish`;
+The Linux `config.fish`. It keeps two PATH lines and sources `local.fish`.
 [`shared/fish/conf.d`](../../shared/fish/conf.d) does the rest. The shell
 itself is set up in [`shared/fish`](../../shared/fish/SETUP.md).
 
@@ -16,7 +16,7 @@ anything.
 
 ## Install
 
-On CachyOS/Arch:
+On CachyOS or Arch:
 
 ```bash
 sudo pacman -S fish

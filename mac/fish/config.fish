@@ -1,16 +1,15 @@
-# macOS fish entry point; linux/fish/config.fish is the Linux one. Everything
+# macOS fish entry point. linux/fish/config.fish is the Linux one. Everything
 # shared lives in conf.d/. starship, zoxide and direnv start here, not in
 # conf.d/05, so they still come after the conda hook below.
 
 # ---------------------------------------------------------------------------
-# PATH carried over from legacy/zsh (zprofile + zshrc + zshenv). Every entry is
-# guarded so a Mac without the tool stays quiet. Homebrew, ~/.local/bin and bun
+# PATH. Every entry is guarded, so a Mac without the tool stays quiet. Homebrew, ~/.local/bin and bun
 # are already handled by shared/fish/conf.d/00-roynul-env.fish.
 # ---------------------------------------------------------------------------
-# Rust (zshenv sourced ~/.cargo/env)
+# Rust
 test -d $HOME/.cargo/bin; and fish_add_path -g $HOME/.cargo/bin
 
-# python.org framework build, and Homebrew's unversioned python/pip shims
+# python.org framework build, and Homebrew's unversioned python and pip shims
 test -d /Library/Frameworks/Python.framework/Versions/3.12/bin; and fish_add_path -g /Library/Frameworks/Python.framework/Versions/3.12/bin
 set -q HOMEBREW_PREFIX; and test -d $HOMEBREW_PREFIX/opt/python@3.9/libexec/bin; and fish_add_path -g $HOMEBREW_PREFIX/opt/python@3.9/libexec/bin
 
@@ -55,11 +54,11 @@ if status is-interactive
     command -q zoxide;   and zoxide init fish --cmd cd | source
     command -q direnv;   and direnv hook fish | source
 
-    # From legacy/zsh. macOS only.
+    # macOS only.
     command -q bat; and alias cat bat
 
-    # fzf from legacy/zsh: fd-backed and .gitignore-aware, bat/eza previews,
-    # ctrl-t / ctrl-r / alt-c key bindings
+    # fzf: lists files with fd (respects .gitignore), previews with bat and eza,
+    # and binds ctrl-t, ctrl-r and alt-c.
     if command -q fzf
         if command -q fd
             set -gx FZF_DEFAULT_COMMAND 'fd --hidden --strip-cwd-prefix --exclude .git'
@@ -71,7 +70,7 @@ if status is-interactive
         fzf --fish | source
     end
 
-    # claude-mem worker (legacy/zsh alias)
+    # claude-mem worker
     alias claude-mem 'bun "$HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
 end
 

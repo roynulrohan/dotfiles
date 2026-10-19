@@ -22,8 +22,8 @@ profile named after the hub's serial number (Install, step 4).
 
 ## Install
 
-1. Install the package. It is in the CachyOS repo; on plain Arch it comes from
-   the AUR (`paru -S openlinkhub`).
+1. Install the package. It is in the CachyOS repo. On plain Arch, it comes
+   from the AUR (`paru -S openlinkhub`).
 
    ```bash
    sudo pacman -S openlinkhub
@@ -102,9 +102,8 @@ blow outwards.
 
 The hub keeps its own fan curves in its memory (iCUE's device memory mode). It
 runs them when no software controls it. Those curves can only use the hub's
-own temperature probes. A probe measures air, which warms slowly: in a full
-CPU load, a probe in the CPU cooler's exhaust rose 1 °C while the CPU rose
-27 °C. So a probe curve can't react to load.
+own temperature probes. A probe measures air, which warms much more slowly
+than the CPU. So a probe curve can't react to load.
 
 When the OpenLinkHub service stops, the hub goes back to its stored curves.
 They also run in the BIOS and during boot. OpenLinkHub can switch between

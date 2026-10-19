@@ -21,11 +21,11 @@ export BAR_COLOR=0xa024273a
 export ICON_COLOR=$WHITE
 export LABEL_COLOR=$WHITE
 
-# Background swatches for item pills (used by spaces bracket and volume bracket).
+# Background swatches for the workspace pills (items/spaces.sh).
 export BACKGROUND_1=0x903c3e4f
 export BACKGROUND_2=0x90494d64
 
-# Popup window (Apple menu, Spotify controls, volume device list).
+# Popup window (Apple menu, Spotify controls).
 export POPUP_BACKGROUND_COLOR=0xff24273a
 export POPUP_BORDER_COLOR=$WHITE
 

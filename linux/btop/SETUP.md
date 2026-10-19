@@ -1,9 +1,8 @@
 # btop
 
 System monitor in the terminal, coloured with the wallpaper palette by
-Noctalia. It
-holds no machine-specific values: disks, network interface, sensors and GPUs
-are all left on auto.
+Noctalia. It holds no machine-specific values: disks, network interface,
+sensors and GPUs are all left on auto.
 
 ## Files
 
@@ -16,7 +15,7 @@ writes (Notes, "Colours").
 
 ## Install
 
-On CachyOS/Arch:
+On CachyOS or Arch:
 
 ```bash
 sudo pacman -S btop

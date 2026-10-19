@@ -1,8 +1,7 @@
 # ~/.config/aerospace/aerospace.toml
-# AeroSpace on the Mac: a minimal, Mac-only subset of my Hyprland binds (caelestia
-# defaults + HyDE-style HyprMod overrides). Hyprland is never changed to match this.
-# Super is the key second from the spacebar, as on Linux; Karabiner turns it into
-# Ctrl+Option (mac/wm/karabiner). Reference: https://nikitabobko.github.io/AeroSpace/guide
+# AeroSpace on the Mac: a minimal, Mac-only subset of my Hyprland binds
+# (linux/hypr, linux/hyprmod). Hyprland is never changed to match this.
+# Reference: https://nikitabobko.github.io/AeroSpace/guide
 config-version = 2
 
 start-at-login = true
@@ -23,7 +22,7 @@ key-mapping.preset = 'qwerty'
 # 1-10 mirror Super+1..0 on Hyprland.
 persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-# Hyprland gaps_in 2 (per side) / gaps_out 4 -> 4 between windows, 4 at edges.
+# 4 px between windows and at the screen edges.
 # Top clears SketchyBar: y_offset 4 + height 36 + gap 4 = 44. The built-in panel's
 # usable area already starts 32 px down, so 12 there. Update these with the bar's
 # height or y_offset (mac/wm/sketchybar/sketchybarrc).
@@ -110,12 +109,8 @@ if.app-id = 'com.apple.finder'
 if.window-title-regex-substring = 'Co(py|nnect)|Move|Info|Pref|Settings'
 run = 'layout floating'
 
-# Super is Ctrl+Option (ctrl-alt below). Karabiner sends it from the key second from
-# the spacebar: the AULA F75's Win key (the board stays in Windows mode for the PC)
-# and the MacBook's left Option. AeroSpace cannot tell left from right modifiers
-# (nikitabobko/AeroSpace#28), hence the remap. Cmd shortcuts are all native.
-# Because Super already contains Ctrl, the Linux chord Ctrl+Super+Shift+arrows
-# lands on the same bind as Super+Shift+arrows.
+# Super is Ctrl+Option (ctrl-alt below), sent by Karabiner. Why: mac/wm/SETUP.md,
+# "The Super key". Cmd shortcuts are all native.
 [mode.main.binding]
     ctrl-alt-t = '''exec-and-forget /Applications/kitty.app/Contents/MacOS/kitten @ --to unix:/tmp/kitty-$(/usr/bin/pgrep -x kitty | head -n1) launch --type=os-window || open -a kitty'''
     ctrl-alt-q = 'close'
@@ -123,8 +118,8 @@ run = 'layout floating'
     ctrl-alt-w = 'layout floating tiling'
     ctrl-alt-j = 'layout horizontal vertical'           # toggle split
 
-    # Screenshots: Super+Shift+S snip to clipboard (caelestia). Super+Shift+Cmd+S snip
-    # saved to the Desktop and opened in Preview. Full screen stays macOS's Cmd+Shift+3.
+    # Screenshots: Super+Shift+S snip to clipboard. Super+Shift+Cmd+S snip saved to
+    # the Desktop and opened in Preview. Full screen stays macOS's Cmd+Shift+3.
     ctrl-alt-shift-s     = 'exec-and-forget screencapture -i -c'
     ctrl-alt-cmd-shift-s = '''exec-and-forget screencapture -i -P "$HOME/Desktop/Screenshot $(date +%Y-%m-%d\ at\ %H.%M.%S).png"'''
 

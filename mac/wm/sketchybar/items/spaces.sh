@@ -1,6 +1,6 @@
 #!/bin/bash
-# items/spaces.sh — One item per AeroSpace workspace (name + glyphs of the apps on
-# it) and one invisible observer that repaints all of them in a single batch per
+# items/spaces.sh: one item per AeroSpace workspace (its name and the glyphs of
+# its apps), and one invisible observer that repaints all of them in a single batch per
 # event. A workspace is shown only while it has windows or focus.
 # Events are custom, fired from ~/.config/aerospace/aerospace.toml:
 #   aerospace_workspace_change  exec-on-workspace-change, carries FOCUSED_WORKSPACE

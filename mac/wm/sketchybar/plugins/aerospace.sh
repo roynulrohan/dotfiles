@@ -1,5 +1,5 @@
 #!/bin/bash
-# plugins/aerospace.sh — The chevron before the app name. Its colour shows the
+# plugins/aerospace.sh: the chevron before the app name. Its colour shows the
 # focused window's state: tiled, floating, fullscreen, accordion. Click toggles
 # floating.
 

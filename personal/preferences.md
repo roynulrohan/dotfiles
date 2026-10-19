@@ -1,9 +1,10 @@
 # Preferences
 
 What I want from a setup, whatever tool does the job. The config files show
-today's values; this file holds what they can't: rankings, conventions that
-carry across tools, the intent behind a layout, and hard no's. Each item names
-the package that does it today, so a new tool can take over the same job.
+today's values. This file holds what they can't: rankings, conventions that
+carry across tools, the intent behind a layout, and hard no's. Where a package
+does the job today, the item names it, so a new tool can take over the same
+job.
 
 ## General
 
@@ -28,7 +29,7 @@ the package that does it today, so a new tool can take over the same job.
   are opaque: terminals, browsers, Discord, file managers, image and video
   players. VS Code and Orca stay translucent. Today:
   [`linux/hyprmod`](../linux/hyprmod/SETUP.md).
-- **One spacing grid** for gaps, the bar and borders. Today: 4 px,
+- **One spacing grid** for gaps, the bar and borders. Today:
   [`linux/hypr`](../linux/hypr/SETUP.md), Look.
 - **Live wallpapers on every monitor.** The still image behind each one is
   picked for its own look: the original artwork over a frame from the video.

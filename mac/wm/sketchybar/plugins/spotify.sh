@@ -1,5 +1,5 @@
 #!/bin/bash
-# plugins/spotify.sh — Receives Spotify's PlaybackStateChanged events and
+# plugins/spotify.sh: receives Spotify's PlaybackStateChanged events and
 # periodic scrubber ticks. Reads track metadata via `osascript` (AppleScript
 # bindings to the Spotify app) and updates the popup items.
 

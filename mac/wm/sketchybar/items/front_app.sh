@@ -1,11 +1,11 @@
 #!/bin/bash
-# items/front_app.sh — Two items:
-#   1) `aerospace` — a chevron pointing at the app name. Its colour carries the focused
-#                    window's state: blue tiled, magenta floating, green
-#                    fullscreen, red accordion. Click toggles floating.
-#   2) `front_app` — name of the currently focused app.
+# items/front_app.sh: two items.
+#   aerospace   a chevron pointing at the app name. Its colour shows the focused
+#               window's state: blue tiled, magenta floating, green fullscreen,
+#               red accordion. A click toggles floating.
+#   front_app   the name of the focused app.
 
-# front_app_switched is a sketchybar built-in event; the app name arrives in $INFO.
+# front_app_switched is a SketchyBar built-in event. The app name arrives in $INFO.
 FRONT_APP_SCRIPT='sketchybar --set $NAME label="$INFO"'
 
 aerospace=(

@@ -1,13 +1,12 @@
 #!/bin/bash
-# items/spotify.sh — Shows a Spotify music note in the center of the bar
-# while Spotify is playing. Hovering pops out an album-art + controls panel.
-# The anchor item is invisible (drawing=off); `spotify.sh` plugin turns it on
-# when Spotify reports a Playing state.
+# items/spotify.sh: a music note in the centre of the bar while Spotify plays.
+# Hovering over it opens a popup with the album art and the controls. The
+# anchor item starts hidden (drawing=off). plugins/spotify.sh shows it when
+# Spotify reports the Playing state.
 
 SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
 POPUP_SCRIPT="sketchybar -m --set spotify.anchor popup.drawing=toggle"
 
-# The anchor is the invisible-until-playing visible icon that receives hover.
 spotify_anchor=(
   script="$PLUGIN_DIR/spotify.sh"
   click_script="$POPUP_SCRIPT"
@@ -59,7 +58,7 @@ spotify_album=(
   width=0
 )
 
-# Scrubber slider: updates every 1s while popup is shown.
+# Scrubber slider: updates every second while the popup shows.
 spotify_state=(
   icon.drawing=on
   icon.font="$FONT:Light Italic:10.0"

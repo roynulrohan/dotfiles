@@ -1,17 +1,10 @@
 #!/bin/bash
-# items/brew.sh — Shows the count of outdated Homebrew packages. Icon tint
-# indicates severity (green ✓ if up-to-date, white/yellow/orange/red as count grows).
-#
-# Updates:
-#   1) Every hour (update_freq=3600) so the number stays fresh on its own.
-#   2) Instantly on the `brew_update` event, which you can optionally trigger
-#      from your zshrc by wrapping `brew`:
-#        function brew() {
-#          command brew "$@"
-#          if [[ $* =~ "upgrade|update|outdated" ]]; then
-#            sketchybar --trigger brew_update
-#          fi
-#        }
+# items/brew.sh: the count of outdated Homebrew packages. The icon colour
+# follows the count: green with a check mark at 0, white to 9, yellow to 29,
+# orange to 59, red above (plugins/brew.sh).
+# It updates every hour (update_freq=3600) and on the `brew_update` event.
+# Nothing in this repo sends that event. Run `sketchybar --trigger brew_update`
+# to refresh the count at once.
 
 brew=(
   icon=􀐛

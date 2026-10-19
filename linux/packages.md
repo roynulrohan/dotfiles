@@ -4,8 +4,8 @@ The base for the Linux desktop, and the apps that have no package of their own
 here. Every package folder names the rest in its `SETUP.md`, under Install.
 
 `pacman -S` unless marked. "AUR" means `paru -S` on CachyOS and Arch. "CachyOS
-repo" means the package is in CachyOS's own repository; on plain Arch it comes
-from the AUR. "CachyOS only" has no Arch equivalent.
+repo" means the package is in CachyOS's own repository. On plain Arch, it
+comes from the AUR. "CachyOS only" has no Arch equivalent.
 
 ## Base
 
