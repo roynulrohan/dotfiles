@@ -211,7 +211,7 @@ inside it.
 | Alt+Shift+arrows | Move an edge 5 px | Resize |
 | Ctrl+arrows | Snap to the half in the arrow's direction | Nothing |
 | `f` | Fill the height | Nothing |
-| `c` | Centre | Centre |
+| `c` | Centre | Nothing |
 
 Outside the mode, **Super+Shift+arrows** resize the same way, 30 px. The edge
 keys move the right or bottom edge in the arrow's direction. When a floating
