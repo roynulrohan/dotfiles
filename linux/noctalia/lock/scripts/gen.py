@@ -23,8 +23,7 @@ RR, PAD = 28.0, 16.0  # one radius and padding for every inner card and tile
 C = P["container"]; CA = P["container_alpha"]
 
 def clock_group(out, dx, dy, shadow):
-    # caelestia center/Clock.qml at 1080p: hours 224 px primary, minutes 121 px secondary,
-    # AM/PM chip under the minutes. Group spans x 829..1092 when centred at 960.
+    # Hours in primary, minutes in secondary, the AM/PM chip under the minutes.
     g = P["clock"]
     w("lock-hours", "clock", out, g["h_cx"]+dx, g["h_cy"]+dy, g["h_w"], g["h_h"],
       dict(format="{:%I}", center_text=True, color="primary", font_family=CLOCK, shadow=shadow, background=False))
@@ -39,15 +38,16 @@ def clock_group(out, dx, dy, shadow):
       dict(format="{:%^A • %-d %^b}", center_text=True, color="on_surface", font_family=GSF, shadow=shadow, background=False))
 
 M = "DP-1"
-K = P["card"]  # caelestia's card, enlarged: 1500x840, content inset 32
-# Frosted like the login screen's card: the blurred wallpaper shows through the rest.
+K = P["card"]  # content inset 32 from the card's edges
+# Frosted like the login screen's card: the blurred wallpaper shows through.
+# Widgets draw in widget_order, so the card goes first.
 card("lock-card", M, 960.0, 540.0, K["w"], K["h"], "surface", P["card_alpha"], 32.0)
 top = 540.0 - K["h"]/2 + 32.0; bottom = 540.0 + K["h"]/2 - 32.0
 side_w = (K["w"] - 64.0 - 450.0 - 80.0) / 2
 L = 960.0 - 225.0 - 40.0 - side_w/2; R = 960.0 + 225.0 + 40.0 + side_w/2
-G = 12.0  # caelestia spacing.medium between stacked cards
+G = 12.0  # between stacked cards
 # Left column: time and place. Weather with a short forecast, then a month grid (no events on the lock screen).
-# The weather widget (5.2.1) lays out a fixed frame, 180 units wide by 72 + 6 + 20 per forecast
+# The weather widget lays out a fixed frame, 180 units wide by 72 + 6 + 20 per forecast
 # day tall, with left-aligned text that ends near 130 units, and centres that frame in its box.
 # Drawn on its own background, its right side stays empty. So the card is a label here, and the
 # widget gets a background-less box of the frame's exact shape, scaled to the card's inner height
@@ -64,7 +64,7 @@ ch = bottom - (top + wh + G)
 w("lock-calendar", "calendar", M, L, bottom - ch/2, side_w, ch,
   dict(show_events=False, show_week_numbers=False, font_family=GSF, background=True,
        background_color=C, background_opacity=CA, background_radius=RR, background_padding=PAD))
-# Centre column: unchanged caelestia centre, shifted for the taller card.
+# Centre column: the clock group, the avatar with its audio ring, the login name.
 clock_group(M, 0.0, P["center_dy"], False)
 if P.get("viz", True):
     w("lock-viz", "fancy_audio_visualizer", M, 960.0, P["avatar_cy"], P["viz_size"], P["viz_size"],
@@ -88,19 +88,18 @@ w("lock-gif", "sticker", M, R, mcy, mw, mh,
   dict(image_path=f"{LOCK}/current.gif", opacity=1.0, background=False))
 REROLL = f"python3 -I {LOCK}/scripts/reroll.py {mw:g} {mh:g} {RR:g}"
 subprocess.run(REROLL.split(), check=True, stdout=sys.stderr)
-# Power row: Suspend, Reboot, Shut down, the login's PowerRow.qml (three cards, 12 apart).
-# The button widget lays its glyph and label side by side, scaled to the box height, so
-# each card gets a glyph-only button over the upper part (box height 104 makes the glyph
-# about the login's 34 px) and a text label under it, as on the login. The label takes
-# no clicks, so the lower edge of a card does nothing. Tabler's moon stands in for the
-# login's bedtime glyph; Noctalia's own "suspend" glyph is a pause sign.
+# Power row: Suspend, Reboot, Shut down, as in the login's PowerRow.qml (three cards,
+# 12 apart). The button widget puts its glyph and label side by side, scaled to the box
+# height. So each card gets a glyph-only button in its upper part and a text label under
+# it, as on the login. Box height 104 makes the glyph about the login's 34 px. The label
+# takes no clicks. Tabler's moon stands in for the login's bedtime glyph, because
+# Noctalia's own "suspend" glyph is a pause sign.
 ph = P["power_h"]; pw = (side_w - 2*G) / 3; pcy = bottom - ph/2
 for i, (glyph, label, action) in enumerate([("moon", "Suspend", "suspend"), ("reboot", "Reboot", "reboot"),
                                             ("shutdown", "Shut down", "shutdown")]):
     x = R - side_w/2 + pw/2 + i*(pw + G)
     card(f"lock-power{i}-card", M, x, pcy, pw, ph, C, CA, RR)
-    # Glyph ink at 26..61 and label ink at 74..87 of the 112 px card: a 12 px gap
-    # between them and about 25 px above and below.
+    # These offsets centre the glyph and the label in the card, 12 px apart.
     w(f"lock-power{i}", "button", M, x, pcy - ph/2 + 40.0, pw, 104.0,
       dict(glyph=glyph, label="", command=f"noctalia msg session {action}", color="primary", background=False))
     text(f"lock-power{i}-label", M, x, pcy - ph/2 + 79.0, pw, 23.0, label, font=GSF)
@@ -135,23 +134,11 @@ def val(v):
     if isinstance(v, int): return f"{float(v)!r}"
     return json.dumps(v, ensure_ascii=False)
 o = []
-o.append("""# Lock screen, modelled on caelestia's (caelestia-shell modules/lock, tokens at
-# 1080p): one surface card (caelestia: 0.7 x screen height, 16:9) on the blurred
-# wallpaper, never a snapshot of the desktop (a lock screen shouldn't show what
-# was on screen).
-# Card enlarged to 1500x840. Left: weather + 3-day forecast, month calendar
-# (no events). Centre: hours/minutes/AM-PM clock in condensed Google Sans Flex,
-# date, ClamShell avatar with an audio ring that fades when idle, pill password
-# field. Right, as on the login screen: a random GIF from ~/Pictures/lock-gifs, a
-# new one after every unlock (hook at the end), CPU/RAM/GPU tiles, and Suspend,
-# Reboot and Shut down buttons. The blurred wallpaper shows through the card
-# (card_alpha), frosted like the login's.
-# Widgets draw in widget_order, so the card comes first. Side monitors: the
-# clock group only. Generated by ~/.local/share/noctalia/lock/scripts/gen.py from
-# params.json; edit those and run apply.sh, not this file.
-# Assets: ~/Pictures/lock-avatar.png, ~/.local/share/noctalia/lock (GIF cards) and
-# ~/.local/share/fonts/google-sans-flex (GSF Lock Clock = wdth 30, wght 500).
+o.append("""# The lock screen. Generated by ~/.local/share/noctalia/lock/scripts/gen.py
+# from params.json. Edit those and run apply.sh, not this file.
 [lockscreen]
+# The blurred wallpaper, never a snapshot of the desktop: a lock screen must
+# not show what was on screen.
 blurred_desktop = false
 blur_intensity = %s
 tint_intensity = %s
@@ -172,9 +159,10 @@ for i, t, s in W:
     for k, v in s.items(): o.append(f"{k} = {val(v)}")
     o.append("")
 o.append("[hooks]\nsession_unlocked = " + val(REROLL))
-# Write atomically: Noctalia watches its config directory, and a half-written file
-# parses without [lockscreen_widgets] (see apply.sh). The temporary name doesn't end
-# in .toml, so Noctalia never loads it.
+# Write atomically: Noctalia watches its config directory. A half-written file parses
+# without [lockscreen_widgets], and the lock controller then saves an "enabled = false"
+# copy to settings.toml, which overrides every config file. The temporary name doesn't
+# end in .toml, so Noctalia never loads it.
 tmp = f"{OUT}.{os.getpid()}.tmp"
 with open(tmp, "w") as f:
     f.write("\n".join(o) + "\n")

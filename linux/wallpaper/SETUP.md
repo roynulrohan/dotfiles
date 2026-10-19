@@ -164,9 +164,6 @@ property.
 - linux-wallpaperengine draws on the `bottom` layer, below the windows.
   Noctalia does not draw a wallpaper, so
   `pkill -f '^\./linux-wallpaperengine'` leaves the plain background.
-- **Accents:** in dark mode the accents are always a light tone of the
-  wallpaper's main hue, so a red wallpaper gives pink accents whatever the
-  scheme variant.
 - linux-wallpaperengine pauses while an app is fullscreen.
 - To preview a wallpaper in a window: `linux-wallpaperengine --silent <id>`.
 

@@ -1,18 +1,18 @@
-# Keep the live wallpapers (linux-wallpaperengine): Noctalia draws its own
-# wallpaper by default, which would cover them.
+# Off: Noctalia's own wallpaper would cover the live wallpapers
+# (linux-wallpaperengine). The wallpaper path stays set, for the colours.
 [wallpaper]
 enabled = false
 
-# Colours from the wallpaper. The scheme here is only the starting default:
-# changing scheme or wallpaper in Noctalia's settings is saved in its own state
-# (~/.local/state/noctalia/settings.toml), which wins over this file, and every
-# template follows the live palette. Nothing in the repo needs to change.
+# Colours from the wallpaper. The scheme is only the first-run default:
+# Noctalia's settings window saves scheme changes in
+# ~/.local/state/noctalia/settings.toml, which wins over this file.
 [theme]
 source = "wallpaper"
 wallpaper_scheme = "m3-tonal-spot"
 
-# Idle, carried over from caelestia: lock after 1 h, screens off after 1.5 h,
-# lock and suspend after 4 h (plain suspend: zram swap only, so no hibernate).
+# Lock after 1 h, screens off after 1.5 h, lock and suspend after 4 h. Suspend,
+# not hibernate: the only swap is zram. Idle inhibitors (browsers and mpv
+# during video) pause the timers. Audio alone does not.
 [idle]
 behavior_order = ["lock", "screen-off", "suspend"]
 
@@ -31,14 +31,15 @@ timeout = 14400
 action = "lock_and_suspend"
 enabled = true
 
-# Weather: Ottawa, named in full (plain "Ottawa" also matches US towns; with
-# coordinates instead, the UI showed the numbers as the place name).
+# Weather. Name the place in full: a bare city name can match another town.
+# Coordinates work, but the UI then shows the numbers as the place name.
 [location]
 auto_locate = false
 address = "Ottawa, Ontario, Canada"
 
-# Session menu: the default five, but log out runs `uwsm stop`. Noctalia's own
-# log out exits Hyprland directly, which once froze the SDDM login screen.
+# Session menu: the default five, but log out runs `uwsm stop`. Don't switch it
+# back: Noctalia's own log out exits Hyprland directly, and that has frozen the
+# SDDM login screen.
 [[shell.session.actions]]
 action = "lock"
 
@@ -55,7 +56,6 @@ action = "reboot"
 [[shell.session.actions]]
 action = "shutdown"
 
-# --- Look: HyDE-style bar and islands (see SETUP.md, Bar) ---
 [shell]
 font_family = "JetBrainsMono Nerd Font"
 # 12-hour time and a written-out date wherever Noctalia shows them without
@@ -101,9 +101,7 @@ opacity = 0.8                # match the single islands
 widget_spacing = 8
 
 [[bar.default.capsule_group]]
-id = "system"                # how the PC behaves and is set up: stay awake, notifications
-                             # (right-click the bell for do not disturb), wallpaper, control
-                             # centre; power sits alone at the edge
+id = "system"                # how the PC behaves and is set up; power stays alone at the edge
 members = ["caffeine", "notifications", "wallpaper", "control-center"]
 padding = 8                  # same end padding as single islands (group default is 6)
 opacity = 0.8                # match the single islands
@@ -129,20 +127,15 @@ type = "sysmon"
 stat = "gpu_temp"
 visualization = "none"
 
-# Community plugin k4n4t4/hypr-submap (enable: noctalia msg plugins enable
-# k4n4t4/hypr-submap): shows the active Hyprland submap, e.g. "window" while
-# window mode (Super+A) is on; hidden otherwise. Click it to leave the mode.
+# The community plugin k4n4t4/hypr-submap: the active Hyprland submap, hidden
+# in the default one.
 [widget.submap]
 type = "k4n4t4/hypr-submap:hypr-submap"
 hide_when_default = true
 glyph = "arrows-move"
 
-# Our local copy of the community plugin yuuto/arch-updater
-# (~/.local/share/noctalia/plugins/arch-updater, id roynul/arch-updater) with
-# its panel floating, since attached panels go transparent on the invisible
-# bar. Needs pacman-contrib. Pending pacman and AUR updates in the bar; click
-# for a panel with both lists, Arch news warnings, a check button, update
-# and rollback.
+# The local copy of the community plugin yuuto/arch-updater, with its panel
+# floating (see SETUP.md, Update widget).
 [widget.updates]
 type = "roynul/arch-updater:widget"
 
@@ -150,10 +143,8 @@ type = "roynul/arch-updater:widget"
 [plugin_settings."roynul/arch-updater"]
 auto_check_hours = 4
 
-# Media island: "Title - Artist", album art a bit bigger than the default
-# 16 px. No minimum width, so it hugs short titles; long ones stop at 240 px and
-# scroll. Hidden when no player is running. (hide_when_idle, hiding it
-# while paused, is in Noctalia's docs but not in 5.2.1.)
+# Media island: "Title - Artist", album art larger than the default 16 px. No
+# minimum width, so it fits short titles. Long titles stop at 240 px and scroll.
 [widget.media]
 title_scroll = "always"
 art_size = 20
@@ -169,8 +160,10 @@ sidebar_section = "full"
 [widget.network]
 show_label = false           # icon only, no "enp5s0"
 
-# HyDE-style workspaces: bare numbers on the island, the active one a wider
-# filled pill. Inactive pills are transparent, so only their numbers show.
+# The built-in workspaces widget. The bar shows roynul/workspace-pills instead,
+# which copies this look. Keep these values for a switch back.
+# Bare numbers, the active one a wider filled pill. Inactive pills are
+# transparent, so only their numbers show.
 [widget.workspaces]
 style = "regular"
 label_source = "id"
@@ -183,15 +176,12 @@ font_scale = 1.3             # numbers start at 11 px and the bar scale (0.75) a
 inactive_pill_size = 1.0
 pill_scale = 1.0
 
-# Our plugin (~/.local/share/noctalia/plugins/workspace-apps): the app icons on
-# this monitor's current workspace. Replaces the built-in taskbar, which shows
-# every window on a monitor whose workspace is empty (a Noctalia bug).
+# The app icons on this monitor's current workspace (plugins/workspace-apps).
 [widget.workspace-apps]
 type = "roynul/workspace-apps:icons"
 
-# Screenshots like caelestia: the region opens in an editor first. Enter or
-# Done copies; Save writes a file; Esc discards. In the region overlay, the
-# copy and save keys deliver at once, skipping the editor.
+# Screenshots open in the editor first (see SETUP.md, Config). In the region
+# overlay, the copy and save keys skip the editor.
 [shell.screenshot]
 annotate = true
 skip_annotate_on_copy_save = true
@@ -199,8 +189,8 @@ save_to_file = false
 directory = "~/Pictures/Screenshots"   # Save puts them here, not loose in ~/Pictures
 copy_to_clipboard = true
 
-# Attached panels grow out of the bar and share its background; with an
-# invisible bar they turned transparent. Float them, like the launcher.
+# Float the panels: an attached panel shares the bar's background, which is
+# invisible here.
 [shell.panel]
 control_center_placement = "floating"
 wallpaper_placement = "floating"
@@ -211,9 +201,9 @@ open_near_click_wallpaper = true
 open_near_click_session = true
 open_near_click_clipboard = true
 
-# kitty takes its colours from Noctalia's palette. Our own copy of Noctalia's
-# kitty template (templates/kitty.conf) writes only kitty/themes/noctalia.conf;
-# the built-in one also edits kitty.conf, which is shared with the Mac.
+# No built-in templates: the built-in kitty, GTK and Qt templates also edit
+# kitty.conf, gtk.css, gsettings and kdeglobals. Copies in templates/ write
+# only their own files.
 [theme.templates]
 builtin_ids = []
 
@@ -222,9 +212,8 @@ input_path = "$XDG_CONFIG_HOME/noctalia/templates/kitty.conf"
 output_path = "$XDG_CONFIG_HOME/kitty/themes/noctalia.conf"
 post_hook = "pkill -USR1 -x kitty || true"
 
-# Launcher actions, ported from caelestia's ">" actions: type /cmd to list them
-# (they also show up when you search by name). Each line is title<TAB>description;
-# `exec` gets the chosen line as {selection}.
+# Launcher actions: type /cmd to list them. Each line is
+# title<TAB>description. `exec` gets the chosen line as {selection}.
 [shell.launcher.dmenu.entry.actions]
 label = "Actions"
 prefix = "cmd"
@@ -257,18 +246,15 @@ output_path = "$XDG_CONFIG_HOME/hypr/scheme/current.lua"
 post_hook = "hyprctl reload"
 
 # App colour files from Noctalia's palette. Each app selects "noctalia".
-# One owner per file: the built-in gtk/qt templates are off (builtin_ids = [])
-# because they also edit gtk.css, gsettings and kdeglobals.
 
-# Spotify: caelestia's spicetify scheme; `spicetify watch -s` also re-patches on
-# change, the hook makes it immediate. -n = no restart, refresh = CSS only.
+# Spotify. The hook patches only the CSS (refresh) and skips the restart (-n).
 [theme.templates.user.spicetify]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/spicetify.ini"
 output_path = "$XDG_CONFIG_HOME/spicetify/Themes/noctalia/color.ini"
 post_hook = "spicetify -q -n refresh"
 
-# GTK 3 and 4: caelestia's gtk.css (libadwaita colour names) with its imports
-# of thunar.css (ours) and colors.css (kde-gtk-config's) kept.
+# GTK 3 and 4, in libadwaita colour names. It imports thunar.css and
+# kde-gtk-config's colors.css.
 [theme.templates.user.gtk]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/gtk.css"
 output_path = [
@@ -276,7 +262,7 @@ output_path = [
   "$XDG_CONFIG_HOME/gtk-4.0/gtk.css",
 ]
 
-# Thunar: caelestia's rounded-pane look, pulled in by gtk.css above.
+# Thunar, imported by gtk.css above.
 [theme.templates.user.thunar]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/thunar.css"
 output_path = [
@@ -284,31 +270,31 @@ output_path = [
   "$XDG_CONFIG_HOME/gtk-4.0/thunar.css",
 ]
 
-# Qt (qtengine): the KDE colour scheme qtengine/config.json points at. Only the
-# file; no post_action, so kdeglobals is not touched.
+# Qt (qtengine): the KDE colour scheme that qtengine/config.json points at. No
+# post_action, so kdeglobals stays untouched.
 [theme.templates.user.qtengine]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/qtengine.colors"
 output_path = "$XDG_CONFIG_HOME/qtengine/noctalia.colors"
 
-# btop: the theme btop.conf selects. SIGUSR2 makes btop re-read its config and
-# theme (btop.cpp: Global::reload_conf).
+# btop: the theme btop.conf selects. SIGUSR2 makes btop read its config and
+# theme again.
 [theme.templates.user.btop]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/btop.theme"
 output_path = "$XDG_CONFIG_HOME/btop/themes/noctalia.theme"
 post_hook = "pkill -USR2 -x btop || true"
 
-# Login screen (linux/sddm): its colours go to the synced assets folder, which
-# the noctalia-card theme reads; the hook copies the wallpaper the palette came
-# from as its still. chmod: the greeter runs as user sddm and must read the
-# file, whatever mode it was first created with. Until /var/lib/sddm-assets
+# Login screen (linux/sddm): the colours go to the assets folder that the
+# noctalia-card theme reads. The hook copies the wallpaper the palette came
+# from as the login still. chmod: the greeter runs as user sddm and must read
+# the file, whatever mode it was created with. Until /var/lib/sddm-assets
 # exists, Noctalia logs "failed to open template output" and skips the hook.
 [theme.templates.user.sddm]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/sddm-theme.conf"
 output_path = "/var/lib/sddm-assets/colours.conf"
 post_hook = "chmod 644 /var/lib/sddm-assets/colours.conf && install -m 644 '{{ image }}' /var/lib/sddm-assets/background"
 
-# Equibop: its own theme file, off until chosen in Equibop > Settings > Themes.
-# Noctalia community "Midnight" template.
+# Equibop: Noctalia's community "Midnight" theme, off until you choose it in
+# Equibop's Settings, Themes.
 [theme.templates.user.equibop]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/equibop.theme.css"
 output_path = "$XDG_CONFIG_HOME/equibop/themes/noctalia.theme.css"

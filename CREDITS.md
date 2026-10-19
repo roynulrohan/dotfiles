@@ -7,7 +7,7 @@ comes from others and keeps its own licence.
 
 - **[caelestia](https://github.com/caelestia-dots/caelestia)**: the desktop
   started on caelestia's dots. It has moved on since, and kept some of its look
-  and defaults.
+  and its lock screen design.
 - **[HyDE](https://github.com/HyDE-Project/HyDE)**: much of the look, the
   keybinds and the animations.
 - **[mpv-image-config](https://github.com/guidocella/mpv-image-config)**: mpv

@@ -17,7 +17,7 @@
 -- to their name and, for workspacev2, the workspace id.
 --
 -- Without Hyprland (no instance in the environment) the service stays idle.
--- The `fake` IPC below then publishes test states, for the sandbox.
+-- The `fake` IPC below then publishes test states.
 
 local POLL_MS = 5000      -- fallback when events are flowing
 local NO_STREAM_MS = 1000 -- no event stream (socat missing): plain polling
