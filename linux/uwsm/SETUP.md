@@ -53,8 +53,9 @@ NVIDIA VA-API driver's
 On other GPUs both lines are skipped, because `LIBVA_DRIVER_NAME=nvidia`
 breaks VA-API there.
 
-Firefox also needs one setting. Put it in a `user.js` file in the Firefox
-profile folder (the profile name is random, so it is not in the manifest):
+Firefox and Zen, which is built on Firefox, also need one setting. Put it in
+a `user.js` file in the profile folder of each browser. The profile names are
+random, so the files are not in the manifest:
 
 ```js
 user_pref("media.hardware-video-decoding.force-enabled", true);
