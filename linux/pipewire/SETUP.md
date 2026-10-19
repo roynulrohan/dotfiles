@@ -44,9 +44,9 @@ preset: +12 +10 +8 −3 −2 +4 +4 +5 +8 +12 dB at 32 Hz…16 kHz.
   filter shapes aren't published, so this is an approximation.
 - **Preamp −6 dB.** A boost pushes loud music past digital full scale. The
   G432 takes 16-bit audio only, so the overflow clips and sounds harsh and
-  painfully loud. −12.1 dB removes clipping completely; 0 dB crackles on heavy
-  bass; −6 dB sounds right. The volume slider sits higher to make up for it. A
-  high shelf at 0 Hz is PipeWire's flat gain (`biquad.c`).
+  painfully loud. Without a preamp, heavy bass crackles. −6 dB stops the
+  audible clipping. Only −12 dB removes all clipping, and it costs more
+  volume. The volume slider sits higher to make up for the preamp.
 - **Smart filter.** WirePlumber puts it in front of the G432 only
   (`filter.smart.target` is the headset's `node.name`). The headset stays the
   default output; HDMI and other outputs are untouched. A different headset
@@ -62,11 +62,7 @@ apps keep playing through the second of silence.
 cycle) to 1024 and stops apps from changing it: default, minimum and maximum
 are all 1024. Each change interrupts playback for a moment, so an app that
 asks for its own quantum, such as an audio visualiser, makes music stutter.
-These are quantum switches, not dropouts: PipeWire's error counters
-(`pw-top`, ERR) stay at 0.
-
-1024 at 48 kHz is about 21 ms of delay. 512 (about 11 ms) also plays without
-stutter.
+1024 at 48 kHz is about 21 ms of delay.
 
 Sources: [PipeWire filter-chain](https://docs.pipewire.org/page_module_filter_chain.html),
 [WirePlumber smart filters](https://pipewire.pages.freedesktop.org/wireplumber/policies/smart_filters.html),

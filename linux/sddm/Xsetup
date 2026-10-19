@@ -5,11 +5,11 @@
 # shows the login on the primary monitor and a clock on the others. Hyprland
 # sets its own layout after login, so this affects the login screen only.
 #
-# The main monitor is the one whose EDID model name contains MAIN_MODEL. X11's
-# output names don't match Hyprland's (X called the left VG248 "DP-2"), and X11
-# offered the VG248 a higher refresh rate than the VG279QM, so neither the name
-# nor the refresh rate is reliable. If no connected monitor matches, the one
-# with the highest refresh rate wins.
+# The main monitor is the one whose EDID model name contains MAIN_MODEL.
+# Neither the output name nor the refresh rate is reliable: with the NVIDIA
+# driver, X11 names outputs differently than Hyprland does, and X11 can offer a
+# side monitor a higher refresh rate than the main one. If no connected monitor
+# matches, the one with the highest refresh rate wins.
 # XSETUP_DRY_RUN=1 prints the xrandr command instead of running it.
 
 MAIN_MODEL=VG279QM

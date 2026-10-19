@@ -10,8 +10,8 @@
 --     home under view_properties/local, network folders under
 --     view_properties/remote), with missing keys from the global settings.
 -- Sort roles: name (natural), modified, created, accessed, size, type (by
--- extension); anything else falls back to name. Once per playlist; mpv's own
--- order stays if anything is missing.
+-- extension); anything else falls back to name. Once per mpv window, on the
+-- first file; mpv's own order stays if anything is missing.
 
 local mp = require "mp"
 local utils = require "mp.utils"

@@ -5,8 +5,8 @@ import "util.js" as U
 // Current weather and a 3-day forecast from Open-Meteo, for the location in
 // <assetsDir>/location.json (Noctalia's, synced). SDDM starts a few seconds
 // before the network is up, so a failed fetch retries every 3 s for the first
-// 90 s, then every 30 s; until one works the card says it's waiting. After
-// that it refreshes every 30 min.
+// 90 s, then every 30 s. Until a fetch works, the card says it is waiting.
+// After that, it refreshes every 30 min.
 Card {
     id: root
 

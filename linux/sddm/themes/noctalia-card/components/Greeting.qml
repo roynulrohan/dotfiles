@@ -132,8 +132,8 @@ Item {
     Column {
         id: content
 
-        // The greeting's line height adds space above its letters; shift up
-        // so the visible margins above and below match.
+        // The greeting's line height adds space above its letters. Shift up
+        // so that the visible margins above and below match.
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -8

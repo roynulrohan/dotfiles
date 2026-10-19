@@ -3,8 +3,8 @@
 The login screen on CachyOS: SDDM with this repo's theme, `noctalia-card`, made
 to look like the Noctalia lock screen. The theme is a fork of the "locklike"
 theme from
-[ItsABigIgloo/caelestia-sddm](https://github.com/ItsABigIgloo/caelestia-sddm);
-its [`README.md`](themes/noctalia-card/README.md) lists the changes and the
+[ItsABigIgloo/caelestia-sddm](https://github.com/ItsABigIgloo/caelestia-sddm).
+Its [`README.md`](themes/noctalia-card/README.md) lists the changes and the
 licence.
 
 ## Files
@@ -23,25 +23,26 @@ the greeter reads (Notes, "How it stays in sync"), and the login video,
 
 ## Install
 
-On CachyOS/Arch:
+On CachyOS or Arch:
 
 ```bash
 sudo pacman -S sddm qt6-5compat qt6-multimedia ttf-material-symbols-variable xorg-xrandr ffmpeg
 ```
 
 `qt6-5compat`, `qt6-multimedia` (video) and `ttf-material-symbols-variable`
-(icons) are the theme's requirements; see its
+(icons) are the theme's requirements, listed in its
 [`README.md`](themes/noctalia-card/README.md). `Xsetup` runs `xrandr` from
 `xorg-xrandr`. `ffmpeg` makes the login video.
 
 Set up [`linux/noctalia`](../noctalia/SETUP.md) first: its lock screen makes
 `current.gif`. Before step 4, set `MAIN_MODEL` and `ORDER` in `Xsetup` to your
-monitors' EDID model names (Notes, "Monitors"). Then run these once, from this
-folder, in your own terminal; the commands work in fish and bash:
+monitors' EDID model names (Notes, "Monitors"). `hyprctl monitors` shows each
+name on its `model:` line. Then run these commands once, from this folder, in
+your own terminal. They work in fish and bash:
 
 ```bash
 # 1. Back up the files this replaces. Not into /etc/sddm.conf.d: SDDM reads
-#    every file there. (A new machine has nothing to back up; skip this.)
+#    every file there. A new machine has nothing to back up: skip this step.
 sudo install -d /etc/sddm/before-noctalia-card
 sudo cp -a /etc/sddm/Xsetup /etc/sddm.conf.d/x11.conf /etc/sddm/before-noctalia-card/
 # 2. The synced assets folder: yours, readable by the greeter.
@@ -74,8 +75,8 @@ sudo systemctl disable plasmalogin.service && sudo systemctl enable sddm.service
 
 `sddm-sync` copies the video from `~/Pictures/Wallpapers/live/login.mp4`
 (`LOGIN_VIDEO` overrides the path). Make it from the main live wallpaper: a
-1080p copy without audio, because the login screen shows on one 1080p monitor
-and may decode on the CPU. Then run `sddm-sync` again.
+1080p copy without audio, because the login screen plays it on one 1080p
+monitor and without sound. Then run `sddm-sync` again.
 
 ```bash
 ffmpeg -i <video> -vf scale=1920:1080 -an -c:v libx264 -crf 22 -pix_fmt yuv420p -movflags +faststart ~/Pictures/Wallpapers/live/login.mp4
@@ -91,10 +92,10 @@ deleted from the repo stays in `/usr/share` until you delete it there.
 ### How it stays in sync
 
 The greeter runs as user `sddm` and cannot read your home folder. So
-everything personal it shows lives in `/var/lib/sddm-assets`: a folder you
-own, readable by everyone. The theme reads it through `assetsDir` in its
-`theme.conf`, and its colours through `theme.conf.user`, a link to
-`colours.conf` there (SDDM reads `theme.conf.user` over `theme.conf`).
+everything personal it shows lives in `/var/lib/sddm-assets`, a folder you own
+that everyone can read. The theme finds the folder through `assetsDir` in its
+`theme.conf`. It reads the colours from `theme.conf.user`, a link to
+`colours.conf` in that folder. SDDM reads `theme.conf.user` over `theme.conf`.
 
 | File | What | Kept fresh by |
 |---|---|---|
@@ -105,25 +106,26 @@ own, readable by everyone. The theme reads it through `assetsDir` in its
 | `faces/<user>.face.icon` | `~/.face` | `sddm-sync`, by hand |
 | `location.json` | Noctalia's weather location | `sddm-sync`, by hand |
 
-No root at run time, and no `[hooks]` keys: the still rides on the template
-and the GIF on `reroll.py`, so nothing merges with `lock.toml`'s
-`session_unlocked`. Run `sddm-sync` after changing the video, `~/.face` or the
-weather location; it also asks Noctalia to render its templates again
-(`noctalia msg templates-apply`), which rewrites the colours and the still.
-`SDDM_ASSETS=<dir> sddm-sync` copies into another folder, for a dry run, and
-skips that last step.
+Nothing needs root at run time. The template carries the still and
+`reroll.py` copies the GIF, so the sync needs no `[hooks]` keys that could
+clash with `session_unlocked` in `lock.toml`.
+
+Run `sddm-sync` after you change the video, `~/.face` or the weather location.
+It also runs `noctalia msg templates-apply`, which writes the colours and the
+still again. `SDDM_ASSETS=<dir> sddm-sync` copies into another folder for a
+dry run and skips `templates-apply`.
 
 **Security:** the theme's QML stays root-owned in `/usr/share`, so the folder
-can change colours and pictures, never code. Any program running as you can
+can change colours and pictures, never code. Any program that runs as you can
 change the login screen's pictures. That is acceptable on a single-user
 machine.
 
 ### SDDM config
 
-- `noctalia-card.conf` selects the theme, clears CachyOS's `InputMethod` (Qt's
-  on-screen keyboard would open on the password field) and sets the greeter's
-  environment. It sets nothing about sessions: the theme preselects the first
-  session with "uwsm" in its name.
+- `noctalia-card.conf` selects the theme and sets the greeter's environment.
+  It also clears CachyOS's `InputMethod`, because Qt's on-screen keyboard
+  opens on the password field. It sets nothing about sessions: the theme
+  preselects the first session with "uwsm" in its name.
 - **Why `x11.conf`:** `cachyos-kde-settings` ships
   `/usr/lib/sddm/sddm.conf.d/zz-wayland.conf`, which draws the login screen
   with KWin on Wayland. The theme runs on X11 (`noctalia-card.conf` sets
@@ -134,72 +136,59 @@ machine.
 
 ### Monitors
 
-X11 mirrors every monitor at the login screen. `x11.conf` makes SDDM run
-`Xsetup` first. `Xsetup` places every connected monitor side by side in the
-order its `ORDER` line gives (by EDID model name; unlisted monitors go on the
-right) and makes the main monitor X's primary output. The theme shows the
-login on the primary monitor and, on every other monitor, the lock screen's
-side view: the clock and date over the blurred still. Only the main monitor
-plays the login video. Hyprland sets its own layout after login.
+X11 mirrors every monitor at the login screen, so `x11.conf` makes SDDM run
+`Xsetup` first. `Xsetup` places the connected monitors side by side in
+`ORDER`, by EDID model name, and puts unlisted monitors on the right. The
+monitor that matches `MAIN_MODEL` becomes X's primary output. If none
+matches, for example when the main monitor is unplugged at boot, the monitor
+with the highest refresh rate becomes primary. `XSETUP_DRY_RUN=1 ./Xsetup`
+prints the `xrandr` command and does not run it.
 
-`Xsetup` finds the main monitor by the model name in its EDID (`MAIN_MODEL`,
-read from `xrandr --verbose`). Output names don't work: the NVIDIA driver
-names outputs differently under X11 than Hyprland does. Refresh rate doesn't
-work either: X11 can offer a side monitor a higher refresh rate than the main
-one. With no matching monitor, the one with the highest refresh rate becomes
-primary. `XSETUP_DRY_RUN=1 ./Xsetup` prints the `xrandr` command instead of
-running it.
+The primary monitor shows the login and plays the login video. Every other
+monitor shows the lock screen's side view: the clock and date over the
+blurred still. Hyprland sets its own layout after login.
 
-- **Main monitor unplugged at boot:** the monitor with the highest refresh
-  rate becomes primary and gets the full login.
-- **One monitor:** it becomes primary and gets the full login.
 - **Keyboard:** keys always go to the login's password field. The side
-  windows refuse focus, so a click on a side monitor changes nothing. The
-  greeter logs a harmless "requestActivate() called for ... which has
-  Qt::WindowDoesNotAcceptFocus set" for each side window at start.
+  windows refuse focus, so a click on a side monitor changes nothing. At
+  start, the greeter logs "requestActivate() called for ... which has
+  Qt::WindowDoesNotAcceptFocus set" once for each side window. This message
+  is harmless.
 - **Monitor plugged in after the login screen appears:** `Xsetup` has already
-  run, so nothing turns the new monitor on. It stays dark until the next time
-  SDDM starts X (after a log out, or a reboot). If something does turn it on,
-  SDDM opens a window there and it shows the side view.
-- **Main monitor unplugged while the login screen shows:** untested on real
-  hardware. Nothing reruns `xrandr`, so X most likely keeps the output in its
-  layout and the login stays on the dark monitor. Typing the password and
-  pressing Enter still logs in, because the keyboard stays on the login's
-  password field. If X does drop the screen, the theme moves the login to the
-  new primary monitor.
+  run, so nothing turns the new monitor on. It stays dark until SDDM starts X
+  again, after a log out or a reboot.
+- **Monitor removed while the login screen shows:** if X removes the main
+  monitor's screen, the theme moves the login to the new primary monitor.
 
 ### Settings and colours
 
-- **Settings** (12-hour clock, blur, tint, video on/off) are in the theme's
+- **Settings** (12-hour clock, blur, tint, video on or off) are in the theme's
   `theme.conf`. Change them in the repo, then update the theme (Install,
-  "Updating the theme"). Don't put them in `colours.conf`: Noctalia rewrites
-  it.
-- **Colours** follow the lock screen: each key takes the Noctalia role the lock
-  uses (`primary` is Noctalia's `primary`, `text` its `on_surface`), from the
-  palette the shell uses, scheme included. The fallback colours in `theme.conf`
-  show only while `colours.conf` is missing.
-- **Login video:** the theme loops `background.mp4` from the assets folder (or
-  `.webm`, `.mkv`, `.mov`, `.m4v`, `.avi`) over the still, silently, on the
-  main monitor only.
+  "Updating the theme"). Don't put them in `colours.conf`, because Noctalia
+  rewrites it.
+- **Colours** follow the lock screen. Each key takes the Noctalia role that
+  the lock uses, from the palette the shell uses, scheme included. For
+  example, `primary` is Noctalia's `primary` and `text` is its `on_surface`.
+  The fallback colours in `theme.conf` show only while `colours.conf` is
+  missing.
 
 ### Logging out
 
 Log out with `uwsm stop`, which the Hyprland wiki recommends for uwsm
-sessions: it brings the graphical session down in order and lets SDDM's helper
-exit normally. Don't kill the whole login session: that kills `sddm-helper`
-too, SDDM logs "Process crashed", and the screen freezes without a login
-screen. Noctalia's own log out exits Hyprland directly, so its session menu
-runs `uwsm stop` instead ([`linux/noctalia/config.toml`](../noctalia/config.toml)).
-Hyprland can also segfault in `libaquamarine` while closing (an upstream bug).
+sessions. It brings the graphical session down in order and lets SDDM's
+helper exit normally. Don't kill the whole login session. That kills
+`sddm-helper` too: SDDM logs "Process crashed", and the screen freezes with
+no login screen. Noctalia's session menu runs `uwsm stop` for this reason
+([`linux/noctalia`](../noctalia/SETUP.md)). Hyprland can also segfault in
+`libaquamarine` while it closes, which is an upstream bug.
 
-If the screen freezes anyway, Ctrl+Alt+Delete reboots (systemd treats it as a
-reboot request). Ctrl+Alt+F2, the terminal SDDM's login screen runs on, may
-bring it back.
+If the screen freezes anyway, press Ctrl+Alt+Delete to reboot. systemd treats
+it as a reboot request. Ctrl+Alt+F2, the terminal that SDDM's login screen
+runs on, may bring the login screen back.
 
 ### The way back
 
-If the login screen is black or broken: Ctrl+Alt+F3 for a text login, log in,
-then switch to Breeze, the theme CachyOS's
+If the login screen is black or broken, press Ctrl+Alt+F3 for a text login and
+log in. Then switch to Breeze, the theme that CachyOS's
 `/usr/lib/sddm/sddm.conf.d/general.conf` selects, and put the backed-up
 monitor setup back:
 
@@ -210,13 +199,18 @@ sudo cp /etc/sddm/before-noctalia-card/x11.conf /etc/sddm.conf.d/x11.conf
 sudo systemctl restart sddm
 ```
 
-The `cp` lines restore the backup from Install, step 1. With no backup,
-delete `/etc/sddm/Xsetup` and `/etc/sddm.conf.d/x11.conf` instead, which
-leaves CachyOS's own SDDM settings in charge. To drop this repo's config completely,
-delete
-`/etc/sddm.conf.d/noctalia-card.conf` instead of the `sed` line: CachyOS's
-defaults then apply alone, Breeze included, with Qt's on-screen keyboard back
-on the password field.
+The `cp` lines restore the backup from Install, step 1. With no backup, delete
+`/etc/sddm/Xsetup` and `/etc/sddm.conf.d/x11.conf` instead. CachyOS's own SDDM
+settings then apply.
+
+To remove this repo's SDDM config completely, delete
+`/etc/sddm.conf.d/noctalia-card.conf` instead of running the `sed` line.
+CachyOS's defaults then apply alone, with Breeze and Qt's on-screen keyboard.
+
+To remove all of this repo's SDDM config, also delete
+`/etc/sddm.conf.d/noctalia-card.conf` instead of running the `sed` line.
+CachyOS's defaults then apply alone: Breeze, and Qt's on-screen keyboard on
+the password field.
 
 Back to Plasma Login Manager:
 
@@ -234,16 +228,23 @@ ls -l /var/lib/sddm-assets                                      # background, ba
 sudo -u sddm cat /var/lib/sddm-assets/colours.conf              # the colours: the greeter's user can read the folder
 ```
 
-Preview the theme before logging out. It opens a full-screen window on every
-monitor; close it with Ctrl+C in its terminal:
+Preview the theme before you log out. The preview opens a full-screen window
+on every monitor: the login on the primary one, the side view on the others.
+Escape does not close it. Close it with Ctrl+C in its terminal:
 
 ```bash
 QML_XHR_ALLOW_FILE_READ=1 QT_QPA_PLATFORM=xcb sddm-greeter-qt6 --test-mode --theme /usr/share/sddm/themes/noctalia-card
 ```
 
+`--theme` also takes the repo's
+[`themes/noctalia-card`](themes/noctalia-card/README.md) folder, because the
+greeter only reads it. That folder has no `theme.conf.user`, so the preview
+shows the fallback colours from `theme.conf`. The pictures still come from
+`assetsDir`.
+
 Test mode runs as you, not as `sddm`, so it can't prove the folder's
-permissions (the `sudo -u sddm` check does). SDDM reports the power actions
-unavailable in test mode, so the power buttons show dimmed, and `sddm.login()`
-does nothing. The greeter logs to the journal
-(`journalctl --user -t sddm-greeter-qt6`). The real test: log out
-(`uwsm stop`), log in, and check that KDE Wallet unlocks.
+permissions. The `sudo -u sddm` check does that. In test mode, SDDM reports
+the power actions as unavailable, so the power buttons show dimmed, and
+`sddm.login()` does nothing. The greeter logs to the journal, not to the
+terminal: `journalctl --user -t sddm-greeter-qt6`. For the real test, log out
+with `uwsm stop`, log in, and check that KDE Wallet unlocks.

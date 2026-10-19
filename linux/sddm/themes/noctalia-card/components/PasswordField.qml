@@ -3,7 +3,7 @@ import QtQuick.Controls
 import "util.js" as U
 
 // The password pill: a lock glyph, the field, and a round submit button.
-// Enter or the button submits; Escape goes back to page 1. Up and Down change
+// Enter or the button submits. Escape goes back to page 1. Up and Down change
 // the session, and Left and Right change the user while the field is empty.
 Item {
     id: root

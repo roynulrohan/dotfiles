@@ -1,7 +1,7 @@
 #!/bin/sh
 # Refresh the login screen's synced assets folder now. Runs as you, no sudo.
 # Noctalia keeps the colours, the still and the GIF fresh by itself (SETUP.md,
-# "How it stays in sync"); run this once after setup and after changing the
+# "How it stays in sync"). Run this once after setup, and after you change the
 # login video, your face picture (~/.face) or Noctalia's weather location.
 # LOGIN_VIDEO overrides the video. SDDM_ASSETS overrides the folder for a dry
 # run, which then skips the colours and still: Noctalia writes those to

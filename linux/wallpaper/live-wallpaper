@@ -60,6 +60,6 @@ if [ "${LIVE_WALLPAPER_DRY_RUN:-}" = 1 ]; then
 fi
 
 # The /usr/bin wrapper execs ./linux-wallpaperengine from /opt/linux-wallpaperengine.
-# Stop any copy not started by the service (an older setup ran it detached).
+# Stop any copy that the service did not start, so that only one draws.
 pkill -f '^\./linux-wallpaperengine' && sleep 1
 exec linux-wallpaperengine "$@"

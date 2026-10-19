@@ -3,12 +3,12 @@ import QtQuick
 import QtQuick.Effects
 import "util.js" as U
 
-// The main monitor's login. Page 1 (Greeting.qml) greets the selected user;
-// any key or a click opens page 2, the login card modelled on our Noctalia
+// The main monitor's login. Page 1 (Greeting.qml) greets the selected user.
+// Any key or a click opens page 2, the login card modelled on our Noctalia
 // lock screen: 1500x840, weather and calendar left; clock, date, avatar,
 // name and password centre; GIF, session and power right. Escape goes back.
 // User files (wallpaper, video, faces, GIF, location) come from assetsDir,
-// which a sync fills; colours come from theme.conf(.user).
+// which a sync fills. Colours come from theme.conf and theme.conf.user.
 Rectangle {
     id: root
 
@@ -121,7 +121,7 @@ Rectangle {
         }
     }
 
-    // Page 1 takes any key; page 2's keys go to the password field.
+    // Page 1 takes any key. Page 2's keys go to the password field.
     Item {
         id: pageOneKeys
 

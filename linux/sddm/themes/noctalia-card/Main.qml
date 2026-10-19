@@ -4,7 +4,7 @@ import "components"
 
 // Noctalia Card. SDDM opens one window per screen and loads this file in
 // each. The window on X's primary screen (Xsetup makes the main monitor
-// primary) gets the login (components/LoginScreen.qml); every other window
+// primary) gets the login (components/LoginScreen.qml). Every other window
 // gets the lock screen's side view (components/SideScreen.qml).
 Item {
     id: root
@@ -17,7 +17,7 @@ Item {
     property bool isMain: primaryScreen
 
     // Keys go to the active window, and with no window manager Qt activates
-    // windows as they are shown or clicked. Side windows refuse focus; the
+    // windows as they are shown or clicked. Side windows refuse focus. The
     // main window takes it back from them (but not from other programs, so a
     // test-mode preview doesn't fight the desktop).
     function updateFocusPolicy() {

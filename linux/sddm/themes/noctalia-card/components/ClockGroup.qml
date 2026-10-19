@@ -3,9 +3,9 @@ import QtQuick
 // The lock screen's clock group, gen.py clock_group(): hours, minutes, the
 // AM/PM chip and text, and the date, with the boxes from params.json
 // "clock". Centres are given for 1920x1080 and scaled per axis to this
-// item's size, as Noctalia places widgets; boxes and text keep their size.
+// item's size, as Noctalia places widgets. Boxes and text keep their size.
 // The main monitor uses dy = center_dy (-21) without shadows and the chip in
-// on_surface at chip_alpha; side monitors use dy = side_dy (235) with
+// on_surface at chip_alpha. Side monitors use dy = side_dy (235) with
 // shadows and the chip in surface at side_chip_alpha.
 Item {
     id: root

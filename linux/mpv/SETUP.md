@@ -56,15 +56,12 @@ folder**), otherwise Dolphin's global default.
 
 - Start at 30% volume, cap at 100, resume where you stopped, loop single
   files.
-- Decode video on the GPU (`hwdec=auto`). With an NVIDIA GPU this cuts a
-  playing video from 39% to about 3% of a CPU core.
-- Render through OpenGL (`gpu-api=opengl`). With an NVIDIA GPU a window appears
-  in about 0.2 s instead of 1.2 s with Vulkan, and decoding stays on NVDEC.
+- Decode video on the GPU (`hwdec=auto`).
+- Render through OpenGL (`gpu-api=opengl`). With an NVIDIA GPU, a window
+  opens much faster than with Vulkan, and decoding stays on NVDEC.
 - The read-ahead cache is capped at 32 MiB ahead and 16 MiB behind
   (`demuxer-max-bytes`, `demuxer-max-back-bytes`). mpv counts SMB and FUSE
-  paths as network streams and otherwise holds up to 200 MiB per window. Each
-  mpv window also carries about 80 MiB for the NVIDIA driver, so many open
-  windows add up.
+  paths as network streams and otherwise holds up to 200 MiB per window.
 - Opening a file loads the rest of its folder, same kind only
   (`autocreate-playlist=same`).
 - The image setup follows
@@ -76,32 +73,23 @@ folder**), otherwise Dolphin's global default.
 
 ### Next / previous in Dolphin's order
 
-`autocreate-playlist` sorts the folder by name only, which differs from
-Dolphin's order when Dolphin sorts the folder another way.
+`autocreate-playlist` sorts the folder by name only.
 [`scripts/dolphin-sort.lua`](scripts/dolphin-sort.lua) reorders that playlist
 the way Dolphin sorts the folder: name (natural), modified, created, accessed,
-size or type, ascending or descending.
+size or type, ascending or descending. It uses the folder's own view settings
+or Dolphin's global default (Install). Its header comment says where Dolphin
+stores these settings.
 
-It reads Dolphin 26.08's view settings (`src/views/viewproperties.cpp`):
-
-- With **Remember display style for each folder** on (`GlobalViewProps=false`
-  in `dolphinrc`), each folder keeps its own sort. Dolphin stores it in the
-  folder's `user.kde.fm.viewproperties#1` extended attribute (a `.directory`
-  file where attributes aren't supported). Settings for folders outside home
-  and for network folders live under
-  `~/.local/share/dolphin/view_properties/local` and `/remote`.
-- Folders without their own settings use the global default
-  (`SortRole` and `SortOrder` in `view_properties/global`).
-
-It runs once per window, when the first image loads. A folder re-sorted while
-mpv is open takes effect on the next image you open from Dolphin. If anything
+It runs once per window, when the first file loads. A folder re-sorted while
+mpv is open takes effect on the next file you open from Dolphin. If anything
 is missing, mpv's name order stays.
 
 ### uosc and thumbfast
 
 Videos get uosc controls (AUR `mpv-uosc`) with thumbfast timeline thumbnails
-(AUR `mpv-thumbfast-git`, provider 1, not `-noenabled`). The controls stay
-hidden until the cursor nears them; there is no always-visible progress line.
+(AUR `mpv-thumbfast-git`, not `mpv-thumbfast-noenabled-git`, which is off by
+default). The controls stay hidden until the cursor nears them; there is no
+always-visible progress line.
 uosc installs to `/usr/share/mpv`, which mpv doesn't search, so `mpv.conf`
 loads it from there. Images get no uosc at all (`[image]` disables every
 element). `thumbfast.conf` sets `network=yes`, because mpv counts SMB files as

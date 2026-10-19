@@ -25,7 +25,7 @@ Item {
     onUserNameChanged: candidate = 0
     onFaceSourceChanged: candidate = 0
 
-    // The mask has to be drawn to work; the face covers it.
+    // The mask works only when it is drawn. The face covers it.
     ShapeCanvas {
         id: mask
 

@@ -39,8 +39,8 @@ optional: it takes a still of what a monitor shows.
 1. In Steam, install **Wallpaper Engine** (Properties → Compatibility → force a
    Proton version if Steam doesn't offer it). It never needs to run on Linux:
    the install provides the `assets` folder, and Steam downloads the Workshop
-   wallpapers you subscribe to. Subscribe from its UI, then close it; it holds
-   about 0.7 GB of GPU memory while open.
+   wallpapers you subscribe to. Subscribe from its UI, then close it, because
+   it holds GPU memory while it is open.
 2. Write your picks to `~/.config/live-wallpaper/picks` (Notes, "Picks").
 3. Copy `live-wallpaper` and the service into place, then
    `systemctl --user enable --now live-wallpaper.service`.
@@ -125,51 +125,50 @@ message in the journal.
 
 ### Video and scene wallpapers
 
-**Video** wallpapers are plain `.mp4`/`.webm` files and play exactly as on
-Windows. **Scene** wallpapers are re-implemented, so some effects are missing
-or wrong. mpvpaper can play the video ones if linux-wallpaperengine stops
-working. It doesn't avoid the memory leak below: it draws through the same
-libmpv OpenGL path, and its own issues (#101, #116, #117) report the same
-growth on Hyprland with NVIDIA.
+Video wallpapers are plain `.mp4` and `.webm` files and play as on Windows.
+linux-wallpaperengine re-implements scene wallpapers, so some of their effects
+are missing or wrong.
+
+mpvpaper can play the video wallpapers if linux-wallpaperengine stops working.
+It does not fix the memory leak below: it uses the same libmpv render path and
+leaks the same way.
 
 ### Memory
 
-On 1080p monitors a 4K wallpaper only costs memory. With a local 1080p copy
-the process starts at about 430 MiB instead of 2 GiB or more.
+Use a local 1080p copy on a 1080p monitor. The process then starts at about
+430 MiB. With the 4K original it starts at 2 GiB or more.
 
-With an NVIDIA GPU, linux-wallpaperengine leaks about 10 MiB a minute with
-video wallpapers (upstream issue #416, traced to mpv's OpenGL render path: mpv
-issues #15099 and #8516). The fix, mpv PR #17303, is merged but not in mpv
-0.41. The watchdog timer runs `live-wallpaper --if-over 1500` every 10
-minutes: above 1500 MiB (PSS) it restarts the service, which flickers for
-about a second. It never starts the wallpapers if they aren't running. Check
-whether the watchdog is still needed once mpv 0.42 ships.
+On an NVIDIA GPU, video wallpapers leak about 10 MiB a minute in mpv's OpenGL
+render path (linux-wallpaperengine issue #416). The watchdog timer runs
+`live-wallpaper --if-over 1500` every 10 minutes. Above 1500 MiB (PSS), it
+restarts the service, and the screens flicker for about a second. It never
+starts wallpapers that are not running. mpv PR #17303 fixes the leak. When
+mpv 0.42 or later is installed, check the memory, then remove the watchdog if
+the leak is gone.
 
 ### Wallpaper settings
 
-Each wallpaper's options are in `project.json` (`general.properties`) in its
-Workshop folder, `~/.local/share/Steam/steamapps/workshop/content/431960/<id>/`.
-Override one with a `property name=value` line in the picks file (1/0 for
-on/off); `live-wallpaper` passes each to every wallpaper as `--set-property`.
-linux-wallpaperengine doesn't run Wallpaper Engine scripts, so an element that
-a script hides after a few seconds stays on screen; turn it off with its
+Each wallpaper's options are in `general.properties` of the `project.json` in
+its Workshop folder,
+`~/.local/share/Steam/steamapps/workshop/content/431960/<id>/`. To override
+one, add a `property name=value` line to the picks file. Use 1 for on and 0
+for off. `live-wallpaper` passes each line to every wallpaper as
+`--set-property`.
+
+linux-wallpaperengine does not run Wallpaper Engine scripts. An element that a
+script hides after a few seconds stays on the screen. Turn it off with its
 property.
 
 ### Things to know
 
-- **Layers:** linux-wallpaperengine uses the `bottom` layer, so it stays below
-  windows and above any shell wallpaper on `background`. Noctalia's wallpaper
-  drawing is off, so stopping linux-wallpaperengine
-  (`pkill -f '^\./linux-wallpaperengine'`) leaves the plain background.
+- linux-wallpaperengine draws on the `bottom` layer, below the windows.
+  Noctalia does not draw a wallpaper, so
+  `pkill -f '^\./linux-wallpaperengine'` leaves the plain background.
 - **Accents:** in dark mode the accents are always a light tone of the
   wallpaper's main hue, so a red wallpaper gives pink accents whatever the
   scheme variant.
-- **Performance**, measured with two monitors on an NVIDIA RTX 5070: about 6% of one CPU
-  core, 0.7 GB RAM and 1.1 GB of GPU memory. It runs at 30 fps and pauses while
-  an app is fullscreen.
-- **Preview** a wallpaper in a window: `linux-wallpaperengine --silent <id>`.
-- **Login screen:** the SDDM theme can loop a video too; see
-  [`linux/sddm`](../sddm/SETUP.md).
+- linux-wallpaperengine pauses while an app is fullscreen.
+- To preview a wallpaper in a window: `linux-wallpaperengine --silent <id>`.
 
 ## Verify
 

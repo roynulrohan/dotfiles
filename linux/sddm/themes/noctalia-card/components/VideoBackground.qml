@@ -4,7 +4,7 @@ import QtQuick
 Item {
     id: root
 
-    // The synced assets folder; the probe starts once it is set.
+    // The synced assets folder. The probe starts when it is set.
     property string dir
     property bool isActive: false
     readonly property var activeVideoItem: isActive ? videoSurface : null
@@ -30,8 +30,8 @@ Item {
 
         videoOutput: videoSurface
         loops: MediaPlayer.Infinite
-        // Probe failures (missing/corrupt files) fall through to the next
-        // candidate extension until one loads, else the image stays visible.
+        // When a file is missing or corrupt, try the next extension. If none
+        // loads, the still stays visible.
         onErrorOccurred: function (error, errorString) {
             if (root.isActive)
                 return;
