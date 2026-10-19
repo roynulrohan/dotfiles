@@ -10,20 +10,10 @@
 #                               use more than MIB of memory (PSS): for the watchdog
 # LIVE_WALLPAPER_DRY_RUN=1 prints the linux-wallpaperengine command instead.
 
-# monitor   workshop id   name
-WALLPAPERS='
-DP-1       ayanami-rei-effects   Ayanami Rei, effects (video from Workshop 3407977762, local 1080p copy; also ayanami-rei-minimal and Workshop scene 3258032485 night)
-HDMI-A-1   2704773569    CITRUS - go to class
-DP-2       2511663284    Rain 4K
-'
-
-# Wallpaper settings, name=value. Each name belongs to one wallpaper.
-PROPERTIES='
-fontcolorff4848bigbpromptbox=0
-'
-# fontcolorff4848bigbpromptbox: Elaina's (3314492008, a spare) notice box ("prompt box"). Its 5-second
-# auto-hide is a Wallpaper Engine script that doesn't run here.
-
+# The picks stay on each machine, out of this repo (SETUP.md, "Picks"):
+#   <monitor> <wallpaper> [title]   a Workshop ID or the name of a local copy
+#   property <name>=<value>         passed to every wallpaper as --set-property
+picks="${XDG_CONFIG_HOME:-$HOME/.config}/live-wallpaper/picks"
 copies="${XDG_DATA_HOME:-$HOME/.local/share}/live-wallpapers"
 
 if [ "${1:-}" = --if-over ]; then
@@ -39,6 +29,8 @@ if [ "${1:-}" != --run ] && [ "${LIVE_WALLPAPER_DRY_RUN:-}" != 1 ]; then
     exec systemctl --user restart live-wallpaper.service
 fi
 
+[ -r "$picks" ] || { echo "live-wallpaper: no picks; write them to $picks" >&2; exit 1; }
+
 # Hyprland may still be setting up outputs right after login.
 i=0
 until connected=$(hyprctl monitors -j 2>/dev/null | jq -r '.[].name' 2>/dev/null) && [ -n "$connected" ]; do
@@ -47,19 +39,19 @@ until connected=$(hyprctl monitors -j 2>/dev/null | jq -r '.[].name' 2>/dev/null
 done
 
 set -- --silent
-for p in $PROPERTIES; do set -- "$@" --set-property "$p"; done
+while read -r key value _; do
+    [ "$key" = property ] && set -- "$@" --set-property "$value"
+done < "$picks"
 screens=0
 while read -r monitor id _name; do
-    [ -n "$monitor" ] || continue
+    case "$monitor" in ''|'#'*|property) continue ;; esac
     printf '%s\n' "$connected" | grep -qx "$monitor" || continue
     # A downscaled local copy (<id>-1080p, see SETUP.md) replaces the Workshop
     # original; linux-wallpaperengine reads any --bg containing a / as a folder.
     [ -d "$copies/$id-1080p" ] && id="$copies/$id-1080p"
     set -- "$@" --screen-root "$monitor" --bg "$id" --scaling fill
     screens=$((screens + 1))
-done <<LIST
-$WALLPAPERS
-LIST
+done < "$picks"
 [ "$screens" -gt 0 ] || { echo "live-wallpaper: none of the listed monitors is connected" >&2; exit 1; }
 
 if [ "${LIVE_WALLPAPER_DRY_RUN:-}" = 1 ]; then

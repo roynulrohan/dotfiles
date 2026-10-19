@@ -16,7 +16,8 @@ the same still from Noctalia whenever it changes ([`linux/sddm`](../sddm/SETUP.m
 | [`live-wallpaper.service`](live-wallpaper.service) | `~/.config/systemd/user/` |
 | [`live-wallpaper-watchdog.service`](live-wallpaper-watchdog.service), [`.timer`](live-wallpaper-watchdog.timer) | `~/.config/systemd/user/` |
 
-Outside the repo: the local wallpaper copies in
+Outside the repo: your picks in `~/.config/live-wallpaper/picks` (Notes,
+"Picks"), the local wallpaper copies in
 `~/.local/share/live-wallpapers/` (Install, "Local 1080p copies") and the
 stills in `~/Pictures/Wallpapers/live/` (Install, "A still for Noctalia").
 
@@ -40,8 +41,7 @@ optional: it takes a still of what a monitor shows.
    the install provides the `assets` folder, and Steam downloads the Workshop
    wallpapers you subscribe to. Subscribe from its UI, then close it; it holds
    about 0.7 GB of GPU memory while open.
-2. Set the picks at the top of `live-wallpaper` for your monitors (Notes,
-   "Picks").
+2. Write your picks to `~/.config/live-wallpaper/picks` (Notes, "Picks").
 3. Copy `live-wallpaper` and the service into place, then
    `systemctl --user enable --now live-wallpaper.service`.
 4. Make the local 1080p copy of the main video (below), then copy the watchdog
@@ -60,8 +60,9 @@ outside the Workshop work the same way. This example encodes with NVENC (an
 NVIDIA GPU) and keeps 60 fps, so the same file suits mpvpaper too:
 
 ```bash
-src=~/.local/share/Steam/steamapps/workshop/content/431960/3314492008
-dst=~/.local/share/live-wallpapers/3314492008-1080p
+id=1234567890   # the Workshop ID
+src=~/.local/share/Steam/steamapps/workshop/content/431960/$id
+dst=~/.local/share/live-wallpapers/$id-1080p
 mkdir -p "$dst" && cp -p "$src/project.json" "$src/preview.gif" "$dst/"
 f=$(jq -r .file "$src/project.json")
 ffmpeg -i "$src/$f" -vf scale=1920:1080:flags=lanczos -c:v h264_nvenc -preset p7 \
@@ -105,15 +106,22 @@ when the screens wake from DPMS. Stop the wallpapers with
 
 ### Picks
 
-The list at the top of `live-wallpaper` maps monitors to wallpapers: a Workshop
-ID, or the name of a local copy. Only connected monitors get a wallpaper.
-Change a pick there, then rerun it.
+`~/.config/live-wallpaper/picks` maps monitors to wallpapers. It stays on
+each machine, so changing a wallpaper needs no commit. One line per monitor:
+the output name (`hyprctl monitors`), a Workshop ID or the name of a local
+copy, and an optional title. Lines starting with `#` are comments, and
+`property` lines set wallpaper options (see Wallpaper settings):
 
-| Monitor | Wallpaper | ID |
-|---|---|---|
-| DP-1 (main, middle) | Ayanami Rei, "effects": video, 30 fps, a local copy of Workshop `3407977762` (also the login video) | `ayanami-rei-effects` |
-| HDMI-A-1 (right) | [4K]CITRUS - go to class | `2704773569` |
-| DP-2 (left) | Rain 雨 [4K] | `2511663284` |
+```
+# monitor  wallpaper   title
+DP-1       1234567890  Main monitor
+HDMI-A-1   my-video    A local copy
+property   name=0
+```
+
+Only connected monitors get a wallpaper. Edit the file, then run
+`live-wallpaper` to apply it. Without the file, the service exits with a
+message in the journal.
 
 ### Video and scene wallpapers
 
@@ -141,11 +149,11 @@ whether the watchdog is still needed once mpv 0.42 ships.
 
 Each wallpaper's options are in `project.json` (`general.properties`) in its
 Workshop folder, `~/.local/share/Steam/steamapps/workshop/content/431960/<id>/`.
-Override one with `--set-property name=value` (1/0 for on/off); `live-wallpaper`
-keeps them in its `PROPERTIES` list. Elaina's notice box hides itself after 5
-seconds through a Wallpaper Engine script that linux-wallpaperengine doesn't
-run, so
-`fontcolorff4848bigbpromptbox=0` turns it off.
+Override one with a `property name=value` line in the picks file (1/0 for
+on/off); `live-wallpaper` passes each to every wallpaper as `--set-property`.
+linux-wallpaperengine doesn't run Wallpaper Engine scripts, so an element that
+a script hides after a few seconds stays on screen; turn it off with its
+property.
 
 ### Things to know
 
@@ -171,4 +179,4 @@ systemctl --user is-active live-wallpaper.service live-wallpaper-watchdog.timer 
 pgrep -af '^\./linux-wallpaperengine' | grep -o -- '--screen-root [^ ]*'          # one line per connected monitor
 ```
 
-Every connected monitor plays its wallpaper from "Picks".
+Every connected monitor plays its wallpaper from the picks file.

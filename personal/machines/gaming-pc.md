@@ -53,6 +53,7 @@ Not on this machine: Cursor and Ghostty.
       signing, then Claude Code and Orca.
 - [ ] Restore my media from backup: wallpaper stills to `~/Pictures/Wallpapers`,
       the main wallpaper's still and `login.mp4` to `~/Pictures/Wallpapers/live`,
+      the live-wallpaper picks to `~/.config/live-wallpaper/picks`,
       lock-screen GIFs to `~/Pictures/lock-gifs`, the lock-screen avatar to
       `~/Pictures/lock-avatar.png`, `~/.face`, and the greeting's
       logo images to `~/.config/fastfetch/logo/`.
@@ -95,5 +96,3 @@ Not on this machine: Cursor and Ghostty.
   bottom RS140s on the other. They are white, stored on the board's lighting
   chip. OpenRGB can't control them: the chip runs firmware 0.2 and OpenRGB
   needs 0.6 for this board ([`linux/openrgb`](../../linux/openrgb/SETUP.md)).
-- Spare live wallpapers, kept as local copies next to the ones in use:
-  `ayanami-rei-minimal` and `3314492008`.
