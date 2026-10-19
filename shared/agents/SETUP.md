@@ -36,6 +36,6 @@ Run from the repo root:
 
 ```bash
 diff shared/agents/AGENTS.md ~/.codex/AGENTS.md    # no output
-diff shared/agents/AGENTS.md ~/.claude/CLAUDE.md   # only the blank line and @RTK.md that rtk adds
+diff shared/agents/AGENTS.md ~/.claude/CLAUDE.md   # only lines that tools add, such as rtk's @RTK.md
 rtk init --show                                    # Global (~/.claude/CLAUDE.md): @RTK.md reference [ok]
 ```

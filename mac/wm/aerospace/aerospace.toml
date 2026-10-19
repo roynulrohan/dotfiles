@@ -22,12 +22,12 @@ key-mapping.preset = 'qwerty'
 # 1-10 mirror Super+1..0 on Hyprland.
 persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-# 4 px between windows and at the screen edges.
+# 2 px between windows and 4 px at the screen edges, as on Linux.
 # Top clears SketchyBar: y_offset 4 + height 36 + gap 4 = 44. The built-in panel's
 # usable area already starts 32 px down, so 12 there. Update these with the bar's
 # height or y_offset (mac/wm/sketchybar/sketchybarrc).
-gaps.inner.horizontal = 4
-gaps.inner.vertical   = 4
+gaps.inner.horizontal = 2
+gaps.inner.vertical   = 2
 gaps.outer.left       = 4
 gaps.outer.right      = 4
 gaps.outer.bottom     = 4
