@@ -7,9 +7,12 @@
 #     top-level file, documentation (*.md), a licence or a .gitkeep
 #   - links: every relative link in the Markdown docs points to a file that
 #     exists
-#   - SETUP.md: the sections Files, Install, Notes, Verify in that order, and
-#     no dates or history ("tried and dropped", "this PC"); the commit history
-#     keeps the story
+#   - SETUP.md: the sections Files, Install, Notes (optional), Verify in that
+#     order
+#   - SETUP.md, README.md, INSTALL.md: no dates or history ("tried and
+#     dropped", "this PC"); the commit history keeps the story
+#   - Markdown: no em dashes and no "etc." (WRITING.md), except in work
+#     copied in from others
 #   - secrets: gitleaks on staged and unstaged changes, if it is installed
 # Luau (the Noctalia plugins) has no checker here. Prints only problems and
 # skipped checks; exit status 1 when anything fails.
@@ -97,20 +100,31 @@ for f in files:
                 if not os.path.exists(path):
                     bad(f"{f}:{n}: link to {target}, which does not exist")
 
-# SETUP.md shape and no history
-shape = ["## Files", "## Install", "## Notes", "## Verify"]
+# SETUP.md shape, no history in the docs for readers, WRITING.md patterns
+shapes = (["## Files", "## Install", "## Notes", "## Verify"],
+          ["## Files", "## Install", "## Verify"])
 history = re.compile(r"\b20\d\d-\d\d-\d\d\b|this PC|on this machine|tried and dropped", re.I)
+slop = re.compile(r"\u2014|\betc\.")
+vendored = ("linux/noctalia/plugins/arch-updater/",)
 for f in files:
-    if os.path.basename(f) != "SETUP.md":
+    if not f.endswith(".md") or f.startswith(vendored):
         continue
     with open(f, encoding="utf-8") as fh:
         lines = fh.read().split("\n")
-    heads = [l.strip() for l in lines if l.startswith("## ")]
-    if heads != shape:
-        bad(f"{f}: sections are {heads}, want {shape}")
+    name = os.path.basename(f)
+    if name == "SETUP.md":
+        heads = [l.strip() for l in lines if l.startswith("## ")]
+        if heads not in shapes:
+            bad(f"{f}: sections are {heads}, want {shapes[0]} (Notes optional)")
+    fenced = False
     for n, line in enumerate(lines, 1):
-        if history.search(line):
-            bad(f"{f}:{n}: history belongs in the commit message: {line.strip()[:60]}")
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+        if name == "SETUP.md" or f in ("README.md", "INSTALL.md"):
+            if history.search(line):
+                bad(f"{f}:{n}: history belongs in the commit message: {line.strip()[:60]}")
+        if not fenced and slop.search(re.sub(r"`[^`]*`", "", line)):
+            bad(f"{f}:{n}: em dash or 'etc.' (WRITING.md): {line.strip()[:60]}")
 
 # manifest.tsv rows
 modes = {"copy", "copy-x", "dir", "seed", "manual", "gone"}

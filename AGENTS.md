@@ -18,6 +18,7 @@ symlinked. Read "Rules" before you change anything.
 | [`INSTALL.md`](INSTALL.md) | The guide for other people who want this setup. |
 | [`README.md`](README.md) | The owner's showcase. |
 | [`CREDITS.md`](CREDITS.md) | Inspirations, and work included from others. |
+| [`WRITING.md`](WRITING.md) | What goes in the repo, where each fact lives, and how to write it. |
 
 ## Setting up one of the owner's machines
 
@@ -72,15 +73,9 @@ These apply to every edit, by any agent.
    `~/.config/fish/local.fish`, `~/.gitconfig.local` or kitty's `local.conf`.
 8. **Run `./check.sh` after `git add` and before every commit.** Commit only
    when it prints no `FAIL` line.
-9. **Each doc has one audience.**
-   - `README.md`: the owner's showcase. No install steps beyond the pointer to
-     `INSTALL.md`, no internal names, no history.
-   - `INSTALL.md`: other people. Nothing about the owner's machines, media or
-     sign-ins.
-   - `personal/`: the owner and agents.
-   - `SETUP.md`: facts about the package that are true for anyone who clones
-     the repo. No dates, no "tried and dropped", no "on this PC"; those go in
-     commit messages or the machine file.
+9. **Write by [`WRITING.md`](WRITING.md).** It says what goes in the repo,
+   which file is the home of each fact, who each doc is for, and how to
+   write. Read it before you write a doc, a comment or a commit body.
 10. **Record lasting preferences.** When the owner states a preference that the
     config can't show (a ranking, a convention across tools, a hard no), add it
     to [`personal/preferences.md`](personal/preferences.md), worded without
