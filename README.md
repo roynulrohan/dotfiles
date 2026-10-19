@@ -38,7 +38,8 @@ On the gaming PC:
 - **Workspaces per monitor**, 1 to 10 on each, shown as animated pills on the
   bar.
 - **Window mode** (Super+A): arrows move the window, Shift resizes it, Alt makes
-  the step finer. mpv's image viewer uses the same keys.
+  the step finer. In mpv's image viewer, arrows pan and Alt makes the step
+  finer too.
 - **Headset EQ** in PipeWire for the Logitech G432.
 
 ## How I work on it

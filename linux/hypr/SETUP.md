@@ -220,10 +220,10 @@ with Ctrl+→ or Ctrl+↓), they move the left or top edge instead, so the windo
 stays against that side.
 
 Floating windows stay inside the usable area of their monitor: the bar (the
-monitor's reserved area) and the 4 px outer gap are excluded, and a step that
-would cross an edge stops at it. Hyprland resizes a floating window around its
-centre, so the edge keys move it by half the change to keep the other edge in
-place.
+monitor's reserved area) and a 6 px margin, the 4 px outer gap plus the 2 px
+border, are excluded, and a step that would cross an edge stops at it. Hyprland
+resizes a floating window around its centre, so the edge keys move it by half
+the change to keep the other edge in place.
 
 `hypr-vars.lua` switches off the resize keys from `keybinds.lua` with empty key
 lists: Super+-/=, Super+Shift+-/= and Super+Alt+arrows. Those keys are free.
@@ -281,7 +281,7 @@ and `notify-send` (package `libnotify`).
 hyprctl configerrors                                # blank lines only: no config errors
 git -C ~/.local/share/hypr-plugins/split-monitor-workspaces rev-parse --short HEAD   # f26d624
 hyprctl workspaces -j | jq -r '.[] | select(.id > 0) | .monitor' | sort | uniq -c   # 10 per monitor
-python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home() / ".config/hypr/hyprland.lua")'   # prints nothing: HyprMod can read the config
+python3 -c 'import hyprland_config, pathlib; hyprland_config.load_any(pathlib.Path.home() / ".config/hypr/hyprland.lua")'   # prints nothing: HyprMod can read the config (needs linux/hyprmod)
 ```
 
 The `python3` line runs `hyprland.lua`, which creates `hypr-vars.lua`,

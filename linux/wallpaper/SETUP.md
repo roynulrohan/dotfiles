@@ -33,7 +33,7 @@ sudo pacman -S jq ffmpeg
 `linux-wallpaperengine-git` is maintained by the author. It builds from source
 and installs into `/opt/linux-wallpaperengine`. `live-wallpaper` reads the
 monitor list with `jq`. `ffmpeg` makes the local copies and the stills. Steam
-comes with CachyOS's gaming bundle (`cachyos-gaming-meta`). `grim` is
+comes with CachyOS's gaming bundle (`cachyos-gaming-applications`). `grim` is
 optional: it takes a still of what a monitor shows.
 
 1. In Steam, install **Wallpaper Engine** (Properties → Compatibility → force a

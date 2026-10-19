@@ -81,8 +81,8 @@ Keybindings sync per platform.
   swipe for back and forward, and colours kept in sRGB (Wayland colour
   management off). Copy it after you sign in to Settings Sync.
 - `--password-store=gnome-libsecret` in `code-flags.conf` sends logins to the
-  Secret Service API (`org.freedesktop.secrets`). KDE Wallet answers it, so
-  GitHub logins stay in the wallet.
+  Secret Service API (`org.freedesktop.secrets`). The program that provides
+  the service stores them, such as KDE Wallet or GNOME Keyring.
 
 ## Verify
 

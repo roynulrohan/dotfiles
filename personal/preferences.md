@@ -14,7 +14,8 @@ job.
   because a device is missing today.
 - **Review and pin third-party code.** A plugin or package that runs code is
   read first, then pinned to the reviewed commit or version. Today:
-  split-monitor-workspaces and the Noctalia plugins.
+  split-monitor-workspaces and the local Noctalia plugins. The community
+  plugin hypr-submap is not pinned: Noctalia fetches it again at every start.
 - **12-hour time** everywhere a clock shows.
 
 ## Look

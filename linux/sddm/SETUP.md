@@ -207,11 +207,6 @@ To remove this repo's SDDM config completely, delete
 `/etc/sddm.conf.d/noctalia-card.conf` instead of running the `sed` line.
 CachyOS's defaults then apply alone, with Breeze and Qt's on-screen keyboard.
 
-To remove all of this repo's SDDM config, also delete
-`/etc/sddm.conf.d/noctalia-card.conf` instead of running the `sed` line.
-CachyOS's defaults then apply alone: Breeze, and Qt's on-screen keyboard on
-the password field.
-
 Back to Plasma Login Manager:
 
 ```bash

@@ -102,7 +102,8 @@ lists the output names):
 - `M` and the side monitors in
   [`linux/noctalia/lock/scripts/gen.py`](linux/noctalia/lock/scripts/gen.py),
   for the lock screen
-- the wallpaper list in [`linux/wallpaper/live-wallpaper`](linux/wallpaper/live-wallpaper)
+- the monitor names in your wallpaper picks file
+  ([`linux/wallpaper`](linux/wallpaper/SETUP.md), Picks)
 - `MAIN_MODEL` and `ORDER` (EDID model names) in
   [`linux/sddm/Xsetup`](linux/sddm/Xsetup), for the login screen
 

@@ -171,8 +171,9 @@ Alt+Tab runs `window-switcher hold` (in
   `workspaces`.
 - **hypr-submap** (`k4n4t4/hypr-submap` 1.0.0, MIT, a community plugin): an
   island that reads "window" while window mode (Super+A,
-  [`linux/hypr`](../hypr/SETUP.md)) is on. Click it to leave the mode. It runs
-  only `hyprctl submap` and `hyprctl dispatch 'hl.dsp.submap("reset")'`.
+  [`linux/hypr`](../hypr/SETUP.md)) is on. Click it to leave the mode. It reads
+  Hyprland's event socket with `socat`, and runs only `hyprctl submap` and
+  `hyprctl dispatch 'hl.dsp.submap("reset")'`.
   Version 1.0.0 was reviewed for this.
 - **arch-updater**: see Update widget.
 
