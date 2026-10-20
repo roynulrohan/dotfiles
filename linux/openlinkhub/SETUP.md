@@ -202,12 +202,31 @@ files.
 Fans on the motherboard's headers are not part of this package. They stay on
 the BIOS fan curves.
 
-### Assignments lost after a BIOS update
+### Assignments lost after a BIOS update or a USB reconnect
 
-On the first boot after a BIOS update, OpenLinkHub can start with every fan
-on its built-in Normal curve and save that over the assignments, without an
-error in its log. The curves themselves stay. Check the fans after a BIOS
-update (Verify) and repeat Install, step 4 if needed.
+OpenLinkHub can start with every fan on its built-in Normal curve and save
+that over the assignments, without an error in its log. The curves
+themselves stay. This happened on the first boot after a BIOS update, and
+after a USB reconnect. Check the fans after either (Verify), and repeat
+Install, step 4 if needed.
+
+### Devices lost after USB devices are moved
+
+Moving USB devices between ports can make the hub and the AIO reconnect. The
+log then shows `Error receiving USB monitor data` with `no buffer space
+available`.
+
+- **The hub comes back without its fans.** The web UI lists only temperature
+  probes. Fix: `sudo systemctl restart openlinkhub`, then repeat Install,
+  step 4.
+- **The AIO stops answering.** The log shows "Loaded custom user profile" for
+  it, but never "Device successfully initialized", and the API doesn't list
+  it. A restart or a reboot doesn't help, because the PC keeps USB powered.
+  Fix: shut down, switch the power supply off for 30 seconds, then start
+  again.
+
+Without the coolant temperature, both scripts print their error values, so
+every fan runs at full speed until the AIO is back.
 
 Source: [OpenLinkHub](https://github.com/jurkovic-nikola/OpenLinkHub).
 
