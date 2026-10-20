@@ -36,10 +36,14 @@ probe: 30% up to 32 °C, 40% at 36 °C, 60% at 40 °C and 100% at 45 °C.
 
 ### Lighting
 
-The rear AR120 and the H100i's pump get their colours from OpenLinkHub. The
-other fans get ARGB from the motherboard's two JRAINBOW headers: one feeds a
-Thermalright ARGB hub, the other the bottom RS140s. They are white, as stored
-on the board's lighting chip. OpenRGB can't control that chip yet
+| Device | Lighting | Set by |
+|---|---|---|
+| Rear AR120 | white | OpenLinkHub |
+| H100i pump | coolant thermometer: green to 35 °C, amber at 38 °C, red at 41 °C | OpenLinkHub ([`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md)) |
+| RAM | CPU and RAM usage as levels in the wallpaper accent | [`linux/case-lights`](../../linux/case-lights/SETUP.md) |
+| Other fans | white, stored on the board's lighting chip | the motherboard's two JRAINBOW headers: one feeds a Thermalright ARGB hub, the other the bottom RS140s |
+
+OpenRGB can't control the board's lighting chip yet
 ([`linux/openrgb`](../../linux/openrgb/SETUP.md)).
 
 ## BIOS
@@ -78,7 +82,8 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
 7. The rest: [`linux/hyprsunset`](../../linux/hyprsunset/SETUP.md),
    [`linux/pipewire`](../../linux/pipewire/SETUP.md),
    [`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md),
-   [`linux/openrgb`](../../linux/openrgb/SETUP.md), [`linux/mpv`](../../linux/mpv/SETUP.md),
+   [`linux/openrgb`](../../linux/openrgb/SETUP.md),
+   [`linux/case-lights`](../../linux/case-lights/SETUP.md), [`linux/mpv`](../../linux/mpv/SETUP.md),
    [`linux/btop`](../../linux/btop/SETUP.md), [`linux/equibop`](../../linux/equibop/SETUP.md),
    [`linux/ssh`](../../linux/ssh/SETUP.md), [`linux/snapshots`](../../linux/snapshots/SETUP.md),
    [`shared/nvim`](../../shared/nvim/SETUP.md), [`shared/vscode`](../../shared/vscode/SETUP.md),

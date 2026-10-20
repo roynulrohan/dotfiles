@@ -302,3 +302,9 @@ output_path = "$XDG_CONFIG_HOME/equibop/themes/noctalia.theme.css"
 [widget.clock]
 format = "{:%a %b %-d · %-I:%M %p}"      # short date, 12-hour time: Thu Oct 8 · 3:42 PM
 tooltip_format = "{:%A, %B %-d, %Y}"      # hover: Thursday, October 8, 2026
+
+# RAM lighting (~/.local/bin/case-lights): the accent colour as plain hex. The
+# script raises its saturation, because LEDs show the pastel as near-white.
+[theme.templates.user.rgb-accent]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/rgb-accent.txt"
+output_path = "$XDG_CONFIG_HOME/case-lights/accent"

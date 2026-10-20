@@ -1,0 +1,102 @@
+#!/usr/bin/python3 -I
+# Draws CPU and RAM usage on the two RAM sticks as a floating level: white,
+# filled from the bottom with the wallpaper's accent colour. The stick nearer
+# the CPU shows CPU usage, the other one RAM usage.
+#
+# Talks to OpenRGB's SDK server (openrgb-server.service, port 6742). The accent
+# comes from Noctalia's rgb-accent template. Noctalia's accents are soft
+# pastels that LEDs show as near-white, so the script raises the saturation.
+import colorsys
+import math
+import os
+import signal
+import time
+
+from openrgb import OpenRGBClient
+from openrgb.utils import RGBColor
+
+ACCENT_FILE = os.path.expanduser("~/.config/case-lights/accent")
+FPS = 25
+LEDS = 10                 # per stick; LED 1 is at the top
+SATURATION = 0.9
+EASE = 0.06               # share of the gap to the target closed per frame
+BOB = 0.25                # surface bob, in LEDs
+WHITE = (255, 255, 255)
+
+
+def accent():
+    try:
+        h = open(ACCENT_FILE).read().strip().lstrip("#")
+        r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    except (OSError, ValueError):
+        return (25, 123, 255)
+    hue, _, _ = colorsys.rgb_to_hsv(r, g, b)
+    return tuple(round(c * 255) for c in colorsys.hsv_to_rgb(hue, SATURATION, 1.0))
+
+
+def cpu_times():
+    v = list(map(int, open("/proc/stat").readline().split()[1:]))
+    return sum(v), v[3] + v[4]
+
+
+def ram_used():
+    m = {}
+    for line in open("/proc/meminfo"):
+        k, v = line.split(":")
+        m[k] = int(v.split()[0])
+    return 1 - m["MemAvailable"] / m["MemTotal"]
+
+
+def frame(level, phase, colour):
+    # level 0..1 fills from the bottom. The top LED is partly lit for
+    # in-between values, and the surface bobs a little.
+    height = max(0.0, min(LEDS, level * LEDS + BOB * math.sin(phase)))
+    leds = []
+    for led in range(LEDS):                 # led 0 = top
+        from_bottom = LEDS - 1 - led
+        f = max(0.0, min(1.0, height - from_bottom))
+        leds.append(RGBColor(*(round(w + (a - w) * f) for w, a in zip(WHITE, colour))))
+    return leds
+
+
+def run():
+    client = OpenRGBClient("127.0.0.1", 6742, "case-lights")
+    sticks = sorted((d for d in client.devices if "Vengeance" in d.name), key=lambda d: d.id)
+    if len(sticks) < 2:
+        raise RuntimeError("expected 2 RAM sticks in OpenRGB")
+    for s in sticks:
+        s.set_mode("Direct")
+    colour, mtime = accent(), 0.0
+    level = [0.0, 0.0]
+    prev = cpu_times()
+    cpu, ram, t = 0.0, ram_used(), 0
+    while True:
+        t += 1
+        if t % 6 == 0:                      # CPU every 0.24 s
+            cur = cpu_times()
+            total, idle = cur[0] - prev[0], cur[1] - prev[1]
+            cpu = 1 - idle / total if total else cpu
+            prev = cur
+        if t % FPS == 0:                    # RAM and the accent every second
+            ram = ram_used()
+            try:
+                m = os.path.getmtime(ACCENT_FILE)
+                if m != mtime:
+                    colour, mtime = accent(), m
+            except OSError:
+                pass
+        for i, target in enumerate((cpu, ram)):
+            level[i] += (target - level[i]) * EASE
+        phase = t / FPS * 1.6
+        sticks[0].set_colors(frame(level[0], phase, colour), fast=True)
+        sticks[1].set_colors(frame(level[1], phase + 1.3, colour), fast=True)
+        time.sleep(1 / FPS)
+
+
+signal.signal(signal.SIGTERM, lambda *_: os._exit(0))
+while True:
+    try:
+        run()
+    except Exception as e:                  # server not up yet, or restarted
+        print("case-lights:", e, flush=True)
+        time.sleep(3)

@@ -1,0 +1,15 @@
+[Unit]
+Description=CPU and RAM usage as floating levels on the RAM sticks
+PartOf=graphical-session.target
+Requires=openrgb-server.service
+After=openrgb-server.service
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/case-lights
+Restart=always
+RestartSec=3
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target

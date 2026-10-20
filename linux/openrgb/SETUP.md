@@ -10,6 +10,7 @@ Commander hubs and the H100i RGB PRO XT cooler, which
 | Repo | Destination |
 |---|---|
 | [`OpenRGB.json`](OpenRGB.json) | `~/.config/OpenRGB/OpenRGB.json` |
+| [`openrgb-server.service`](openrgb-server.service) | `~/.config/systemd/user/openrgb-server.service` |
 
 `OpenRGB.json` is a seed: it holds only the detector switches. OpenRGB adds
 every other setting to the file at its first start and keeps the switches.
@@ -27,6 +28,19 @@ every other setting to the file at its first start and keeps the switches.
 
 2. Copy `OpenRGB.json` **before the first start** of OpenRGB, so detection
    never touches a Corsair hub or cooler.
+
+3. Copy the service, then start it. It runs OpenRGB's SDK server without a
+   window, for scripts such as [`linux/case-lights`](../case-lights/SETUP.md):
+
+   ```bash
+   systemctl --user daemon-reload
+   systemctl --user enable --now openrgb-server.service
+   ```
+
+   While the server runs, `openrgb` connects to it and doesn't scan the
+   hardware itself. Don't start it with `--noautoconnect`: it then scans as
+   well, reads the devices at the same time as the server, and logs errors
+   such as `Corsair DRAM ReadDeviceInfo CRC Mismatch`.
 
 ## Notes
 
@@ -61,7 +75,9 @@ Source: [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB).
 ## Verify
 
 ```bash
-openrgb --list-devices | grep -E '^[0-9]+: '            # the RGB devices found
-openrgb --list-devices | grep -i -E 'commander|hydro'   # nothing
+systemctl --user is-active openrgb-server.service      # active
+ss -ltn | grep ':6742 '                                 # the SDK server listens
+openrgb --list-devices | grep -E '^[0-9]+: '              # each RGB device once
+openrgb --list-devices | grep -i -E 'commander|hydro'     # nothing
 grep -E '"Corsair (Commander Core|Hydro H100i Pro XT)' ~/.config/OpenRGB/OpenRGB.json   # all four false
 ```

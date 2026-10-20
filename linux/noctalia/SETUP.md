@@ -281,6 +281,7 @@ writes to `gtk.css`), and the Qt one merges into `kdeglobals`.
 | `qtengine.colors` | `~/.config/qtengine/noctalia.colors` | `qtengine/config.json`'s `colorScheme` points at this file. `kdeglobals` stays untouched |
 | `btop.theme` | `~/.config/btop/themes/noctalia.theme` | The theme `btop.conf` selects ([`linux/btop`](../btop/SETUP.md)). The hook `pkill -USR2 -x btop` makes a running btop reload |
 | `sddm-theme.conf` | `/var/lib/sddm-assets/colours.conf` | The login screen's colours ([`linux/sddm`](../sddm/SETUP.md), How it stays in sync). The hook copies the wallpaper the palette came from as the login still. Until that folder exists, the log says "failed to open template output" and the hook is skipped |
+| `rgb-accent.txt` | `~/.config/case-lights/accent` | The accent colour as plain hex, for [`linux/case-lights`](../case-lights/SETUP.md). No hook: case-lights reads the file every second |
 | `equibop.theme.css` | `~/.config/equibop/themes/noctalia.theme.css` | Noctalia's community "Midnight" Discord theme. To switch it on, open Equibop's Settings, then Themes. It loads its base CSS from `refact0r.github.io` |
 
 ### Qt apps turn light after a Qt update

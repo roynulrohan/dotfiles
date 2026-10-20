@@ -122,6 +122,7 @@ Take any of these on their own.
 | Headset EQ (Logitech G432) | [`linux/pipewire`](linux/pipewire/SETUP.md) | Linux |
 | Corsair fan hub and AIO cooler: fans follow the coolant and GPU temperatures | [`linux/openlinkhub`](linux/openlinkhub/SETUP.md) | Linux |
 | OpenRGB, kept away from the Corsair fan hub and cooler | [`linux/openrgb`](linux/openrgb/SETUP.md) | Linux |
+| RAM lighting: CPU and RAM usage as levels in the wallpaper accent | [`linux/case-lights`](linux/case-lights/SETUP.md) | Linux |
 | mpv as video player and image viewer | [`linux/mpv`](linux/mpv/SETUP.md) | Linux |
 | btop | [`linux/btop`](linux/btop/SETUP.md) | Linux |
 | Equibop (Discord) | [`linux/equibop`](linux/equibop/SETUP.md) | Linux |

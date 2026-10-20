@@ -8,6 +8,8 @@
 #   without it.
 # Destinations outside ~ need sudo to copy.
 linux	linux/btop/btop.conf	~/.config/btop/btop.conf	copy
+linux	linux/case-lights/case-lights	~/.local/bin/case-lights	copy-x	openrgb
+linux	linux/case-lights/case-lights.service	~/.config/systemd/user/case-lights.service	copy	openrgb
 linux	linux/equibop/equibop.desktop	~/.local/share/applications/equibop.desktop	copy
 linux	linux/fish/config.fish	~/.config/fish/config.fish	copy
 linux	linux/hypr/animations	~/.config/hypr/animations	dir
@@ -61,6 +63,7 @@ linux	linux/openlinkhub/temperatures/CaseRearCurve.json	/var/lib/openlinkhub/dat
 linux	linux/openlinkhub/temperatures/CoolantCurve.json	/var/lib/openlinkhub/database/temperatures/CoolantCurve.json	seed	openlinkhub
 linux	linux/openlinkhub/temperatures/CoolantScriptCurve.json	/var/lib/openlinkhub/database/temperatures/CoolantScriptCurve.json	seed	openlinkhub
 linux	linux/openrgb/OpenRGB.json	~/.config/OpenRGB/OpenRGB.json	seed	openrgb
+linux	linux/openrgb/openrgb-server.service	~/.config/systemd/user/openrgb-server.service	copy	openrgb
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
 linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
 linux	linux/sddm/Xsetup	/etc/sddm/Xsetup	copy-x
