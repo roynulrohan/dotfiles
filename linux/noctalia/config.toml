@@ -88,7 +88,7 @@ end = ["media", "group:signal", "updates", "tray", "clock", "group:system", "ses
 
 [[bar.default.capsule_group]]
 id = "stats"                 # machine state, text only
-members = ["cpu", "ram", "cputemp", "gputemp"]
+members = ["cpu", "ram", "cputemp", "gputemp", "coolant"]
 padding = 8                  # same end padding as single islands (group default is 6)
 opacity = 0.8                # match the single islands
 widget_spacing = 8
@@ -111,21 +111,30 @@ widget_spacing = 8
 type = "sysmon"
 stat = "cpu_usage"
 visualization = "none"
+label_min_width = 26         # room for "100%", so the bar doesn't shift
 
 [widget.ram]
 type = "sysmon"
 stat = "ram_used"
 visualization = "none"
+label_min_width = 46
 
 [widget.cputemp]
 type = "sysmon"
 stat = "cpu_temp"
 visualization = "none"
+label_min_width = 28
 
 [widget.gputemp]
 type = "sysmon"
 stat = "gpu_temp"
 visualization = "none"
+label_min_width = 28
+
+# The H100i's coolant temperature (plugins/coolant): monotone, amber and red
+# from the pump lighting's points on.
+[widget.coolant]
+type = "roynul/coolant:coolant"
 
 # The community plugin k4n4t4/hypr-submap: the active Hyprland submap, hidden
 # in the default one.
@@ -308,3 +317,9 @@ tooltip_format = "{:%A, %B %-d, %Y}"      # hover: Thursday, October 8, 2026
 [theme.templates.user.rgb-accent]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/rgb-accent.txt"
 output_path = "$XDG_CONFIG_HOME/case-lights/accent"
+
+# A 5800X sits at 60-70 C on the desktop, so the defaults (60 / 85) tinted the
+# CPU temperature all day. AMD's limit for this CPU is 90 C.
+[system.monitor]
+cpu_temp_activity_threshold = 75
+cpu_temp_critical_threshold = 88

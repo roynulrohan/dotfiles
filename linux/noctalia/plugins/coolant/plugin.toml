@@ -1,0 +1,18 @@
+# The H100i's coolant temperature in the bar. It stays monotone like the
+# other stats and turns amber, then red, at the pump lighting's points. The
+# tooltip lists the fan and pump speeds. A click opens the OpenLinkHub web UI.
+
+id           = "roynul/coolant"
+name         = "Coolant"
+version      = "0.1.0"
+plugin_api   = 32 # argv runAsync (24)
+author       = "roynul"
+license      = "MIT"
+icon         = "droplet"
+description  = "Coolant temperature from OpenLinkHub, with fan and pump speeds in the tooltip."
+tags         = ["hardware", "cooling"]
+dependencies = ["openlinkhub", "python3"]
+
+[[widget]]
+id    = "coolant"
+entry = "coolant.luau"

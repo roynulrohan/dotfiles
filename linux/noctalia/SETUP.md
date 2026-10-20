@@ -12,6 +12,7 @@ and screenshots. Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | [`templates/`](templates) | `~/.config/noctalia/templates/` (see Colour templates) |
 | [`plugins/workspace-apps/`](plugins/workspace-apps/README.md) | `~/.local/share/noctalia/plugins/workspace-apps/` (see Plugins) |
 | [`plugins/workspace-pills/`](plugins/workspace-pills/README.md) | `~/.local/share/noctalia/plugins/workspace-pills/` (see Plugins) |
+| [`plugins/coolant/`](plugins/coolant/README.md) | `~/.local/share/noctalia/plugins/coolant/` (see Plugins) |
 | [`plugins/arch-updater/`](plugins/arch-updater/README.md) | `~/.local/share/noctalia/plugins/arch-updater/` (see Update widget) |
 | [`arch-update-tray.desktop`](arch-update-tray.desktop) | `~/.config/autostart/arch-update-tray.desktop` (see Update widget) |
 | [`spicetify-user.css`](spicetify-user.css) | `~/.config/spicetify/Themes/noctalia/user.css` (the Spotify theme's CSS; the `spicetify.ini` template writes its colours) |
@@ -66,6 +67,7 @@ noctalia msg wallpaper-set ~/Pictures/Wallpapers/live/<your-still>.jpg
 noctalia msg plugins enable roynul/workspace-apps
 noctalia msg plugins enable roynul/workspace-pills
 noctalia msg plugins enable roynul/arch-updater
+noctalia msg plugins enable roynul/coolant
 # A community plugin, fetched from Noctalia's community repo
 noctalia msg plugins enable k4n4t4/hypr-submap
 ```
@@ -175,6 +177,9 @@ Alt+Tab runs `window-switcher hold` (in
   Hyprland's event socket with `socat`, and runs only `hyprctl submap` and
   `hyprctl dispatch 'hl.dsp.submap("reset")'`.
   Version 1.0.0 was reviewed for this.
+- **coolant** ([`plugins/coolant`](plugins/coolant/README.md)): the AIO's
+  coolant temperature in the `stats` island, with the fan and pump speeds in
+  its tooltip. It needs [`linux/openlinkhub`](../openlinkhub/SETUP.md).
 - **arch-updater**: see Update widget.
 
 After you change a local plugin's `plugin.toml`, run
