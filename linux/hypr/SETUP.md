@@ -126,6 +126,8 @@ express:
 - Super+Ctrl+F toggles "fake fullscreen": the app is told it is fullscreen,
   but the window keeps its size. A browser then hides its tabs, and a video's
   own fullscreen button fills only this window.
+- Super+Ctrl+S captures the focused monitor, like Print. The capture opens in
+  Noctalia's editor first.
 - Loading `hypr-local.lua`, if it exists (see Files).
 
 ### Autostart, rules and environment

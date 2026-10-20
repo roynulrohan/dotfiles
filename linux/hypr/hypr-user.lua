@@ -251,6 +251,10 @@ hl.bind("SUPER + CTRL + M", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/wi
 -- this window. Press again to undo. Normal fullscreen is unchanged.
 hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen_state({ action = "toggle", internal = 0, client = 2 }))
 
+-- Super+Ctrl+S captures the focused monitor, like Print in hyprland/keybinds.lua,
+-- for keyboards without a Print key.
+hl.bind("SUPER + CTRL + S", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"))
+
 -- An inner glow on the focused window (Hyprland 0.56 or newer), in the
 -- border's primary-to-tertiary gradient at half strength. Unfocused windows get
 -- none. Motion blur stays off: with an NVIDIA GPU, windows flash while they move.
