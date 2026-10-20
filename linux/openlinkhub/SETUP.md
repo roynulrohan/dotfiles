@@ -76,9 +76,9 @@ between them. OpenLinkHub reads the sensors every 3 seconds.
 |---|---|---|
 | `CoolantCurve` | the AIO's coolant (Liquid) | 40% to 32 °C, 34: 48, 36: 60, 38: 78, 40: 95, 41: 100 |
 | `CoolantScriptCurve` | `olh-coolant-temp` (External Executable) | the same as `CoolantCurve` |
-| `CaseRearCurve` | `olh-case-heat` (External Executable) | 30% to 55, 60: 45, 66: 65, 72: 85, 76: 100 |
-| `CaseIntakeCurve` | `olh-case-heat` | 40% to 55, 60: 52, 66: 70, 72: 88, 76: 100 |
-| `CaseFrontCurve` | `olh-case-heat` | 32% to 55, 60: 45, 66: 62, 72: 82, 76: 100 |
+| `CaseRearCurve` | `olh-case-heat` (External Executable) | 55% to 60, 66: 65, 72: 85, 76: 100 |
+| `CaseIntakeCurve` | `olh-case-heat` | 65% to 60, 66: 70, 72: 88, 76: 100 |
+| `CaseFrontCurve` | `olh-case-heat` | 57% to 60, 66: 62, 72: 82, 76: 100 |
 
 - `CoolantCurve` is for the radiator fans that the AIO drives itself.
 - `CoolantScriptCurve` is for radiator fans on the hub.
@@ -123,8 +123,8 @@ do this:
 
 - **The intakes and the rear exhaust follow one signal,** `olh-case-heat`,
   so they rise together.
-- **The intakes have the higher floors** (40% and 32% against the rear's
-  30%), and the bigger fans.
+- **The intakes have the higher floors** (65% and 57% against the rear's
+  55%), and the bigger fans.
 - **The radiator slows the top fans.** They move clearly less air than
   their rating.
 
@@ -140,6 +140,36 @@ Performance. OpenLinkHub picks the mode by the name of the profile on the
 pump channel. Use Normal. Quiet lowers the coolant flow, so the CPU runs
 about 2 °C hotter and the radiator fans spin faster. Performance gains
 nothing over Normal.
+
+### Case fan floors
+
+A top radiator breathes the case air, so the coolant can't settle below it.
+The case fans' floors set how warm that air gets at rest. Higher floors
+bring it closer to room temperature, and the coolant follows. With these
+fans, the floors above are still inaudible.
+
+### Pump lighting
+
+The pump shows the coolant temperature: green up to 35 °C, amber at 38 °C,
+red at 41 °C. Red means the radiator fans are at 100%. It uses OpenLinkHub's
+built-in `liquid-temperature` mode on the pump channel.
+
+The colour follows the temperature stored on each of the three colours in
+`/var/lib/openlinkhub/database/rgb/<key>.json`. The profile's `minTemp` and
+`maxTemp` don't affect it. Set the three temperatures, then the mode:
+
+```bash
+sudo python3 -c 'import json; p="/var/lib/openlinkhub/database/rgb/3117.json"; d=json.load(open(p)); x=d["profiles"]["liquid-temperature"]; x["start"]["temperature"]=35; x["middle"]["temperature"]=38; x["end"]["temperature"]=41; x["middle"].update(red=255, green=140, blue=0); x["start"]["brightness"]=1; x["end"]["brightness"]=1; json.dump(d, open(p, "w"), indent=2)'
+sudo systemctl restart openlinkhub
+curl -s -X POST 127.0.0.1:27003/api/color -H 'Content-Type: application/json' \
+  -d '{"deviceId":"3117","channelId":0,"profile":"liquid-temperature"}'
+```
+
+- Switch off the device's **OpenRGB** toggle in the web UI. While it is on,
+  OpenLinkHub leaves the pump's lighting to OpenRGB and refuses the mode.
+- Don't change the colours with `PUT /api/color/change`. It sets the three
+  temperatures to 0 °C, and the pump then shows red at any coolant
+  temperature.
 
 ### Why not the temperature probe
 
@@ -191,4 +221,5 @@ curl -sL 127.0.0.1:27003/api/temperatures/ | grep -o '"C[a-zA-Z]*Curve"' | sort 
 /usr/local/bin/olh-coolant-temp                                                      # the coolant temperature, such as 32.4
 /usr/local/bin/olh-case-heat                                                         # about 45 to 80, never 80 at an idle desktop
 curl -sL 127.0.0.1:27003/api/devices/<key> | grep -o '"profile":"[^"]*"'            # each fan's curve, not "Normal" (the pump: "Normal")
+grep -o '"0": "[a-z-]*"' /var/lib/openlinkhub/database/profiles/3117.json             # the pump's lighting: "liquid-temperature"
 ```
