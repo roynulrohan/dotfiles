@@ -1,0 +1,13 @@
+#!/usr/bin/python3 -I
+# Prints the H100i's coolant temperature for OpenLinkHub's "External Executable"
+# sensor, so fans on the Commander Core XT can follow it: the Core XT driver
+# refuses liquid-temperature curves because it has no pump of its own.
+# On any error it prints 50, which puts the fans at full speed instead of idle.
+import json
+import urllib.request
+
+try:
+    with urllib.request.urlopen("http://127.0.0.1:27003/api/devices/3117", timeout=2) as r:
+        print(float(json.load(r)["device"]["devices"]["0"]["temperature"]))
+except Exception:
+    print(50)

@@ -2,8 +2,8 @@
 
 RGB control for the RAM, the graphics card, keyboards, controllers and
 network lights, in one app. Its config here keeps it away from the Corsair
-Commander hubs, which [`linux/openlinkhub`](../openlinkhub/SETUP.md)
-controls.
+Commander hubs and the H100i RGB PRO XT cooler, which
+[`linux/openlinkhub`](../openlinkhub/SETUP.md) controls.
 
 ## Files
 
@@ -26,17 +26,18 @@ every other setting to the file at its first start and keeps the switches.
    ```
 
 2. Copy `OpenRGB.json` **before the first start** of OpenRGB, so detection
-   never touches a Commander hub.
+   never touches a Corsair hub or cooler.
 
 ## Notes
 
-### Commander hubs stay with OpenLinkHub
+### Corsair hubs and coolers stay with OpenLinkHub
 
-OpenRGB has drivers for Corsair Commander Core and Commander Core XT hubs.
-Two programs that talk to one hub at the same time fight over it, and fan
-control can break. `OpenRGB.json` turns off the "Corsair Commander Core" and
-"Corsair Commander Core XT" detectors. A fan on such a hub gets its colour
-from OpenLinkHub.
+OpenRGB has drivers for Corsair Commander Core hubs and Hydro AIO coolers.
+Two programs that talk to one device at the same time fight over it, and fan
+or pump control can break. `OpenRGB.json` turns off these detectors:
+"Corsair Commander Core", "Corsair Commander Core XT", "Corsair Hydro H100i
+Pro XT" and "Corsair Hydro H100i Pro XT v2". OpenLinkHub sets the colours of
+these devices and of the fans on them.
 
 ### MSI Mystic Light firmware
 
@@ -61,6 +62,6 @@ Source: [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB).
 
 ```bash
 openrgb --list-devices | grep -E '^[0-9]+: '            # the RGB devices found
-openrgb --list-devices | grep -i commander              # nothing
-grep -E '"Corsair Commander Core( XT)?"' ~/.config/OpenRGB/OpenRGB.json   # both false
+openrgb --list-devices | grep -i -E 'commander|hydro'   # nothing
+grep -E '"Corsair (Commander Core|Hydro H100i Pro XT)' ~/.config/OpenRGB/OpenRGB.json   # all four false
 ```

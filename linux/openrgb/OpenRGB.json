@@ -2,7 +2,9 @@
     "Detectors": {
         "detectors": {
             "Corsair Commander Core": false,
-            "Corsair Commander Core XT": false
+            "Corsair Commander Core XT": false,
+            "Corsair Hydro H100i Pro XT": false,
+            "Corsair Hydro H100i Pro XT v2": false
         }
     }
 }

@@ -53,11 +53,13 @@ linux	linux/noctalia/spicetify-user.css	~/.config/spicetify/Themes/noctalia/user
 linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
 linux	linux/openlinkhub/openlinkhub-reenable.hook	/etc/pacman.d/hooks/openlinkhub-reenable.hook	copy	openlinkhub
 linux	linux/openlinkhub/openlinkhub.desktop	~/.local/share/applications/openlinkhub.desktop	copy	openlinkhub
-linux	linux/openlinkhub/temperatures/CpuCurve.json	/var/lib/openlinkhub/database/temperatures/CpuCurve.json	seed	openlinkhub
-linux	linux/openlinkhub/temperatures/ExhaustCurve.json	/var/lib/openlinkhub/database/temperatures/ExhaustCurve.json	seed	openlinkhub
-linux	linux/openlinkhub/temperatures/GpuCurve.json	/var/lib/openlinkhub/database/temperatures/GpuCurve.json	seed	openlinkhub
-linux	linux/openlinkhub/temperatures/IntakeCurve.json	/var/lib/openlinkhub/database/temperatures/IntakeCurve.json	seed	openlinkhub
-linux	linux/openlinkhub/temperatures/SystemCurve.json	/var/lib/openlinkhub/database/temperatures/SystemCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/olh-case-heat	/usr/local/bin/olh-case-heat	copy-x	openlinkhub
+linux	linux/openlinkhub/olh-coolant-temp	/usr/local/bin/olh-coolant-temp	copy-x	openlinkhub
+linux	linux/openlinkhub/temperatures/CaseFrontCurve.json	/var/lib/openlinkhub/database/temperatures/CaseFrontCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/temperatures/CaseIntakeCurve.json	/var/lib/openlinkhub/database/temperatures/CaseIntakeCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/temperatures/CaseRearCurve.json	/var/lib/openlinkhub/database/temperatures/CaseRearCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/temperatures/CoolantCurve.json	/var/lib/openlinkhub/database/temperatures/CoolantCurve.json	seed	openlinkhub
+linux	linux/openlinkhub/temperatures/CoolantScriptCurve.json	/var/lib/openlinkhub/database/temperatures/CoolantScriptCurve.json	seed	openlinkhub
 linux	linux/openrgb/OpenRGB.json	~/.config/OpenRGB/OpenRGB.json	seed	openrgb
 linux	linux/pipewire/g432-eq.conf	~/.config/pipewire/filter-chain.conf.d/g432-eq.conf	copy
 linux	linux/pipewire/quantum.conf	~/.config/pipewire/pipewire.conf.d/quantum.conf	copy
@@ -116,3 +118,8 @@ linux	-	~/.config/hypr/scheme/current.conf	gone
 mac	-	~/.config/borders	gone
 mac	-	~/.config/yabai	gone
 mac	-	~/.config/skhd	gone
+linux	-	/var/lib/openlinkhub/database/temperatures/CpuCurve.json	gone
+linux	-	/var/lib/openlinkhub/database/temperatures/ExhaustCurve.json	gone
+linux	-	/var/lib/openlinkhub/database/temperatures/GpuCurve.json	gone
+linux	-	/var/lib/openlinkhub/database/temperatures/IntakeCurve.json	gone
+linux	-	/var/lib/openlinkhub/database/temperatures/SystemCurve.json	gone

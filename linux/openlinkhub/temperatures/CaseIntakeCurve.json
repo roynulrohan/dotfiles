@@ -1,5 +1,5 @@
 {
-    "sensor": 5,
+    "sensor": 7,
     "zeroRpm": false,
     "profiles": [
         {
@@ -105,35 +105,35 @@
         "1": [
             {
                 "x": 0,
-                "y": 25
+                "y": 40
+            },
+            {
+                "x": 55,
+                "y": 40
             },
             {
                 "x": 60,
-                "y": 28
+                "y": 52
             },
             {
                 "x": 66,
-                "y": 36
+                "y": 70
             },
             {
                 "x": 72,
-                "y": 45
+                "y": 88
             },
             {
-                "x": 78,
-                "y": 58
-            },
-            {
-                "x": 81,
-                "y": 65
+                "x": 76,
+                "y": 100
             },
             {
                 "x": 200,
-                "y": 65
+                "y": 100
             }
         ]
     },
-    "device": "",
+    "device": "/usr/local/bin/olh-case-heat",
     "hwmonDevice": "",
     "temperatureInputId": "",
     "channelId": 0,

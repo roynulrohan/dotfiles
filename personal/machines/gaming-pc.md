@@ -11,7 +11,7 @@ and Windows 11.
 | GPU | Gigabyte GeForce RTX 5070 Aero OC, 12 GB |
 | RAM | 32 GB DDR4, 2× Corsair Vengeance RGB Pro SL |
 | Motherboard | MSI MPG B550 Gaming Plus |
-| CPU cooler | Thermalright Peerless Assassin |
+| CPU cooler | Corsair iCUE H100i RGB PRO XT, 240 mm AIO, on top in push-pull |
 | Case | NZXT H6 Flow |
 | Fan hub | Corsair iCUE Commander Core XT, with a third-party temperature probe |
 | Storage | Crucial P1 500 GB NVMe (CachyOS), Samsung 970 EVO Plus 1 TB NVMe (Windows 11), Seagate 2 TB HDD (shared by both) |
@@ -23,23 +23,23 @@ the reason for the positive pressure.
 
 | Place | Fans | Rated | Connected to | Curve |
 |---|---|---|---|---|
-| CPU cooler | the cooler's 2 fans | | motherboard CPU header | BIOS (see [BIOS](#bios)) |
-| Rear exhaust, behind the CPU cooler | Corsair iCUE AR120 Digital RGB | 59 CFM | hub channel 0 (Fan 1) | `CpuCurve` |
-| Bottom intakes, blowing onto the GPU | 2× Corsair RS140 ARGB | 95.5 CFM | hub channels 1, 2 (Fans 2, 3) | `IntakeCurve` |
-| Front intakes | 3× Thermalright TL-M12QRW-S (reverse), daisy-chained | 1500 RPM, 47.6 CFM | hub channel 3 (Fan 4) | `SystemCurve` |
-| Top exhausts | 3× Thermalright TL-M12QW-S, daisy-chained | 2000 RPM, 68.9 CFM | hub channel 4 (Fan 5) | `ExhaustCurve` |
+| Radiator, above it (pull) | 3× Thermalright TL-M12QW-S, daisy-chained | 2000 RPM, 68.9 CFM | hub channel 4 (Fan 5) | `CoolantScriptCurve` |
+| Radiator, below it (push) | the 2 fans from the earlier Thermalright Peerless Assassin cooler | | the H100i's fan splitter (Fan 1, Fan 2) | `CoolantCurve` |
+| Rear exhaust | Corsair iCUE AR120 Digital RGB | 59 CFM | hub channel 0 (Fan 1) | `CaseRearCurve` |
+| Bottom intakes, blowing onto the GPU | 2× Corsair RS140 ARGB | 95.5 CFM | hub channels 1, 2 (Fans 2, 3) | `CaseIntakeCurve` |
+| Front intakes | 3× Thermalright TL-M12QRW-S (reverse), daisy-chained | 1500 RPM, 47.6 CFM | hub channel 3 (Fan 4) | `CaseFrontCurve` |
+| Pump | the H100i | | USB and SATA power; its speed lead on CPU_FAN | Normal mode |
 
-A daisy-chained set gives one RPM reading. The temperature probe sits in the
-CPU cooler's exhaust. When OpenLinkHub is not running, the hub uses the curve
-that iCUE stored on it, which reads the probe: 30% up to 32 °C, 40% at 36 °C,
-60% at 40 °C and 100% at 45 °C.
+A daisy-chained set gives one RPM reading. When OpenLinkHub is not running,
+the hub uses the curve that iCUE stored on it, which reads the temperature
+probe: 30% up to 32 °C, 40% at 36 °C, 60% at 40 °C and 100% at 45 °C.
 
 ### Lighting
 
-The rear AR120 gets its colour from OpenLinkHub. The other fans get ARGB from
-the motherboard's two JRAINBOW headers: one feeds a Thermalright ARGB hub, the
-other the bottom RS140s. They are white, as stored on the board's lighting
-chip. OpenRGB can't control that chip yet
+The rear AR120 and the H100i's pump get their colours from OpenLinkHub. The
+other fans get ARGB from the motherboard's two JRAINBOW headers: one feeds a
+Thermalright ARGB hub, the other the bottom RS140s. They are white, as stored
+on the board's lighting chip. OpenRGB can't control that chip yet
 ([`linux/openrgb`](../../linux/openrgb/SETUP.md)).
 
 ## BIOS
@@ -51,11 +51,11 @@ either.
 |---|---|
 | A-XMP | On. The RAM runs at 3600 MT/s. |
 | PBO | Auto, with no Curve Optimizer and no boost override. Tuning them gave no clear gain. |
-| CPU fan curve | 50% at 40 °C, 60% at 65 °C, 75% at 75 °C, 100% at 80 °C |
+| CPU_FAN | Carries only the pump's speed lead. Its fan curve controls nothing. |
 | Boot order | "UEFI OS", then Windows |
 
 "UEFI OS" is Limine, started from the fallback path `\EFI\BOOT\BOOTX64.EFI`
-on the Crucial NVMe. The firmware has no Limine entry of its own.
+on the Crucial NVMe. A "Limine" entry also exists, after Windows.
 
 ## Packages
 

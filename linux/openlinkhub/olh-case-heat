@@ -1,0 +1,19 @@
+#!/usr/bin/python3 -I
+# Prints a "case heat" value for OpenLinkHub's "External Executable" sensor:
+# the GPU temperature, or the H100i coolant temperature converted to a
+# GPU-like scale (31 C coolant = 45, 40 C = 75), whichever is higher.
+# Case fans follow it, so GPU heat and sustained CPU heat raise airflow but
+# short CPU spikes don't. On any error it prints 80, which puts the fans high.
+import json
+import subprocess
+import urllib.request
+
+try:
+    gpu = float(subprocess.run(
+        ["/usr/bin/nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"],
+        capture_output=True, text=True, timeout=3, check=True).stdout.split()[0])
+    with urllib.request.urlopen("http://127.0.0.1:27003/api/devices/3117", timeout=2) as r:
+        coolant = float(json.load(r)["device"]["devices"]["0"]["temperature"])
+    print(round(max(gpu, 45 + (coolant - 31) * 30 / 9), 1))
+except Exception:
+    print(80)
