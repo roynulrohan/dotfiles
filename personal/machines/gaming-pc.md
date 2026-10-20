@@ -39,7 +39,7 @@ probe: 30% up to 32 °C, 40% at 36 °C, 60% at 40 °C and 100% at 45 °C.
 
 | Device | Lighting | Set by |
 |---|---|---|
-| Rear AR120 | white | OpenLinkHub |
+| Rear AR120 | green `#14C846`, full brightness (static) | OpenLinkHub |
 | H100i pump | coolant thermometer: green to 35 °C, amber at 38 °C, red at 41 °C | OpenLinkHub ([`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md)) |
 | RAM | CPU and RAM usage as levels in the wallpaper accent | [`linux/case-lights`](../../linux/case-lights/SETUP.md) |
 | Other fans | white, stored on the board's lighting chip | the motherboard's two JRAINBOW headers: one feeds a Thermalright ARGB hub, the other the bottom RS140s |
