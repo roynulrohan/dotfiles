@@ -35,6 +35,9 @@ return {
     kbWindowIncreaseWidth  = {},
     kbWindowDecreaseHeight = {},
     kbWindowIncreaseHeight = {},
+    -- The MX Master 3S thumb button sends mouse:277 without Solaar, so it
+    -- toggles pop-up workspaces like Super+S.
+    kbSpecialWs = { "SUPER + S", "mouse:277" },
     -- Pop-up workspace apps, merged over the defaults in utils/functions.lua.
     -- Super+D starts Equibop, not Discord.
     toggles = {

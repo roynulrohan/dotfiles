@@ -75,7 +75,7 @@ The role matters, not the app or the exact key.
 
 - **Must:** Super+T terminal, Super+E file manager, Super+B browser; Super+M
   music, Super+D chat and Super+S scratch (pop-up workspaces), and Super+Alt+S
-  to send a window to scratch.
+  to send a window to scratch. A mouse's thumb button also toggles scratch.
 - **Use:** the launcher; lock; clipboard history; the keyboard's own media
   keys, volume knob and mute; Super+Shift+S region screenshot on a frozen
   screen; colour picker; restarting the shell (Ctrl+Super+Alt+R).
