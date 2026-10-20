@@ -14,6 +14,7 @@ and Windows 11.
 | CPU cooler | Corsair iCUE H100i RGB PRO XT, 240 mm AIO, on top in push-pull |
 | Case | NZXT H6 Flow |
 | Fan hub | Corsair iCUE Commander Core XT, with a third-party temperature probe |
+| Mice | Logitech MX Master 3S (Bolt receiver), Logitech G502 X LIGHTSPEED and G Pro X Superlight (Lightspeed receivers) |
 | Storage | Crucial P1 500 GB NVMe (CachyOS), Samsung 970 EVO Plus 1 TB NVMe (Windows 11), Seagate 2 TB HDD (shared by both) |
 
 ### Fans
@@ -83,7 +84,8 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
    [`linux/pipewire`](../../linux/pipewire/SETUP.md),
    [`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md),
    [`linux/openrgb`](../../linux/openrgb/SETUP.md),
-   [`linux/case-lights`](../../linux/case-lights/SETUP.md), [`linux/mpv`](../../linux/mpv/SETUP.md),
+   [`linux/case-lights`](../../linux/case-lights/SETUP.md),
+   [`linux/solaar`](../../linux/solaar/SETUP.md), [`linux/mpv`](../../linux/mpv/SETUP.md),
    [`linux/btop`](../../linux/btop/SETUP.md), [`linux/equibop`](../../linux/equibop/SETUP.md),
    [`linux/ssh`](../../linux/ssh/SETUP.md), [`linux/snapshots`](../../linux/snapshots/SETUP.md),
    [`shared/nvim`](../../shared/nvim/SETUP.md), [`shared/vscode`](../../shared/vscode/SETUP.md),
@@ -98,6 +100,9 @@ Not on this machine: Cursor and Ghostty.
 - [ ] Set the power profile to performance: `powerprofilesctl set performance`.
       I prefer it to `balanced`.
 - [ ] Set the BIOS settings in [BIOS](#bios).
+- [ ] Set every mouse to 1600 DPI: `solaar config "MX Master 3S" dpi 1600`
+      ([`linux/solaar`](../../linux/solaar/SETUP.md)). The G502 X and the
+      Superlight keep 1600 in their onboard profiles.
 
 ## Things to know
 

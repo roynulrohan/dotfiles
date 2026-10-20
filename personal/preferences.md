@@ -17,6 +17,9 @@ job.
   split-monitor-workspaces and the local Noctalia plugins. The community
   plugin hypr-submap is not pinned: Noctalia fetches it again at every start.
 - **12-hour time** everywhere a clock shows.
+- **Every mouse runs at 1600 DPI.** Today: Solaar for the Logitech mice
+  ([`linux/solaar`](../linux/solaar/SETUP.md)). The gaming mice keep it in
+  their onboard profiles.
 
 ## Look
 

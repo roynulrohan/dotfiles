@@ -71,6 +71,7 @@ linux	linux/sddm/noctalia-card.conf	/etc/sddm.conf.d/noctalia-card.conf	copy
 linux	linux/sddm/sddm-sync	~/.local/bin/sddm-sync	copy-x
 linux	linux/sddm/themes/noctalia-card	/usr/share/sddm/themes/noctalia-card	dir
 linux	linux/sddm/x11.conf	/etc/sddm.conf.d/x11.conf	copy
+linux	linux/solaar/solaar.desktop	~/.config/autostart/solaar.desktop	copy	solaar
 linux	linux/ssh/ssh-add.service	~/.config/systemd/user/ssh-add.service	copy
 linux	linux/uwsm/env	~/.config/uwsm/env	copy
 linux	linux/uwsm/env-hyprland	~/.config/uwsm/env-hyprland	copy
