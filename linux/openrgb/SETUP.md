@@ -1,9 +1,10 @@
 # OpenRGB
 
-RGB control for the RAM, the graphics card, keyboards, controllers and
-network lights, in one app. Its config here keeps it away from the Corsair
-Commander hubs and the H100i RGB PRO XT cooler, which
-[`linux/openlinkhub`](../openlinkhub/SETUP.md) controls.
+RGB control for the RAM, the graphics card, controllers and network lights,
+in one app. Its config here keeps it away from the Corsair Commander hubs and
+the H100i RGB PRO XT cooler, which
+[`linux/openlinkhub`](../openlinkhub/SETUP.md) controls, and away from the
+keyboard, which runs its own lighting.
 
 ## Files
 
@@ -27,7 +28,7 @@ every other setting to the file at its first start and keeps the switches.
    ```
 
 2. Copy `OpenRGB.json` **before the first start** of OpenRGB, so detection
-   never touches a Corsair hub or cooler.
+   never touches a Corsair hub, the cooler or the keyboard.
 
 3. Copy the service, then start it. It runs OpenRGB's SDK server without a
    window, for scripts such as [`linux/case-lights`](../case-lights/SETUP.md):
@@ -52,6 +53,15 @@ or pump control can break. `OpenRGB.json` turns off these detectors:
 "Corsair Commander Core", "Corsair Commander Core XT", "Corsair Hydro H100i
 Pro XT" and "Corsair Hydro H100i Pro XT v2". OpenLinkHub sets the colours of
 these devices and of the fans on them.
+
+### The keyboard keeps its own lighting
+
+OpenRGB's Sinowealth driver matches the keyboard (USB `258a:010c`, shown as
+"AULA F75"). That driver has only two modes, Off and Direct, no hardware
+effects. On detection it switches the keyboard to Direct, which stops the
+firmware's own effects, and nothing sends colours, so every key goes dark.
+`OpenRGB.json` turns off the "Sinowealth Keyboard" detector, so the firmware
+stays in charge and the keyboard's own effects and shortcuts work.
 
 ### MSI Mystic Light firmware
 
@@ -80,4 +90,6 @@ ss -ltn | grep ':6742 '                                 # the SDK server listens
 openrgb --list-devices | grep -E '^[0-9]+: '              # each RGB device once
 openrgb --list-devices | grep -i -E 'commander|hydro'     # nothing
 grep -E '"Corsair (Commander Core|Hydro H100i Pro XT)' ~/.config/OpenRGB/OpenRGB.json   # all four false
+grep '"Sinowealth Keyboard"' ~/.config/OpenRGB/OpenRGB.json   # false
+openrgb --list-devices | grep -i aula                          # nothing
 ```
