@@ -8,9 +8,10 @@ The Claude Code statusline, on four lines:
    zero), then speed, total tokens, the prompt cache timer and cache hit rate.
 3. Session and weekly usage with their reset countdowns, Fable weekly usage,
    then session cost and cost per hour.
-4. Git: owner/repo as a link, branch, commits and diff of the branch against
-   the default branch, worktree, then clean/dirty, staged/unstaged/untracked
-   file counts, insertions and deletions, ahead-behind, conflicts, PR and SHA.
+4. Git: origin owner/repo as a link, branch, worktree, commits and diff of
+   the branch against the default branch, then clean/dirty,
+   staged/unstaged/untracked file counts, insertions and deletions,
+   ahead-behind, conflicts, PR and SHA.
    Each segment hides when it has nothing to say.
 
 ## Files

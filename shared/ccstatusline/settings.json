@@ -108,16 +108,6 @@
         }
       },
       {
-        "id": "00441ad4-71ca-45c5-8a01-ded4c4f741a6",
-        "type": "custom-symbol",
-        "color": "blue",
-        "customSymbol": "\uf1da",
-        "merge": true,
-        "metadata": {
-          "hide": "merge-target-hidden"
-        }
-      },
-      {
         "id": "80749987-255f-451c-95ec-374a1505687c",
         "type": "cache-timer",
         "color": "blue",
@@ -206,13 +196,13 @@
       {
         "id": "bd20fb09-5b8b-4b15-b0ac-1d42aa7f49e9",
         "type": "session-cost",
-        "color": "yellow",
+        "color": "brightYellow",
         "metadata": {}
       },
       {
         "id": "3eeb31a0-a2e9-4db1-aab5-ca0e4b46a041",
         "type": "session-cost-rate",
-        "color": "yellow"
+        "color": "brightYellow"
       }
     ],
     [
@@ -229,13 +219,13 @@
       },
       {
         "id": "f766d8e9-20c0-4f41-b437-a6447cc88b0d",
-        "type": "git-upstream-owner-repo",
+        "type": "git-origin-owner-repo",
         "color": "brightWhite",
         "backgroundColor": "bgBlack",
         "dim": true,
         "metadata": {
-          "hide": "no-upstream",
-          "linkToRepo": "true"
+          "linkToRepo": "true",
+          "hide": "no-remote"
         }
       },
       {
@@ -249,22 +239,22 @@
         }
       },
       {
-        "id": "b74b1c34-1a11-4a37-9314-23c8e4bf5012",
-        "type": "custom-command",
-        "backgroundColor": "bgBlack",
-        "commandPath": "git-branch-stat",
-        "timeout": 1500,
-        "color": "yellow"
-      },
-      {
         "id": "67d52f91-a5c7-4680-8da1-0e51d784d2e6",
         "type": "git-worktree",
-        "color": "white",
+        "color": "brightRed",
         "backgroundColor": "bgBlack",
         "dim": true,
         "metadata": {
           "hide": "no-git"
         }
+      },
+      {
+        "id": "b74b1c34-1a11-4a37-9314-23c8e4bf5012",
+        "type": "custom-command",
+        "color": "yellow",
+        "backgroundColor": "bgBlack",
+        "commandPath": "git-branch-stat",
+        "timeout": 1500
       },
       {
         "id": "0bb64eac-ee92-47fa-bb44-ffc63e810c6d",
@@ -282,8 +272,8 @@
       {
         "id": "8c32ee9a-6c12-48bb-af50-894f1d898934",
         "type": "git-staged-files",
-        "backgroundColor": "bgBlack",
         "color": "green",
+        "backgroundColor": "bgBlack",
         "metadata": {
           "hide": "no-git,zero"
         }
@@ -291,8 +281,8 @@
       {
         "id": "7fd21b5b-5e43-48a1-9c91-a9c38a8cf8f6",
         "type": "git-unstaged-files",
-        "backgroundColor": "bgBlack",
         "color": "yellow",
+        "backgroundColor": "bgBlack",
         "metadata": {
           "hide": "no-git,zero"
         }
@@ -300,8 +290,8 @@
       {
         "id": "fc1a0f15-846c-4a15-9d99-14d73044e31d",
         "type": "git-untracked-files",
-        "backgroundColor": "bgBlack",
         "color": "white",
+        "backgroundColor": "bgBlack",
         "dim": true,
         "metadata": {
           "hide": "no-git,zero"
