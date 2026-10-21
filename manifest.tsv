@@ -90,6 +90,7 @@ mac	mac/wm/sketchybar	~/.config/sketchybar	dir
 all	shared/agents/AGENTS.md	~/.claude/CLAUDE.md	seed
 all	shared/agents/AGENTS.md	~/.codex/AGENTS.md	copy
 all	shared/ccstatusline/settings.json	~/.config/ccstatusline/settings.json	seed
+all	shared/ccstatusline/git-branch-stat	~/.local/bin/git-branch-stat	copy-x
 all	shared/claude/settings.json	~/.claude/settings.json	seed
 linux	shared/cursor/keybindings.json	~/.config/Cursor/User/keybindings.json	copy	cursor
 mac	shared/cursor/keybindings.json	~/Library/Application Support/Cursor/User/keybindings.json	copy	/Applications/Cursor.app

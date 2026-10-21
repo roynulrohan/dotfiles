@@ -2,19 +2,29 @@
 
 The Claude Code statusline, on four lines:
 
-1. Speed and active skills.
-2. Model, thinking effort and context bar.
-3. Session usage, weekly usage (all models and Fable), the weekly reset timer
-   and session cost.
-4. Git branch, worktree, changes, ahead-behind, conflicts and PR.
+1. Model, thinking effort, Claude service status with a 48-hour incident
+   strip, Claude Code version, and the skills used this session.
+2. Session name (after `/rename`), context bar, compaction count (hidden at
+   zero), then speed, total tokens, the prompt cache timer and cache hit rate.
+3. Session and weekly usage with their reset countdowns, Fable weekly usage,
+   then session cost and cost per hour.
+4. Git: owner/repo as a link, branch, commits and diff of the branch against
+   the default branch, worktree, then clean/dirty, staged/unstaged/untracked
+   file counts, insertions and deletions, ahead-behind, conflicts, PR and SHA.
+   Each segment hides when it has nothing to say.
 
 ## Files
 
 | Repo | Destination |
 |---|---|
 | [`settings.json`](settings.json) | `~/.config/ccstatusline/settings.json` |
+| [`git-branch-stat`](git-branch-stat) | `~/.local/bin/git-branch-stat` |
 
-Same path on both OSes.
+Same paths on both OSes. `git-branch-stat` is the custom command behind the
+"commits vs main" segment: it reads the status JSON on stdin, compares the
+branch with `origin/HEAD` (fallback `main`, then `master`) and prints nothing
+on the default branch or when the branch has no commits of its own. It needs
+`python3` and `git` on PATH.
 
 ## Install
 
@@ -43,8 +53,11 @@ macOS) and a truecolor terminal. kitty and Ghostty both qualify.
 - ccstatusline records the install in an `installation` block in the live
   `settings.json`. That block is per machine and is not in this repo, so
   `./status.sh` reports the file as `seeded` (its manifest mode).
-- The config has no paths inside, so it works on both OSes unchanged.
-  `colorLevel: 3` means 24-bit colour.
+- The config has no paths inside: the custom command is `git-branch-stat`
+  from PATH. So it works on both OSes unchanged. `colorLevel: 3` means 24-bit
+  colour.
+- The cache timer assumes the 1-hour prompt cache (`ttlSeconds: 3600`). Claude
+  Code drops to the 5-minute cache in usage overage; the timer does not know.
 - `powerline.enabled` is `false`, so it needs no powerline separator glyphs
   beyond the Nerd Font.
 

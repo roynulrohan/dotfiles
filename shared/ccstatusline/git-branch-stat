@@ -1,0 +1,51 @@
+#!/usr/bin/python3 -I
+# ccstatusline custom command: commits and diff size of the current branch
+# against the repo's default branch. Prints nothing on the default branch,
+# on a detached HEAD, outside git, or when the branch has no commits of its own. Reads Claude Code's status JSON on stdin
+# for the working directory.
+import json
+import os
+import subprocess
+import sys
+
+try:
+    data = json.load(sys.stdin)
+    cwd = data.get("workspace", {}).get("current_dir") or data.get("cwd") or os.getcwd()
+except (ValueError, AttributeError):
+    cwd = os.getcwd()
+
+
+def git(*args):
+    try:
+        r = subprocess.run(["git", "-C", cwd, *args], capture_output=True, text=True, timeout=3)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+head = git("rev-parse", "--abbrev-ref", "HEAD")
+if not head or head == "HEAD":
+    sys.exit(0)
+
+base = git("symbolic-ref", "--short", "refs/remotes/origin/HEAD")   # e.g. origin/main
+if base:
+    base_name = base.split("/", 1)[1]
+else:
+    base_name = next((b for b in ("main", "master") if git("rev-parse", "--verify", "--quiet", "refs/heads/" + b)), None)
+    base = base_name
+if not base or head == base_name:
+    sys.exit(0)
+
+count = git("rev-list", "--count", f"{base}..HEAD") or "0"
+if count == "0":
+    sys.exit(0)
+stat = git("diff", "--shortstat", f"{base}...HEAD") or ""
+ins = dele = "0"
+for part in stat.split(","):
+    part = part.strip()
+    if part.endswith("(+)"):
+        ins = part.split()[0]
+    elif part.endswith("(-)"):
+        dele = part.split()[0]
+unit = "commit" if count == "1" else "commits"
+print(f"{count} {unit} +{ins} −{dele} vs {base_name}")
