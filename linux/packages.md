@@ -23,7 +23,7 @@ comes from the AUR. "CachyOS only" has no Arch equivalent.
 | `zen-browser-bin` (CachyOS repo) | browser on Super+B |
 | `thunar` `gvfs-smb` `tumbler` `ffmpegthumbnailer` | second file manager, with SMB shares and thumbnails in GTK apps |
 | `opera-gx` (AUR) | second browser |
-| `jellyfin-desktop-git` (AUR) | Jellyfin client |
+| `jellyfin-desktop-git` (AUR) | Jellyfin client; settings in [`linux/jellyfin`](jellyfin/SETUP.md) |
 | `chatgpt-desktop-bin` (CachyOS only) | ChatGPT desktop app; also opens `codex://` links |
 | `appimagelauncher` (AUR) | adds downloaded AppImages to the app menu. Enable its service: `systemctl --user enable --now appimagelauncherd` |
 | `profile-sync-daemon` | keeps browser profiles in RAM for the browsers it knows (Firefox, Chromium, Opera and more; not Zen). Enable its service: `systemctl --user enable --now psd` |

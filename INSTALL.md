@@ -125,6 +125,7 @@ Take any of these on their own.
 | Logitech mice: DPI and buttons, applied at login | [`linux/solaar`](linux/solaar/SETUP.md) | Linux |
 | RAM lighting: CPU and RAM usage as levels in the wallpaper accent | [`linux/case-lights`](linux/case-lights/SETUP.md) | Linux |
 | mpv as video player and image viewer | [`linux/mpv`](linux/mpv/SETUP.md) | Linux |
+| Jellyfin Desktop: volume matched to the Windows client, NVDEC decoding | [`linux/jellyfin`](linux/jellyfin/SETUP.md) | Linux |
 | btop | [`linux/btop`](linux/btop/SETUP.md) | Linux |
 | Equibop (Discord) | [`linux/equibop`](linux/equibop/SETUP.md) | Linux |
 | SSH key unlocked at login | [`linux/ssh`](linux/ssh/SETUP.md) | Linux |
