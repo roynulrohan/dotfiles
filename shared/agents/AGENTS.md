@@ -17,28 +17,19 @@ A repo's own conventions and docs outrank this file, except the Git rules.
   context: name it and say why it matters. Spell out shorthand, jargon, and
   labels lifted from tool output. Not "the deploy failed with exit 137", but
   "the build container ran out of memory, so the image never shipped".
-- Comments explain non-obvious reasons or constraints. Commit, PR, and review
-  text stays factual, specific, and proportional to the change.
 
 ## Code
 
 - Prefer LSP over Grep/Glob for navigating code. Grep is fine for text, config
   values, and languages with no server.
 - Check diagnostics after editing code, and find the call sites before renaming.
-- Before fixing a bug, build something that fails on it: a test, a curl, a script.
 
 ## Working Together
 
-- For non-trivial work, plan first: present the options and your pick, then wait
-  for a decision.
 - Ask when the answer changes what you would do. Otherwise state the assumption
   and carry on.
 - Stop and say so at an architectural flaw, unforeseen scope, or the edge of what
   you know.
-- Make small, reviewable changes. A targeted edit beats a rewrite, and unrelated
-  changes travel separately.
-- Deliver the whole task, or say plainly which part you skipped and why. Flag
-  shortcuts as you take them.
 
 ## Subagents
 
@@ -60,5 +51,13 @@ searches, long builds, independent tasks.
 
 - Commit and PR text is mine alone: no `Co-Authored-By: Claude`, no AI
   attribution lines of any kind.
-- Commit or push when I ask for it.
+- Never push without asking.
 - Preserve unrelated changes in a dirty worktree.
+- Commit messages: Conventional Commits `type(scope): subject`,
+  no trailing period. A convention the repo documents or enforces overrides
+  this default. Type such as `feat`, `fix`, `docs`, `refactor`, `test`,
+  `chore`, or `perf`. Scope is the area. Subject is short, imperative, and names
+  a real symbol when one carries the change, for example
+  `fix(nav): stop the scroll spy marking two Sections`.
+- Each commit is landable and ordered to tell the story. Commit bodies don't
+  restate the subject.
