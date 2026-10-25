@@ -66,7 +66,9 @@ on the Crucial NVMe. A "Limine" entry also exists, after Windows.
 
 In this order. Each package's `SETUP.md` has the steps and a Verify section.
 
-1. Base: CachyOS, then [`linux/packages.md`](../../linux/packages.md).
+1. Base: CachyOS with its KDE Plasma desktop, which stays as the fallback
+   ([`personal/preferences.md`](../preferences.md)). Then
+   [`linux/packages.md`](../../linux/packages.md).
 2. Shell and git: [`shared/fish`](../../shared/fish/SETUP.md),
    [`linux/fish`](../../linux/fish/SETUP.md), [`shared/git`](../../shared/git/SETUP.md).
 3. Terminal: [`shared/kitty`](../../shared/kitty/SETUP.md).

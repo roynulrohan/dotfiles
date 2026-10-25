@@ -12,6 +12,9 @@ job.
   for edge cases are fine. Large custom scripts are not.
 - **Keep config for hardware that isn't connected right now.** Don't remove it
   because a device is missing today.
+- **Keep a full second desktop as a fallback** for when the main one breaks.
+  Keep its apps too, such as its terminal and its theme. Today: KDE Plasma,
+  from CachyOS's install.
 - **Review and pin third-party code.** A plugin or package that runs code is
   read first, then pinned to the reviewed commit or version. Today:
   split-monitor-workspaces and the local Noctalia plugins. The community
