@@ -262,21 +262,13 @@ input_path = "$XDG_CONFIG_HOME/noctalia/templates/spicetify.ini"
 output_path = "$XDG_CONFIG_HOME/spicetify/Themes/noctalia/color.ini"
 post_hook = "spicetify -q -n refresh"
 
-# GTK 3 and 4, in libadwaita colour names. It imports thunar.css and
-# kde-gtk-config's colors.css.
+# GTK 3 and 4, in libadwaita colour names. It imports kde-gtk-config's
+# colors.css.
 [theme.templates.user.gtk]
 input_path = "$XDG_CONFIG_HOME/noctalia/templates/gtk.css"
 output_path = [
   "$XDG_CONFIG_HOME/gtk-3.0/gtk.css",
   "$XDG_CONFIG_HOME/gtk-4.0/gtk.css",
-]
-
-# Thunar, imported by gtk.css above.
-[theme.templates.user.thunar]
-input_path = "$XDG_CONFIG_HOME/noctalia/templates/thunar.css"
-output_path = [
-  "$XDG_CONFIG_HOME/gtk-3.0/thunar.css",
-  "$XDG_CONFIG_HOME/gtk-4.0/thunar.css",
 ]
 
 # Qt (qtengine): the KDE colour scheme that qtengine/config.json points at. No

@@ -281,8 +281,7 @@ writes to `gtk.css`), and the Qt one merges into `kdeglobals`.
 | Template | Writes | Notes |
 |---|---|---|
 | `spicetify.ini` | `~/.config/spicetify/Themes/noctalia/color.ini` | The Spotify colours, next to [`spicetify-user.css`](spicetify-user.css). The hook `spicetify -q -n refresh` patches Spotify again without a restart |
-| `gtk.css` | `gtk-3.0/gtk.css` and `gtk-4.0/gtk.css` | Keeps `@import "thunar.css"` and kde-gtk-config's `@import 'colors.css'`. Open GTK apps pick it up on restart |
-| `thunar.css` | `gtk-3.0/thunar.css` and `gtk-4.0/thunar.css` | |
+| `gtk.css` | `gtk-3.0/gtk.css` and `gtk-4.0/gtk.css` | Keeps kde-gtk-config's `@import 'colors.css'`. Open GTK apps pick it up on restart |
 | `qtengine.colors` | `~/.config/qtengine/noctalia.colors` | `qtengine/config.json`'s `colorScheme` points at this file. `kdeglobals` stays untouched |
 | `btop.theme` | `~/.config/btop/themes/noctalia.theme` | The theme `btop.conf` selects ([`linux/btop`](../btop/SETUP.md)). The hook `pkill -USR2 -x btop` makes a running btop reload |
 | `sddm-theme.conf` | `/var/lib/sddm-assets/colours.conf` | The login screen's colours ([`linux/sddm`](../sddm/SETUP.md), How it stays in sync). The hook copies the wallpaper the palette came from as the login still. Until that folder exists, the log says "failed to open template output" and the hook is skipped |

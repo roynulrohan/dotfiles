@@ -54,6 +54,9 @@ linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/work
 linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
 linux	linux/noctalia/spicetify-user.css	~/.config/spicetify/Themes/noctalia/user.css	copy
 linux	linux/noctalia/templates	~/.config/noctalia/templates	dir
+linux	-	~/.config/noctalia/templates/thunar.css	gone
+linux	-	~/.config/gtk-3.0/thunar.css	gone
+linux	-	~/.config/gtk-4.0/thunar.css	gone
 linux	linux/openlinkhub/openlinkhub-reenable.hook	/etc/pacman.d/hooks/openlinkhub-reenable.hook	copy	openlinkhub
 linux	linux/openlinkhub/openlinkhub.desktop	~/.local/share/applications/openlinkhub.desktop	copy	openlinkhub
 linux	linux/openlinkhub/olh-case-heat	/usr/local/bin/olh-case-heat	copy-x	openlinkhub

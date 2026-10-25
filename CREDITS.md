@@ -22,9 +22,8 @@ comes from others and keeps its own licence.
   The other animation presets in [`linux/hypr/animations`](linux/hypr/animations)
   are HyDE's, and [`linux/hypr/window-mute`](linux/hypr/window-mute) is a port of
   HyDE's `window.mute.py`.
-- The GTK, Thunar and Spotify colour templates
+- The GTK and Spotify colour templates
   ([`gtk.css`](linux/noctalia/templates/gtk.css),
-  [`thunar.css`](linux/noctalia/templates/thunar.css),
   [`spicetify.ini`](linux/noctalia/templates/spicetify.ini)) and the Spotify
   theme's CSS ([`linux/noctalia/spicetify-user.css`](linux/noctalia/spicetify-user.css))
   come from caelestia (GPL-3.0).

@@ -57,8 +57,8 @@ is closed, and keep its exact `hl.bind` / `hl.window_rule` shape.
 - **Window rules** force these windows opaque, so the default window
   transparency (`windowOpacity` in
   [`linux/hypr/hypr-vars.lua`](../hypr/hypr-vars.lua)) doesn't apply: kitty,
-  the browsers (Zen, Opera GX, Firefox, Brave), Discord, Jellyfin, the file
-  explorers (Dolphin, Thunar) and the viewers (Gwenview, Haruna, mpv). The
+  the browsers (Zen, Opera GX, Firefox, Brave), Discord, Jellyfin, Dolphin
+  and the viewers (Gwenview, Haruna, mpv). The
   rules in [`linux/hypr/hyprland/rules.lua`](../hypr/hyprland/rules.lua)
   already keep `imv` and `feh` opaque. Orca's own window is never
   transparent, so it keeps the default transparency on purpose.

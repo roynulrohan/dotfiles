@@ -126,12 +126,6 @@ hl.window_rule({
 })
 hl.window_rule({
     match = {
-        class = "[Tt]hunar",
-    },
-    opaque = true,
-})
-hl.window_rule({
-    match = {
         class = "org.kde.gwenview",
     },
     opaque = true,
