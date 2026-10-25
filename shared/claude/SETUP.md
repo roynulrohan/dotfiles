@@ -46,6 +46,7 @@ After copying:
 | Tool | Needed for | If missing |
 |---|---|---|
 | `bun` | installing ccstatusline | the statusline doesn't render |
+| `node` | running ccstatusline ([`shared/ccstatusline`](../ccstatusline/SETUP.md), Install) | the statusline and every ccstatusline hook fail |
 | `ccstatusline` | the statusline and the ccstatusline hooks | the statusline doesn't render |
 | `rtk` | the `rtk hook claude` entry in `settings.json` | the hook command fails on every Bash call |
 | `gh` | the statusline's Git PR segment (`git-review`) | the segment stays blank |

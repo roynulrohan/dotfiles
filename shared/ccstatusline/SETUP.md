@@ -36,6 +36,12 @@ Install):
 bun add -g ccstatusline
 ```
 
+bun only installs it. ccstatusline runs on Node.js (`#!/usr/bin/env node`).
+Install Node.js by name (CachyOS/Arch: `sudo pacman -S nodejs`; macOS:
+`brew install node`). Without Node.js, the statusline stays empty and every
+hook entry fails. If another package pulled Node.js in as a dependency,
+`pacman -Rns` on that package removes Node.js too.
+
 Optional, for the PR segment: `gh` (CachyOS/Arch: `sudo pacman -S
 github-cli`; macOS: `brew install gh`).
 
