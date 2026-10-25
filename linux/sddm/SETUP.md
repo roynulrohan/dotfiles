@@ -65,10 +65,11 @@ sddm-sync
 ```
 
 If the machine runs Plasma Login Manager (CachyOS's Plasma install profile
-ships it), switch login managers, then reboot:
+ships it), switch login managers and remove it, then reboot:
 
 ```bash
 sudo systemctl disable plasmalogin.service && sudo systemctl enable sddm.service
+sudo pacman -Rns plasma-login-manager
 ```
 
 ### Login video
@@ -210,6 +211,7 @@ CachyOS's defaults then apply alone, with Breeze and Qt's on-screen keyboard.
 Back to Plasma Login Manager:
 
 ```bash
+sudo pacman -S plasma-login-manager
 sudo systemctl disable sddm.service && sudo systemctl enable plasmalogin.service && sudo reboot
 ```
 
