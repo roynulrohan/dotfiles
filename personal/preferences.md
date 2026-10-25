@@ -99,8 +99,10 @@ The role matters, not the app or the exact key.
 - **bun over npm and npx,** except in a project with its own lockfile.
 - **Browser:** Zen for now. I'm open to other browsers, and to using more
   than one.
-- **Default apps:** Zen for web pages and PDFs, Dolphin for folders, mpv for
-  images and videos, Gwenview for SVG and editing. Equibop is the Discord app.
+- **Default apps:** Zen for web pages, a dedicated viewer for PDFs (Okular),
+  the code editor for text and code files, the spreadsheet for CSV, Dolphin
+  for folders, mpv for images and videos, Gwenview for SVG and editing.
+  Equibop is the Discord app.
 - **Folders sort by date modified, newest first,** and each folder remembers
   its own view.
 - **Hyprland binds and rules go through HyprMod** where it can express them.

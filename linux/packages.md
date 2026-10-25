@@ -14,6 +14,7 @@ comes from the AUR. "CachyOS only" has no Arch equivalent.
 | `paru` (CachyOS repo) | installs the AUR packages |
 | `ttf-jetbrains-mono-nerd` | the font every package assumes |
 | `python` `lua` `gitleaks` | [`check.sh`](../check.sh): Python, `luac` and the secret scan |
+| `pacman-contrib` | `paccache` deletes old package versions every week and keeps the 3 newest of each. Enable its timer: `sudo systemctl enable --now paccache.timer` |
 
 ## Apps without their own package
 
@@ -21,7 +22,9 @@ comes from the AUR. "CachyOS only" has no Arch equivalent.
 |---|---|
 | `dolphin` `gwenview` | file manager on Super+E; image editing and SVG |
 | `zen-browser-bin` (CachyOS repo) | browser on Super+B |
-| `thunar` `gvfs-smb` `tumbler` `ffmpegthumbnailer` | second file manager, with SMB shares and thumbnails in GTK apps |
+| `gvfs-smb` `ffmpegthumbnailer` | SMB shares and video thumbnails in GTK apps |
+| `okular` | PDF viewer |
+| `libreoffice-fresh` `hunspell-en_ca` | office suite. LibreOffice has no dictionaries of its own and uses the system's, so spell check needs `hunspell-en_ca` |
 | `opera-gx` (AUR) | second browser |
 | `jellyfin-desktop-git` (AUR) | Jellyfin client; settings in [`linux/jellyfin`](jellyfin/SETUP.md) |
 | `chatgpt-desktop-bin` (CachyOS only) | ChatGPT desktop app; also opens `codex://` links |
@@ -31,18 +34,25 @@ comes from the AUR. "CachyOS only" has no Arch equivalent.
 
 ## Default apps
 
-Zen for web pages and PDFs, Dolphin for folders. mpv and Equibop set their own
+Zen for web pages, Okular for PDFs, VS Code for text and code files,
+LibreOffice Calc for CSV, Dolphin for folders. mpv and Equibop set their own
 defaults in [`mpv`](mpv/SETUP.md) and [`equibop`](equibop/SETUP.md).
 
 ```bash
 xdg-settings set default-web-browser zen.desktop
-xdg-mime default zen.desktop application/pdf
+xdg-mime default org.kde.okular.desktop application/pdf
+for t in text/plain text/markdown application/json text/x-python text/x-python3 text/x-shellscript application/yaml application/toml; do
+    xdg-mime default com.microsoft.VSCode.desktop "$t"; done
+xdg-mime default libreoffice-calc.desktop text/csv
 xdg-mime default org.kde.dolphin.desktop inode/directory
 ```
 
 ## Verify
 
 ```bash
-pacman -Q paru ttf-jetbrains-mono-nerd python lua gitleaks   # a version for each
-xdg-settings get default-web-browser                          # zen.desktop
+pacman -Q paru ttf-jetbrains-mono-nerd python lua gitleaks pacman-contrib   # a version for each
+systemctl is-enabled paccache.timer                                          # enabled
+xdg-settings get default-web-browser                                         # zen.desktop
+xdg-mime query default application/pdf                                       # org.kde.okular.desktop
+xdg-mime query default text/plain                                            # com.microsoft.VSCode.desktop
 ```
