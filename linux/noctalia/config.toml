@@ -37,6 +37,13 @@ enabled = true
 auto_locate = false
 address = "Ottawa, Ontario, Canada"
 
+# Night light. Lower is warmer. Don't set force = true: when the config forces
+# it, a left click on the control centre button can't leave Always On. Use a
+# right click for Always On instead.
+[nightlight]
+enabled = true
+temperature_night = 5800
+
 # Session menu: the default five, but log out runs `uwsm stop`. Don't switch it
 # back: Noctalia's own log out exits Hyprland directly, and that has frozen the
 # SDDM login screen.
@@ -233,16 +240,12 @@ command = """printf '%s\t%s\n' \
   'Restart shell' 'Restart Noctalia (fixes bar and panel glitches)' \
   'Reload Hyprland' 'Re-read the Hyprland config; puts workspaces back on their monitors' \
   'Restart wallpapers' 'Restart the live wallpapers' \
-  'Night light off' 'Turn the night light off until midnight or the next login' \
-  'Night light on' 'Back to the configured warmth' \
   'Battery' 'Show the charge of wireless devices (mice, controllers)'"""
 exec = '''case "{selection}" in
   "Restart audio"*) systemctl --user restart pipewire pipewire-pulse wireplumber filter-chain ;;
   "Restart shell"*) pkill -x noctalia; sleep .5; uwsm app -- noctalia ;;
   "Reload Hyprland"*) hyprctl reload ;;
   "Restart wallpapers"*) "$HOME/.local/bin/live-wallpaper" ;;
-  "Night light off"*) hyprctl hyprsunset identity ;;
-  "Night light on"*) hyprctl hyprsunset reset ;;
   "Battery"*) b=$(upower -d | awk '/^Device:/{m="";p="";s=""} /^ +model:/{sub(/^ +model: +/,"");sub(/^(Logitech|Sony Interactive Entertainment) /,"");sub(/ Wireless Controller$/,"");m=$0} /^ +state:/{s=" ("$2")"} /^ +percentage:/{p=$2} /^$/{if(m!=""&&p!="")print m": "p s;m=""}'); notify-send -e -a Battery Battery "${b:-No battery devices connected}" ;;
 esac'''
 

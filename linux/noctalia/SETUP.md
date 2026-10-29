@@ -114,13 +114,16 @@ The comments in [`config.toml`](config.toml) explain its values.
   writes to `~/Pictures/Screenshots`, and Esc discards. In the region overlay,
   Ctrl+C and Ctrl+S skip the editor.
 - **Launcher actions**: type `/cmd` to list Restart audio, Restart shell,
-  Reload Hyprland, Restart wallpapers, Night light off, Night light on and
-  Battery. They also match by name in a normal search. Use Restart audio when a
-  USB headset reconnects and PipeWire keeps failing on the old device.
-  Shutdown, lock and the other session actions are in `/session`.
-- **Night light**: the Night Light toggle in the control centre is Noctalia's
-  own and stays off. The night light that runs is hyprsunset
-  ([`linux/hyprsunset`](../hyprsunset/SETUP.md)). Use the `/cmd` actions.
+  Reload Hyprland, Restart wallpapers and Battery. They also match by name in
+  a normal search. Use Restart audio when a USB headset reconnects and
+  PipeWire keeps failing on the old device. Shutdown, lock and the other
+  session actions are in `/session`.
+- **Night light** is Noctalia's own, on the Night Light button in the control
+  centre. A left click turns the schedule on or off: warm from sunset to
+  sunrise at the `[location]` address. A right click turns Always On on or
+  off: the night temperature all day. Always On from a right click lasts until
+  Noctalia restarts. To change the temperatures, open Settings, then Location,
+  Night Light. Copy a value you keep into `config.toml`.
 - **Login screen**: SDDM with this repo's `noctalia-card` theme
   ([`linux/sddm`](../sddm/SETUP.md)). It follows Noctalia's palette, wallpaper
   and lock GIF.

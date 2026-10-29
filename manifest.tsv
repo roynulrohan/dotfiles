@@ -32,7 +32,7 @@ linux	linux/hypr/utils/functions.lua	~/.config/hypr/utils/functions.lua	copy
 linux	linux/hypr/variables.lua	~/.config/hypr/variables.lua	copy
 linux	linux/hypr/window-mute	~/.local/bin/window-mute	copy-x
 linux	linux/hyprmod/hyprland-gui.lua	~/.config/hypr/hyprland-gui.lua	copy
-linux	linux/hyprsunset/hyprsunset.conf	~/.config/hypr/hyprsunset.conf	copy
+linux	-	~/.config/hypr/hyprsunset.conf	gone
 linux	linux/mpv/input.conf	~/.config/mpv/input.conf	copy
 linux	linux/mpv/mpv-image.desktop	~/.local/share/applications/mpv-image.desktop	copy
 linux	linux/mpv/mpv.conf	~/.config/mpv/mpv.conf	copy

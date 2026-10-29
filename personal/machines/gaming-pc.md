@@ -82,8 +82,7 @@ In this order. Each package's `SETUP.md` has the steps and a Verify section.
    [`linux/uwsm`](../../linux/uwsm/SETUP.md), [`linux/hyprmod`](../../linux/hyprmod/SETUP.md),
    [`linux/noctalia`](../../linux/noctalia/SETUP.md), [`linux/sddm`](../../linux/sddm/SETUP.md),
    [`linux/wallpaper`](../../linux/wallpaper/SETUP.md). Then log out and back in.
-7. The rest: [`linux/hyprsunset`](../../linux/hyprsunset/SETUP.md),
-   [`linux/pipewire`](../../linux/pipewire/SETUP.md),
+7. The rest: [`linux/pipewire`](../../linux/pipewire/SETUP.md),
    [`linux/openlinkhub`](../../linux/openlinkhub/SETUP.md),
    [`linux/openrgb`](../../linux/openrgb/SETUP.md),
    [`linux/case-lights`](../../linux/case-lights/SETUP.md),

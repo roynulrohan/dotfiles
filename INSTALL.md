@@ -118,7 +118,6 @@ Take any of these on their own.
 
 | App | Package | System |
 |---|---|---|
-| Night light | [`linux/hyprsunset`](linux/hyprsunset/SETUP.md) | Linux |
 | Headset EQ (Logitech G432) | [`linux/pipewire`](linux/pipewire/SETUP.md) | Linux |
 | Corsair fan hub and AIO cooler: fans follow the coolant and GPU temperatures | [`linux/openlinkhub`](linux/openlinkhub/SETUP.md) | Linux |
 | OpenRGB, kept away from the Corsair fan hub and cooler | [`linux/openrgb`](linux/openrgb/SETUP.md) | Linux |

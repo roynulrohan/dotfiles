@@ -25,7 +25,6 @@ Every file is in [`manifest.tsv`](../../manifest.tsv).
 Other files in `~/.config/hypr`:
 
 - `hyprland-gui.lua` belongs to HyprMod ([`linux/hyprmod`](../hyprmod/SETUP.md)).
-- `hyprsunset.conf` belongs to [`linux/hyprsunset`](../hyprsunset/SETUP.md).
 - `scheme/current.lua` is the colour file that borders, group bars and the
   background read. A Noctalia template generates it from the wallpaper palette
   ([`linux/noctalia`](../noctalia/SETUP.md)), so it isn't in the repo.
@@ -135,8 +134,7 @@ express:
 - **Autostart** ([`hyprland/execs.lua`](hyprland/execs.lua)): the polkit agent,
   `trash-empty 30` (deletes trash older than 30 days), the cursor theme for
   `hyprctl` and gsettings, and Noctalia in its own uwsm scope
-  (`uwsm app -- noctalia`). The night light is hyprsunset's own user service
-  ([`linux/hyprsunset`](../hyprsunset/SETUP.md)).
+  (`uwsm app -- noctalia`).
 - **Shell keys** ([`hyprland/keybinds.lua`](hyprland/keybinds.lua)) call
   `noctalia msg …`. The list is in [`linux/noctalia`](../noctalia/SETUP.md),
   Keys. The clipboard history is Noctalia's own.

@@ -43,7 +43,8 @@ job.
   Today: [`linux/wallpaper`](../linux/wallpaper/SETUP.md).
 - **The login screen and the lock screen look alike.** Today:
   [`linux/sddm`](../linux/sddm/SETUP.md), [`linux/noctalia`](../linux/noctalia/SETUP.md).
-- **Night light is always on.** Today: [`linux/hyprsunset`](../linux/hyprsunset/SETUP.md).
+- **Night light is always on, and a button in the shell turns it off.**
+  Today: Noctalia's Always On ([`linux/noctalia`](../linux/noctalia/SETUP.md)).
 
 ## Bar
 
