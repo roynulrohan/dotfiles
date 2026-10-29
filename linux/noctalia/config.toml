@@ -173,6 +173,26 @@ hide_when_no_media = true
 sidebar = "full"
 sidebar_section = "full"
 
+# The default six buttons, with Share Cursor (plugins/share-cursor) in place
+# of Wi-Fi. The control centre shows at most six.
+[[control_center.shortcuts]]
+type = "roynul/share-cursor:share-cursor"
+
+[[control_center.shortcuts]]
+type = "bluetooth"
+
+[[control_center.shortcuts]]
+type = "caffeine"
+
+[[control_center.shortcuts]]
+type = "nightlight"
+
+[[control_center.shortcuts]]
+type = "notification"
+
+[[control_center.shortcuts]]
+type = "power_profile"
+
 [widget.network]
 show_label = false           # icon only, no "enp5s0"
 

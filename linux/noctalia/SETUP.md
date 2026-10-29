@@ -13,6 +13,7 @@ and screenshots. Docs: [docs.noctalia.dev](https://docs.noctalia.dev/).
 | [`plugins/workspace-apps/`](plugins/workspace-apps/README.md) | `~/.local/share/noctalia/plugins/workspace-apps/` (see Plugins) |
 | [`plugins/workspace-pills/`](plugins/workspace-pills/README.md) | `~/.local/share/noctalia/plugins/workspace-pills/` (see Plugins) |
 | [`plugins/coolant/`](plugins/coolant/README.md) | `~/.local/share/noctalia/plugins/coolant/` (see Plugins) |
+| [`plugins/share-cursor/`](plugins/share-cursor/README.md) | `~/.local/share/noctalia/plugins/share-cursor/` (see Plugins) |
 | [`plugins/arch-updater/`](plugins/arch-updater/README.md) | `~/.local/share/noctalia/plugins/arch-updater/` (see Update widget) |
 | [`arch-update-tray.desktop`](arch-update-tray.desktop) | `~/.config/autostart/arch-update-tray.desktop` (see Update widget) |
 | [`spicetify-user.css`](spicetify-user.css) | `~/.config/spicetify/Themes/noctalia/user.css` (the Spotify theme's CSS; the `spicetify.ini` template writes its colours) |
@@ -68,6 +69,7 @@ noctalia msg plugins enable roynul/workspace-apps
 noctalia msg plugins enable roynul/workspace-pills
 noctalia msg plugins enable roynul/arch-updater
 noctalia msg plugins enable roynul/coolant
+noctalia msg plugins enable roynul/share-cursor
 # A community plugin, fetched from Noctalia's community repo
 noctalia msg plugins enable k4n4t4/hypr-submap
 ```
@@ -183,6 +185,10 @@ Alt+Tab runs `window-switcher hold` (in
 - **coolant** ([`plugins/coolant`](plugins/coolant/README.md)): the AIO's
   coolant temperature in the `stats` island, with the fan and pump speeds in
   its tooltip. It needs [`linux/openlinkhub`](../openlinkhub/SETUP.md).
+- **share-cursor** ([`plugins/share-cursor`](plugins/share-cursor/README.md)):
+  the Share Cursor button in the control centre, in place of Wi-Fi. It
+  switches Hyprland to a software cursor, so a screen share shows the pointer.
+  Screenshots show it too, so switch it off after the share.
 - **arch-updater**: see Update widget.
 
 After you change a local plugin's `plugin.toml`, run
@@ -310,7 +316,7 @@ Darkly (`darkly-bin`) only uses Qt's public API and survives updates.
 ```bash
 ./status.sh | grep -E '/noctalia/|google-sans|arch-update'   # ok on every line
 noctalia config validate                        # ✓ Config is valid
-noctalia msg plugins list | grep -w enabled     # roynul/workspace-apps, workspace-pills, arch-updater, k4n4t4/hypr-submap
+noctalia msg plugins list | grep -w enabled     # roynul/workspace-apps, workspace-pills, arch-updater, coolant, share-cursor, k4n4t4/hypr-submap
 systemctl --user is-enabled arch-update.timer   # masked
 ```
 

@@ -50,6 +50,7 @@ linux	linux/noctalia/lock/scripts/reroll.py	~/.local/share/noctalia/lock/scripts
 linux	linux/noctalia/lock/scripts/strip.py	~/.local/share/noctalia/lock/scripts/strip.py	copy
 linux	linux/noctalia/plugins/arch-updater	~/.local/share/noctalia/plugins/arch-updater	dir
 linux	linux/noctalia/plugins/coolant	~/.local/share/noctalia/plugins/coolant	dir
+linux	linux/noctalia/plugins/share-cursor	~/.local/share/noctalia/plugins/share-cursor	dir
 linux	linux/noctalia/plugins/workspace-apps	~/.local/share/noctalia/plugins/workspace-apps	dir
 linux	linux/noctalia/plugins/workspace-pills	~/.local/share/noctalia/plugins/workspace-pills	dir
 linux	linux/noctalia/spicetify-user.css	~/.config/spicetify/Themes/noctalia/user.css	copy

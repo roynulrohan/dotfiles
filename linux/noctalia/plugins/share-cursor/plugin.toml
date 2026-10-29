@@ -1,0 +1,22 @@
+# A control centre button that switches Hyprland to a software cursor, so a
+# screen share shows the pointer. Off is Hyprland's default cursor, which
+# screenshots leave out.
+
+id           = "roynul/share-cursor"
+name         = "Share Cursor"
+version      = "0.1.0"
+plugin_api   = 24 # argv runAsync
+author       = "roynul"
+license      = "MIT"
+icon         = "pointer"
+description  = "Control centre button: a software cursor so screen shares show the pointer."
+tags         = ["hyprland", "screen-share"]
+dependencies = ["hyprland"]
+
+[[shortcut]]
+id    = "share-cursor"
+entry = "shortcut.luau"
+
+[[service]]
+id    = "state"
+entry = "service.luau"
