@@ -63,5 +63,10 @@
   "skipDangerousModePermissionPrompt": true,
   "autoCompactEnabled": false,
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  }
 }
