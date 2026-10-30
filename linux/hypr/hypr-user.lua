@@ -226,11 +226,14 @@ end
 
 -- Dim the workspace behind a pop-up workspace, don't let apps pull focus, paste
 -- with the middle button, and turn Num Lock on at login. The last three
--- override hyprland/misc.lua and hyprland/input.lua.
+-- override hyprland/misc.lua and hyprland/input.lua. Keep the monitors in SDR:
+-- by default Hyprland switches a monitor to HDR while an HDR video is
+-- fullscreen on it.
 hl.config({
     decoration = { dim_special = 0.3 },
     misc = { focus_on_activate = false, middle_click_paste = true },
     input = { numlock_by_default = true },
+    render = { cm_auto_hdr = 0 },
 })
 
 -- Alt+Tab: Noctalia's window switcher (thumbnails, most recent first) instead

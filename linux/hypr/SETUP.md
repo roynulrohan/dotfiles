@@ -192,7 +192,8 @@ Each rule below names the file it lives in.
   `hypr-vars.lua`).
 - **Behaviour** (`hypr-user.lua`): apps can't pull focus
   (`focus_on_activate = false`), middle-click pastes, and Num Lock is on at
-  login. Key repeat ([`hyprland/input.lua`](hyprland/input.lua)) is 250 ms
+  login. The monitors stay in SDR (`cm_auto_hdr = 0`): by default Hyprland
+  switches a monitor to HDR while an HDR video is fullscreen on it. Key repeat ([`hyprland/input.lua`](hyprland/input.lua)) is 250 ms
   and 35 per second, faster than Hyprland's default 600 / 25.
 - **Animations**: the caelestia preset (see Animations).
 
